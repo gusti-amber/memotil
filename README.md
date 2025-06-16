@@ -203,3 +203,7 @@ Notion はドキュメントとしての体裁を整える前提があるため�
 | ドキュメント抽出               | nokogiri                |
 | コードのシンタックスハイライト | rouge                   |
 | GitHub 連携                    | octokit                 |
+
+## 画面遷移図
+
+https://www.figma.com/design/zOplZlur07IL8oWRqlQmOy/%E3%82%BF%E3%82%B9%E3%82%AF%E3%83%A1%E3%83%A2%E3%82%A2%E3%83%97%E3%83%AA?node-id=0-1&t=BVV11oXtRknQ4bOA-1
