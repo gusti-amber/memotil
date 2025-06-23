@@ -23,8 +23,10 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+    <div class="min-h-screen flex flex-col">
+      <main class="w-full flex-1">
+        <%= yield %>
+      </main>
+    </div>
   </body>
 </html>
