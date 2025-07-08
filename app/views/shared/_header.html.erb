@@ -1,5 +1,9 @@
-<% if user_signed_in? %>
-  <%= render 'shared/header_user' %>
+<% if auth_page? %>
+  <%= render 'shared/header_auth' %>
 <% else %>
-  <%= render 'shared/header_guest' %>
+  <% if user_signed_in? %>
+    <%= render 'shared/header_user' %>
+  <% else %>
+    <%= render 'shared/header_guest' %>
+  <% end %>
 <% end %> 
