@@ -111,6 +111,11 @@ GEM
     drb (2.2.3)
     erb (5.0.1)
     erubi (1.13.1)
+    factory_bot (6.5.4)
+      activesupport (>= 6.1.0)
+    factory_bot_rails (6.5.0)
+      factory_bot (~> 6.5)
+      railties (>= 6.1.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.7)
@@ -351,6 +356,7 @@ DEPENDENCIES
   capybara
   debug
   devise (~> 4.9)
+  factory_bot_rails
   jbuilder
   jsbundling-rails
   pg (~> 1.1)
