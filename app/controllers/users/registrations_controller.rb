@@ -10,9 +10,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+    current_or_guest_user # 主にはゲストユーザーからログイン中のユーザーへのデータの引き継ぎ
+  end
 
   # GET /resource/edit
   # def edit
