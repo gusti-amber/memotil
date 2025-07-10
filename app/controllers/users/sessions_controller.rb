@@ -11,7 +11,13 @@ class Users::SessionsController < Devise::SessionsController
   # POST /resource/sign_in
   def create
     super
-    current_or_guest_user
+    current_or_guest_user # 主にはゲストユーザーからログイン中のユーザーへのデータの引き継ぎ
+  end
+
+  # ゲストユーザー作成アクション
+  def create_guest
+    guest_user
+    redirect_to root_path
   end
 
   # DELETE /resource/sign_out
