@@ -12,7 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
-    current_or_guest_user
+    current_or_guest_user # 主にはゲストユーザーからログイン中のユーザーへのデータの引き継ぎ
   end
 
   # GET /resource/edit
