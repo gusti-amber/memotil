@@ -3,7 +3,7 @@
     <%= image_tag "logo.png", class: "flex-none size-16" %>
     <% if !auth_page? %>
       <div class="flex-1 flex justify-start items-center gap-10">
-        <%= link_to "タスクをみる", "#" %>
+        <%= link_to "タスクをみる", tasks_path %>
         <%= link_to "マイリスト", "#" %>
         <%= link_to "さがす", "#" %>
       </div>
