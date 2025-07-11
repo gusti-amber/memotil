@@ -9,5 +9,7 @@ Rails.application.routes.draw do
     post "/users/guest", to: "users/sessions#create_guest", as: :guest_session
   end
 
+  resources :tasks
+
   root "static_pages#top"
 end
