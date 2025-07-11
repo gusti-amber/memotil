@@ -1,0 +1,9 @@
+<div class="flex flex-col h-full gap-10 mx-20 my-10">
+  <p class="text-2xl font-bold">タスク</p>
+  <div class="flex justify-end gap-4">
+    <%= link_to "作成", new_task_path, class: "btn btn-primary" %>
+  </div>
+  <div class="flex flex-col gap-4">
+    <%= render @tasks %>
+  </div>
+</div>
