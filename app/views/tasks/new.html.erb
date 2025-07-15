@@ -1,0 +1,13 @@
+<div class="flex flex-col items-center h-full gap-10 my-10">
+  <%= form_with model: @task, url: tasks_path, local: true, html: { class: "flex flex-col gap-10" } do |f| %>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+    <%= f.label :tag_ids %>
+    <%# 7行目　なぜかparams[:task][:tag_ids]の初めの要素がブランクになる。今の所Taskは正しく作成され、Tagとの関連付けもできているため保留する %>
+    <%= f.collection_select :tag_ids, Tag.all, :id, :name, { multiple: true } %>
+    <div class="flex justify-center gap-10">
+      <%= link_to "戻る", tasks_path, class: "btn btn-primary" %>
+      <%= f.submit "作成", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
