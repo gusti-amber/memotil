@@ -3,7 +3,33 @@
   <div class="flex justify-end gap-4">
     <%= link_to "作成", new_task_path, class: "btn btn-primary" %>
   </div>
-  <div class="flex flex-col gap-4">
-    <%#= render @tasks %>
-  </div>
+  
+  <% if @tasks.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @tasks.each do |task| %>
+        <%= link_to task_path(task), class: "card card-side bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300" do %>
+          <%= image_tag "logo.png", size: "100x100", class: "object-cover" %>
+          <div class="card-body">
+            <p class="card-title text-lg"><%= task.title %></p>
+            
+            <% if task.tags.any? %>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <% task.tags.each do |tag| %>
+                  <span class="badge badge-primary"><%= tag.name %></span>
+                <% end %>
+              </div>
+            <% end %>
+            
+            <p class="text-sm text-gray-500 text-right">
+              作成日: <%= task.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+            </p>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-10">
+      <p class="text-gray-500">タスクがありません</p>
+    </div>
+  <% end %>
 </div>
