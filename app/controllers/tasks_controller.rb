@@ -18,6 +18,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    @task = current_or_guest_user.tasks.includes(:tags).find(params[:id])
   end
 
   def edit
