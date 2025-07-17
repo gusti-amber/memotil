@@ -3,6 +3,7 @@ class Task < ApplicationRecord
 
   has_many :tasktags
   has_many :tags, through: :tasktags
+  has_many :todos, dependent: :destroy
 
   enum status: { todo: 0, doing: 1, done: 2 }
 
