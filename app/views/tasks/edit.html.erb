@@ -1,0 +1,109 @@
+<div class="flex flex-col items-center my-10">
+  <div class="card bg-base-100 shadow-xl max-w-2xl">
+    <div class="card-body">      
+      <%= form_with model: @task, local: true, html: { class: "flex flex-col gap-6" } do |f| %>
+        <!-- タイトル入力フィールド -->
+        <div class="form-control">
+          <%= f.label :title, class: "label" %>
+          <div class="join w-full">
+            <%= f.text_field :title, class: "input input-bordered join-item flex-1" %>
+            <!-- ♻️onclickイベントは改善の余地あり。今後Stimulusコントローラーで実装予定 -->
+            <button type="button" 
+                    class="btn btn-square join-item"
+                    onclick="document.getElementById('task_title').value = ''">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- タグ選択セクション -->
+        <div class="form-control">
+          <%= f.label :tag_ids, class: "label" %>
+          <!-- タグ選択ドロップダウン -->
+          <div class="dropdown">
+            <!-- ♻️safariブラウザ含むすべてのブラウザで動作するコード。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus
+            <div tabindex="0" role="button" class="btn btn-outline">
+              <span>選択</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            -->
+            <!-- ⚠️buttonタグを使用した場合、safariブラウザでは動作しない可能性がある。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus-->
+            <button type="button" class="btn btn-outline">
+              <span>選択</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+            </button>
+
+            <!-- 🎓tabindex="0"により、ラベルをクリックしても画面が閉じなくなる。-->
+            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] p-2 shadow w-full max-h-60 overflow-y-auto">
+              <% Tag.all.each do |tag| %>
+                <li>
+                  <label class="flex items-center gap-2">
+                    <input type="checkbox" 
+                            name="task[tag_ids][]" 
+                            value="<%= tag.id %>"
+                            <%= 'checked' if @task.tag_ids.include?(tag.id) %>
+                            class="checkbox checkbox-primary">
+                    <span><%= tag.name %></span>
+                  </label>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ♻️タグ検索セクション 将来的に以下の実装で行いたいが、jsがまだ理解不足なので置いておく-->
+        <%#= render partial: "tag_search_form", locals: { f: f, task: @task } %>
+
+        <!-- ここまで読みました(2025/07/17) -->
+        <!-- やることリストセクション（プレースホルダー） -->
+        <div class="form-control">
+          <div class="flex items-center justify-between mb-3">
+            <!-- ♻️ここはf.labelに変更予定 -->
+            <h3 class="text-lg font-medium">やること</h3>
+            <button type="button" class="btn btn-ghost btn-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
+              </svg>
+              <span>追加</span>
+            </button>
+          </div>
+          <!-- ♻️ここはtodoモデル作成後に、f.text_fieldに変更予定 -->
+          <div class="space-y-2">
+            <input type="text" placeholder="やること1" class="input input-bordered w-full" disabled>
+            <input type="text" placeholder="やること2" class="input input-bordered w-full" disabled>
+            <input type="text" placeholder="やること3" class="input input-bordered w-full" disabled>
+          </div>
+        </div>
+
+        <!-- アクションボタン -->
+        <div class="flex justify-end gap-4 pt-4">
+          <%= link_to "戻る", tasks_path, class: "btn btn-ghost" %>
+          <%= f.submit "変更", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%# <script>
+function toggleTagDropdown() {
+  const dropdown = document.getElementById('tagDropdown');
+  dropdown.classList.toggle('hidden');
+}
+
+// ドロップダウン外をクリックした時に閉じる
+document.addEventListener('click', function(event) {
+  const dropdown = document.getElementById('tagDropdown');
+  const button = event.target.closest('button');
+  
+  if (!dropdown.contains(event.target) && !button) {
+    dropdown.classList.add('hidden');
+  }
+});
+</script> %>
