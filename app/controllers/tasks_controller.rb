@@ -27,7 +27,7 @@ class TasksController < ApplicationController
 
   def update
     @task = current_or_guest_user.tasks.find(params[:id])
-    
+
     if @task.update(task_params)
       redirect_to @task, notice: "タスクが正常に更新されました。"
     else
