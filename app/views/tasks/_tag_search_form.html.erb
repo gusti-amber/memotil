@@ -1,0 +1,117 @@
+<!-- タグ検索・追加フォーム 仮実装 -->
+<div>
+  <%= f.label :tag_ids, class: "label" %>
+  <!-- タグ検索・追加フォーム -->
+  <div class="relative">
+    <div class="input input-bordered w-full min-h-12 flex flex-wrap items-center gap-2 p-2" id="tagInputContainer">
+      <!-- 既存のタグバッジ -->
+      <% @task.tags.each do |tag| %>
+        <div class="badge badge-primary gap-1" data-tag-id="<%= tag.id %>">
+          #<%= tag.name %>
+          <button type="button" class="btn btn-ghost btn-xs p-0" onclick="removeTag('<%= tag.id %>')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+              <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+            </svg>
+          </button>
+        </div>
+      <% end %>
+      <!-- 検索入力フィールド -->
+      <input type="text" id="tagSearchInput" class="flex-1 min-w-20 bg-transparent border-none outline-none" autocomplete="off">
+      <!-- 隠しフィールド（フォーム送信用） -->
+      <% @task.tags.each do |tag| %>
+        <input type="hidden" name="task[tag_ids][]" value="<%= tag.id %>">
+      <% end %>
+    </div>
+    <!-- 検索結果ドロップダウン -->
+    <div id="tagSearchResults" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full max-h-60 overflow-y-auto absolute top-full left-0 z-50 hidden">
+      <!-- 検索結果がここに動的に表示される -->
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('tagSearchInput');
+  const searchResults = document.getElementById('tagSearchResults');
+  const tagInputContainer = document.getElementById('tagInputContainer');
+
+  searchInput.addEventListener('input', function() {
+    const query = this.value.trim();
+    if (query.length === 0) {
+      searchResults.classList.add('hidden');
+      return;
+    }
+    const allTags = <%= raw Tag.all.map { |tag| { id: tag.id, name: tag.name } }.to_json %>;
+    const currentTagIds = Array.from(document.querySelectorAll('[data-tag-id]')).map(el => parseInt(el.dataset.tagId));
+    const filteredTags = allTags.filter(tag =>
+      tag.name.toLowerCase().includes(query.toLowerCase()) &&
+      !currentTagIds.includes(tag.id)
+    );
+    displaySearchResults(filteredTags);
+  });
+
+  function displaySearchResults(tags) {
+    if (tags.length === 0) {
+      searchResults.classList.add('hidden');
+      return;
+    }
+    searchResults.innerHTML = tags.map(tag => `
+      <li>
+        <button type="button" class="w-full text-left p-2 hover:bg-base-200 rounded"
+          onclick="addTag(${tag.id}, '${tag.name}')">
+          #${tag.name}
+        </button>
+      </li>
+    `).join('');
+    searchResults.classList.remove('hidden');
+  }
+
+  document.addEventListener('click', function(event) {
+    if (!searchResults.contains(event.target) && event.target !== searchInput) {
+      searchResults.classList.add('hidden');
+    }
+  });
+
+  searchInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const firstResult = searchResults.querySelector('button');
+      if (firstResult) firstResult.click();
+    }
+  });
+});
+
+function addTag(tagId, tagName) {
+  const container = document.getElementById('tagInputContainer');
+  const searchInput = document.getElementById('tagSearchInput');
+  const tagBadge = document.createElement('div');
+  tagBadge.className = 'badge badge-neutral gap-1';
+  tagBadge.setAttribute('data-tag-id', tagId);
+  tagBadge.innerHTML = `
+    #${tagName}
+    <button type="button" class="btn btn-ghost btn-xs p-0" onclick="removeTag('${tagId}')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+        <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+      </svg>
+    </button>
+  `;
+  const hiddenField = document.createElement('input');
+  hiddenField.type = 'hidden';
+  hiddenField.name = 'task[tag_ids][]';
+  hiddenField.value = tagId;
+  container.insertBefore(tagBadge, searchInput);
+  container.appendChild(hiddenField);
+  searchInput.value = '';
+  document.getElementById('tagSearchResults').classList.add('hidden');
+  searchInput.focus();
+}
+
+function removeTag(tagId) {
+  const tagBadge = document.querySelector(`[data-tag-id="${tagId}"]`);
+  if (tagBadge) tagBadge.remove();
+  const hiddenFields = document.querySelectorAll('input[name="task[tag_ids][]"]');
+  hiddenFields.forEach(field => {
+    if (field.value === tagId.toString()) field.remove();
+  });
+}
+</script>
