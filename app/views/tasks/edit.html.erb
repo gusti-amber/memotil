@@ -83,7 +83,7 @@
 
         <!-- アクションボタン -->
         <div class="flex justify-end gap-4 pt-4">
-          <%= link_to "戻る", tasks_path, class: "btn btn-ghost" %>
+          <%= link_to "戻る", task_path(@task), class: "btn btn-ghost" %>
           <%= f.submit "変更", class: "btn btn-primary" %>
         </div>
       <% end %>
