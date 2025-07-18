@@ -60,24 +60,40 @@
         <!-- ♻️タグ検索セクション 将来的に以下の実装で行いたいが、jsがまだ理解不足なので置いておく-->
         <%#= render partial: "tag_search_form", locals: { f: f, task: @task } %>
 
-        <!-- ここまで読みました(2025/07/17) -->
         <!-- やることリストセクション（プレースホルダー） -->
         <div class="form-control">
           <div class="flex items-center justify-between mb-3">
             <!-- ♻️ここはf.labelに変更予定 -->
-            <h3 class="text-lg font-medium">やること</h3>
-            <button type="button" class="btn btn-ghost btn-sm">
+            <%= f.label :todos, class: "label" %>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="addTodoField()">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                 <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
               </svg>
               <span>追加</span>
             </button>
           </div>
-          <!-- ♻️ここはtodoモデル作成後に、f.text_fieldに変更予定 -->
-          <div class="space-y-2">
-            <input type="text" placeholder="やること1" class="input input-bordered w-full" disabled>
-            <input type="text" placeholder="やること2" class="input input-bordered w-full" disabled>
-            <input type="text" placeholder="やること3" class="input input-bordered w-full" disabled>
+
+          <!-- Todoリストの表示・編集フォーム -->
+          <!-- 🐛 todoリストの幅が不当に狭くなっている。以前はflexが原因だった。 -->
+          <div id="todos-container" class="space-y-2">
+            <%= f.fields_for :todos do |todo_form| %>
+              <div class="flex items-center gap-2">                
+                <!-- 削除ボタン -->
+                <button type="button" 
+                        class="btn btn-circle btn-outline btn-error btn-sm"
+                        onclick="removeTodoField(this)">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                    <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+                  </svg>
+                </button>
+                <!-- todo入力フィールド -->
+                <%= todo_form.text_field :body, 
+                    placeholder: "やることを入力してください", 
+                    class: "input input-bordered flex-1" %>
+                <%= todo_form.hidden_field :id %>
+                <%= todo_form.hidden_field :_destroy, class: "hidden" %>
+              </div>
+            <% end %>
           </div>
         </div>
 
@@ -91,19 +107,48 @@
   </div>
 </div>
 
-<%# <script>
-function toggleTagDropdown() {
-  const dropdown = document.getElementById('tagDropdown');
-  dropdown.classList.toggle('hidden');
+<!-- ♻️ jsは今後すべてStimulusコントローラーに移す予定 -->
+<script>
+function addTodoField() {
+  const container = document.getElementById('todos-container');
+  const todoCount = container.children.length; // 🎓 todoの数、つまり新しいtodoのindexを取得
+  
+  // ♻️ この箇所は今後formオブジェクトを使った書き方に変更予定(CSRF対策、エラーハンドリングなどが欲しいため)
+  // 方法としては、<template>タグ内でf.fields_forを使う。
+  const newTodoHtml = `
+    <div class="flex items-center gap-2">
+      <button type="button" 
+              class="btn btn-circle btn-outline btn-error btn-sm"
+              onclick="removeTodoField(this)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+          <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+        </svg>
+      </button>
+      <input type="hidden" name="task[todos_attributes][${todoCount}][_destroy]" value="0" class="hidden">
+      <input type="text" 
+              name="task[todos_attributes][${todoCount}][body]" 
+              placeholder="やることを入力してください" 
+              class="input input-bordered flex-1">
+      <input type="hidden" name="task[todos_attributes][${todoCount}][id]" value="">
+    </div>
+  `;
+  container.insertAdjacentHTML('beforeend', newTodoHtml); // 🎓 'beforeend'により、</div>の直前に新しいtodoを追加する。
 }
 
-// ドロップダウン外をクリックした時に閉じる
-document.addEventListener('click', function(event) {
-  const dropdown = document.getElementById('tagDropdown');
-  const button = event.target.closest('button');
-  
-  if (!dropdown.contains(event.target) && !button) {
-    dropdown.classList.add('hidden');
+function removeTodoField(button) {
+  const todoForm = button.closest('.flex');
+  const todoId = todoForm.querySelector('input[type="hidden"][name$="[id]"]').value;
+  const todoDestroyField = todoForm.querySelector('input[type="hidden"][name$="[_destroy]"]');
+
+  if (confirm('このtodoを削除しますか？')) {
+    if (todoId) {
+      // 既存のtodoの場合、_destroyフィールドを設定して削除マーク
+      todoDestroyField.value = '1';
+      todoForm.style.display = 'none'; // 🎓 Railsで削除対象を特定するためにDOM要素を残す必要がある。
+    } else {
+      // 新規追加のtodoの場合、直接削除
+      todoForm.remove(); // DOM要素ごと削除
+    }
   }
-});
-</script> %>
+}
+</script>

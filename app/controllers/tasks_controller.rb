@@ -22,7 +22,7 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = current_or_guest_user.tasks.includes(:tags).find(params[:id])
+    @task = current_or_guest_user.tasks.includes(:tags, :todos).find(params[:id])
   end
 
   def update
@@ -41,6 +41,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, tag_ids: [])
+    params.require(:task).permit(:title, tag_ids: [], todos_attributes: [ :id, :body, :done, :_destroy ])
   end
 end
