@@ -41,6 +41,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, tag_ids: [], todos_attributes: [:id, :body, :done, :_destroy])
+    params.require(:task).permit(:title, tag_ids: [], todos_attributes: [ :id, :body, :done, :_destroy ])
   end
 end
