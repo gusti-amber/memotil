@@ -1,5 +1,5 @@
 <div class="flex flex-col items-center my-10">
-  <div class="card bg-base-100 shadow-xl max-w-2xl">
+  <div class="card bg-base-100 shadow-xl max-w-2xl w-full">
     <div class="card-body">      
       <%= form_with model: @task, local: true, html: { class: "flex flex-col gap-6" } do |f| %>
         <!-- タイトル入力フィールド -->
@@ -32,7 +32,7 @@
             </div>
             -->
             <!-- ⚠️buttonタグを使用した場合、safariブラウザでは動作しない可能性がある。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus-->
-            <button type="button" class="btn btn-outline">
+            <button type="button" class="btn btn-outline w-full">
               <span>選択</span>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                 <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
@@ -74,7 +74,6 @@
           </div>
 
           <!-- Todoリストの表示・編集フォーム -->
-          <!-- 🐛 todoリストの幅が不当に狭くなっている。以前はflexが原因だった。 -->
           <div id="todos-container" class="space-y-2">
             <%= f.fields_for :todos do |todo_form| %>
               <div class="flex items-center gap-2">                
