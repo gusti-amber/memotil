@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center my-10">
   <div class="card bg-base-100 shadow-xl max-w-2xl w-full">
     <div class="card-body">      
-      <%= form_with model: @task, url: tasks_path, local: true, html: { class: "flex flex-col gap-6" } do |f| %>
+      <%= form_with model: @task, local: true, html: { class: "flex flex-col gap-6" } do |f| %>
         <!-- タイトル入力フィールド -->
         <div class="form-control">
           <%= f.label :title, class: "label" %>
