@@ -1,13 +1,67 @@
-<div class="flex flex-col items-center h-full gap-10 my-10">
-  <%= form_with model: @task, url: tasks_path, local: true, html: { class: "flex flex-col gap-10" } do |f| %>
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-    <%= f.label :tag_ids %>
-    <%# 7行目　なぜかparams[:task][:tag_ids]の初めの要素がブランクになる。今の所Taskは正しく作成され、Tagとの関連付けもできているため保留する %>
-    <%= f.collection_select :tag_ids, Tag.all, :id, :name, { multiple: true } %>
-    <div class="flex justify-center gap-10">
-      <%= link_to "戻る", tasks_path, class: "btn btn-primary" %>
-      <%= f.submit "作成", class: "btn btn-primary" %>
+<div class="flex flex-col items-center my-10">
+  <div class="card bg-base-100 shadow-xl max-w-2xl w-full">
+    <div class="card-body">      
+      <%= form_with model: @task, url: tasks_path, local: true, html: { class: "flex flex-col gap-6" } do |f| %>
+        <!-- タイトル入力フィールド -->
+        <div class="form-control">
+          <%= f.label :title, class: "label" %>
+          <div class="join w-full">
+            <%= f.text_field :title, class: "input input-bordered join-item flex-1" %>
+            <!-- ♻️onclickイベントは改善の余地あり。今後Stimulusコントローラーで実装予定 -->
+            <button type="button" 
+                    class="btn btn-square join-item"
+                    onclick="document.getElementById('task_title').value = ''">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- タグ選択セクション -->
+        <div class="form-control">
+          <%= f.label :tag_ids, class: "label" %>
+          <!-- タグ選択ドロップダウン -->
+          <div class="dropdown">
+            <!-- ♻️safariブラウザ含むすべてのブラウザで動作するコード。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus
+            <div tabindex="0" role="button" class="btn btn-outline">
+              <span>選択</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            -->
+            <!-- ⚠️buttonタグを使用した場合、safariブラウザでは動作しない可能性がある。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus-->
+            <button type="button" class="btn btn-outline w-full">
+              <span>選択</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+            </button>
+
+            <!-- 🎓tabindex="0"により、ラベルをクリックしても画面が閉じなくなる。-->
+            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] p-2 shadow w-full max-h-60 overflow-y-auto">
+              <% Tag.all.each do |tag| %>
+                <li>
+                  <label class="flex items-center gap-2">
+                    <input type="checkbox" 
+                            name="task[tag_ids][]" 
+                            value="<%= tag.id %>"
+                            class="checkbox checkbox-primary">
+                    <span><%= tag.name %></span>
+                  </label>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ボタンセクション -->
+        <div class="flex justify-center gap-4 mt-6">
+          <%= link_to "戻る", tasks_path, class: "btn btn-outline" %>
+          <%= f.submit "作成", class: "btn btn-primary" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 </div>
