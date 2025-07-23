@@ -16,12 +16,9 @@
       <% end %>
 
       <!-- タスクのTodoリスト -->
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2" data-controller="todo-toggle">
         <% @task.todos.each do |todo| %>
-          <div class="flex items-center gap-2">
-            <input type="checkbox" class="checkbox" <%= todo.done? ? "checked" : "" %>>
-            <%= todo.body %>
-          </div>
+          <%= render "todos/todo", todo: todo %>
         <% end %>
       </div>
     </div>
