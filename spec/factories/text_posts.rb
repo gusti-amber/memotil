@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :memo do
+  factory :text_post do
     body { "MyText" }
   end
 end
