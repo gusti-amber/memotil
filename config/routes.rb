@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   end
 
   resources :tasks do
-    resources :todos, only: [ :update ]
+    resources :posts, only: [:create]
+    resources :todos, only: [:update]
   end
 
   root "static_pages#top"
