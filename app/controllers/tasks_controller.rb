@@ -19,6 +19,8 @@ class TasksController < ApplicationController
 
   def show
     @task = current_or_guest_user.tasks.includes(:tags).find(params[:id])
+    @post = Post.new
+    @text_post = TextPost.new
   end
 
   def edit
