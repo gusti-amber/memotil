@@ -1,6 +1,6 @@
 <%= form_with model: post, url: task_posts_path(task), local: true, class: "space-y-4" do |form| %>
   <div class="form-control">
-    <%= form.fields_for :postable_attributes, text_post do |text_post_form| %>
+    <%= form.fields_for :postable_attributes do |text_post_form| %>
       <%= text_post_form.text_area :body, 
           placeholder: "コメントを入力してください...", 
           class: "textarea textarea-bordered w-full h-24" %>
