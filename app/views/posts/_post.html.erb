@@ -1,0 +1,13 @@
+<div class="border-l-4 border-blue-500 pl-4 py-2">
+  <div class="flex items-center gap-2 mb-2">
+    <span class="text-sm font-medium text-gray-700">
+      <%= post.user.name || "ゲストユーザー" %>
+    </span>
+    <span class="text-xs text-gray-500">
+      <%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+    </span>
+  </div>
+  <div class="text-gray-800">
+    <%= post.postable.body %>
+  </div>
+</div> 
