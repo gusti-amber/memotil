@@ -46,6 +46,20 @@
   </div>
 </div>
 
+<!-- 投稿一覧 -->
+<div class="bg-white rounded-lg shadow-lg p-6 m-10">
+  <% if @posts.any? %>
+    <h3 class="text-lg font-semibold mb-4">投稿一覧</h3>
+    <div class="space-y-4">
+      <%= render @posts %>
+    </div>
+  <% else %>
+    <div class="text-center py-8 text-gray-500">
+      <p>まだ投稿はありません</p>
+    </div>
+  <% end %>
+</div>
+
 <!-- 投稿フォーム -->
 <div class="bg-white rounded-lg shadow-lg p-6 m-10">
   <h3 class="text-lg font-semibold mb-4">コメントを投稿</h3>
