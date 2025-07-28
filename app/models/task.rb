@@ -4,6 +4,7 @@ class Task < ApplicationRecord
   has_many :tasktags
   has_many :tags, through: :tasktags
   has_many :todos, dependent: :destroy
+  has_many :posts, dependent: :destroy
 
   # 🎓 reject_if: :all_blank について、:all_blankが渡されると、_destroyの値を除くすべての属性が空白レコードを受け付けなくなるprocが1つ生成されます。
   #   つまり、_destroyの値を除くすべての属性に値がないと、レコードが作成されないようになる。

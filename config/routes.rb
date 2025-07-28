@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
 
   resources :tasks do
+    resources :posts, only: [ :create ]
     resources :todos, only: [ :update ]
   end
 
