@@ -6,4 +6,4 @@ module Postable
     has_one :task, through: :post
     has_one :user, through: :post
   end
-end 
+end

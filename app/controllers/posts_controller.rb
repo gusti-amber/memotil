@@ -2,10 +2,10 @@ class PostsController < ApplicationController
   def create
     @task = current_or_guest_user.tasks.find(params[:task_id])
     @post = @task.posts.build(user: current_or_guest_user)
-    
+
     # TextPostを作成
     text_post = TextPost.new(post_params)
-    
+
     if text_post.save
       @post.postable = text_post
       if @post.save
@@ -23,4 +23,4 @@ class PostsController < ApplicationController
   def post_params
     params.require(:post).require(:postable_attributes).permit(:body)
   end
-end 
+end

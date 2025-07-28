@@ -2,7 +2,7 @@ class RenameMemosToTextPosts < ActiveRecord::Migration[7.2]
   def up
     # テーブル名を変更
     rename_table :memos, :text_posts
-    
+
     # Postモデルのpostable_typeを更新
     execute "UPDATE posts SET postable_type = 'TextPost' WHERE postable_type = 'Memo'"
   end
