@@ -21,7 +21,6 @@ class TasksController < ApplicationController
     @task = current_or_guest_user.tasks.includes(:tags, :posts).find(params[:id])
     @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
     @post = Post.new
-    @text_post = TextPost.new
   end
 
   def edit
