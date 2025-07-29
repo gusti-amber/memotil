@@ -1,0 +1,8 @@
+ja:
+  # フォームラベルの和訳
+  helpers:
+    label:
+      user:
+        email: "メールアドレス"
+        password: "パスワード"
+        remember_me: "ログイン情報を記憶する"

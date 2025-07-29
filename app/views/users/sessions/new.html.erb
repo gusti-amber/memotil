@@ -1,33 +1,49 @@
-<div class="flex flex-col items-center h-full gap-10 my-10">
-  <p class="text-2xl font-bold">Log in</p>
+<div class="bg-white rounded-lg shadow-lg px-12 py-6 relative mx-auto my-10 max-w-md">
+  <div class="flex flex-col items-center h-full gap-5 my-5 w-full">
+    <p class="text-2xl font-bold">ログイン</p>
 
-  <%= button_to "create guest user", guest_session_path, class: "btn btn-primary" %>
-  
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-10" }) do |f| %>
-    <div class="field">
-      <%= f.label :email %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-primary" %>
+    <%= form_with url: guest_session_path, method: :post, html: { class: "w-full" } do |f| %>
+      <button type="submit" class="btn btn-primary w-full">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+          <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+        </svg>
+        ゲストとしてアクセス
+      </button>
+    <% end %>
+
+    <!-- 区切り線 -->
+    <div class="flex items-center w-full">
+      <div class="flex-1 border-t border-gray-300"></div>
+      <span class="px-4 text-sm text-gray-500">または</span>
+      <div class="flex-1 border-t border-gray-300"></div>
     </div>
+    
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-5 w-full" }) do |f| %>
+      <div class="field w-full">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-primary w-full" %>
+      </div>
 
-    <div class="field">
-      <%= f.label :password %><br />
-      <%= f.password_field :password, autocomplete: "current-password", class: "input input-primary" %>
-    </div>
+      <div class="field w-full">
+        <%= f.label :password %><br />
+        <%= f.password_field :password, autocomplete: "current-password", class: "input input-primary w-full" %>
+      </div>
 
-    <% if devise_mapping.rememberable? %>
-      <div class="field">
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
+      <% if devise_mapping.rememberable? %>
+        <div class="field w-full">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </div>
+      <% end %>
+
+      <div class="actions flex justify-center w-full">
+        <%= f.submit "ログイン", class: "btn btn-primary w-full" %>
       </div>
     <% end %>
 
-    <div class="actions flex justify-center">
-      <%= f.submit "Log in", class: "btn btn-primary" %>
+    <div class="flex justify-center gap-10">
+      <%= link_to "新規アカウントを作成", new_registration_path(resource_name), class: "text-xs font-semibold underline" %>
+      <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "text-xs font-semibold underline" %>
     </div>
-  <% end %>
-
-  <div class="flex justify-center gap-10">
-    <%= link_to "Sign up", new_registration_path(resource_name) %>
-    <%= link_to "Forgot your password?", new_password_path(resource_name) %>
   </div>
 </div>
