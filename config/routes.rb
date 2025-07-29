@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
 
   resources :tasks do
+    patch :toggle_status, on: :member # toggle_statusというカスタムアクションの追加
     resources :posts, only: [ :create ]
     resources :todos, only: [ :update ]
   end
