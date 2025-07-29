@@ -37,6 +37,16 @@ class TasksController < ApplicationController
     end
   end
 
+  def toggle_status
+    @task = current_or_guest_user.tasks.find(params[:id])
+    new_status = @task.done? ? :doing : :done
+
+    if @task.update(status: new_status)
+    else
+      render :show, status: :unprocessable_entity
+    end
+  end
+
   def destroy
   end
 
