@@ -1,0 +1,7 @@
+<div id="task_status_button_<%= task.id %>">
+  <% if task.done? %>
+    <%= render "tasks/return_to_doing_button", task: task %>
+  <% else %>
+    <%= render "tasks/complete_button", task: task %>
+  <% end %> 
+</div>
