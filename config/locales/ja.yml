@@ -3,6 +3,8 @@ ja:
   helpers:
     label:
       user:
+        name: "名前"
         email: "メールアドレス"
         password: "パスワード"
+        password_confirmation: "パスワード（確認）"
         remember_me: "ログイン情報を記憶する"
