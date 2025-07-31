@@ -7,17 +7,27 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
 tag_names = [
-  "Ruby",
-  "Rails",
-  "JavaScript",
-  "React",
-  "Node.js",
-  "Express",
-  "PostgreSQL",
-  "MySQL",
-  "MongoDB",
-  "Redis"
+  # Programming Languages
+  "JavaScript", "TypeScript", "Python", "Ruby", "PHP", "Go", "Rust", "Java", "C#", "Shell",
+
+  # Frameworks
+  "React", "Vue.js", "Next.js", "Nuxt", "Angular", "Express", "FastAPI", "Django", "Rails", "Laravel", "Spring Boot",
+
+  # Databases
+  "PostgreSQL", "MySQL", "MongoDB", "SQLite", "Oracle", "Redis", "Firebase", "SQL",
+
+  # Infrastructure / Cloud
+  "AWS", "Azure", "GoogleCloud", "Docker", "Docker Compose", "Kubernetes", "Terraform", "Vagrant",
+  "Heroku", "Netlify", "Vercel", "Cloudflare", "Lambda", "EC2", "S3",
+
+  # Development Tools
+  "Git", "GitHub", "GitHub-Actions", "CI-CD", "Jenkins", "ESLint", "Prettier", "Webpack",
+  "pnpm", "Yarn", "Vite", "VSCode", "Vim", "Slack", "Zsh", "Bash", "Postman",
+
+  # Rails Gems
+  "Devise", "Capistrano", "CarrierWave", "RSpec", "Kaminari", "Pundit", "ActiveAdmin", "Sidekiq"
 ]
 
 tag_names.each do |tag_name|
