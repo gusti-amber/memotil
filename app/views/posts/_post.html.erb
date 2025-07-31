@@ -1,13 +1,13 @@
-<div class="border-l-4 border-blue-500 pl-4 py-2">
-  <div class="flex items-center gap-2 mb-2">
+<div class="chat chat-start">
+  <div class="chat-header">
     <span class="text-sm font-medium text-gray-700">
-      <%= post.user.name || "ゲストユーザー" %>
+      <%= post.user.name %>
     </span>
-    <span class="text-xs text-gray-500">
+    <span class="text-xs text-gray-500 ml-2">
       <%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
     </span>
   </div>
-  <div class="text-gray-800">
+  <div class="chat-bubble chat-bubble-primary">
     <%= post.postable.body %>
   </div>
 </div> 
