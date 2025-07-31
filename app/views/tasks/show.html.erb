@@ -42,11 +42,10 @@
 </div>
 
 <!-- 投稿一覧 -->
-<div class="bg-white rounded-lg shadow-lg p-6 m-10">
+<div class="p-6 m-10">
   <% if @posts.any? %>
-    <h3 class="text-lg font-semibold mb-4">投稿一覧</h3>
     <div class="space-y-4">
-      <%= render partial: "posts/post", collection: @posts %>
+      <%= render @posts %>
     </div>
   <% else %>
     <div class="text-center py-8 text-gray-500">
@@ -57,12 +56,11 @@
 
 <!-- 投稿フォーム -->
 <div class="bg-white rounded-lg shadow-lg p-6 m-10">
-  <h3 class="text-lg font-semibold mb-4">ポストを投稿</h3>
   <%= render 'posts/form', task: @task, post: @post %>
 </div>
 
 <!-- 戻るボタン -->
-<div class="mt-6 text-center">
+<div class="my-6 text-center">
   <%= link_to tasks_path, class: "btn btn-primary" do %>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
