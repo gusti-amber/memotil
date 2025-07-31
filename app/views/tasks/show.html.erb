@@ -45,7 +45,8 @@
 <div class="p-6 m-10">
   <% if @posts.any? %>
     <div class="space-y-4">
-      <%= render @posts %>
+      <%#= render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
+      <%= render partial: "posts/post", collection: @posts %>
     </div>
   <% else %>
     <div class="text-center py-8 text-gray-500">
