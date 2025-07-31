@@ -8,3 +8,7 @@ ja:
         password: "パスワード"
         password_confirmation: "パスワード（確認）"
         remember_me: "ログイン情報を記憶する"
+      task:
+        title: "タイトル"
+        tag_ids: "タグ"
+        todos: "やることリスト"
