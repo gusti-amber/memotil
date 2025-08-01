@@ -20,6 +20,7 @@ module.exports = {
           "sage-white": "#AAB396", // ボタン（ホバー時）
           "sage-dark": "#6B7A5B", // ボタン（ホバー時、明度10%下げ）
           brown: "#674636", // ヘッダー、フッター
+          "brown-light": "#7A5646", // brownより明度10%明るい
         },
       },
     },
