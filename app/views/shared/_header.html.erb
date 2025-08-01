@@ -11,9 +11,9 @@
         <%= link_to "さがす", "#", onclick: "alert('Coming soon!'); return false;", class: "text-custom-cream hover:text-custom-cream transition-colors" %>
       </div>
       <% if user_signed_in? %>
-        <%= link_to "ログアウト", destroy_user_session_path, class: "flex-none btn bg-custom-sage-dark border-custom-sage-dark hover:bg-custom-sage hover:border-custom-sage text-custom-cream", data: { turbo_method: :delete } %>
+        <%= link_to "ログアウト", destroy_user_session_path, class: "flex-none btn bg-custom-sage border-custom-sage hover:bg-custom-sage-white hover:border-custom-sage-white text-custom-cream", data: { turbo_method: :delete } %>
       <% else %>
-        <%= link_to "ログイン", new_user_session_path, class: "flex-none btn bg-custom-sage-dark border-custom-sage-dark hover:bg-custom-sage hover:border-custom-sage text-custom-cream" %>
+        <%= link_to "ログイン", new_user_session_path, class: "flex-none btn bg-custom-sage border-custom-sage hover:bg-custom-sage-white hover:border-custom-sage-white text-custom-cream" %>
       <% end %>
     <% end %>
   </div>
