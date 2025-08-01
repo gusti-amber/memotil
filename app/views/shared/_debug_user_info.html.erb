@@ -1,0 +1,15 @@
+<div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+  <div class="flex">
+    <div class="ml-3">
+      <h3 class="text-sm font-medium">開発用デバッグ情報</h3>
+      <div class="mt-2 text-sm">
+        <p><strong>session[:guest_user_id]:</strong> <%= session[:guest_user_id] %></p>
+        <p><strong>ユーザーID:</strong> <%= current_or_guest_user.id %></p>
+        <p><strong>ユーザー名:</strong> <%= current_or_guest_user.name %></p>
+        <p><strong>メールアドレス:</strong> <%= current_or_guest_user.email %></p>
+        
+        <p><strong>作成日時:</strong> <%= current_or_guest_user.created_at.strftime('%Y-%m-%d %H:%M:%S') %></p>
+      </div>
+    </div>
+  </div>
+</div> 
