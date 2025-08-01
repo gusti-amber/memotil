@@ -10,7 +10,7 @@
         <%= link_to task_path(task), class: "card card-side bg-custom-beige shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-custom-sage/20" do %>
           <%= image_tag "logo.png", size: "100x100", class: "object-cover" %>
           <div class="card-body">
-            <p class="card-title text-lg text-custom-brown"><%= task.title %></p>
+            <p class="card-title text-lg text-custom-brown line-clamp-2"><%= task.title %></p>
             
             <% if task.tags.any? %>
               <div class="flex flex-wrap gap-2 mb-4">
