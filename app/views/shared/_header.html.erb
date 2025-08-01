@@ -1,16 +1,19 @@
-<header class="bg-slate-200">
+<header class="bg-custom-brown">
   <div class="flex justify-between items-center p-4 gap-10">
-    <%= image_tag "logo.png", class: "flex-none size-16" %>
+    <%= link_to root_path do %>
+      <%= image_tag "logo.png", class: "flex-none size-16" %>
+    <% end %>
     <% if !auth_page? %>
       <div class="flex-1 flex justify-start items-center gap-10">
-        <%= link_to "タスクをみる", tasks_path %>
-        <%= link_to "マイリスト", "#" %>
-        <%= link_to "さがす", "#" %>
+        <%= link_to "タスクをみる", tasks_path, class: "text-custom-cream hover:text-custom-cream transition-colors" %>
+        <!-- マイリスト画面とさがす画面はまだ実装していないので、クリックしたらアラートが表示されるようにしている。 -->
+        <%= link_to "マイリスト", "#", onclick: "alert('Coming soon!'); return false;", class: "text-custom-cream hover:text-custom-cream transition-colors" %>
+        <%= link_to "さがす", "#", onclick: "alert('Coming soon!'); return false;", class: "text-custom-cream hover:text-custom-cream transition-colors" %>
       </div>
       <% if user_signed_in? %>
-        <%= link_to "ログアウト", destroy_user_session_path, class: "flex-none btn btn-secondary", data: { turbo_method: :delete } %>
+        <%= link_to "ログアウト", destroy_user_session_path, class: "flex-none btn bg-custom-sage-dark border-custom-sage-dark hover:bg-custom-sage hover:border-custom-sage text-custom-cream", data: { turbo_method: :delete } %>
       <% else %>
-        <%= link_to "ログイン", new_user_session_path, class: "flex-none btn btn-primary" %>
+        <%= link_to "ログイン", new_user_session_path, class: "flex-none btn bg-custom-sage-dark border-custom-sage-dark hover:bg-custom-sage hover:border-custom-sage text-custom-cream" %>
       <% end %>
     <% end %>
   </div>
