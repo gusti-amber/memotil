@@ -6,8 +6,9 @@
     <% if !auth_page? %>
       <div class="flex-1 flex justify-start items-center gap-10">
         <%= link_to "タスクをみる", tasks_path %>
-        <%= link_to "マイリスト", "#" %>
-        <%= link_to "さがす", "#" %>
+        <!-- マイリスト画面とさがす画面はまだ実装していないので、クリックしたらアラートが表示されるようにしている。 -->
+        <%= link_to "マイリスト", "#", onclick: "alert('Coming soon!'); return false;" %>
+        <%= link_to "さがす", "#", onclick: "alert('Coming soon!'); return false;" %>
       </div>
       <% if user_signed_in? %>
         <%= link_to "ログアウト", destroy_user_session_path, class: "flex-none btn btn-secondary", data: { turbo_method: :delete } %>
