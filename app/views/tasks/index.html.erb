@@ -7,22 +7,25 @@
   <% if @tasks.any? %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <% @tasks.each do |task| %>
-        <%= link_to task_path(task), class: "card card-side bg-custom-beige shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-custom-sage/20" do %>
-          <%= image_tag "logo.png", size: "100x100", class: "object-cover" %>
-          <div class="card-body">
-            <p class="card-title text-lg text-custom-brown line-clamp-2"><%= task.title %></p>
+        <%= link_to task_path(task), class: "card bg-custom-beige shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-custom-sage/20 h-48" do %>
+          <div class="card-body flex flex-col h-full p-6">
+            <div class="flex-1">
+              <p class="card-title text-lg text-custom-brown line-clamp-2 mb-2"><%= task.title %></p>
+              
+              <% if task.tags.any? %>
+                <div class="flex flex-wrap gap-2">
+                  <% task.tags.each do |tag| %>
+                    <span class="badge bg-custom-sage text-custom-cream border-none"><%= tag.name %></span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
             
-            <% if task.tags.any? %>
-              <div class="flex flex-wrap gap-2 mb-4">
-                <% task.tags.each do |tag| %>
-                  <span class="badge bg-custom-sage text-custom-cream border-none"><%= tag.name %></span>
-                <% end %>
-              </div>
-            <% end %>
-            
-            <p class="text-sm text-custom-brown/70 text-right">
-              作成日: <%= task.created_at.strftime("%Y年%m月%d日 %H:%M") %>
-            </p>
+            <div class="mt-auto">
+              <p class="text-sm text-custom-brown/70 text-right">
+                作成日: <%= task.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+              </p>
+            </div>
           </div>
         <% end %>
       <% end %>
