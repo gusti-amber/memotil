@@ -1,13 +1,25 @@
-<%= form_with model: post, url: task_posts_path(task), local: true, class: "space-y-4" do |form| %>
-  <div class="form-control">
-    <%= form.fields_for :postable_attributes do |text_post_form| %>
-      <%= text_post_form.text_area :body, 
-          placeholder: "コメントを入力してください...", 
-          class: "textarea textarea-bordered w-full h-24 bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none placeholder:text-custom-brown/50" %>
-    <% end %>
+<div class="flex flex-col gap-4">
+  <%= form_with model: post, url: task_posts_path(task), method: :post, local: true, class: "space-y-4", html: { id: "post_form_#{task.id}" } do |form| %>
+    <div class="form-control">
+      <%= form.fields_for :postable_attributes do |text_post_form| %>
+        <%= text_post_form.text_area :body, 
+            placeholder: "コメントを入力してください...", 
+            class: "textarea textarea-bordered w-full h-24 bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none placeholder:text-custom-brown/50" %>
+      <% end %>
+    </div>
+    <!-- ⚠️ この実装では、完了ボタンを押しても、patchリクエストのurlがtask_post_path(task)になってしまい、ルーティングエラーが発生する。
+      そのため、form_withタグの外でボタン群を実装することで、完了ボタンを押した時、patchリクエストは正常に動作し、タスクのステータスをトグルすることができた。 -->
+      <%# <div class="flex justify-end gap-4">
+      <%#   <%= render "tasks/status_buttons", task: task %>
+      <%#   <%= form.submit "投稿", class: "btn bg-custom-sage hover:bg-custom-sage-dark text-custom-cream border-none" %>
+      <%# </div> %>
+  <% end %>
+
+  <div class="flex justify-end gap-4">
+    <%= render "tasks/status_buttons", task: task %>
+    <!-- ⚠️ 現在の実装では、投稿ボタンはform_with外に設置している。もし完了ボタンを廃止する場合には、form_with内に投稿ボタンを移動する。 -->
+    <button type="submit" form="post_form_<%= task.id %>" class="btn bg-custom-sage hover:bg-custom-sage-dark text-custom-cream border-none">
+      投稿
+    </button>
   </div>
-  
-  <div class="flex justify-end">
-    <%= form.submit "投稿", class: "btn bg-custom-sage hover:bg-custom-sage-dark text-custom-cream border-none" %>
-  </div>
-<% end %> 
+</div> 
