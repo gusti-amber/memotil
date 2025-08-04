@@ -3,11 +3,11 @@
     <%= form.fields_for :postable_attributes do |text_post_form| %>
       <%= text_post_form.text_area :body, 
           placeholder: "コメントを入力してください...", 
-          class: "textarea textarea-bordered w-full h-24" %>
+          class: "textarea textarea-bordered w-full h-24 bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none placeholder:text-custom-brown/50" %>
     <% end %>
   </div>
   
   <div class="flex justify-end">
-    <%= form.submit "投稿", class: "btn btn-primary" %>
+    <%= form.submit "投稿", class: "btn bg-custom-sage hover:bg-custom-sage-dark text-custom-cream border-none" %>
   </div>
 <% end %> 
