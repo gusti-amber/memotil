@@ -42,10 +42,10 @@
             </button>
 
             <!-- 🎓tabindex="0"により、ラベルをクリックしても画面が閉じなくなる。-->
-            <ul tabindex="0" class="dropdown-content menu bg-custom-cream rounded-box z-[1] p-2 shadow w-full max-h-60 overflow-y-auto border border-custom-sage/20">
+            <ul tabindex="0" class="dropdown-content bg-custom-cream rounded-box z-[1] p-2 shadow w-full max-h-60 overflow-y-auto border border-custom-sage/20">
               <% Tag.all.each do |tag| %>
-                <li>
-                  <label class="flex items-center gap-2 text-custom-brown hover:bg-custom-beige hover:text-custom-brown">
+                <li class="rounded p-1">
+                  <label class="flex items-center gap-2 text-custom-brown hover:bg-custom-beige hover:text-custom-brown rounded cursor-pointer p-1 transition-colors duration-200">
                     <input type="checkbox" 
                             name="task[tag_ids][]" 
                             value="<%= tag.id %>"
