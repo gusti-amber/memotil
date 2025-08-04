@@ -1,35 +1,43 @@
-<div class="flex flex-col h-full gap-10 mx-20 my-10">
-  <p class="text-2xl font-bold">タスク</p>
+<div class="flex flex-col h-full gap-10 mx-20 my-10 bg-custom-cream min-h-screen">
+  <p class="text-4xl font-bold text-custom-brown text-center">タスク</p>
   <div class="flex justify-end gap-4">
-    <%= link_to "作成", new_task_path, class: "btn btn-primary" %>
+    <%= link_to new_task_path, class: "btn btn-outline bg-custom-cream border-custom-brown text-custom-brown hover:bg-custom-brown hover:text-custom-cream" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+        <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+      </svg>
+      作成
+    <% end %>
   </div>
   
   <% if @tasks.any? %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <% @tasks.each do |task| %>
-        <%= link_to task_path(task), class: "card card-side bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300" do %>
-          <%= image_tag "logo.png", size: "100x100", class: "object-cover" %>
-          <div class="card-body">
-            <p class="card-title text-lg"><%= task.title %></p>
+        <%= link_to task_path(task), class: "card bg-custom-beige shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-custom-sage/20 h-48" do %>
+          <div class="card-body flex flex-col h-full p-6">
+            <div class="flex-1">
+              <p class="card-title text-lg text-custom-brown line-clamp-2 mb-2"><%= task.title %></p>
+              
+              <% if task.tags.any? %>
+                <div class="flex flex-wrap gap-2">
+                  <% task.tags.each do |tag| %>
+                    <span class="badge bg-custom-sage text-custom-cream border-none"><%= tag.name %></span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
             
-            <% if task.tags.any? %>
-              <div class="flex flex-wrap gap-2 mb-4">
-                <% task.tags.each do |tag| %>
-                  <span class="badge badge-primary"><%= tag.name %></span>
-                <% end %>
-              </div>
-            <% end %>
-            
-            <p class="text-sm text-gray-500 text-right">
-              作成日: <%= task.created_at.strftime("%Y年%m月%d日 %H:%M") %>
-            </p>
+            <div class="mt-auto">
+              <p class="text-sm text-custom-brown/70 text-right">
+                作成日: <%= task.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+              </p>
+            </div>
           </div>
         <% end %>
       <% end %>
     </div>
   <% else %>
     <div class="text-center py-10">
-      <p class="text-gray-500">タスクがありません</p>
+      <p class="text-custom-brown/60">タスクがありません</p>
     </div>
   <% end %>
 </div>
