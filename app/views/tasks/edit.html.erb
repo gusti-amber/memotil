@@ -1,15 +1,15 @@
-<div class="flex flex-col items-center my-10">
-  <div class="card bg-base-100 shadow-xl max-w-2xl w-full">
+<div class="flex flex-col items-center my-10 bg-custom-cream min-h-screen">
+  <div class="card bg-custom-beige shadow-xl max-w-2xl w-full border border-custom-brown/20">
     <div class="card-body">      
       <%= form_with model: @task, local: true, html: { class: "flex flex-col gap-6" } do |f| %>
         <!-- タイトル入力フィールド -->
         <div class="form-control">
-          <%= f.label :title, class: "label" %>
+          <%= f.label :title, class: "label text-custom-brown font-medium" %>
           <div class="join w-full">
-            <%= f.text_field :title, class: "input input-bordered join-item flex-1" %>
+            <%= f.text_field :title, class: "input input-bordered join-item flex-1 bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none" %>
             <!-- ♻️onclickイベントは改善の余地あり。今後Stimulusコントローラーで実装予定 -->
             <button type="button" 
-                    class="btn btn-square join-item"
+                    class="btn btn-square join-item bg-custom-brown hover:bg-custom-brown-light text-custom-cream border-none"
                     onclick="document.getElementById('task_title').value = ''">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                 <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
@@ -20,7 +20,7 @@
 
         <!-- タグ選択セクション -->
         <div class="form-control">
-          <%= f.label :tag_ids, class: "label" %>
+          <%= f.label :tag_ids, class: "label text-custom-brown font-medium" %>
           <!-- タグ選択ドロップダウン -->
           <div class="dropdown">
             <!-- ♻️safariブラウザ含むすべてのブラウザで動作するコード。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus
@@ -32,7 +32,7 @@
             </div>
             -->
             <!-- ⚠️buttonタグを使用した場合、safariブラウザでは動作しない可能性がある。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus-->
-            <button type="button" class="btn btn-outline w-full">
+            <button type="button" class="btn btn-outline w-full bg-custom-cream border-custom-brown text-custom-brown hover:bg-custom-brown hover:text-custom-cream">
               <span>選択</span>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                 <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
@@ -40,15 +40,16 @@
             </button>
 
             <!-- 🎓tabindex="0"により、ラベルをクリックしても画面が閉じなくなる。-->
-            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] p-2 shadow w-full max-h-60 overflow-y-auto">
+            <ul tabindex="0" class="dropdown-content menu bg-custom-cream rounded-box z-[1] p-2 shadow w-full max-h-60 overflow-y-auto border border-custom-sage/20">
               <% Tag.all.each do |tag| %>
                 <li>
-                  <label class="flex items-center gap-2">
+                  <label class="flex items-center gap-2 text-custom-brown hover:bg-custom-beige hover:text-custom-brown">
                     <input type="checkbox" 
                             name="task[tag_ids][]" 
                             value="<%= tag.id %>"
                             <%= 'checked' if @task.tag_ids.include?(tag.id) %>
-                            class="checkbox checkbox-primary">
+                            class="checkbox bg-custom-cream border-custom-brown"
+                            style="--chkbg: #674636; --chkfg: #FFF8E8;">
                     <span><%= tag.name %></span>
                   </label>
                 </li>
@@ -64,8 +65,8 @@
         <div class="form-control">
           <div class="flex items-center justify-between mb-3">
             <!-- ♻️ここはf.labelに変更予定 -->
-            <%= f.label :todos, class: "label" %>
-            <button type="button" class="btn btn-ghost btn-sm" onclick="addTodoField()">
+            <%= f.label :todos, class: "label text-custom-brown font-medium" %>
+            <button type="button" class="btn btn-ghost btn-sm bg-custom-brown hover:bg-custom-brown-light text-custom-cream border-none" onclick="addTodoField()">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                 <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
               </svg>
@@ -79,7 +80,7 @@
               <div class="flex items-center gap-2">                
                 <!-- 削除ボタン -->
                 <button type="button" 
-                        class="btn btn-circle btn-outline btn-error btn-sm"
+                        class="btn btn-circle btn-outline btn-sm bg-custom-cream border-custom-brown text-custom-brown hover:bg-custom-brown hover:text-custom-cream"
                         onclick="removeTodoField(this)">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                     <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
@@ -88,7 +89,7 @@
                 <!-- todo入力フィールド -->
                 <%= todo_form.text_field :body, 
                     placeholder: "やることを入力してください", 
-                    class: "input input-bordered flex-1" %>
+                    class: "input input-bordered flex-1 bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none placeholder:text-custom-brown/50" %>
                 <%= todo_form.hidden_field :id %>
                 <%= todo_form.hidden_field :_destroy, class: "hidden" %>
               </div>
@@ -97,9 +98,9 @@
         </div>
 
         <!-- アクションボタン -->
-        <div class="flex justify-end gap-4 pt-4">
-          <%= link_to "戻る", task_path(@task), class: "btn btn-ghost" %>
-          <%= f.submit "変更", class: "btn btn-primary" %>
+        <div class="flex justify-end gap-4 mt-6">
+          <%= link_to "戻る", task_path(@task), class: "btn btn-outline bg-custom-cream border-custom-brown text-custom-brown hover:bg-custom-brown hover:text-custom-cream" %>
+          <%= f.submit "変更", class: "btn bg-custom-sage hover:bg-custom-sage-dark text-custom-cream border-none" %>
         </div>
       <% end %>
     </div>
@@ -117,7 +118,7 @@ function addTodoField() {
   const newTodoHtml = `
     <div class="flex items-center gap-2">
       <button type="button" 
-              class="btn btn-circle btn-outline btn-error btn-sm"
+              class="btn btn-circle btn-outline btn-sm bg-custom-cream border-custom-brown text-custom-brown hover:bg-custom-brown hover:text-custom-cream"
               onclick="removeTodoField(this)">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
           <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
@@ -127,7 +128,7 @@ function addTodoField() {
       <input type="text" 
               name="task[todos_attributes][${todoCount}][body]" 
               placeholder="やることを入力してください" 
-              class="input input-bordered flex-1">
+              class="input input-bordered flex-1 bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none placeholder:text-custom-brown/50">
       <input type="hidden" name="task[todos_attributes][${todoCount}][id]" value="">
     </div>
   `;
