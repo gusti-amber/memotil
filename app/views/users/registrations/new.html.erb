@@ -8,12 +8,12 @@
 
         <div class="field w-full">
           <%= f.label :name, class: "text-custom-brown font-medium" %><br />
-          <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "name", class: "input input-bordered w-full bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none" %>
+          <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "name", class: "input input-bordered w-full bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none placeholder:text-custom-brown/50" %>
         </div>
 
         <div class="field w-full">
           <%= f.label :email, class: "text-custom-brown font-medium" %><br />
-          <%= f.email_field :email, autocomplete: "email", placeholder: "id@gmail.com", class: "input input-bordered w-full bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none" %>
+          <%= f.email_field :email, autocomplete: "email", placeholder: "id@gmail.com", class: "input input-bordered w-full bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none placeholder:text-custom-brown/50" %>
         </div>
 
         <div class="field w-full">
@@ -21,12 +21,12 @@
           <% if @minimum_password_length %>
             <p class="text-sm text-custom-brown/60"><%= @minimum_password_length %> characters minimum</p>
           <% end %>
-          <%= f.password_field :password, autocomplete: "new-password", placeholder: "password", class: "input input-bordered w-full bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none" %>
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: "password", class: "input input-bordered w-full bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none placeholder:text-custom-brown/50" %>
         </div>
 
         <div class="field w-full">
           <%= f.label :password_confirmation, class: "text-custom-brown font-medium" %><br />
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "password(confirmation)", class: "input input-bordered w-full bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "password(confirmation)", class: "input input-bordered w-full bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none placeholder:text-custom-brown/50" %>
         </div>
 
         <div class="actions flex justify-center w-full">
