@@ -1,15 +1,15 @@
-<div class="bg-white rounded-lg shadow-lg p-6 relative m-10">
+<div class="bg-custom-beige rounded-lg shadow-lg p-6 relative m-10 border border-custom-brown/20">
   <!-- 🐛 タスク項目カードの内容をパーシャルに移したが、二重でtodoリストが表示されるバグが発生しており、hotwireのturbo_frameが影響を及ぼしている可能性が高い -->
   <%#= render "tasks/task_content" %>
   <!-- タイトル -->
   <div class="flex flex-col gap-4">
-    <div class="flex justify-between">
-      <p class="text-2xl font-bold mb-6">
+    <div class="flex justify-between gap-12">
+      <p class="text-2xl font-bold mb-6 text-custom-brown">
         <%= @task.title %>
       </p>
 
       <!-- 編集ボタン -->
-      <%= link_to edit_task_path(@task), class: "btn btn-primary" do %>
+      <%= link_to edit_task_path(@task), class: "btn bg-custom-sage hover:bg-custom-sage-dark text-custom-cream border-none" do %>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
         </svg>
@@ -21,7 +21,7 @@
     <% if @task.tags.any? %>
       <div class="flex flex-wrap gap-2 mb-8">
         <% @task.tags.each do |tag| %>
-          <span class="badge badge-primary">#<%= tag.name %></span>
+          <span class="badge bg-custom-sage text-custom-cream border-none">#<%= tag.name %></span>
         <% end %>
       </div>
     <% end %>
@@ -49,20 +49,20 @@
       <%= render partial: "posts/post", collection: @posts %>
     </div>
   <% else %>
-    <div class="text-center py-8 text-gray-500">
+    <div class="text-center py-8 text-custom-brown/60">
       <p>まだ投稿はありません</p>
     </div>
   <% end %>
 </div>
 
 <!-- 投稿フォーム -->
-<div class="bg-white rounded-lg shadow-lg p-6 m-10">
+<div class="bg-custom-beige rounded-lg shadow-lg p-6 m-10 border border-custom-brown/20">
   <%= render 'posts/form', task: @task, post: @post %>
 </div>
 
 <!-- 戻るボタン -->
 <div class="my-6 text-center">
-  <%= link_to tasks_path, class: "btn btn-primary" do %>
+  <%= link_to tasks_path, class: "btn bg-custom-sage hover:bg-custom-sage-dark text-custom-cream border-none" do %>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
     </svg>
