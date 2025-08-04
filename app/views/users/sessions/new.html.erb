@@ -22,18 +22,20 @@
       <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-5 w-full" }) do |f| %>
         <div class="field w-full">
           <%= f.label :email, class: "text-custom-brown font-medium" %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "id@gmail.com", class: "input input-bordered w-full bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "id@gmail.com", class: "input input-bordered w-full bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none placeholder:text-custom-brown/50" %>
         </div>
 
         <div class="field w-full">
           <%= f.label :password, class: "text-custom-brown font-medium" %><br />
-          <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class: "input input-bordered w-full bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none" %>
+          <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class: "input input-bordered w-full bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none placeholder:text-custom-brown/50" %>
         </div>
 
         <% if devise_mapping.rememberable? %>
-          <div class="field w-full">
-            <%= f.check_box :remember_me, class: "checkbox bg-custom-cream border-custom-brown" %>
-            <%= f.label :remember_me, class: "text-custom-brown ml-2" %>
+          <div class="form-control w-full">
+            <label class="label cursor-pointer">
+              <%= f.check_box :remember_me, class: "checkbox bg-custom-cream border-custom-brown", style: "--chkbg: #674636; --chkfg: #FFF8E8;" %>
+              <span class="label-text text-custom-brown">ログイン状態を保持</span>
+            </label>
           </div>
         <% end %>
 
