@@ -20,7 +20,7 @@ class Task < ApplicationRecord
 
   def tags_must_be_five_or_less
     if tag_ids.present? && tag_ids.length > 5
-      errors.add(:tag_ids, "は最大5個まで選択できます")
+      errors.add(:tag_ids, :too_many)
     end
   end
 end
