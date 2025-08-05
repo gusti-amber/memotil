@@ -27,3 +27,6 @@ ja:
       blank: "を入力してください"
       too_short: "は%{count}文字以上で入力してください"
       too_long: "は%{count}文字以下で入力してください"
+    attributes:
+      tag_ids:
+        too_many: "は最大5個まで選択できます"
