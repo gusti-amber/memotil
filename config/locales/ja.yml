@@ -12,3 +12,17 @@ ja:
         title: "タイトル"
         tag_ids: "タグ"
         todos: "やることリスト"
+
+  # エラーメッセージの和訳
+  errors:
+    messages:
+      blank: "を入力してください"
+      too_short: "は%{count}文字以上で入力してください"
+      too_long: "は%{count}文字以下で入力してください"
+    attributes:
+      title:
+        blank: "タイトルを入力してください"
+        too_short: "タイトルは%{count}文字以上で入力してください"
+        too_long: "タイトルは%{count}文字以下で入力してください"
+      status:
+        blank: "ステータスを選択してください"
