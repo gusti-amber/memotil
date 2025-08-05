@@ -1,7 +1,8 @@
 <div class="flex flex-col items-center my-10 bg-custom-cream min-h-screen">
   <div class="card bg-custom-beige shadow-xl max-w-2xl w-full border border-custom-brown/20">
     <div class="card-body">      
-      <h2 class="text-3xl font-bold text-custom-brown text-center mb-6">新しいタスク</h2>
+      <!-- エラーメッセージ表示エリア -->
+      <%= render 'shared/error_messages', object: @task %>
       
       <%= form_with model: @task, local: true, html: { class: "flex flex-col gap-6" } do |f| %>
         <!-- タイトル入力フィールド -->
