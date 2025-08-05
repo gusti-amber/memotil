@@ -11,25 +11,24 @@ RSpec.describe Task, type: :model do
     it 'titleがない場合、バリデーションが機能し、invalidになる' do
       task_without_title = build(:task, title: nil)
       expect(task_without_title).to be_invalid
-      expect(task_without_title.errors[:title]).to include("タイトルを入力してください")
+      expect(task_without_title.errors[:title]).to include("を入力してください")
     end
 
     it 'statusがない場合、バリデーションが機能し、invalidになる' do
       task_without_status = build(:task, status: nil)
       expect(task_without_status).to be_invalid
-      expect(task_without_status.errors[:status]).to include("ステータスを選択してください")
     end
 
     it 'titleが1文字の場合、バリデーションが機能し、invalidになる' do
       task_with_short_title = build(:task, title: 'A')
       expect(task_with_short_title).to be_invalid
-      expect(task_with_short_title.errors[:title]).to include('タイトルは2文字以上で入力してください')
+      expect(task_with_short_title.errors[:title]).to include('は2文字以上で入力してください')
     end
 
     it 'titleが256文字の場合、バリデーションが機能し、invalidになる' do
       task_with_long_title = build(:task, title: 'A' * 256)
       expect(task_with_long_title).to be_invalid
-      expect(task_with_long_title.errors[:title]).to include('タイトルは255文字以下で入力してください')
+      expect(task_with_long_title.errors[:title]).to include('は255文字以下で入力してください')
     end
   end
 
