@@ -1,14 +1,16 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user!
+
   def index
-    @tasks = current_or_guest_user.tasks.includes(:tags).order(created_at: :desc)
+    @tasks = current_user.tasks.includes(:tags).order(created_at: :desc)
   end
 
   def new
-    @task = current_or_guest_user.tasks.build
+    @task = current_user.tasks.build
   end
 
   def create
-    @task = current_or_guest_user.tasks.build(task_params)
+    @task = current_user.tasks.build(task_params)
 
     if @task.save
       redirect_to @task, notice: "タスクが正常に作成されました。"
@@ -18,17 +20,17 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = current_or_guest_user.tasks.includes(:tags, :posts).find(params[:id])
+    @task = current_user.tasks.includes(:tags, :posts).find(params[:id])
     @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
     @post = Post.new
   end
 
   def edit
-    @task = current_or_guest_user.tasks.includes(:tags, :todos).find(params[:id])
+    @task = current_user.tasks.includes(:tags, :todos).find(params[:id])
   end
 
   def update
-    @task = current_or_guest_user.tasks.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
 
     if @task.update(task_params)
       redirect_to @task, notice: "タスクが正常に更新されました。"
@@ -38,7 +40,7 @@ class TasksController < ApplicationController
   end
 
   def toggle_status
-    @task = current_or_guest_user.tasks.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
     new_status = @task.done? ? :doing : :done
 
     if @task.update(status: new_status)

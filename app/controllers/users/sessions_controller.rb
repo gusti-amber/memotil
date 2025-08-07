@@ -21,9 +21,19 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def destroy
+    # ゲストユーザーの場合は適切に削除処理を行う
+    if current_user&.email&.start_with?("guest_")
+      # キャッシュの問題を回避: current_userはWarden戦略によりキャッシュされたオブジェクトの可能性
+      # 解決策: IDを保存 → セッションクリア → データベースから直接削除
+      guest_user_id = current_user.id
+      session[:guest_user_id] = nil
+
+      # データベースから直接取得して削除（キャッシュを無視）
+      User.find_by(id: guest_user_id)&.destroy
+    end
+    super
+  end
 
   # protected
 

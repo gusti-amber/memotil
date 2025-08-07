@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   def create
-    @task = current_or_guest_user.tasks.find(params[:task_id])
-    @post = @task.posts.build(user: current_or_guest_user)
+    @task = current_user.tasks.find(params[:task_id])
+    @post = @task.posts.build(user: current_user)
 
     # TextPostを作成
     text_post = TextPost.new(post_params)

@@ -9,6 +9,6 @@ class TodosController < ApplicationController
   private
 
   def set_todo
-    @todo = current_or_guest_user.tasks.find(params[:task_id]).todos.find(params[:id])
+    @todo = current_user.tasks.find(params[:task_id]).todos.find(params[:id])
   end
 end
