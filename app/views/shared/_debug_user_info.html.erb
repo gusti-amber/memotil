@@ -3,12 +3,13 @@
     <div class="ml-3">
       <h3 class="text-sm font-medium">開発用デバッグ情報</h3>
       <div class="mt-2 text-sm">
-        <p><strong>session[:guest_user_id]:</strong> <%= session[:guest_user_id] %></p>
-        <p><strong>ユーザーID:</strong> <%= current_or_guest_user.id %></p>
-        <p><strong>ユーザー名:</strong> <%= current_or_guest_user.name %></p>
-        <p><strong>メールアドレス:</strong> <%= current_or_guest_user.email %></p>
-        
-        <p><strong>作成日時:</strong> <%= current_or_guest_user.created_at.strftime('%Y-%m-%d %H:%M:%S') %></p>
+        <p><strong>user_signed_in?:</strong> <%= user_signed_in? %></p>
+        <p><strong>session[:guest_user_id]:</strong> <%= session[:guest_user_id].present? ? session[:guest_user_id] : 'なし' %></p>
+
+        <p><strong>ユーザーID(current_user.id):</strong> <%= current_user.present? ? current_user.id : 'なし' %></p>
+        <p><strong>ユーザー名(current_user.name):</strong> <%= current_user.present? ? current_user.name : 'なし' %></p>
+        <p><strong>メールアドレス(current_user.email):</strong> <%= current_user.present? ? current_user.email : 'なし' %></p>
+        <p><strong>作成日時(current_user.created_at):</strong> <%= current_user.present? ? current_user.created_at.strftime('%Y-%m-%d %H:%M:%S') : 'なし' %></p>
       </div>
     </div>
   </div>
