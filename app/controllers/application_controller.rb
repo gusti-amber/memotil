@@ -9,11 +9,18 @@ class ApplicationController < ActionController::Base
   # --------------以下ゲストユーザー関連のコード--------------
   protect_from_forgery
 
+  # deviseの:authenticate_user!は動的に生成されるメソッド
+  # 以下を参照
+  # https://github.com/heartcombo/devise/blob/cf93de390a29654620fdf7ac07b4794eb95171d0/lib/devise/controllers/helpers.rb#L100
+
   def current_or_guest_user
     if current_user
       if session[:guest_user_id] && session[:guest_user_id] != current_user.id
-        logging_in
+        logging_in # データ引き継ぎの機能は今後実装しないかの性が高い
         # reload guest_user to prevent caching problems before destruction
+        # 
+        # キャッシュの問題を回避: @cached_guest_userが古いオブジェクトを参照する可能性
+        # 解決策: with_retry=falseでキャッシュ無視 → reloadで最新状態取得 → 安全に削除
         guest_user(with_retry = false).try(:reload).try(:destroy)
         session[:guest_user_id] = nil
       end
@@ -27,9 +34,13 @@ class ApplicationController < ActionController::Base
   # creating one as needed
   def guest_user(with_retry = true)
     # Cache the value the first time it's gotten.
+    # 
+    # キャッシュ: @cached_guest_userで初回のみDBクエリ、以降はキャッシュを返す
+    # 注意: 削除処理時はwith_retry=falseでキャッシュを無視する必要がある
     @cached_guest_user ||= User.find(session[:guest_user_id] ||= create_guest_user.id)
 
   rescue ActiveRecord::RecordNotFound # if session[:guest_user_id] invalid
+    # セッションのIDが無効な場合: セッションクリア → with_retry=trueの場合のみ再帰呼び出し
     session[:guest_user_id] = nil
     guest_user if with_retry
   end
