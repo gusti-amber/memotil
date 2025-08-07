@@ -1,7 +1,7 @@
 class Task < ApplicationRecord
   belongs_to :user
 
-  has_many :tasktags
+  has_many :tasktags, dependent: :destroy
   has_many :tags, through: :tasktags
   has_many :todos, dependent: :destroy
   has_many :posts, dependent: :destroy
