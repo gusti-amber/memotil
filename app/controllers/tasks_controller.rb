@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @tasks = current_or_guest_user.tasks.includes(:tags).order(created_at: :desc)
   end
