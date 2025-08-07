@@ -13,4 +13,4 @@ Warden::Strategies.add(:guest_user) do
     u = User.where(id: session[:guest_user_id]).first
     success!(u) if u.present?
   end
-end 
+end
