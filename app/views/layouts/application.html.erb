@@ -22,7 +22,7 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body class="bg-custom-cream">
+  <body class="bg-custom-off-white p-2">
     <div class="min-h-screen flex flex-col">
       <%= render 'shared/header' %>
       
@@ -30,7 +30,7 @@
         <%#= render 'shared/debug_user_info' %>
       <% end %>
       
-      <main class="w-full flex-1">
+      <main class="w-full flex-1 pt-2">
         <%= yield %>
       </main>
     </div>

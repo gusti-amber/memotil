@@ -1,5 +1,5 @@
-<div class="flex flex-col items-center my-10 bg-custom-cream min-h-screen">
-  <div class="card bg-custom-beige shadow-xl max-w-2xl w-full border border-custom-brown/20">
+<div class="flex flex-col items-center py-10 bg-custom-white rounded-lg min-h-screen">
+  <div class="card bg-custom-white shadow-xl max-w-2xl w-full border border-custom-light-gray/50">
     <div class="card-body">      
       <!-- エラーメッセージ表示エリア -->
       <%= render 'shared/error_messages', object: @task %>
@@ -7,12 +7,12 @@
       <%= form_with model: @task, local: true, html: { class: "flex flex-col gap-6" } do |f| %>
         <!-- タイトル入力フィールド -->
         <div class="form-control">
-          <%= f.label :title, class: "label text-custom-brown font-medium" %>
+          <%= f.label :title, class: "label text-custom-dark-green font-medium" %>
           <div class="join w-full">
-            <%= f.text_field :title, class: "input input-bordered join-item flex-1 bg-custom-cream border-custom-brown text-custom-brown focus:border-custom-brown-light focus:outline-none" %>
+            <%= f.text_field :title, class: "input input-bordered join-item flex-1 bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none" %>
             <!-- ♻️onclickイベントは改善の余地あり。今後Stimulusコントローラーで実装予定 -->
             <button type="button" 
-                    class="btn btn-square join-item bg-custom-brown hover:bg-custom-brown-light text-custom-cream border-none"
+                    class="btn btn-square join-item bg-custom-dark-green hover:bg-custom-dark-green/80 text-white border-none"
                     onclick="document.getElementById('task_title').value = ''">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                 <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
@@ -23,7 +23,7 @@
 
         <!-- タグ選択セクション -->
         <div class="form-control">
-          <%= f.label :tag_ids, class: "label text-custom-brown font-medium" %>
+          <%= f.label :tag_ids, class: "label text-custom-dark-green font-medium" %>
           <!-- タグ選択ドロップダウン -->
           <div class="dropdown">
             <!-- ♻️safariブラウザ含むすべてのブラウザで動作するコード。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus
@@ -35,7 +35,7 @@
             </div>
             -->
             <!-- ⚠️buttonタグを使用した場合、safariブラウザでは動作しない可能性がある。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus-->
-            <button type="button" class="btn btn-outline w-full bg-custom-cream border-custom-brown text-custom-brown hover:bg-custom-brown hover:text-custom-cream">
+            <button type="button" class="btn btn-outline w-full bg-custom-white border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-white">
               <span>選択</span>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                 <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
@@ -43,15 +43,15 @@
             </button>
 
             <!-- 🎓tabindex="0"により、ラベルをクリックしても画面が閉じなくなる。-->
-            <ul tabindex="0" class="dropdown-content bg-custom-cream rounded-box z-[1] p-2 shadow w-full max-h-60 overflow-y-auto border border-custom-sage/20">
+            <ul tabindex="0" class="dropdown-content bg-custom-white rounded-box z-[1] p-2 shadow w-full max-h-60 overflow-y-auto border border-custom-light-gray/50">
               <% Tag.all.each do |tag| %>
                 <li class="rounded p-1">
-                  <label class="flex items-center gap-2 text-custom-brown hover:bg-custom-beige hover:text-custom-brown rounded cursor-pointer p-1 transition-colors duration-200">
+                  <label class="flex items-center gap-2 text-custom-dark-green hover:bg-custom-light-gray hover:text-custom-dark-green rounded cursor-pointer p-1 transition-colors duration-200">
                     <input type="checkbox" 
                             name="task[tag_ids][]" 
                             value="<%= tag.id %>"
-                            class="checkbox bg-custom-cream border-custom-brown"
-                            style="--chkbg: #674636; --chkfg: #FFF8E8;">
+                            class="checkbox bg-custom-white border-custom-dark-green"
+                            style="--chkbg: #233D31; --chkfg: #FCFCF9;">
                     <span><%= tag.name %></span>
                   </label>
                 </li>
@@ -62,8 +62,8 @@
 
         <!-- ボタンセクション -->
         <div class="flex justify-end gap-4 mt-6">
-          <%= link_to "戻る", tasks_path, class: "btn btn-outline bg-custom-cream border-custom-brown text-custom-brown hover:bg-custom-brown hover:text-custom-cream" %>
-          <%= f.submit "作成", class: "btn bg-custom-sage hover:bg-custom-sage-dark text-custom-cream border-none" %>
+          <%= link_to "戻る", tasks_path, class: "btn btn-outline border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-white bg-transparent" %>
+          <%= f.submit "作成", class: "btn bg-custom-green hover:bg-custom-green/80 text-white border-none" %>
         </div>
       <% end %>
     </div>

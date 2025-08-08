@@ -1,19 +1,22 @@
-<header class="bg-custom-brown">
+<header class="bg-custom-white rounded-lg">
   <div class="flex justify-between items-center p-4 gap-10">
     <%= link_to root_path do %>
-      <%= image_tag "logo.png", class: "flex-none size-16" %>
+      <%= image_tag "logo.png", class: "flex-none size-6" %>
     <% end %>
     <% if !auth_page? %>
       <div class="flex-1 flex justify-start items-center gap-10">
-        <%= link_to "タスクをみる", tasks_path, class: "text-custom-cream hover:text-custom-cream transition-colors" %>
+        <%= link_to "タスクをみる", tasks_path, class: "text-custom-dark-green hover:text-custom-dark-green transition-colors" %>
         <!-- マイリスト画面とさがす画面はまだ実装していないので、クリックしたらアラートが表示されるようにしている。 -->
-        <%= link_to "マイリスト", "#", onclick: "alert('Coming soon!'); return false;", class: "text-custom-cream hover:text-custom-cream transition-colors" %>
-        <%= link_to "さがす", "#", onclick: "alert('Coming soon!'); return false;", class: "text-custom-cream hover:text-custom-cream transition-colors" %>
+        <%= link_to "マイリスト", "#", onclick: "alert('Coming soon!'); return false;", class: "text-custom-dark-green hover:text-custom-dark-green transition-colors" %>
+        <%= link_to "さがす", "#", onclick: "alert('Coming soon!'); return false;", class: "text-custom-dark-green hover:text-custom-dark-green transition-colors" %>
       </div>
       <% if user_signed_in? %>
-        <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "flex-none btn bg-custom-sage border-custom-sage hover:bg-custom-sage-light hover:border-custom-sage-light text-custom-cream" %>
+        <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "flex-none btn btn-sm bg-custom-dark-green border-custom-dark-green hover:bg-custom-dark-green/80 hover:border-custom-dark-green/80 text-sm text-white rounded-full" %>
       <% else %>
-        <%= link_to "ログイン", new_user_session_path, class: "flex-none btn bg-custom-sage border-custom-sage hover:bg-custom-sage-light hover:border-custom-sage-light text-custom-cream" %>
+        <div class="flex-none flex gap-2">
+          <%= link_to "ログイン", new_user_session_path, class: "btn btn-sm bg-custom-dark-green border-custom-dark-green hover:bg-custom-dark-green/80 hover:border-custom-dark-green/80 text-sm text-white rounded-full" %>
+          <%= link_to "サインアップ", new_user_registration_path, class: "btn btn-sm btn-outline bg-custom-white border-custom-dark-green text-sm text-custom-dark-green hover:bg-custom-dark-green hover:text-white rounded-full" %>
+        </div>
       <% end %>
     <% end %>
   </div>
