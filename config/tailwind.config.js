@@ -14,14 +14,12 @@ module.exports = {
       },
       colors: {
         custom: {
-          cream: "#FFF8E8", // 背景、テキスト
-          beige: "#F7EED3", // カード
-          sage: "#AAB396", // 基準色
-          "sage-light": "#C4D1B8", // sageより10%明度が明るい
-          "sage-dark": "#8A9A7A", // sageより10%明度が暗い
-          brown: "#674636", // ヘッダー、フッター
-          "brown-light": "#7A5646", // brownより明度10%明るい
-          "brown-dark": "#543628", // brownより明度10%暗い
+          green: "#148F57", // Green
+          "dark-green": "#233D31", // Dark Green
+          "light-gray": "#E8E8E2", // Light Gray
+          "off-white": "#F3F3ED", // Off White
+          white: "#FCFCF9", // White
+          rust: "#A94B2E", // Rust
         },
       },
     },
