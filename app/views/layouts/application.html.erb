@@ -1,18 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Myapp" %></title>
+    <title><%= content_for(:title) || "めもTIL" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <!-- OGP設定 -->
+    <meta property="og:title" content="<%= content_for(:og_title) || 'めもTIL - メモするだけで、学びが形になる。' %>">
+    <meta property="og:description" content="<%= content_for(:og_description) || 'タスクでの気づきをメモする。メモをTILにまとめて残す。学びを形にする学習支援アプリ。' %>">
+    <meta property="og:type" content="<%= content_for(:og_type) || 'website' %>">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="<%= content_for(:og_image) || asset_url('ogp.png') %>">
+    <meta property="og:site_name" content="めもTIL">
+    <meta property="og:locale" content="ja_JP">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= content_for(:og_title) || 'めもTIL - メモするだけで、学びが形になる。' %>">
+    <meta name="twitter:description" content="<%= content_for(:og_description) || 'タスクでの気づきをメモする。メモをTILにまとめて残す。学びを形にする学習支援アプリ。' %>">
+    <meta name="twitter:image" content="<%= content_for(:og_image) || asset_url('ogp.png') %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <link rel="manifest" href="/manifest.json">
+    <!-- ファビコン設定 -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    
+    <link rel="manifest" href="/manifest.json">
     <!-- daisyUI CDN -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.24/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
