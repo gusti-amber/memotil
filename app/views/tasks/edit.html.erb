@@ -44,6 +44,11 @@
             -->
 
             <!-- 🎓tabindex="0"により、ラベルをクリックしても画面が閉じなくなる。-->
+            <!-- デバッグ情報（本番環境でも表示） -->
+            <div class="p-2 bg-red-100 text-xs text-red-800 border-b">
+              デバッグ: タグ数 <%= Tag.count %>個 | 
+              タグ一覧: <%= Tag.all.map(&:name).join(', ') %>
+            </div>
             <ul tabindex="0" class="dropdown-content bg-custom-white rounded-box z-[1] p-2 shadow w-full max-h-60 overflow-y-auto border border-custom-light-gray/50">
               <% Tag.all.each do |tag| %>
                 <li class="rounded p-1">
