@@ -15,7 +15,14 @@ ja:
 
   # ActiveRecordの属性名翻訳
   activerecord:
+    models:
+      user: "ユーザー"
     attributes:
+      user:
+        name: "名前"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認）"
       task:
         title: "タイトル"
         tag_ids: "タグ"
@@ -24,9 +31,35 @@ ja:
   # エラーメッセージの和訳
   errors:
     messages:
+      not_saved: "%{count}件のエラーにより、%{resource}を保存できませんでした"
       blank: "を入力してください"
       too_short: "は%{count}文字以上で入力してください"
       too_long: "は%{count}文字以下で入力してください"
     attributes:
       tag_ids:
         too_many: "は最大5個まで選択できます"
+
+  # Deviseのエラーメッセージの和訳
+  devise:
+    failure:
+      user:
+        invalid: "メールアドレスまたはパスワードが違います"
+        not_found_in_database: "メールアドレスまたはパスワードが違います"
+        locked: "アカウントがロックされています"
+        unconfirmed: "メールアドレスの本人確認が必要です"
+        unauthenticated: "ログインしてください"
+      invalid: "メールアドレスまたはパスワードが違います"
+      not_found_in_database: "メールアドレスまたはパスワードが違います"
+      locked: "アカウントがロックされています"
+      unconfirmed: "メールアドレスの本人確認が必要です"
+      unauthenticated: "ログインしてください"
+    sessions:
+      user:
+        signed_in: "ログインしました"
+        signed_out: "ログアウトしました"
+        already_signed_out: "ログアウトしました"
+    registrations:
+      user:
+        signed_up: "アカウント登録が完了しました"
+        updated: "アカウント情報を変更しました"
+        destroyed: "アカウントを削除しました"
