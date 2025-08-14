@@ -7,4 +7,5 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   # カスタムバリデーション
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }
+  validates :password, presence: true, length: { minimum: 6 }
 end
