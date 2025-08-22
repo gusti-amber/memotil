@@ -12,7 +12,7 @@
             <%= f.text_field :title, class: "input input-bordered join-item flex-1 bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none" %>
             <!-- ♻️onclickイベントは改善の余地あり。今後Stimulusコントローラーで実装予定 -->
             <button type="button" 
-                    class="btn btn-square join-item bg-custom-dark-green hover:bg-custom-dark-green/80 text-white border-none"
+                    class="btn btn-square join-item bg-custom-dark-green hover:bg-custom-dark-green/80 text-custom-white border-none"
                     onclick="document.getElementById('task_title').value = ''">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                 <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
@@ -35,7 +35,7 @@
             </div>
             
             <!-- ⚠️buttonタグを使用した場合、safariブラウザでは動作しない可能性がある。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus-->
-            <!-- <button type="button" class="btn btn-outline w-full bg-custom-white border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-white">
+            <!-- <button type="button" class="btn btn-outline w-full bg-custom-white border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-white">
               <span>選択</span>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                 <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
@@ -63,8 +63,8 @@
 
         <!-- ボタンセクション -->
         <div class="flex justify-end gap-4 mt-6">
-          <%= link_to "戻る", tasks_path, class: "btn btn-outline border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-white bg-transparent" %>
-          <%= f.submit "作成", class: "btn bg-custom-green hover:bg-custom-green/80 text-white border-none" %>
+          <%= link_to "戻る", tasks_path, class: "btn btn-outline border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-white bg-transparent" %>
+          <%= f.submit "作成", class: "btn bg-custom-green hover:bg-custom-green/80 text-custom-white border-none" %>
         </div>
       <% end %>
     </div>
