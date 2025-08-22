@@ -18,7 +18,7 @@
   <div class="flex justify-end gap-4">
     <%= render "tasks/status_buttons", task: task %>
     <!-- ⚠️ 現在の実装では、投稿ボタンはform_with外に設置している。もし完了ボタンを廃止する場合には、form_with内に投稿ボタンを移動する。 -->
-    <button type="submit" form="post_form_<%= task.id %>" class="btn bg-custom-green hover:bg-custom-green/80 text-white border-none">
+    <button type="submit" form="post_form_<%= task.id %>" class="btn bg-custom-green hover:bg-custom-green/80 text-custom-white border-none">
       投稿
     </button>
   </div>
