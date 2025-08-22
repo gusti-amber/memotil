@@ -17,6 +17,7 @@ ja:
   activerecord:
     models:
       user: "ユーザー"
+      task: "タスク"
     attributes:
       user:
         name: "名前"
@@ -31,7 +32,7 @@ ja:
   # エラーメッセージの和訳
   errors:
     messages:
-      not_saved: "%{count}件のエラーにより、%{resource}を保存できませんでした"
+      not_saved: "%{resource}を保存できませんでした"
       blank: "を入力してください"
       too_short: "は%{count}文字以上で入力してください"
       too_long: "は%{count}文字以下で入力してください"
