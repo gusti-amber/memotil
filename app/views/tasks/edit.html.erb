@@ -66,7 +66,10 @@
         <%#= render partial: "tag_search_form", locals: { f: f, task: @task } %>
 
         <!-- やることリストセクション -->
-        <div class="form-control" data-controller="todo-form" data-todo-form-max-count-value="3">
+        <div class="form-control" 
+             data-controller="todo-form" 
+             data-todo-form-max-count-value="3"
+             data-todo-form-disabled-class="opacity-50 cursor-not-allowed">
           <div class="flex items-center justify-between mb-3">
             <!-- ♻️ここはf.labelに変更予定 -->
             <%= f.label :todos, class: "label text-custom-dark-green font-medium" %>
@@ -84,24 +87,30 @@
           <!-- Todoリストの表示・編集フォーム -->
           <div id="todos-container" data-todo-form-target="container" class="space-y-2">
             <%= f.fields_for :todos do |todo_form| %>
-              <div class="flex items-center gap-2">                
-                <!-- 削除ボタン -->
-                <button type="button" 
-                        data-action="click->todo-form#remove"
-                        class="btn btn-circle btn-outline btn-sm border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-white bg-transparent">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                    <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
-                  </svg>
-                </button>
-                <!-- todo入力フィールド -->
-                <%= todo_form.text_field :body, 
-                    placeholder: "やることを入力してください", 
-                    class: "input input-bordered flex-1 bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
-                <%= todo_form.hidden_field :id %>
-                <%= todo_form.hidden_field :_destroy, class: "hidden" %>
-              </div>
+              <%= render "todo_field", todo_form: todo_form %>
             <% end %>
           </div>
+
+          <!-- 新規ToDoフィールド用テンプレート（非表示） -->
+          <template data-todo-form-target="template">
+            <div class="flex items-center gap-2" data-todo-form-target="todoField">                
+              <!-- 削除ボタン -->
+              <button type="button" 
+                      data-action="click->todo-form#remove"
+                      class="btn btn-circle btn-outline btn-sm border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-white bg-transparent">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                  <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+                </svg>
+              </button>
+              <!-- todo入力フィールド -->
+              <input type="hidden" name="task[todos_attributes][INDEX][_destroy]" value="0" class="hidden">
+              <input type="text" 
+                      name="task[todos_attributes][INDEX][body]" 
+                      placeholder="やることを入力してください" 
+                      class="input input-bordered flex-1 bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50">
+              <input type="hidden" name="task[todos_attributes][INDEX][id]" value="">
+            </div>
+          </template>
         </div>
 
         <!-- アクションボタン -->
