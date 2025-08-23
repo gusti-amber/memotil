@@ -39,6 +39,8 @@ ja:
     attributes:
       tag_ids:
         too_many: "は最大5個まで選択できます"
+      todos:
+        too_many: "は最大3個まで作成できます"
 
   # Deviseのエラーメッセージの和訳
   devise:
