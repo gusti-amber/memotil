@@ -65,12 +65,15 @@
         <!-- ♻️タグ検索セクション 将来的に以下の実装で行いたいが、jsがまだ理解不足なので置いておく-->
         <%#= render partial: "tag_search_form", locals: { f: f, task: @task } %>
 
-        <!-- やることリストセクション（プレースホルダー） -->
-        <div class="form-control">
+        <!-- やることリストセクション -->
+        <div class="form-control" data-controller="todo-form" data-todo-form-max-count-value="3">
           <div class="flex items-center justify-between mb-3">
             <!-- ♻️ここはf.labelに変更予定 -->
             <%= f.label :todos, class: "label text-custom-dark-green font-medium" %>
-            <button type="button" id="add-todo-btn" class="btn btn-ghost btn-sm bg-custom-dark-green hover:bg-custom-dark-green/80 text-custom-white border-none" onclick="addTodoField()">
+            <button type="button" 
+                    data-todo-form-target="addButton"
+                    data-action="click->todo-form#add"
+                    class="btn btn-ghost btn-sm bg-custom-dark-green hover:bg-custom-dark-green/80 text-custom-white border-none">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                 <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
               </svg>
@@ -79,13 +82,13 @@
           </div>
 
           <!-- Todoリストの表示・編集フォーム -->
-          <div id="todos-container" class="space-y-2">
+          <div id="todos-container" data-todo-form-target="container" class="space-y-2">
             <%= f.fields_for :todos do |todo_form| %>
               <div class="flex items-center gap-2">                
                 <!-- 削除ボタン -->
                 <button type="button" 
-                        class="btn btn-circle btn-outline btn-sm border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-white bg-transparent"
-                        onclick="removeTodoField(this)">
+                        data-action="click->todo-form#remove"
+                        class="btn btn-circle btn-outline btn-sm border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-white bg-transparent">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                     <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
                   </svg>
@@ -110,99 +113,3 @@
     </div>
   </div>
 </div>
-
-<!-- ♻️ jsは今後すべてStimulusコントローラーに移す予定 -->
-<script>
-// ToDoの数を監視して追加ボタンの有効/無効を制御
-function updateAddButtonState() {
-  const container = document.getElementById('todos-container');
-  const addButton = document.getElementById('add-todo-btn');
-  
-  // 表示されているToDoの数をカウント（削除マークされたものは除外）
-  const visibleTodos = Array.from(container.children).filter(todoDiv => {
-    const destroyField = todoDiv.querySelector('input[type="hidden"][name$="[_destroy]"]');
-    const isDestroyed = destroyField && destroyField.value === '1';
-    const isHidden = todoDiv.style.display === 'none';
-    
-    // 削除マークされていない、かつ非表示でないToDoのみをカウント
-    return !isDestroyed && !isHidden;
-  });
-  
-  const todoCount = visibleTodos.length;
-  
-  if (todoCount >= 3) {
-    // 3個以上の場合、ボタンを無効化
-    addButton.disabled = true;
-    addButton.classList.add('opacity-50', 'cursor-not-allowed');
-    addButton.classList.remove('hover:bg-custom-dark-green/80');
-  } else {
-    // 3個未満の場合、ボタンを有効化
-    addButton.disabled = false;
-    addButton.classList.remove('opacity-50', 'cursor-not-allowed');
-    addButton.classList.add('hover:bg-custom-dark-green/80');
-  }
-}
-
-function addTodoField() {
-  const container = document.getElementById('todos-container');
-  const todoCount = container.children.length; // 🎓 todoの数、つまり新しいtodoのindexを取得
-  
-  // ♻️ この箇所は今後formオブジェクトを使った書き方に変更予定(CSRF対策、エラーハンドリングなどが欲しいため)
-  // 方法としては、<template>タグ内でf.fields_forを使う。
-  const newTodoHtml = `
-    <div class="flex items-center gap-2">
-      <button type="button" 
-              class="btn btn-circle btn-outline btn-sm border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-white bg-transparent"
-              onclick="removeTodoField(this)">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-          <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
-        </svg>
-      </button>
-      <input type="hidden" name="task[todos_attributes][${todoCount}][_destroy]" value="0" class="hidden">
-      <input type="text" 
-              name="task[todos_attributes][${todoCount}][body]" 
-              placeholder="やることを入力してください" 
-              class="input input-bordered flex-1 bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50">
-      <input type="hidden" name="task[todos_attributes][${todoCount}][id]" value="">
-    </div>
-  `;
-  container.insertAdjacentHTML('beforeend', newTodoHtml); // 🎓 'beforeend'により、</div>の直前に新しいtodoを追加する。
-  
-  // ToDo追加後にボタンの状態を更新
-  updateAddButtonState();
-}
-
-function removeTodoField(button) {
-  const todoForm = button.closest('.flex');
-  const todoId = todoForm.querySelector('input[type="hidden"][name$="[id]"]').value;
-  const todoDestroyField = todoForm.querySelector('input[type="hidden"][name$="[_destroy]"]');
-
-  if (confirm('このtodoを削除しますか？')) {
-    if (todoId) {
-      // 既存のtodoの場合、_destroyフィールドを設定して削除マーク
-      todoDestroyField.value = '1';
-      todoForm.style.display = 'none'; // 🎓 Railsで削除対象を特定するためにDOM要素を残す必要がある。
-    } else {
-      // 新規追加のtodoの場合、直接削除
-      todoForm.remove(); // DOM要素ごと削除
-    }
-    
-    // ToDo削除後にボタンの状態を更新
-    updateAddButtonState();
-  }
-}
-
-// 初期化関数
-function initializeTodoButton() {
-  updateAddButtonState();
-}
-
-// ページ読み込み時の初期化
-document.addEventListener('DOMContentLoaded', initializeTodoButton);
-window.addEventListener('load', initializeTodoButton);
-
-// 即座に実行を試行（DOMが既に読み込まれている場合）
-if (document.readyState !== 'loading') {
-  initializeTodoButton();
-}
-</script>
