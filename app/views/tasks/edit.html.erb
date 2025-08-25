@@ -5,7 +5,7 @@
       <%= render 'shared/error_messages', object: @task %>
 
       <%= form_with model: @task, local: true, html: { class: "flex flex-col gap-6" } do |f| %>
-        <!-- タイトル入力フィールド -->
+        <!-- タイトルフォーム -->
         <div class="form-control">
           <%= f.label :title, class: "label text-custom-dark-green font-medium" %>
           <div class="join w-full">
