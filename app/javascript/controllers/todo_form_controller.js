@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ["container", "addButton", "template", "todoField"];
   static values = {
     maxCount: { type: Number, default: 3 },
-    confirmMessage: { type: String, default: "このtodoを削除しますか？" },
+    confirmMessage: { type: String, default: "この項目を削除しますか？" },
   };
 
   connect() {
