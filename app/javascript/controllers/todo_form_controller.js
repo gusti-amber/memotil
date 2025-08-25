@@ -61,6 +61,7 @@ export default class extends Controller {
 
   createNewTodo() {
     const template = this.templateTarget.content.cloneNode(true);
+    // ここで取得するtodoの数は非表示のtodoも含む
     const todoCount = this.containerTarget.children.length;
 
     // インデックスを置換
