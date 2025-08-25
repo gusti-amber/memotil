@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center py-10 bg-custom-white rounded-lg min-h-screen">
   <div class="card bg-custom-white shadow-xl max-w-2xl w-full border border-custom-light-gray/50">
     <div class="card-body">      
-      <!-- エラーメッセージ表示エリア -->
+      <!-- エラーメッセージ -->
       <%= render 'shared/error_messages', object: @task %>
 
       <%= form_with model: @task, local: true, html: { class: "flex flex-col gap-6" } do |f| %>
