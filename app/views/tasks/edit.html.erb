@@ -81,7 +81,7 @@
             </button>
           </div>
 
-          <!-- Todoリストの表示・編集フォーム -->
+          <!-- ToDoフィールド -->
           <div id="todos-container" data-todo-form-target="container" class="space-y-2">
             <%= f.fields_for :todos do |todo_form| %>
               <%= render "todo_field", todo_form: todo_form %>
