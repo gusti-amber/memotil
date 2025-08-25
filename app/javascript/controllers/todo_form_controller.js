@@ -2,63 +2,71 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["container", "addButton", "template", "todoField"];
-  static values = { maxCount: { type: Number, default: 3 } };
+  static values = {
+    maxCount: { type: Number, default: 3 },
+    confirmMessage: { type: String, default: "このtodoを削除しますか？" },
+  };
 
   connect() {
     this.updateButtonState();
   }
 
   add() {
-    if (this.todoCount >= this.maxCountValue) return;
-
-    const newTodoElement = this.createNewTodoFromTemplate();
-    this.containerTarget.appendChild(newTodoElement);
-    this.updateButtonState();
+    if (this.canAdd) {
+      this.containerTarget.appendChild(this.createNewTodo());
+      this.updateButtonState();
+    }
   }
 
   remove(event) {
     const todoField = event.target.closest(
       "[data-todo-form-target='todoField']"
     );
-    const destroyField = todoField.querySelector('input[name*="[_destroy]"]');
-    const todoId = todoField.querySelector('input[name*="[id]"]').value;
 
-    if (confirm("このtodoを削除しますか？")) {
-      if (todoId) {
-        // 既存のtodoの場合、削除マーク
-        destroyField.value = "1";
-        todoField.style.display = "none";
-      } else {
-        // 新規追加のtodoの場合、直接削除
-        todoField.remove();
-      }
+    if (confirm(this.confirmMessageValue)) {
+      this.removeTodo(todoField);
       this.updateButtonState();
     }
   }
 
   updateButtonState() {
-    const isDisabled = this.todoCount >= this.maxCountValue;
-
+    const isDisabled = !this.canAdd;
     this.addButtonTarget.disabled = isDisabled;
-    if (isDisabled) {
-      this.addButtonTarget.classList.add("btn-disabled");
-    } else {
-      this.addButtonTarget.classList.remove("btn-disabled");
-    }
+    this.addButtonTarget.classList.toggle("btn-disabled", isDisabled);
+  }
+
+  get canAdd() {
+    return this.todoCount < this.maxCountValue;
   }
 
   get todoCount() {
-    return this.todoFieldTargets.filter((todo) => {
-      const destroyField = todo.querySelector('input[name*="[_destroy]"]');
-      const isDestroyed = destroyField && destroyField.value === "1";
-      const isHidden = todo.style.display === "none";
-      return !isDestroyed && !isHidden;
-    }).length;
+    return this.todoFieldTargets.filter((todo) => this.isValidTodo(todo))
+      .length;
   }
 
-  createNewTodoFromTemplate() {
-    const todoCount = this.containerTarget.children.length;
+  isValidTodo(todo) {
+    const destroyField = todo.querySelector('input[name*="[_destroy]"]');
+    const isDestroyed = destroyField?.value === "1";
+    const isHidden = todo.style.display === "none";
+    return !isDestroyed && !isHidden;
+  }
+
+  removeTodo(todoField) {
+    const todoId = todoField.querySelector('input[name*="[id]"]')?.value;
+
+    if (todoId) {
+      // 既存のtodo: 削除マークを設定して非表示
+      todoField.querySelector('input[name*="[_destroy]"]').value = "1";
+      todoField.style.display = "none";
+    } else {
+      // 新規todo: 直接削除
+      todoField.remove();
+    }
+  }
+
+  createNewTodo() {
     const template = this.templateTarget.content.cloneNode(true);
+    const todoCount = this.containerTarget.children.length;
 
     // インデックスを置換
     template.querySelectorAll('input[name*="INDEX"]').forEach((input) => {
