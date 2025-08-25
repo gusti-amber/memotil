@@ -3,7 +3,6 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = ["container", "addButton", "template", "todoField"];
   static values = { maxCount: { type: Number, default: 3 } };
-  static classes = ["disabled"];
 
   connect() {
     this.updateButtonState();
