@@ -19,6 +19,7 @@ export default class extends Controller {
   }
 
   remove(event) {
+    // クリックされた削除ボタンを子要素に持つtodoFieldを取得
     const todoField = event.target.closest(
       "[data-todo-form-target='todoField']"
     );
