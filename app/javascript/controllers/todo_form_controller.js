@@ -52,6 +52,7 @@ export default class extends Controller {
   }
 
   removeTodo(todoField) {
+    // input要素のname属性に[id]が含まれている場合のみ、todoField要素のidを取得
     const todoId = todoField.querySelector('input[name*="[id]"]')?.value;
 
     if (todoId) {
