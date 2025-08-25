@@ -42,9 +42,9 @@ export default class extends Controller {
 
     this.addButtonTarget.disabled = isDisabled;
     if (isDisabled) {
-      this.addButtonTarget.classList.add(this.disabledClass);
+      this.addButtonTarget.classList.add("btn-disabled");
     } else {
-      this.addButtonTarget.classList.remove(this.disabledClass);
+      this.addButtonTarget.classList.remove("btn-disabled");
     }
   }
 
