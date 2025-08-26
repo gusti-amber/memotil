@@ -11,7 +11,7 @@ ja:
       task:
         title: "タイトル"
         tag_ids: "タグ"
-        todos: "やることリスト"
+        todos: "ToDoリスト"
 
   # ActiveRecordの属性名翻訳
   activerecord:
