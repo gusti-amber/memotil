@@ -13,13 +13,13 @@ RSpec.describe User, type: :model do
 
         it 'nameが空の場合は無効' do
           user.name = ''
-          expect(user).not_to be_valid
+          expect(user).not_to be_valid, 'nameが空の場合は無効である必要があります'
           expect(user.errors[:name]).to include('を入力してください')
         end
 
         it 'nameがnilの場合は無効' do
           user.name = nil
-          expect(user).not_to be_valid
+          expect(user).not_to be_valid, 'nameがnilの場合は無効である必要があります'
           expect(user.errors[:name]).to include('を入力してください')
         end
       end
@@ -32,13 +32,13 @@ RSpec.describe User, type: :model do
 
         it '1文字の場合は無効' do
           user.name = 'A'
-          expect(user).not_to be_valid
+          expect(user).not_to be_valid, 'nameが1文字の場合は無効である必要があります'
           expect(user.errors[:name]).to include('は2文字以上で入力してください')
         end
 
         it '21文字以上の場合は無効' do
           user.name = 'A' * 21
-          expect(user).not_to be_valid
+          expect(user).not_to be_valid, 'nameが21文字以上の場合は無効である必要があります'
           expect(user.errors[:name]).to include('は20文字以下で入力してください')
         end
       end
@@ -55,14 +55,14 @@ RSpec.describe User, type: :model do
         it '7文字以下の場合は無効' do
           user.password = '1234567'
           user.password_confirmation = '1234567'
-          expect(user).not_to be_valid
+          expect(user).not_to be_valid, 'passwordが7文字以下の場合は無効である必要があります'
           expect(user.errors[:password]).to include('は8文字以上で入力してください')
         end
 
         it '129文字以上の場合は無効' do
           user.password = 'a' * 129
           user.password_confirmation = 'a' * 129
-          expect(user).not_to be_valid
+          expect(user).not_to be_valid, 'passwordが129文字以上の場合は無効である必要があります'
           expect(user.errors[:password]).to include('は128文字以下で入力してください')
         end
       end
@@ -72,13 +72,13 @@ RSpec.describe User, type: :model do
       context '存在性' do
         it 'emailが空の場合は無効' do
           user.email = ''
-          expect(user).not_to be_valid
+          expect(user).not_to be_valid, 'emailが空の場合は無効である必要があります'
           expect(user.errors[:email]).to include('を入力してください')
         end
 
         it 'emailがnilの場合は無効' do
           user.email = nil
-          expect(user).not_to be_valid
+          expect(user).not_to be_valid, 'emailがnilの場合は無効である必要があります'
           expect(user.errors[:email]).to include('を入力してください')
         end
       end
@@ -131,7 +131,7 @@ RSpec.describe User, type: :model do
 
         it '同じemailでユーザーを作成できない' do
           new_user = build(:user, email: 'test@example.com')
-          expect(new_user).not_to be_valid
+          expect(new_user).not_to be_valid, '同じemailでユーザーを作成できない必要があります'
           expect(new_user.errors[:email]).to include('はすでに存在しています')
         end
       end
