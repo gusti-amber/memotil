@@ -1,7 +1,7 @@
 class Todo < ApplicationRecord
   belongs_to :task
 
-  validates :body, presence: true, length: { maximum: 200 }
+  validates :body, presence: true, length: { maximum: 255 }
 
   def done?
     done
