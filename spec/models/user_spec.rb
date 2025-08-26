@@ -84,5 +84,21 @@ RSpec.describe User, type: :model do
         expect(Task.where(id: task_ids)).to be_empty
       end
     end
+
+    describe 'has_many :posts' do
+      let(:user) { create(:user) }
+      let(:post_count) { 2 }
+      let!(:posts) { create_list(:post, post_count, user: user) }
+
+      it 'userが削除されると、関連するpostsも削除される' do
+        expect { user.destroy }.to change(Post, :count).by(-post_count)
+      end
+
+      it 'userが削除されると、関連するpostsが存在しなくなる' do
+        post_ids = posts.map(&:id)
+        user.destroy
+        expect(Post.where(id: post_ids)).to be_empty
+      end
+    end
   end
 end
