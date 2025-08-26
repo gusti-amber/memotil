@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'バリデーション' do
     let(:user) { build(:user) }
+
     describe 'name' do
       context '存在性' do
         it 'nameが存在する場合は有効' do
@@ -74,14 +75,12 @@ RSpec.describe User, type: :model do
       let(:task_count) { 3 }
       let!(:tasks) { create_list(:task, task_count, user: user) }
 
-      it 'userが削除されると、関連するtasksも削除される' do
-        expect { user.destroy }.to change(Task, :count).by(-task_count)
+      it 'tasksにアクセスできる' do
+        expect(user.tasks).to match_array(tasks)
       end
 
-      it 'userが削除されると、関連するtasksが存在しなくなる' do
-        task_ids = tasks.map(&:id)
-        user.destroy
-        expect(Task.where(id: task_ids)).to be_empty
+      it 'userが削除されると、関連するtasksも削除される' do
+        expect { user.destroy }.to change(Task, :count).by(-task_count)
       end
     end
 
@@ -90,14 +89,12 @@ RSpec.describe User, type: :model do
       let(:post_count) { 2 }
       let!(:posts) { create_list(:post, post_count, user: user) }
 
-      it 'userが削除されると、関連するpostsも削除される' do
-        expect { user.destroy }.to change(Post, :count).by(-post_count)
+      it 'postsにアクセスできる' do
+        expect(user.posts).to match_array(posts)
       end
 
-      it 'userが削除されると、関連するpostsが存在しなくなる' do
-        post_ids = posts.map(&:id)
-        user.destroy
-        expect(Post.where(id: post_ids)).to be_empty
+      it 'userが削除されると、関連するpostsも削除される' do
+        expect { user.destroy }.to change(Post, :count).by(-post_count)
       end
     end
   end
