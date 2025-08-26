@@ -39,4 +39,19 @@ RSpec.describe Todo, type: :model do
       end
     end
   end
+
+  describe 'アソシエーション' do
+    describe 'belongs_to :task' do
+      it 'taskが存在しない場合は無効' do
+        todo = build(:todo, task: nil)
+        expect(todo).not_to be_valid
+      end
+
+      it 'taskが存在する場合は有効' do
+        task = create(:task)
+        todo = build(:todo, task: task)
+        expect(todo).to be_valid
+      end
+    end
+  end
 end
