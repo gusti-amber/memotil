@@ -28,6 +28,8 @@ ja:
         title: "タイトル"
         tag_ids: "タグ"
         status: "ステータス"
+      # ネストした属性を日本語対応する場合、parent/childrenのように記述する。
+      # 詳細は、https://nisshiee.hatenablog.jp/entry/2017/05/09/195115
       task/todos:
         body: "ToDoの内容"
 
