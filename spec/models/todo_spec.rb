@@ -58,27 +58,27 @@ RSpec.describe Todo, type: :model do
   describe '依存関係' do
     describe 'Task削除時の依存関係' do
       let(:task) { create(:task) }
-      
+
       context '1つのTodoが存在する場合' do
         let!(:todo) { create(:todo, task: task) }
-        
+
         it 'Taskが削除されると、関連するTodoも削除される' do
           expect { task.destroy }.to change(Todo, :count).by(-1)
         end
-        
+
         it 'Taskが削除されると、Todoが存在しなくなる' do
           task.destroy
           expect(Todo.exists?(todo.id)).to be false
         end
       end
-      
+
       context '最大3つのTodoが存在する場合' do
         let!(:todos) { create_list(:todo, 3, task: task) }
-        
+
         it 'Taskが削除されると、すべてのTodoが削除される' do
           expect { task.destroy }.to change(Todo, :count).by(-3)
         end
-        
+
         it 'Taskが削除されると、すべてのTodoが存在しなくなる' do
           todo_ids = todos.map(&:id)
           task.destroy
