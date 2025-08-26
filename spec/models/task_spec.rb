@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  describe 'バリデーションチェック' do
+  describe 'バリデーション' do
     it '設定したすべてのバリデーションが機能しているか' do
       task = build(:task)
       expect(task).to be_valid
