@@ -52,21 +52,5 @@ ja:
       user:
         invalid: "メールアドレスまたはパスワードが違います"
         not_found_in_database: "メールアドレスまたはパスワードが違います"
-        locked: "アカウントがロックされています"
-        unconfirmed: "メールアドレスの本人確認が必要です"
-        unauthenticated: "ログインしてください"
       invalid: "メールアドレスまたはパスワードが違います"
       not_found_in_database: "メールアドレスまたはパスワードが違います"
-      locked: "アカウントがロックされています"
-      unconfirmed: "メールアドレスの本人確認が必要です"
-      unauthenticated: "ログインしてください"
-    sessions:
-      user:
-        signed_in: "ログインしました"
-        signed_out: "ログアウトしました"
-        already_signed_out: "ログアウトしました"
-    registrations:
-      user:
-        signed_up: "アカウント登録が完了しました"
-        updated: "アカウント情報を変更しました"
-        destroyed: "アカウントを削除しました"
