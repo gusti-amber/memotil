@@ -13,7 +13,7 @@ ja:
         tag_ids: "タグ"
         todos: "ToDoリスト"
 
-  # ActiveRecordの属性名翻訳
+  # ActiveRecordの属性名の和訳
   activerecord:
     models:
       user: "ユーザー"
