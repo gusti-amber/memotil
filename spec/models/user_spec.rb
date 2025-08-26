@@ -8,7 +8,7 @@ RSpec.describe User, type: :model do
       context '存在性' do
         it 'nameが存在する場合は有効' do
           user.name = 'userテスト'
-          expect(user).to be_valid
+          expect(user).to be_valid, 'nameが存在する場合は有効である必要があります'
         end
 
         it 'nameが空の場合は無効' do
@@ -27,7 +27,7 @@ RSpec.describe User, type: :model do
       context '文字数制限' do
         it '2文字以上20文字以内の場合は有効' do
           user.name = 'テスト'
-          expect(user).to be_valid
+          expect(user).to be_valid, 'nameが2文字以上20文字以内の場合は有効である必要があります'
         end
 
         it '1文字の場合は無効' do
@@ -49,7 +49,7 @@ RSpec.describe User, type: :model do
         it '8文字以上128文字以内の場合は有効' do
           user.password = '12345678'
           user.password_confirmation = '12345678'
-          expect(user).to be_valid
+          expect(user).to be_valid, 'passwordが8文字以上128文字以内の場合は有効である必要があります'
         end
 
         it '7文字以下の場合は無効' do
@@ -145,11 +145,11 @@ RSpec.describe User, type: :model do
       let!(:tasks) { create_list(:task, task_count, user: user) }
 
       it 'tasksにアクセスできる' do
-        expect(user.tasks).to match_array(tasks)
+        expect(user.tasks).to match_array(tasks), 'user.tasksにアクセスできる必要があります'
       end
 
       it 'userが削除されると、関連するtasksも削除される' do
-        expect { user.destroy }.to change(Task, :count).by(-task_count)
+        expect { user.destroy }.to change(Task, :count).by(-task_count), 'userが削除されると、関連するtasksも削除される必要があります'
       end
     end
 
@@ -159,11 +159,11 @@ RSpec.describe User, type: :model do
       let!(:posts) { create_list(:post, post_count, user: user) }
 
       it 'postsにアクセスできる' do
-        expect(user.posts).to match_array(posts)
+        expect(user.posts).to match_array(posts), 'user.postsにアクセスできる必要があります'
       end
 
       it 'userが削除されると、関連するpostsも削除される' do
-        expect { user.destroy }.to change(Post, :count).by(-post_count)
+        expect { user.destroy }.to change(Post, :count).by(-post_count), 'userが削除されると、関連するpostsも削除される必要があります'
       end
     end
   end
