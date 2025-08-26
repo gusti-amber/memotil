@@ -15,12 +15,19 @@ class Task < ApplicationRecord
   validates :title, presence: true, length: { minimum: 2, maximum: 255 }
   validates :status, presence: true
   validate :tags_must_be_five_or_less
+  validate :todos_must_be_three_or_less
 
   private
 
   def tags_must_be_five_or_less
     if tag_ids.present? && tag_ids.length > 5
       errors.add(:tag_ids, :too_many)
+    end
+  end
+
+  def todos_must_be_three_or_less
+    if todos.count > 3
+      errors.add(:todos, :too_many)
     end
   end
 end

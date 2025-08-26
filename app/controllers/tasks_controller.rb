@@ -20,7 +20,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = current_user.tasks.includes(:tags, :posts).find(params[:id])
+    @task = current_user.tasks.includes(:tags, :posts, :todos).find(params[:id])
     @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
     @post = Post.new
   end
