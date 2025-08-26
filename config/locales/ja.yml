@@ -11,7 +11,7 @@ ja:
       task:
         title: "タイトル"
         tag_ids: "タグ"
-        todos: "やることリスト"
+        todos: "ToDoリスト"
 
   # ActiveRecordの属性名翻訳
   activerecord:
@@ -28,6 +28,10 @@ ja:
         title: "タイトル"
         tag_ids: "タグ"
         status: "ステータス"
+      # ネストした属性を日本語対応する場合、parent/childrenのように記述する。
+      # 詳細は、https://nisshiee.hatenablog.jp/entry/2017/05/09/195115
+      task/todos:
+        body: "ToDoの内容"
 
   # エラーメッセージの和訳
   errors:
@@ -39,6 +43,8 @@ ja:
     attributes:
       tag_ids:
         too_many: "は最大5個まで選択できます"
+      todos:
+        too_many: "は最大3個まで作成できます"
 
   # Deviseのエラーメッセージの和訳
   devise:
