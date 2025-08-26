@@ -28,6 +28,8 @@ ja:
         title: "タイトル"
         tag_ids: "タグ"
         status: "ステータス"
+      task/todos:
+        body: "ToDoの内容"
 
   # エラーメッセージの和訳
   errors:
