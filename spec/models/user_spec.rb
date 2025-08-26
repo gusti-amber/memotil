@@ -84,15 +84,45 @@ RSpec.describe User, type: :model do
       end
 
       context '形式' do
-        it '有効なemail形式の場合は有効' do
-          user.email = 'test@example.com'
-          expect(user).to be_valid
+        context '有効なemail形式' do
+          let(:valid_emails) do
+            [
+              'user@example.com',
+              'user.name@example.com',
+              'user+name@example.com',
+              'user@example-domain.com',
+              'user@example.co.jp',
+              'user123@example.com'
+            ]
+          end
+
+          it '有効なemail形式の場合は有効' do
+            valid_emails.each do |email|
+              user.email = email
+              expect(user).to be_valid, "#{email}は有効なemail形式である必要があります"
+            end
+          end
         end
 
-        it '無効なemail形式の場合は無効' do
-          user.email = 'invalid-email'
-          expect(user).not_to be_valid
-          expect(user.errors[:email]).to include('は無効な値です')
+        context '無効なemail形式' do
+          let(:invalid_emails) do
+            [
+              'user',
+              '@example.com',
+              'user@',
+              'user @example.com',
+              'user@@example.com',
+              'user@example .com'
+            ]
+          end
+
+          it '無効なemail形式の場合は無効' do
+            invalid_emails.each do |email|
+              user.email = email
+              expect(user).not_to be_valid, "#{email}は無効なemail形式である必要があります"
+              expect(user.errors[:email]).to include('は無効な値です')
+            end
+          end
         end
       end
 
