@@ -34,38 +34,30 @@ RSpec.describe Task, type: :model do
 
   describe 'タグの個数制限バリデーション' do
     let(:user) { create(:user) }
-    let(:tags) { create_list(:tag, 6) }
+    let(:max_tags) { 5 }
+    let(:error_message) { 'は最大5個まで選択できます' }
 
-    it 'タグが5個以下の場合、validになる' do
-      task_with_five_tags = build(:task, user: user, tag_ids: tags.first(5).map(&:id))
-      expect(task_with_five_tags).to be_valid
-      expect(task_with_five_tags.errors[:tag_ids]).to be_empty
+    it 'タグが選択されていない場合（空配列）は有効' do
+      task = build(:task, user: user, tag_ids: [])
+      expect(task).to be_valid
     end
 
-    it 'タグが6個の場合、invalidになる' do
-      task_with_six_tags = build(:task, user: user, tag_ids: tags.map(&:id))
-      expect(task_with_six_tags).to be_invalid
-      expect(task_with_six_tags.errors[:tag_ids]).to include('は最大5個まで選択できます')
+    it 'タグが選択されていない場合（nil）は有効' do
+      task = build(:task, user: user, tag_ids: nil)
+      expect(task).to be_valid
     end
 
-    it 'タグが選択されていない場合、validになる' do
-      task_without_tags = build(:task, user: user, tag_ids: [])
-      expect(task_without_tags).to be_valid
-      expect(task_without_tags.errors[:tag_ids]).to be_empty
+    it 'タグが最大数以下の場合は有効' do
+      tags = create_list(:tag, max_tags)
+      task = build(:task, user: user, tag_ids: tags.map(&:id))
+      expect(task).to be_valid
     end
 
-    it 'タグが選択されていない場合（nil）、validになる' do
-      task_with_nil_tags = build(:task, user: user, tag_ids: nil)
-      expect(task_with_nil_tags).to be_valid
-      expect(task_with_nil_tags.errors[:tag_ids]).to be_empty
-    end
-
-    it 'タグが7個の場合、invalidになる' do
-      extra_tags = create_list(:tag, 1)
-      all_tags = tags + extra_tags
-      task_with_seven_tags = build(:task, user: user, tag_ids: all_tags.map(&:id))
-      expect(task_with_seven_tags).to be_invalid
-      expect(task_with_seven_tags.errors[:tag_ids]).to include('は最大5個まで選択できます')
+    it 'タグが最大数を超える場合は無効' do
+      tags = create_list(:tag, max_tags + 1)
+      task = build(:task, user: user, tag_ids: tags.map(&:id))
+      expect(task).to be_invalid
+      expect(task.errors[:tag_ids]).to include(error_message)
     end
   end
 end
