@@ -92,7 +92,7 @@ RSpec.describe User, type: :model do
         it '無効なemail形式の場合は無効' do
           user.email = 'invalid-email'
           expect(user).not_to be_valid
-          expect(user.errors[:email]).not_to be_empty
+          expect(user.errors[:email]).to include('は無効な値です')
         end
       end
 
@@ -102,7 +102,7 @@ RSpec.describe User, type: :model do
         it '同じemailでユーザーを作成できない' do
           new_user = build(:user, email: 'test@example.com')
           expect(new_user).not_to be_valid
-          expect(new_user.errors[:email]).not_to be_empty
+          expect(new_user.errors[:email]).to include('はすでに存在しています')
         end
       end
     end
