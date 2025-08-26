@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :post do
-    task { nil }
-    user { nil }
-    postable_type { "MyString" }
-    postable_id { 1 }
+    association :user
+    association :task
+    postable_type { "TextPost" }
+    postable_id { create(:text_post).id }
   end
 end
