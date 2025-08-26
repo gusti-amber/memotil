@@ -87,4 +87,19 @@ RSpec.describe Todo, type: :model do
       end
     end
   end
+
+  describe '#done?' do
+    let(:task) { create(:task) }
+    let(:todo) { create(:todo, task: task) }
+
+    it 'doneがtrueの場合はtrueを返す' do
+      todo.update(done: true)
+      expect(todo.done?).to be true
+    end
+
+    it 'doneがfalseの場合はfalseを返す' do
+      todo.update(done: false)
+      expect(todo.done?).to be false
+    end
+  end
 end
