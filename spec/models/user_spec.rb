@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'バリデーション' do
     let(:user) { build(:user) }
-
     describe 'name' do
       context '存在性' do
         it 'nameが存在する場合は有効' do
@@ -65,6 +64,24 @@ RSpec.describe User, type: :model do
           expect(user).not_to be_valid
           expect(user.errors[:password]).to include('は128文字以下で入力してください')
         end
+      end
+    end
+  end
+
+  describe 'アソシエーション' do
+    describe 'has_many :tasks' do
+      let(:user) { create(:user) }
+      let(:task_count) { 3 }
+      let!(:tasks) { create_list(:task, task_count, user: user) }
+
+      it 'userが削除されると、関連するtasksも削除される' do
+        expect { user.destroy }.to change(Task, :count).by(-task_count)
+      end
+
+      it 'userが削除されると、関連するtasksが存在しなくなる' do
+        task_ids = tasks.map(&:id)
+        user.destroy
+        expect(Task.where(id: task_ids)).to be_empty
       end
     end
   end
