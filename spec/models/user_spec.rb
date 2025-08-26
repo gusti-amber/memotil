@@ -67,6 +67,45 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe 'email' do
+      context '存在性' do
+        it 'emailが空の場合は無効' do
+          user.email = ''
+          expect(user).not_to be_valid
+          expect(user.errors[:email]).to include('を入力してください')
+        end
+
+        it 'emailがnilの場合は無効' do
+          user.email = nil
+          expect(user).not_to be_valid
+          expect(user.errors[:email]).to include('を入力してください')
+        end
+      end
+
+      context '形式' do
+        it '有効なemail形式の場合は有効' do
+          user.email = 'test@example.com'
+          expect(user).to be_valid
+        end
+
+        it '無効なemail形式の場合は無効' do
+          user.email = 'invalid-email'
+          expect(user).not_to be_valid
+          expect(user.errors[:email]).not_to be_empty
+        end
+      end
+
+      context '一意性' do
+        let!(:existing_user) { create(:user, email: 'test@example.com') }
+
+        it '同じemailでユーザーを作成できない' do
+          new_user = build(:user, email: 'test@example.com')
+          expect(new_user).not_to be_valid
+          expect(new_user.errors[:email]).not_to be_empty
+        end
+      end
+    end
   end
 
   describe 'アソシエーション' do
