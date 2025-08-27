@@ -61,7 +61,6 @@ RSpec.describe Task, type: :model do
   describe 'Todoの個数制限バリデーション' do
     let(:user) { create(:user) }
     let(:max_todos) { 3 }
-    let(:error_message) { 'は最大3個まで作成できます' }
 
     it 'Todoが存在しない場合は有効' do
       task = build(:task, user: user)
@@ -78,14 +77,13 @@ RSpec.describe Task, type: :model do
       task = build(:task, user: user)
       create_list(:todo, max_todos + 1, task: task)
       expect(task).not_to be_valid, 'Todoが最大数を超える場合は無効である必要があります'
-      expect(task.errors[:todos]).to include(error_message)
+      expect(task.errors[:todos]).to include("は最大#{max_todos}個まで作成できます")
     end
   end
 
   describe 'タグの個数制限バリデーション' do
     let(:user) { create(:user) }
     let(:max_tags) { 5 }
-    let(:error_message) { 'は最大5個まで選択できます' }
 
     it 'タグが選択されていない場合（空配列）は有効' do
       task = build(:task, user: user, tag_ids: [])
@@ -107,7 +105,7 @@ RSpec.describe Task, type: :model do
       tags = create_list(:tag, max_tags + 1)
       task = build(:task, user: user, tag_ids: tags.map(&:id))
       expect(task).to be_invalid, 'タグが最大数を超える場合は無効である必要があります'
-      expect(task.errors[:tag_ids]).to include(error_message)
+      expect(task.errors[:tag_ids]).to include("は最大#{max_tags}個まで選択できます")
     end
   end
 end
