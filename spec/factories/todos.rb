@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :todo do
-    task { nil }
-    body { "MyString" }
+    association :task
+    body { "todo_body" }
     done { false }
   end
 end
