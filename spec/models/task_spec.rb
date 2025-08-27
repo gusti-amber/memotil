@@ -70,13 +70,13 @@ RSpec.describe Task, type: :model do
     it 'Todoが最大数以下の場合は有効' do
       task = build(:task, user: user)
       create_list(:todo, max_todos, task: task)
-      expect(task).to be_valid, 'Todoが最大数以下の場合は有効である必要があります'
+      expect(task).to be_valid, "Todoが最大数（#{max_todos}個）以下の場合は有効である必要があります"
     end
 
     it 'Todoが最大数を超える場合は無効' do
       task = build(:task, user: user)
       create_list(:todo, max_todos + 1, task: task)
-      expect(task).not_to be_valid, 'Todoが最大数を超える場合は無効である必要があります'
+      expect(task).not_to be_valid, "Todoが最大数（#{max_todos}個）を超える場合は無効である必要があります"
       expect(task.errors[:todos]).to include("は最大#{max_todos}個まで作成できます")
     end
   end
@@ -98,13 +98,13 @@ RSpec.describe Task, type: :model do
     it 'タグが最大数以下の場合は有効' do
       tags = create_list(:tag, max_tags)
       task = build(:task, user: user, tag_ids: tags.map(&:id))
-      expect(task).to be_valid, 'タグが最大数以下の場合は有効である必要があります'
+      expect(task).to be_valid, "タグが最大数（#{max_tags}個）以下の場合は有効である必要があります"
     end
 
     it 'タグが最大数を超える場合は無効' do
       tags = create_list(:tag, max_tags + 1)
       task = build(:task, user: user, tag_ids: tags.map(&:id))
-      expect(task).to be_invalid, 'タグが最大数を超える場合は無効である必要があります'
+      expect(task).to be_invalid, "タグが最大数（#{max_tags}個）を超える場合は無効である必要があります"
       expect(task.errors[:tag_ids]).to include("は最大#{max_tags}個まで選択できます")
     end
   end
