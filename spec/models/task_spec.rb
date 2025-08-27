@@ -108,4 +108,82 @@ RSpec.describe Task, type: :model do
       expect(task.errors[:tag_ids]).to include("は最大#{max_tags}個まで選択できます")
     end
   end
+
+  describe 'アソシエーション' do
+    describe 'belongs_to :user' do
+      let(:user) { create(:user) }
+      let(:task) { build(:task, user: user) }
+
+      it 'userにアクセスできる' do
+        expect(task.user).to eq user
+      end
+
+      it 'userが存在しない場合は無効' do
+        task = build(:task, user: nil)
+        expect(task).not_to be_valid, 'userが存在しない場合は無効である必要があります'
+      end
+
+      it 'userが存在する場合は有効' do
+        expect(task).to be_valid, 'userが存在する場合は有効である必要があります'
+      end
+    end
+
+    describe 'has_many :todos' do
+      let(:user) { create(:user) }
+      let(:task) { create(:task, user: user) }
+      let(:todo_count) { 2 }
+      let!(:todos) { create_list(:todo, todo_count, task: task) }
+
+      it 'todosにアクセスできる' do
+        expect(task.todos).to match_array(todos)
+      end
+
+      it 'taskが削除されると、関連するtodosも削除される' do
+        expect { task.destroy }.to change(Todo, :count).by(-todo_count), 'taskが削除されると、関連するtodosも削除される必要があります'
+      end
+    end
+
+    describe 'has_many :posts' do
+      let(:user) { create(:user) }
+      let(:task) { create(:task, user: user) }
+      let(:post_count) { 2 }
+      let!(:posts) { create_list(:post, post_count, task: task) }
+
+      it 'postsにアクセスできる' do
+        expect(task.posts).to match_array(posts)
+      end
+
+      it 'taskが削除されると、関連するpostsも削除される' do
+        expect { task.destroy }.to change(Post, :count).by(-post_count), 'taskが削除されると、関連するpostsも削除される必要があります'
+      end
+    end
+
+    describe 'has_many :tasktags' do
+      let(:user) { create(:user) }
+      let(:task) { create(:task, user: user) }
+      let(:tasktag_count) { 2 }
+      let!(:tasktags) { create_list(:tasktag, tasktag_count, task: task) }
+
+      it 'tasktagsにアクセスできる' do
+        expect(task.tasktags).to match_array(tasktags)
+      end
+
+      it 'taskが削除されると、関連するtasktagsも削除される' do
+        expect { task.destroy }.to change(Tasktag, :count).by(-tasktag_count), 'taskが削除されると、関連するtasktagsも削除される必要があります'
+      end
+    end
+
+    describe 'has_many :tags, through: :tasktags' do
+      let(:user) { create(:user) }
+      let(:task) { create(:task, user: user) }
+      let(:tags) { create_list(:tag, 2) }
+      let!(:tasktags) do
+        tags.map { |tag| create(:tasktag, task: task, tag: tag) }
+      end
+
+      it 'tagsにアクセスできる' do
+        expect(task.tags).to match_array(tags)
+      end
+    end
+  end
 end
