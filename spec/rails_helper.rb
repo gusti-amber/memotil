@@ -54,16 +54,16 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do
     # リモートChromeドライバーを使用（Docker内のSeleniumコンテナ）
     driven_by :remote_chrome
-    
+
     # RailsサーバーのIPアドレスを取得（Docker内での通信用）
     Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
-    
+
     # Railsサーバーのポート番号を設定（通常の3000と競合を避けるため）
     Capybara.server_port = 4444
-    
+
     # ブラウザがアクセスするRailsアプリの完全なURLを設定
     Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
-    
+
     # 隠れた要素（display: none等）も操作可能にする
     Capybara.ignore_hidden_elements = false
   end

@@ -12,9 +12,9 @@ RSpec.describe 'Users', type: :system do
         fill_in 'メールアドレス', with: 'test@example.com'
         fill_in 'パスワード', with: 'password'
         fill_in 'パスワード（確認）', with: 'password'
-        
+
         click_button '新規登録'
-        
+
         # 登録後はログアウトボタンが表示される（自動ログイン）
         expect(page).to have_content('ログアウト')
         expect(page).to have_current_path(root_path)
@@ -27,9 +27,9 @@ RSpec.describe 'Users', type: :system do
         fill_in 'メールアドレス', with: 'test@example.com'
         fill_in 'パスワード', with: 'password'
         fill_in 'パスワード（確認）', with: 'password'
-        
+
         click_button '新規登録'
-        
+
         expect(page).to have_content('名前 を入力してください')
       end
 
@@ -38,9 +38,9 @@ RSpec.describe 'Users', type: :system do
         fill_in 'メールアドレス', with: 'test@example.com'
         fill_in 'パスワード', with: 'password'
         fill_in 'パスワード（確認）', with: 'password'
-        
+
         click_button '新規登録'
-        
+
         expect(page).to have_content('名前 は2文字以上で入力してください')
       end
 
@@ -49,9 +49,9 @@ RSpec.describe 'Users', type: :system do
         fill_in 'メールアドレス', with: 'test@example.com'
         fill_in 'パスワード', with: 'password'
         fill_in 'パスワード（確認）', with: 'password'
-        
+
         click_button '新規登録'
-        
+
         expect(page).to have_content('名前 は20文字以下で入力してください')
       end
 
@@ -60,23 +60,23 @@ RSpec.describe 'Users', type: :system do
         fill_in 'メールアドレス', with: ''
         fill_in 'パスワード', with: 'password'
         fill_in 'パスワード（確認）', with: 'password'
-        
+
         click_button '新規登録'
-        
+
         expect(page).to have_content('メールアドレス を入力してください')
       end
 
       it 'メールアドレスが登録済みの場合はエラーが表示される' do
         # 既存のユーザーを作成
         existing_user = create(:user, email: 'test@example.com')
-        
+
         fill_in '名前', with: 'test_user'
         fill_in 'メールアドレス', with: 'test@example.com'
         fill_in 'パスワード', with: 'password'
         fill_in 'パスワード（確認）', with: 'password'
-        
+
         click_button '新規登録'
-        
+
         expect(page).to have_content('メールアドレス はすでに登録済みです')
       end
 
@@ -85,9 +85,9 @@ RSpec.describe 'Users', type: :system do
         fill_in 'メールアドレス', with: 'test@example.com'
         fill_in 'パスワード', with: 'a' * 7
         fill_in 'パスワード（確認）', with: 'a' * 7
-        
+
         click_button '新規登録'
-        
+
         expect(page).to have_content('パスワード は8文字以上で入力してください')
       end
 
@@ -97,9 +97,9 @@ RSpec.describe 'Users', type: :system do
         fill_in 'メールアドレス', with: 'test@example.com'
         fill_in 'パスワード', with: 'password'
         fill_in 'パスワード（確認）', with: 'different_password'
-        
+
         click_button '新規登録'
-        
+
         expect(page).to have_content('')
       end
     end
@@ -116,9 +116,9 @@ RSpec.describe 'Users', type: :system do
       it 'ユーザーが正常にログインされる' do
         fill_in 'メールアドレス', with: user.email
         fill_in 'パスワード', with: user.password
-        
+
         click_button 'ログイン'
-        
+
         expect(page).to have_content('ログアウト')
         expect(page).to have_current_path(root_path)
       end
@@ -128,9 +128,9 @@ RSpec.describe 'Users', type: :system do
       it '無効な認証情報の場合はエラーが表示される' do
         fill_in 'メールアドレス', with: 'wrong@example.com'
         fill_in 'パスワード', with: 'wrong_password'
-        
+
         click_button 'ログイン'
-        
+
         expect(page).to have_content('メールアドレスまたはパスワードが違います')
       end
     end
@@ -147,7 +147,7 @@ RSpec.describe 'Users', type: :system do
     it 'ユーザーが正常にログアウトされる' do
       # ログアウトボタンをクリック
       click_button 'ログアウト'
-      
+
       # ログアウト後はログイン・サインアップボタンが表示される
       expect(page).to have_content('ログイン')
       expect(page).to have_content('サインアップ')
@@ -165,7 +165,7 @@ RSpec.describe 'Users', type: :system do
 
       it 'ルートページにリダイレクトされる' do
         visit new_user_session_path
-        
+
         # 既にログインしている場合はルートページにリダイレクト
         expect(page).to have_current_path(root_path)
       end
