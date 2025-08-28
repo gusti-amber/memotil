@@ -45,6 +45,11 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  # Deviseのテストヘルパーを追加
+  config.include Devise::Test::IntegrationHelpers, type: :system
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
+
   # システムスペック用の設定（Docker環境対応）
   config.before(:each, type: :system) do
     # リモートChromeドライバーを使用（Docker内のSeleniumコンテナ）
@@ -62,6 +67,7 @@ RSpec.configure do |config|
     # 隠れた要素（display: none等）も操作可能にする
     Capybara.ignore_hidden_elements = false
   end
+
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
