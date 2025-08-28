@@ -129,10 +129,10 @@ RSpec.describe User, type: :model do
       context '一意性' do
         let!(:existing_user) { create(:user, email: 'test@example.com') }
 
-        it '同じemailでユーザーを作成できない' do
+        it '登録済みのemailでユーザーを作成できない' do
           new_user = build(:user, email: 'test@example.com')
-          expect(new_user).not_to be_valid, '同じemailでユーザーを作成できない必要があります'
-          expect(new_user.errors[:email]).to include('はすでに存在しています')
+          expect(new_user).not_to be_valid, '登録済みのemailでユーザーを作成できない必要があります'
+          expect(new_user.errors[:email]).to include('はすでに登録済みです')
         end
       end
     end
