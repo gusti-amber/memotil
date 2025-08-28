@@ -27,11 +27,19 @@ services:
       - node_modules:/myapp/node_modules
     environment:
       TZ: Asia/Tokyo
+      # システムスペック用: SeleniumコンテナのURLを指定(spec/support/capybara.rbで参照)
+      SELENIUM_DRIVER_URL: http://selenium_chrome:4444/wd/hub
     ports:
       - "3000:3000"
     depends_on:
       db:
         condition: service_healthy
+  # システムスペック用: Seleniumコンテナ
+  # M1 Macではseleniarm/standalone-chromiumを使用（selenium/standalone-chromeは動作しない）
+  selenium_chrome:
+    image: seleniarm/standalone-chromium
+    ports:
+      - "4444:4444"
 volumes:
   bundle_data:
   postgresql_data:
