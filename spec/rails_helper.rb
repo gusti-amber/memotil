@@ -50,7 +50,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
 
-  # システムスペック用の設定（Docker環境対応）
+  # Capybaraの設定（Docker環境対応）
   config.before(:each, type: :system) do
     # リモートChromeドライバーを使用（Docker内のSeleniumコンテナ）
     driven_by :remote_chrome
