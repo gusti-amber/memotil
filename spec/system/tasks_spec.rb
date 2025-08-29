@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
   let(:user) { create(:user) }
-  let(:other_user) { create(:user) }
   let(:task) { create(:task, user: user) }
-  let(:other_user_task) { create(:task, user: other_user) }
 
   describe '認証フィルター' do
     context '未ログインユーザーの場合' do
@@ -324,6 +322,16 @@ RSpec.describe 'Tasks', type: :system do
         
         # 追加ボタンが非表示になっていることを確認
         expect(page).not_to have_button('追加')
+      end
+    end
+
+    context '他のユーザーのタスクを編集しようとする場合' do
+      let!(:other_user) { create(:user, email: 'other_user@example.com') }
+      let!(:other_user_task) { create(:task, user: other_user) }
+      skip '編集ページにアクセスするとタスク一覧ページにリダイレクトされる' do
+        visit edit_task_path(other_user_task)
+        expect(current_path).to eq tasks_path
+        # expect(page).to have_content('アクセス権限がありません')
       end
     end
   end
