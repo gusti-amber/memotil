@@ -32,29 +32,6 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  describe '権限制御' do
-    let!(:other_user) { create(:user, email: 'other_user@example.com') }
-    let!(:other_user_task) { create(:task, user: other_user) }
-
-    before do
-      login_as(user, scope: :user)
-    end
-
-    context '他のユーザーのタスクにアクセスしようとする場合' do
-      skip '編集ページにアクセスするとタスク一覧ページにリダイレクトされる' do
-        visit edit_task_path(other_user_task)
-        expect(current_path).to eq tasks_path
-        # expect(page).to have_content('アクセス権限がありません')
-      end
-
-      skip '詳細ページにアクセスするとタスク一覧ページにリダイレクトされる' do
-        visit task_path(other_user_task)
-        expect(current_path).to eq tasks_path
-        # expect(page).to have_content('アクセス権限がありません')
-      end
-    end
-  end
-
   describe 'タスク新規作成' do
     let(:max_tags) { 5 }
 
@@ -345,6 +322,62 @@ RSpec.describe 'Tasks', type: :system do
 
         # 追加ボタンが非表示になっていることを確認
         expect(page).not_to have_button('追加')
+      end
+    end
+
+    context '他のユーザーのタスクにアクセスしようとする場合' do
+      let!(:other_user) { create(:user, email: 'other_user@example.com') }
+      let!(:other_user_task) { create(:task, user: other_user) }
+      
+      skip '編集ページにアクセスするとタスク一覧ページにリダイレクトされる' do
+        visit edit_task_path(other_user_task)
+        expect(current_path).to eq tasks_path
+        # expect(page).to have_content('アクセス権限がありません')
+      end
+    end
+  end
+
+  describe 'タスク詳細' do
+    let(:task_with_todos) { create(:task, user: user) }
+    let!(:todo) { create(:todo, task: task_with_todos, body: 'test_todo') }
+
+    before do
+      login_as(user, scope: :user)
+      visit task_path(task_with_todos)
+    end
+
+    context 'Todoのチェックボックスをクリックした場合' do
+      it 'Todoの完了状態がトグルされる' do
+        # 初期状態の確認
+        expect(todo.reload.done?).to be false
+        
+        # チェックボックスをクリック
+        find("input[type='checkbox']").click
+        
+        # JavaScriptの処理を待つ
+        sleep 0.5
+        
+        # 完了状態がトグルされることを確認
+        expect(todo.reload.done?).to be true
+        
+        # 再度クリックして未完了に戻す
+        find("input[type='checkbox']").click
+        
+        # JavaScriptの処理を待つ
+        sleep 0.5
+        
+        expect(todo.reload.done?).to be false
+      end
+    end
+
+    context '他のユーザーのタスクにアクセスしようとする場合' do
+      let(:other_user) { create(:user, email: 'other@example.com') }
+      let(:other_user_task) { create(:task, user: other_user) }
+
+      skip '詳細ページにアクセスするとタスク一覧ページにリダイレクトされる' do
+        visit task_path(other_user_task)
+        expect(current_path).to eq tasks_path
+        # expect(page).to have_content('アクセス権限がありません')
       end
     end
   end
