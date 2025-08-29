@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :text_post do
-    body { "text_post_body" }
+    sequence(:body) { |n| "test_text_post_#{n}" }
   end
 end

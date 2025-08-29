@@ -8,7 +8,7 @@ RSpec.describe Task, type: :model do
     describe 'title' do
       context '存在性' do
         it 'titleが存在する場合は有効' do
-          task.title = 'task_title'
+          task.title = 'test_task'
           expect(task).to be_valid, 'titleが存在する場合は有効である必要があります'
         end
 
@@ -27,7 +27,7 @@ RSpec.describe Task, type: :model do
 
       context '文字数制限' do
         it '2文字以上255文字以内の場合は有効' do
-          task.title = 'task_title'
+          task.title = 'test_task'
           expect(task).to be_valid, 'titleが2文字以上255文字以内の場合は有効である必要があります'
         end
 
@@ -147,7 +147,8 @@ RSpec.describe Task, type: :model do
       let(:user) { create(:user) }
       let(:task) { create(:task, user: user) }
       let(:post_count) { 2 }
-      let!(:posts) { create_list(:post, post_count, task: task) }
+      let(:text_post) { create(:text_post) }
+      let!(:posts) { create_list(:post, post_count, task: task, postable: text_post) }
 
       it 'postsにアクセスできる' do
         expect(task.posts).to match_array(posts)
