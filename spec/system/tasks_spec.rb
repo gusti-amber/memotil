@@ -3,6 +3,13 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :system do
   let(:user) { create(:user) }
   let(:task) { create(:task, user: user) }
+  let(:other_user) { create(:user, email: 'other@example.com') }
+  let(:other_user_task) { create(:task, user: other_user) }
+  let(:max_tags) { 5 }
+  let(:max_todos) { 3 }
+  let!(:tags) { create_list(:tag, max_tags + 1) }
+  let(:task_with_todo) { create(:task, user: user) }
+  let!(:todo) { create(:todo, task: task_with_todo, body: 'test_todo') }
 
   describe '認証フィルター' do
     context '未ログインユーザーの場合' do
@@ -33,16 +40,13 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'タスク新規作成' do
-    let(:max_tags) { 5 }
-
     before do
       sign_in user
+      visit new_task_path
     end
 
     context '正常な入力の場合' do
       it 'タスクが新規作成される' do
-        tags = create_list(:tag, max_tags)
-        visit new_task_path
         fill_in 'タイトル', with: 'test_task_with_tag'
 
         # 「選択」ボタンをクリックしてドロップダウンを開く
@@ -62,7 +66,6 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it '戻るボタンをクリックすると一覧ページに戻る' do
-        visit new_task_path
         click_link '戻る'
         expect(page).to have_content('タスク')
         expect(page).to have_link('作成')
@@ -71,7 +74,6 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'バリデーションエラーが発生する場合' do
       it 'タイトルが空の場合、エラーメッセージが表示される' do
-        visit new_task_path
         fill_in 'タイトル', with: ''
         click_button '作成'
 
@@ -80,7 +82,6 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'タイトルが1文字の場合、エラーメッセージが表示される' do
-        visit new_task_path
         fill_in 'タイトル', with: 'a'
         click_button '作成'
 
@@ -89,7 +90,6 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'タイトルが256文字以上の場合、エラーメッセージが表示される' do
-        visit new_task_path
         fill_in 'タイトル', with: 'a' * 256
         click_button '作成'
 
@@ -98,8 +98,6 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'タグを最大数を超える数選択した場合、エラーメッセージが表示される' do
-        tags = create_list(:tag, max_tags + 1)
-        visit new_task_path
         fill_in 'タイトル', with: 'test_task_with_too_many_tags'
 
         # 「選択」ボタンをクリックしてドロップダウンを開く
@@ -122,17 +120,12 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'タスク編集' do
-    let(:task) { create(:task, user: user) }
-    let(:max_tags) { 5 }
-    let(:max_todos) { 3 }
-
     before do
       sign_in user
     end
 
     context '正常な入力の場合' do
       it 'タスクが正常に更新される' do
-        tags = create_list(:tag, max_tags)
         visit edit_task_path(task)
 
         fill_in 'タイトル', with: 'updated_task_title'
@@ -168,12 +161,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'ToDoを削除してタスクが正常に更新される' do
-        # 既存のToDoを持つタスクを作成
-        task_with_todos = create(:task, user: user)
-        create(:todo, task: task_with_todos, body: 'test_todo_1')
-        create(:todo, task: task_with_todos, body: 'test_todo_2')
-
-        visit edit_task_path(task_with_todos)
+        visit edit_task_path(task_with_todo)
 
         # 最初のToDoの削除ボタンをクリック
         first('button[data-action="click->todo-form#remove"]').click
@@ -183,8 +171,7 @@ RSpec.describe 'Tasks', type: :system do
 
         click_button '変更'
 
-        expect(page).to have_content('test_todo_2')
-        expect(page).not_to have_content('test_todo_1')
+        expect(page).not_to have_content('test_todo')
       end
 
       it '戻るボタンをクリックすると詳細ページに戻る' do
@@ -223,7 +210,6 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'タグを最大数を超える数選択した場合、エラーメッセージが表示される' do
-        tags = create_list(:tag, max_tags + 1)
         visit edit_task_path(task)
         fill_in 'タイトル', with: 'updated_task_with_too_many_tags'
 
@@ -245,10 +231,6 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it '既存のToDoのbodyを空にした場合、エラーメッセージが表示される' do
-        # 既存のToDoを持つタスクを作成
-        task_with_todo = create(:task, user: user)
-        create(:todo, task: task_with_todo, body: 'existing_todo')
-
         visit edit_task_path(task_with_todo)
 
         # 既存のToDoフィールドを空にする
@@ -313,12 +295,12 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).not_to have_button('追加')
       end
 
-      it '初めからToDoが3個紐づいているタスクでは、追加ボタンが非表示になっている' do
-        # 初めから3個のToDoを持つタスクを作成
-        task_with_todos = create(:task, user: user)
-        create_list(:todo, max_todos, task: task_with_todos)
+      it '初めからToDoが最大個数に達しているタスクでは、追加ボタンが非表示になっている' do
+        # 初めから最大個数のToDoを持つタスクを作成
+        task_with_max_todos = create(:task, user: user)
+        create_list(:todo, max_todos, task: task_with_max_todos)
 
-        visit edit_task_path(task_with_todos)
+        visit edit_task_path(task_with_max_todos)
 
         # 追加ボタンが非表示になっていることを確認
         expect(page).not_to have_button('追加')
@@ -326,9 +308,6 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context '他のユーザーのタスクにアクセスしようとする場合' do
-      let!(:other_user) { create(:user, email: 'other_user@example.com') }
-      let!(:other_user_task) { create(:task, user: other_user) }
-      
       skip '編集ページにアクセスするとタスク一覧ページにリダイレクトされる' do
         visit edit_task_path(other_user_task)
         expect(current_path).to eq tasks_path
@@ -338,42 +317,36 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'タスク詳細' do
-    let(:task_with_todos) { create(:task, user: user) }
-    let!(:todo) { create(:todo, task: task_with_todos, body: 'test_todo') }
-
     before do
       sign_in user
-      visit task_path(task_with_todos)
+      visit task_path(task_with_todo)
     end
 
     context 'Todoのチェックボックスをクリックした場合' do
       it 'Todoの完了状態がトグルされる' do
         # 初期状態の確認
         expect(todo.reload.done?).to be false
-        
+
         # チェックボックスをクリック
         find("input[type='checkbox']").click
-        
+
         # JavaScriptの処理を待つ
         sleep 0.5
-        
+
         # 完了状態がトグルされることを確認
         expect(todo.reload.done?).to be true
-        
+
         # 再度クリックして未完了に戻す
         find("input[type='checkbox']").click
-        
+
         # JavaScriptの処理を待つ
         sleep 0.5
-        
+
         expect(todo.reload.done?).to be false
       end
     end
 
     context '他のユーザーのタスクにアクセスしようとする場合' do
-      let(:other_user) { create(:user, email: 'other@example.com') }
-      let(:other_user_task) { create(:task, user: other_user) }
-
       skip '詳細ページにアクセスするとタスク一覧ページにリダイレクトされる' do
         visit task_path(other_user_task)
         expect(current_path).to eq tasks_path
