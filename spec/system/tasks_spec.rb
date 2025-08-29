@@ -296,7 +296,9 @@ RSpec.describe 'Tasks', type: :system do
         expect(current_path).to eq edit_task_path(task)
         expect(page).to have_content('ToDoの内容 は255文字以下で入力してください')
       end
+    end
 
+    context 'UI制御' do
       it '追加ボタンを押し、ToDoフィールドが最大個数に達した場合、追加ボタンが非表示になる' do
         visit edit_task_path(task)
 
