@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :system do
   let(:user) { create(:user) }
   let(:task) { create(:task, user: user) }
-
+  
   describe '認証フィルター' do
     context '未ログインユーザーの場合' do
       it 'タスク一覧ページにアクセスするとログインページにリダイレクトされる' do
@@ -11,23 +11,46 @@ RSpec.describe 'Tasks', type: :system do
         expect(current_path).to eq new_user_session_path
         expect(page).to have_content('ログインしてください')
       end
-
+      
       it 'タスク作成ページにアクセスするとログインページにリダイレクトされる' do
         visit new_task_path
         expect(current_path).to eq new_user_session_path
         expect(page).to have_content('ログインしてください')
       end
-
+      
       it 'タスク詳細ページにアクセスするとログインページにリダイレクトされる' do
         visit task_path(task)
         expect(current_path).to eq new_user_session_path
         expect(page).to have_content('ログインしてください')
       end
-
+      
       it 'タスク編集ページにアクセスするとログインページにリダイレクトされる' do
         visit edit_task_path(task)
         expect(current_path).to eq new_user_session_path
         expect(page).to have_content('ログインしてください')
+      end
+    end
+  end
+  
+  describe '権限制御' do
+    let!(:other_user) { create(:user, email: 'other_user@example.com') }
+    let!(:other_user_task) { create(:task, user: other_user) }
+  
+    before do
+      login_as(user, scope: :user)
+    end
+  
+    context '他のユーザーのタスクにアクセスしようとする場合' do
+      skip '編集ページにアクセスするとタスク一覧ページにリダイレクトされる' do
+        visit edit_task_path(other_user_task)
+        expect(current_path).to eq tasks_path
+        # expect(page).to have_content('アクセス権限がありません')
+      end
+  
+      skip '詳細ページにアクセスするとタスク一覧ページにリダイレクトされる' do
+        visit task_path(other_user_task)
+        expect(current_path).to eq tasks_path
+        # expect(page).to have_content('アクセス権限がありません')
       end
     end
   end
@@ -322,16 +345,6 @@ RSpec.describe 'Tasks', type: :system do
         
         # 追加ボタンが非表示になっていることを確認
         expect(page).not_to have_button('追加')
-      end
-    end
-
-    context '他のユーザーのタスクを編集しようとする場合' do
-      let!(:other_user) { create(:user, email: 'other_user@example.com') }
-      let!(:other_user_task) { create(:task, user: other_user) }
-      skip '編集ページにアクセスするとタスク一覧ページにリダイレクトされる' do
-        visit edit_task_path(other_user_task)
-        expect(current_path).to eq tasks_path
-        # expect(page).to have_content('アクセス権限がありません')
       end
     end
   end
