@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :tag do
-    name { "MyString" }
+    sequence(:name) { |n| "test_tag_#{n}" }
   end
 end
