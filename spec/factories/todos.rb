@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :todo do
     association :task
-    body { "todo_body" }
+    sequence(:body) { |n| "test_todo_#{n}" }
     done { false }
   end
 end
