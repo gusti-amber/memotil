@@ -156,7 +156,8 @@ RSpec.describe User, type: :model do
     describe 'has_many :posts' do
       let(:user) { create(:user) }
       let(:post_count) { 2 }
-      let!(:posts) { create_list(:post, post_count, user: user) }
+      let(:text_post) { create(:text_post) }
+      let!(:posts) { create_list(:post, post_count, user: user, postable: text_post) }
 
       it 'postsにアクセスできる' do
         expect(user.posts).to match_array(posts), 'user.postsにアクセスできる必要があります'
