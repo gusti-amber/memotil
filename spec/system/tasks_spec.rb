@@ -36,7 +36,7 @@ RSpec.describe 'Tasks', type: :system do
     let(:max_tags) { 5 }
 
     before do
-      login_as(user, scope: :user)
+      sign_in user
     end
 
     context '正常な入力の場合' do
@@ -127,7 +127,7 @@ RSpec.describe 'Tasks', type: :system do
     let(:max_todos) { 3 }
 
     before do
-      login_as(user, scope: :user)
+      sign_in user
     end
 
     context '正常な入力の場合' do
@@ -342,7 +342,7 @@ RSpec.describe 'Tasks', type: :system do
     let!(:todo) { create(:todo, task: task_with_todos, body: 'test_todo') }
 
     before do
-      login_as(user, scope: :user)
+      sign_in user
       visit task_path(task_with_todos)
     end
 
