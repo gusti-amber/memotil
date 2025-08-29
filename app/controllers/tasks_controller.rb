@@ -30,7 +30,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = current_user.tasks.find(params[:id])
+    @task = current_user.tasks.includes(:tags, :todos).find(params[:id])
 
     if @task.update(task_params)
       redirect_to @task, notice: "タスクが正常に更新されました。"
