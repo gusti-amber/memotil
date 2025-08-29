@@ -56,5 +56,3 @@ ja:
         invalid: "メールアドレスまたはパスワードが違います"
         not_found_in_database: "メールアドレスまたはパスワードが違います"
         unauthenticated: "ログインしてください"
-      invalid: "メールアドレスまたはパスワードが違います"
-      not_found_in_database: "メールアドレスまたはパスワードが違います"
