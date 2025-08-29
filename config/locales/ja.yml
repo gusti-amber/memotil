@@ -42,6 +42,7 @@ ja:
       too_long: "は%{count}文字以下で入力してください"
       invalid: "は無効な値です"
       taken: "はすでに登録済みです"
+      confirmation: "と%{attribute}の入力が一致しません"
     attributes:
       tag_ids:
         too_many: "は最大5個まで選択できます"

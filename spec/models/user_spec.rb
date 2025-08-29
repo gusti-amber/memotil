@@ -68,6 +68,23 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe 'password_confirmation' do
+      context 'passwordとの一致' do
+        it 'passwordとpassword_confirmationが一致する場合は有効' do
+          user.password = 'password'
+          user.password_confirmation = 'password'
+          expect(user).to be_valid, 'passwordとpassword_confirmationが一致する場合は有効である必要があります'
+        end
+
+        it 'passwordとpassword_confirmationが一致しない場合は無効' do
+          user.password = 'password '
+          user.password_confirmation = 'different_password'
+          expect(user).not_to be_valid, 'passwordとpassword_confirmationが一致しない場合は無効である必要があります'
+          expect(user.errors[:password_confirmation]).to include('とパスワードの入力が一致しません')
+        end
+      end
+    end
+
     describe 'email' do
       context '存在性' do
         it 'emailが空の場合は無効' do
@@ -156,7 +173,8 @@ RSpec.describe User, type: :model do
     describe 'has_many :posts' do
       let(:user) { create(:user) }
       let(:post_count) { 2 }
-      let!(:posts) { create_list(:post, post_count, user: user) }
+      let(:text_post) { create(:text_post) }
+      let!(:posts) { create_list(:post, post_count, user: user, postable: text_post) }
 
       it 'postsにアクセスできる' do
         expect(user.posts).to match_array(posts), 'user.postsにアクセスできる必要があります'

@@ -92,7 +92,6 @@ RSpec.describe 'Users', type: :system do
       end
 
       it 'パスワードとパスワード確認が一致しない場合はエラーが表示される' do
-        skip 'パスワードとパスワード確認が一致しない場合はエラーが表示される'
         fill_in '名前', with: 'test_user'
         fill_in 'メールアドレス', with: 'test@example.com'
         fill_in 'パスワード', with: 'password'
@@ -100,7 +99,7 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
-        expect(page).to have_content('')
+        expect(page).to have_content('パスワード（確認） とパスワードの入力が一致しません')
       end
     end
   end
