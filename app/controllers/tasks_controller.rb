@@ -34,7 +34,7 @@ class TasksController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
-  
+
   def destroy
   end
 
@@ -57,6 +57,6 @@ class TasksController < ApplicationController
   def set_task
     @task = current_user.tasks.includes(:tags, :posts, :todos).find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_to tasks_path, alert: 'アクセス権限がありません'
+    redirect_to tasks_path, alert: "アクセス権限がありません"
   end
 end
