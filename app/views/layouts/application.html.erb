@@ -7,7 +7,7 @@
     
     <!-- OGP設定 -->
     <meta property="og:title" content="<%= content_for(:og_title) || 'めもTIL - メモするだけで、学びが形になる。' %>">
-    <meta property="og:description" content="<%= content_for(:og_description) || 'タスクでの気づきをメモする。メモをTILにまとめて残す。学びを形にする学習支援アプリ。' %>">
+    <meta property="og:description" content="<%= content_for(:og_description) || 'タスクでの気づきをメモする、メモをTILにまとめて残す。学びを形にするタスクメモアプリ' %>">
     <meta property="og:type" content="<%= content_for(:og_type) || 'website' %>">
     <meta property="og:url" content="<%= request.original_url %>">
     <meta property="og:image" content="<%= content_for(:og_image) || asset_url('ogp.png') %>">
@@ -17,8 +17,9 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<%= content_for(:og_title) || 'めもTIL - メモするだけで、学びが形になる。' %>">
-    <meta name="twitter:description" content="<%= content_for(:og_description) || 'タスクでの気づきをメモする。メモをTILにまとめて残す。学びを形にする学習支援アプリ。' %>">
+    <meta name="twitter:description" content="<%= content_for(:og_description) || 'タスクでの気づきをメモする、メモをTILにまとめて残す。学びを形にするタスクメモアプリ' %>">
     <meta name="twitter:image" content="<%= content_for(:og_image) || asset_url('ogp.png') %>">
+    <meta name="twitter:image:alt" content="めもTIL - タスクメモアプリのOGP画像">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
