@@ -2,11 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'Posts', type: :system do
   let(:user) { create(:user) }
-  let(:task) { create(:task, user: user) }
-  let(:text_post) { create(:text_post, body: 'test_text_post') }
-  let!(:post) { create(:post, user: user, task: task, postable: text_post) }
 
   describe '投稿作成' do
+    let(:task) { create(:task, user: user) }
+
     before do
       sign_in user
       visit task_path(task)
@@ -46,6 +45,9 @@ RSpec.describe 'Posts', type: :system do
 
   describe '投稿表示' do
     context '投稿が存在する場合' do
+      let(:task) { create(:task, user: user) }
+      let!(:post) { create(:post, user: user, task: task, postable: create(:text_post, body: 'test_text_post')) }
+
       before do
         sign_in user
         visit task_path(task)
