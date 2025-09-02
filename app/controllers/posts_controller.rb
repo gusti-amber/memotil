@@ -15,6 +15,8 @@ class PostsController < ApplicationController
         format.html { redirect_to @task, notice: "コメントが投稿されました。" }
       end
     else
+      # ⚠️ この実装では、501文字以上の文章を投稿しようとした場合、投稿フォーム上の文章が消えてしまう。
+      # また、投稿フォームパーシャル内にエラーメッセージを実装したい。
       respond_to do |format|
         format.html { redirect_to @task, alert: "投稿の保存に失敗しました。" }
       end
