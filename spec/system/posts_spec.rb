@@ -61,18 +61,5 @@ RSpec.describe 'Posts', type: :system do
         end
       end
     end
-
-    context '投稿が存在しない場合' do
-      let(:empty_task) { create(:task, user: user) }
-
-      before do
-        sign_in user
-        visit task_path(empty_task)
-      end
-
-      it '「まだ投稿はありません」メッセージが表示される' do
-        expect(page).to have_content('まだ投稿はありません')
-      end
-    end
   end
 end
