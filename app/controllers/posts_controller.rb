@@ -10,9 +10,15 @@ class PostsController < ApplicationController
     )
 
     if @post.save
-      redirect_to @task, notice: "コメントが投稿されました。"
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to @task, notice: "コメントが投稿されました。" }
+      end
     else
-      redirect_to @task, alert: "投稿の保存に失敗しました。"
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to @task, alert: "投稿の保存に失敗しました。" }
+      end
     end
   end
 
