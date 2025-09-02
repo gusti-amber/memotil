@@ -1,13 +1,15 @@
-<div class="chat chat-start">
-  <div class="chat-header">
-    <span class="text-sm font-medium text-custom-dark-green">
-      <%= post.user.name %>
-    </span>
-    <span class="text-xs text-custom-dark-green/70 ml-2">
-      <%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
-    </span>
+<div class="px-6 py-2">
+  <div class="chat chat-start">
+    <div class="chat-header">
+      <span class="text-sm font-medium text-custom-dark-green">
+        <%= post.user.name %>
+      </span>
+      <span class="text-xs text-custom-dark-green/70 ml-2">
+        <%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+      </span>
+    </div>
+    <div class="chat-bubble bg-custom-off-white text-custom-dark-green border-none">
+      <%= post.postable.body %>
+    </div>
   </div>
-  <div class="chat-bubble bg-custom-off-white text-custom-dark-green border-none">
-    <%= post.postable.body %>
-  </div>
-</div> 
+</div>
