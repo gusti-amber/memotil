@@ -16,7 +16,6 @@ class PostsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.turbo_stream
         format.html { redirect_to @task, alert: "投稿の保存に失敗しました。" }
       end
     end
