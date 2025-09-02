@@ -1,10 +1,10 @@
 <div class="flex flex-col gap-4">
-  <%= form_with model: post, url: task_posts_path(task), method: :post, local: true, class: "space-y-4", html: { id: "post_form_#{task.id}" } do |form| %>
+  <%= form_with model: post, url: task_posts_path(task), method: :post, local: true, class: "space-y-4", html: { id: "post_form_#{task.id}" } do |f| %>
     <!-- postable_typeを明示的に指定 -->
-    <%= form.hidden_field :postable_type, value: "TextPost" %>
+    <%= f.hidden_field :postable_type, value: "TextPost" %>
     
     <div class="form-control">
-      <%= form.fields_for :postable_attributes do |text_post_form| %>
+      <%= f.fields_for :postable_attributes do |text_post_form| %>
         <%= text_post_form.text_area :body, 
             placeholder: "コメントを入力してください...", 
             class: "textarea textarea-bordered w-full h-24 bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
@@ -14,7 +14,7 @@
       そのため、form_withタグの外でボタン群を実装することで、完了ボタンを押した時、patchリクエストは正常に動作し、タスクのステータスをトグルすることができた。 -->
       <%# <div class="flex justify-end gap-4">
       <%#   <%= render "tasks/status_buttons", task: task %>
-      <%#   <%= form.submit "投稿", class: "btn bg-custom-sage hover:bg-custom-sage-dark text-custom-cream border-none" %>
+      <%#   <%= f.submit "投稿", class: "btn bg-custom-sage hover:bg-custom-sage-dark text-custom-cream border-none" %>
       <%# </div> %>
   <% end %>
 
