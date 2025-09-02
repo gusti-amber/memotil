@@ -45,6 +45,6 @@
 <% end %>
 
 <!-- 投稿フォーム -->
-<%= turbo_frame_tag "post_form_#{@task.id}" do %>
+<%= turbo_frame_tag "post_form" do %>
   <%= render 'posts/form', task: @task, post: @post %>
 <% end %>

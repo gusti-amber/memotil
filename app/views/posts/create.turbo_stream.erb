@@ -1,0 +1,7 @@
+<%= turbo_stream.append "posts" do %>
+  <%= render partial: "posts/post", locals: { post: @post } %>
+<% end %>
+
+<%= turbo_stream.update "post_form" do %>
+  <%= render "posts/form", task: @task, post: Post.new %>
+<% end %>
