@@ -1,5 +1,8 @@
 <div class="flex flex-col gap-4">
   <%= form_with model: post, url: task_posts_path(task), method: :post, local: true, class: "space-y-4", html: { id: "post_form_#{task.id}" } do |form| %>
+    <!-- postable_typeを明示的に指定 -->
+    <%= form.hidden_field :postable_type, value: "TextPost" %>
+    
     <div class="form-control">
       <%= form.fields_for :postable_attributes do |text_post_form| %>
         <%= text_post_form.text_area :body, 
