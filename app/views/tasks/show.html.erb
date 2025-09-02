@@ -37,20 +37,14 @@
 </div>
 
 <!-- 投稿一覧 -->
-<div class="p-6">
+<%= turbo_frame_tag "posts" do %>
   <% if @posts.any? %>
-    <div class="space-y-4">
-      <%#= render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
-      <%= render partial: "posts/post", collection: @posts %>
-    </div>
-  <% else %>
-    <div class="text-center py-8 text-custom-dark-green/60">
-      <p>まだ投稿はありません</p>
-    </div>
+    <%#= render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
+    <%= render partial: "posts/post", collection: @posts %>
   <% end %>
-</div>
+<% end %>
 
 <!-- 投稿フォーム -->
-<div class="bg-custom-white rounded-lg shadow-lg p-6 border border-custom-light-gray/50">
+<%= turbo_frame_tag "post_form" do %>
   <%= render 'posts/form', task: @task, post: @post %>
-</div>
+<% end %>
