@@ -1,5 +1,5 @@
-<div class="flex flex-col gap-4">
-  <%= form_with model: post, url: task_posts_path(task), method: :post, class: "space-y-4", html: { id: "post_form_#{task.id}" } do |f| %>
+<div class="bg-custom-white rounded-lg shadow-lg p-6 border border-custom-light-gray/50">
+  <%= form_with model: post, url: task_posts_path(task), method: :post, class: "space-y-4" do |f| %>
     <!-- postable_typeを明示的に指定 -->
     <%= f.hidden_field :postable_type, value: "TextPost" %>
     
@@ -24,4 +24,4 @@
       投稿
     </button> -->
   <!-- </div> -->
-</div> 
+</div>
