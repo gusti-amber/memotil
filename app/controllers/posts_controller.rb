@@ -1,26 +1,24 @@
 class PostsController < ApplicationController
   def create
     @task = current_user.tasks.find(params[:task_id])
-    @post = @task.posts.build(user: current_user)
+    
+    # ネストした属性を使用して一度に作成
+    @post = @task.posts.build(
+      user: current_user,
+      postable_type: post_params[:postable_type],
+      postable_attributes: post_params[:postable_attributes]
+    )
 
-    # TextPostを作成
-    text_post = TextPost.new(post_params)
-
-    if text_post.save
-      @post.postable = text_post
-      if @post.save
-        redirect_to @task, notice: "コメントが投稿されました。" # ♻️ renderに変更できないか？
-      else
-        redirect_to @task, alert: "投稿の保存に失敗しました。"
-      end
+    if @post.save
+      redirect_to @task, notice: "コメントが投稿されました。"
     else
-      redirect_to @task, alert: "コメントの内容が無効です。"
+      redirect_to @task, alert: "投稿の保存に失敗しました。"
     end
   end
 
   private
 
   def post_params
-    params.require(:post).require(:postable_attributes).permit(:body)
+    params.require(:post).permit(:postable_type, postable_attributes: [:body])
   end
 end
