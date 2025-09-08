@@ -365,16 +365,16 @@ RSpec.describe 'Tasks', type: :system do
       it 'タスクは正常に削除される' do
         # ドロップダウンメニューを開く
         find('summary').click
-        
-        # 削除リンクをクリック
         click_link '削除'
         
         # 確認ダイアログでOKをクリック
         accept_confirm
+
+        # タスク一覧ページに遷移するまで待ってから確認
+        expect(page).to have_current_path(tasks_path, ignore_query: true)
         
-        # 削除が完了したことを確認
+        # 削除完了を確認
         # expect(page).to have_content('タスクが削除されました')
-        expect(current_path).to eq tasks_path
         expect(Task.find_by(id: task.id)).to be_nil        
       end
     end
