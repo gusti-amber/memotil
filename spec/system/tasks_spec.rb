@@ -327,21 +327,16 @@ RSpec.describe 'Tasks', type: :system do
         # 初期状態の確認
         expect(todo.reload.done?).to be false
 
-        # チェックボックスをクリック
-        find("input[type='checkbox']").click
+        checkbox = find("input[type='checkbox']", visible: :all)
 
-        # JavaScriptの処理を待つ
-        sleep 0.5
-
-        # 完了状態がトグルされることを確認
+        # 完了にする
+        checkbox.click
+        expect(checkbox).to be_checked # Capybara が状態変化まで待機
         expect(todo.reload.done?).to be true
 
-        # 再度クリックして未完了に戻す
-        find("input[type='checkbox']").click
-
-        # JavaScriptの処理を待つ
-        sleep 0.5
-
+        # 未完了に戻す
+        checkbox.click
+        expect(checkbox).not_to be_checked
         expect(todo.reload.done?).to be false
       end
     end
@@ -351,6 +346,31 @@ RSpec.describe 'Tasks', type: :system do
         visit task_path(other_user_task)
         expect(current_path).to eq tasks_path
         # expect(page).to have_content('アクセス権限がありません')
+      end
+    end
+  end
+
+  describe 'タスク削除' do
+    before do
+      sign_in user
+      visit task_path(task)
+    end
+
+    context 'ドロップダウンメニューから削除を選択した場合' do
+      it 'タスクは正常に削除される' do
+        # ドロップダウンメニューを開く
+        find('summary').click
+        click_link '削除'
+
+        # 確認ダイアログでOKをクリック
+        accept_confirm
+
+        # タスク一覧ページに遷移するまで待ってから確認
+        expect(page).to have_current_path(tasks_path, ignore_query: true)
+
+        # 削除完了を確認
+        # expect(page).to have_content('タスクが削除されました')
+        expect(Task.find_by(id: task.id)).to be_nil
       end
     end
   end

@@ -1,50 +1,17 @@
 <div class="flex flex-col h-full gap-10 px-20 py-10 bg-custom-white rounded-lg min-h-screen">
-<div class="bg-custom-white rounded-lg shadow-lg p-6 relative border border-custom-light-gray/50">
-  <!-- 🐛 タスク項目カードの内容をパーシャルに移したが、二重でtodoリストが表示されるバグが発生しており、hotwireのturbo_frameが影響を及ぼしている可能性が高い -->
-  <%#= render "tasks/task_content" %>
-  <!-- タイトル -->
-  <div class="flex flex-col gap-4">
-    <div class="flex justify-between gap-12">
-      <p class="text-2xl font-bold mb-6 text-custom-dark-green">
-        <%= @task.title %>
-      </p>
+  <!-- タスク項目 -->
+  <%= render 'tasks/task_content', task: @task %>
 
-      <!-- 編集ボタン -->
-      <%= link_to edit_task_path(@task), class: "btn btn-outline border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-white bg-transparent" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-        </svg>
-        編集
-      <% end %>
-    </div>
-
-    <!-- タグ -->
-    <% if @task.tags.any? %>
-      <div class="flex flex-wrap gap-2 mb-8">
-        <% @task.tags.each do |tag| %>
-          <span class="badge bg-custom-dark-green text-custom-white border-none"><%= tag.name %></span>
-        <% end %>
-      </div>
+  <!-- 投稿一覧 -->
+  <%= turbo_frame_tag "posts" do %>
+    <% if @posts.any? %>
+      <%#= 🎓 render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
+      <%= render partial: "posts/post", collection: @posts %>
     <% end %>
-
-    <!-- タスクのTodoリスト -->
-    <div class="flex flex-col gap-2" data-controller="todo-toggle">
-      <% @task.todos.each do |todo| %>
-        <%= render "todos/todo", todo: todo %>
-      <% end %>
-    </div>
-  </div>
-</div>
-
-<!-- 投稿一覧 -->
-<%= turbo_frame_tag "posts" do %>
-  <% if @posts.any? %>
-    <%#= render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
-    <%= render partial: "posts/post", collection: @posts %>
   <% end %>
-<% end %>
 
-<!-- 投稿フォーム -->
-<%= turbo_frame_tag "post_form" do %>
-  <%= render 'posts/form', task: @task, post: @post %>
-<% end %>
+  <!-- 投稿フォーム -->
+  <%= turbo_frame_tag "post_form" do %>
+    <%= render 'posts/form', task: @task, post: @post %>
+  <% end %>
+</div>
