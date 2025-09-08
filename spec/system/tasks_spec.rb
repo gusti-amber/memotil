@@ -327,21 +327,16 @@ RSpec.describe 'Tasks', type: :system do
         # 初期状態の確認
         expect(todo.reload.done?).to be false
 
-        # チェックボックスをクリック
-        find("input[type='checkbox']").click
+        checkbox = find("input[type='checkbox']", visible: :all)
 
-        # JavaScriptの処理を待つ
-        sleep 0.5
-
-        # 完了状態がトグルされることを確認
+        # 完了にする
+        checkbox.click
+        expect(checkbox).to be_checked # Capybara が状態変化まで待機
         expect(todo.reload.done?).to be true
 
-        # 再度クリックして未完了に戻す
-        find("input[type='checkbox']").click
-
-        # JavaScriptの処理を待つ
-        sleep 0.5
-
+        # 未完了に戻す
+        checkbox.click
+        expect(checkbox).not_to be_checked
         expect(todo.reload.done?).to be false
       end
     end
