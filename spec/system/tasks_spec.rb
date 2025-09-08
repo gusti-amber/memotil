@@ -354,4 +354,29 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
   end
+
+  describe 'タスク削除' do
+    before do
+      sign_in user
+      visit task_path(task)
+    end
+
+    context 'ドロップダウンメニューから削除を選択した場合' do
+      it 'タスクは正常に削除される' do
+        # ドロップダウンメニューを開く
+        find('summary').click
+        
+        # 削除リンクをクリック
+        click_link '削除'
+        
+        # 確認ダイアログでOKをクリック
+        accept_confirm
+        
+        # 削除が完了したことを確認
+        # expect(page).to have_content('タスクが削除されました')
+        expect(current_path).to eq tasks_path
+        expect(Task.find_by(id: task.id)).to be_nil        
+      end
+    end
+  end
 end
