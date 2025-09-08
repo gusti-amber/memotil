@@ -36,6 +36,8 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    @task.destroy
+    redirect_to tasks_path, notice: "タスクが削除されました。"
   end
 
   def toggle_status
