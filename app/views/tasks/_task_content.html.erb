@@ -1,0 +1,29 @@
+<div class="bg-custom-white rounded-lg shadow-lg p-6 relative border border-custom-light-gray/50">
+  <div class="flex flex-col gap-4">
+    <div class="flex justify-between gap-12">
+      <!-- タイトル -->
+      <p class="text-2xl font-bold mb-6 text-custom-dark-green">
+        <%= task.title %>
+      </p>
+
+      <!-- ドロップダウンメニュー（編集・削除） -->
+      <%= render 'tasks/dropdown', task: task %>
+    </div>
+
+    <!-- タグ一覧 -->
+    <% if task.tags.any? %>
+      <div class="flex flex-wrap gap-2 mb-8">
+        <% task.tags.each do |tag| %>
+          <span class="badge bg-custom-dark-green text-custom-white border-none"><%= tag.name %></span>
+        <% end %>
+      </div>
+    <% end %>
+
+    <!-- Todoリスト -->
+    <div class="flex flex-col gap-2" data-controller="todo-toggle">
+      <% task.todos.each do |todo| %>
+        <%= render "todos/todo", todo: todo %>
+      <% end %>
+    </div>
+  </div>
+</div>

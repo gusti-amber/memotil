@@ -1,34 +1,6 @@
 <div class="flex flex-col h-full gap-10 px-20 py-10 bg-custom-white rounded-lg min-h-screen">
-  <div class="bg-custom-white rounded-lg shadow-lg p-6 relative border border-custom-light-gray/50">
-    <!-- 🐛 タスク項目カードの内容をパーシャルに移したが、二重でtodoリストが表示されるバグが発生しており、hotwireのturbo_frameが影響を及ぼしている可能性が高い -->
-    <div class="flex flex-col gap-4">
-      <div class="flex justify-between gap-12">
-        <!-- タイトル -->
-        <p class="text-2xl font-bold mb-6 text-custom-dark-green">
-          <%= @task.title %>
-        </p>
-
-        <!-- ドロップダウンメニュー（編集・削除） -->
-        <%= render 'tasks/dropdown', task: @task %>
-      </div>
-
-      <!-- タグ一覧 -->
-      <% if @task.tags.any? %>
-        <div class="flex flex-wrap gap-2 mb-8">
-          <% @task.tags.each do |tag| %>
-            <span class="badge bg-custom-dark-green text-custom-white border-none"><%= tag.name %></span>
-          <% end %>
-        </div>
-      <% end %>
-
-      <!-- Todoリスト -->
-      <div class="flex flex-col gap-2" data-controller="todo-toggle">
-        <% @task.todos.each do |todo| %>
-          <%= render "todos/todo", todo: todo %>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  <!-- タスク項目 -->
+  <%= render 'tasks/task_content', task: @task %>
 
   <!-- 投稿一覧 -->
   <%= turbo_frame_tag "posts" do %>
@@ -42,5 +14,4 @@
   <%= turbo_frame_tag "post_form" do %>
     <%= render 'posts/form', task: @task, post: @post %>
   <% end %>
-
 </div>
