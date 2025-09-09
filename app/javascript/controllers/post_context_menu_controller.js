@@ -71,8 +71,8 @@ export default class extends Controller {
       '[data-post-context-menu-target="menu"]:not(.hidden)'
     );
     if (openMenu) {
-      openMenu.classList.add("hidden");
-      openMenu.classList.remove("dropdown-open");
+      openMenu.classList.add(this.hiddenClass);
+      openMenu.classList.remove(this.openClass);
     }
   }
 
