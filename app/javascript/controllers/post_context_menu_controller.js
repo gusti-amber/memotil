@@ -64,16 +64,16 @@ export default class extends Controller {
     }, 0);
   }
 
-  // 他のコンテキストメニューをすべて閉じる
+  // 他のコンテキストメニューを閉じる
   hideAllMenus() {
-    document
-      .querySelectorAll(
-        '[data-controller*="post-context-menu"] [data-post-context-menu-target="menu"]'
-      )
-      .forEach((menu) => {
-        menu.classList.add("hidden");
-        menu.classList.remove("dropdown-open");
-      });
+    // 現在開いているメニューを探して閉じる
+    const openMenu = document.querySelector(
+      '[data-post-context-menu-target="menu"]:not(.hidden)'
+    );
+    if (openMenu) {
+      openMenu.classList.add("hidden");
+      openMenu.classList.remove("dropdown-open");
+    }
   }
 
   handleClickOutside(event) {
