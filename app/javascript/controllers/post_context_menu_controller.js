@@ -2,14 +2,16 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["menu", "chatBubble"];
-  static classes = ["hidden", "open"];
+  static classes = ["hidden", "open", "fading"];
 
   connect() {
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   disconnect() {
     document.removeEventListener("click", this.handleClickOutside);
+    document.removeEventListener("scroll", this.handleScroll);
   }
 
   showMenu(event) {
@@ -21,12 +23,20 @@ export default class extends Controller {
     this.menuTarget.classList.add(this.openClass);
     this.positionMenu(event);
     document.addEventListener("click", this.handleClickOutside);
+    document.addEventListener("scroll", this.handleScroll, true);
   }
 
   hideMenu() {
-    this.menuTarget.classList.add(this.hiddenClass);
-    this.menuTarget.classList.remove(this.openClass);
-    document.removeEventListener("click", this.handleClickOutside);
+    this.menuTarget.classList.add(this.fadingClass);
+
+    // トランジション完了後にメニューを完全に閉じる
+    setTimeout(() => {
+      this.menuTarget.classList.add(this.hiddenClass);
+      this.menuTarget.classList.remove(this.openClass);
+      this.menuTarget.classList.remove(this.fadingClass);
+      document.removeEventListener("click", this.handleClickOutside);
+      document.removeEventListener("scroll", this.handleScroll, true);
+    }, 200); // CSSのduration-200と合わせる
   }
 
   // メニューの位置を計算・設定
@@ -49,6 +59,7 @@ export default class extends Controller {
     if (openMenu) {
       openMenu.classList.add(this.hiddenClass);
       openMenu.classList.remove(this.openClass);
+      openMenu.classList.remove(this.fadingClass);
     }
   }
 
@@ -57,5 +68,10 @@ export default class extends Controller {
     if (!this.chatBubbleTarget.contains(event.target)) {
       this.hideMenu();
     }
+  }
+
+  handleScroll() {
+    // スクロール時にメニューを閉じる
+    this.hideMenu();
   }
 }
