@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_task
-  before_action :set_post, only: [:destroy]
+  before_action :set_post, only: [ :destroy ]
 
   def create
     # ネストした属性を使用して一度に作成
@@ -26,7 +26,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    
+
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to @task, notice: "投稿を削除しました。" }

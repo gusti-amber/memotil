@@ -359,7 +359,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'タスクは正常に削除される' do
         # ドロップダウンメニューを開く
         find('summary').click
-        
+
         # 削除ボタンをクリック
         accept_confirm do
           click_link '削除'
