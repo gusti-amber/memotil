@@ -1,6 +1,6 @@
 <!-- 投稿のコンテキストメニュー -->
 <div class="dropdown hidden" data-post-context-menu-target="menu">
-  <ul tabindex="0" class="dropdown-content menu bg-custom-white rounded-box z-[1] w-28 p-2 shadow-lg border border-base-300">
+  <ul tabindex="0" class="dropdown-content menu bg-custom-white rounded-box z-[1] w-28 p-2 shadow">
     <li>
       <%= link_to task_post_path(post.task, post),
           data: { turbo_method: :delete, turbo_confirm: "この投稿を削除しますか？" },
