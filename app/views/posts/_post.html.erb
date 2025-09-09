@@ -1,39 +1,41 @@
-<div id="post_<%= post.id %>" class="px-6 py-2" 
+<%= turbo_frame_tag "post_#{post.id}" do %>
+  <div class="px-6 py-2" 
       data-controller="post-context-menu" 
       data-post-context-menu-hidden-class="hidden"
       data-post-context-menu-open-class="dropdown-open">
-  
-  <div class="chat chat-start">
-    <div class="chat-header">
-      <span class="text-sm font-medium text-custom-dark-green">
-        <%= post.user.name %>
-      </span>
-      <span class="text-xs text-custom-dark-green/70 ml-2">
-        <%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
-      </span>
+    
+    <div class="chat chat-start">
+      <div class="chat-header">
+        <span class="text-sm font-medium text-custom-dark-green">
+          <%= post.user.name %>
+        </span>
+        <span class="text-xs text-custom-dark-green/70 ml-2">
+          <%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+        </span>
+      </div>
+      <div class="chat-bubble bg-custom-off-white text-custom-dark-green border-none"
+            data-post-context-menu-target="chatBubble"
+            data-action="contextmenu->post-context-menu#showMenu">
+        <%= post.postable.body %>
+      </div>
     </div>
-    <div class="chat-bubble bg-custom-off-white text-custom-dark-green border-none"
-          data-post-context-menu-target="chatBubble"
-          data-action="contextmenu->post-context-menu#showMenu">
-      <%= post.postable.body %>
-    </div>
-  </div>
 
-  <!-- コンテキストメニュー -->
-  <div class="dropdown hidden" data-post-context-menu-target="menu">
-    <ul tabindex="0" class="dropdown-content menu bg-custom-white rounded-box z-[1] w-28 p-2 shadow-lg border border-base-300">
-      <% if post.user == current_user %>
-        <li>
-          <%= link_to task_post_path(post.task, post),
-              data: { turbo_method: :delete, turbo_confirm: "この投稿を削除しますか？" },
-              class: "hover:bg-custom-off-white flex items-center gap-2 px-4 py-2 w-full text-left text-custom-rust" do %>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-            削除
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
+    <!-- コンテキストメニュー -->
+    <div class="dropdown hidden" data-post-context-menu-target="menu">
+      <ul tabindex="0" class="dropdown-content menu bg-custom-white rounded-box z-[1] w-28 p-2 shadow-lg border border-base-300">
+        <% if post.user == current_user %>
+          <li>
+            <%= link_to task_post_path(post.task, post),
+                data: { turbo_method: :delete, turbo_confirm: "この投稿を削除しますか？" },
+                class: "hover:bg-custom-off-white flex items-center gap-2 px-4 py-2 w-full text-left text-custom-rust" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              削除
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
-</div>
+<% end %>
