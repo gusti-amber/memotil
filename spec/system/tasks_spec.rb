@@ -164,10 +164,9 @@ RSpec.describe 'Tasks', type: :system do
         visit edit_task_path(task_with_todo)
 
         # 最初のToDoの削除ボタンをクリック
-        first('button[data-action="click->todo-form#remove"]').click
-
-        # アラートが表示された場合はOKをクリック
-        page.driver.browser.switch_to.alert.accept if page.driver.browser.switch_to.alert
+        accept_confirm do
+          first('button[data-action="click->todo-form#remove"]').click
+        end
 
         click_button '変更'
 
@@ -360,10 +359,11 @@ RSpec.describe 'Tasks', type: :system do
       it 'タスクは正常に削除される' do
         # ドロップダウンメニューを開く
         find('summary').click
-        click_link '削除'
 
-        # 確認ダイアログでOKをクリック
-        accept_confirm
+        # 削除ボタンをクリック
+        accept_confirm do
+          click_link '削除'
+        end
 
         # タスク一覧ページに遷移するまで待ってから確認
         expect(page).to have_current_path(tasks_path, ignore_query: true)

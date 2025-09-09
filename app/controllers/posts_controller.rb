@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
-  def create
-    @task = current_user.tasks.find(params[:task_id])
+  before_action :set_task
+  before_action :set_post, only: [ :destroy ]
 
+  def create
     # ネストした属性を使用して一度に作成
     @post = @task.posts.build(
       user: current_user,
@@ -23,7 +24,24 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post.destroy
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to @task, notice: "投稿を削除しました。" }
+    end
+  end
+
   private
+
+  def set_task
+    @task = current_user.tasks.find(params[:task_id])
+  end
+
+  def set_post
+    @post = @task.posts.find(params[:id])
+  end
 
   def post_params
     params.require(:post).permit(:postable_type, postable_attributes: [ :body ])
