@@ -4,9 +4,6 @@ export default class extends Controller {
   static targets = ["menu", "chatBubble"];
   static classes = ["hidden", "open"];
 
-  // 定数
-  MENU_OFFSET = 10;
-
   connect() {
     this.handleClickOutside = this.handleClickOutside.bind(this);
   }
@@ -34,25 +31,11 @@ export default class extends Controller {
 
   // メニューの位置を計算・設定
   positionMenu(event) {
-    const menuRect = this.menuTarget.getBoundingClientRect();
-    const viewport = { width: window.innerWidth, height: window.innerHeight };
-
-    let left = event.clientX;
-    let top = event.clientY;
-
-    // 画面端を考慮した位置調整
-    if (left + menuRect.width > viewport.width) {
-      left = viewport.width - menuRect.width - this.MENU_OFFSET;
-    }
-    if (top + menuRect.height > viewport.height) {
-      top = viewport.height - menuRect.height - this.MENU_OFFSET;
-    }
-
     // 位置を適用
     Object.assign(this.menuTarget.style, {
       position: "fixed",
-      left: `${left}px`,
-      top: `${top}px`,
+      left: `${event.clientX}px`,
+      top: `${event.clientY}px`,
       zIndex: "9999",
     });
   }
