@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["menu"];
+  static targets = ["menu", "chatBubble"];
   static classes = ["hidden", "open"];
 
   // 定数
@@ -77,10 +77,8 @@ export default class extends Controller {
   }
 
   handleClickOutside(event) {
-    if (
-      !this.element.contains(event.target) &&
-      !this.menuTarget.contains(event.target)
-    ) {
+    // chat-bubble要素以外をクリックした場合、メニューを閉じる
+    if (!this.chatBubbleTarget.contains(event.target)) {
       this.hideMenu();
     }
   }
