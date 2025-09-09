@@ -20,7 +20,7 @@ export default class extends Controller {
     this.menuTarget.classList.remove(this.hiddenClass);
     this.menuTarget.classList.add(this.openClass);
     this.positionMenu(event);
-    this.addClickOutsideListener();
+    document.addEventListener("click", this.handleClickOutside);
   }
 
   hideMenu() {
@@ -38,13 +38,6 @@ export default class extends Controller {
       top: `${event.clientY}px`,
       zIndex: "9999",
     });
-  }
-
-  // クリックアウトサイドのイベントリスナーを追加
-  addClickOutsideListener() {
-    setTimeout(() => {
-      document.addEventListener("click", this.handleClickOutside);
-    }, 0);
   }
 
   // 他のコンテキストメニューを閉じる
