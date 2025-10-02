@@ -1,8 +1,10 @@
-<div class="bg-custom-white rounded-lg shadow-lg p-6 border border-custom-light-gray/50">
+<div class="bg-custom-white rounded-2xl shadow-lg border border-custom-light-gray/50">
   <!-- daisyUI Radio Tabs Lifted -->
   <div role="tablist" class="tabs tabs-lifted">
-    <input type="radio" name="post_type" role="tab" class="tab" aria-label="テキスト" checked />
-    <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
+    <!-- ♻️ daisyUIコンポーネント特有のスタイルを変更するために、inputタグの背景色とボーダー色をstyle属性により強制的に設定した。
+    ここはdaisyUIやtailwindcss特有の設定方法がある可能性があるので、今後同じスタイルを使用する場合は改善の余地あり。 -->
+    <input type="radio" name="post_type" role="tab" class="tab" style="background-color: #FCFCF9; border-color: #E8E8E2;" aria-label="テキスト" checked />
+    <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-6">
       <!-- TextPost フォーム -->
       <%= form_with model: post, url: task_posts_path(task), method: :post, class: "space-y-4", id: "text-post-form" do |f| %>
         <%= f.hidden_field :postable_type, value: "TextPost" %>
@@ -20,8 +22,8 @@
       <% end %>
     </div>
 
-    <input type="radio" name="post_type" role="tab" class="tab" aria-label="ドキュメント" />
-    <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
+    <input type="radio" name="post_type" role="tab" class="tab" style="background-color: #FCFCF9; border-color: #E8E8E2;" aria-label="ドキュメント" />
+    <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-6">
       <!-- DocumentPost フォーム -->
       <%= form_with model: post, url: task_posts_path(task), method: :post, class: "space-y-4", id: "document-post-form" do |f| %>
         <%= f.hidden_field :postable_type, value: "DocumentPost" %>
