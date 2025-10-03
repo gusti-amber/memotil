@@ -60,24 +60,6 @@ RSpec.describe 'Posts', type: :system do
             click_button '投稿'
           end
 
-          # ⚠️ 以下のテストはデータベースレベルのテストなので、統合テストではなくモデルレベルのテストで行うべきだという判断。
-
-          # DocumentPost投稿時に、DocumentPostレコードとそれに紐づくDocumentレコードが正しく作成されているか確認
-          # 1. Documentテーブルに投稿したURLを含むレコードが存在するか
-          # document = Document.find_by(url: 'https://docs.example.com')
-          # expect(document).to be_present
-          
-          # 2. DocumentPostテーブルのdocument_idが作成したDocumentレコードのidと一致するか
-          # document_post = DocumentPost.last
-          # expect(document_post).to be_present
-          # expect(document_post.document_id).to eq(document.id)
-          
-          # 3. 最新の投稿がDocumentPostであり、PostレコードとDocumentPostレコードが紐づいているか確認
-          # post = Post.last
-          # expect(post).to be_present
-          # expect(post.postable_type).to eq('DocumentPost')
-          # expect(post.postable).to eq(document_post)
-
           # ポスト一覧に投稿されたDocumentPostが表示されることを確認
           expect(page).to have_content('https://docs.example.com')
           expect(current_path).to eq task_path(task)
