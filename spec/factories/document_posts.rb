@@ -3,5 +3,3 @@ FactoryBot.define do
     association :document
   end
 end
-
-

@@ -54,7 +54,7 @@ RSpec.describe 'Posts', type: :system do
         it 'DocumentPostが正常に作成される' do
           # DocumentPost投稿フォームのタブをクリック
           find('input[aria-label="ドキュメント"]').click
-          
+
           fill_in 'post[postable_attributes][url]', with: 'https://docs.example.com'
           within('#document-post-form') do
             click_button '投稿'

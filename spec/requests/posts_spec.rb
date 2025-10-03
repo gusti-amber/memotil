@@ -48,16 +48,16 @@ RSpec.describe 'Posts', type: :request do
             .and change(Document, :count).by(1)
 
           expect(response).to have_http_status(:redirect)
-          
+
           # Documentレコードが作成されることを確認
           document = Document.find_by(url: 'https://docs.example.com')
           expect(document).to be_present
-          
+
           # DocumentPostレコードが作成され、Documentと関連付けられることを確認
           document_post = DocumentPost.last
           expect(document_post).to be_present
           expect(document_post.document_id).to eq(document.id)
-          
+
           # PostレコードがDocumentPostと関連付けられることを確認
           post = Post.last
           expect(post.postable_type).to eq('DocumentPost')

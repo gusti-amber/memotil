@@ -3,5 +3,3 @@ FactoryBot.define do
     sequence(:url) { |n| "https://docs.example.com/#{n}" }
   end
 end
-
-
