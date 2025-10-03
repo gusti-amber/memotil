@@ -79,7 +79,7 @@ RSpec.describe 'Posts', type: :system do
       end
 
       context 'TextPostが存在する場合' do
-        it 'TextPost一覧が正しく表示される' do
+        it '投稿一覧にTextPostが正しく表示される' do
           expect(page).to have_content('test_text_post')
           expect(page).to have_content(user.name)
           expect(page).to have_content(post.created_at.strftime("%Y年%m月%d日 %H:%M"))
