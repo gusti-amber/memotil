@@ -1,19 +1,48 @@
-<div class="bg-custom-white rounded-lg shadow-lg p-6 border border-custom-light-gray/50">
-  <%= form_with model: post, url: task_posts_path(task), method: :post, class: "space-y-4" do |f| %>
-    <!-- postable_typeを明示的に指定 -->
-    <%= f.hidden_field :postable_type, value: "TextPost" %>
-    
-    <div class="form-control">
-      <%= f.fields_for :postable_attributes do |text_post_form| %>
-        <%= text_post_form.text_area :body, 
-            placeholder: "コメントを入力してください...", 
-            class: "textarea textarea-bordered w-full h-24 bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+<div class="bg-custom-white rounded-2xl shadow-lg border border-custom-light-gray/50">
+  <!-- daisyUI Radio Tabs Lifted -->
+  <div role="tablist" class="tabs tabs-lifted">
+    <!-- ♻️ daisyUIコンポーネント特有のスタイルを変更するために、inputタグの背景色とボーダー色をstyle属性により強制的に設定した。
+    背景色は、bg-custom-white、ボーダー色は、border-custom-light-gray/50である。
+    ここはdaisyUIやtailwindcss特有の設定方法がある可能性があるので、今後同じスタイルを使用する場合は改善の余地あり。 -->
+    <input type="radio" name="post_type" role="tab" class="tab text-custom-dark-green" style="background-color: #FCFCF9; border-color: rgba(232, 232, 226, 0.5);" aria-label="テキスト" checked />
+    <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-6">
+      <!-- TextPost フォーム -->
+      <%= form_with model: post, url: task_posts_path(task), method: :post, class: "space-y-4", id: "text-post-form" do |f| %>
+        <%= f.hidden_field :postable_type, value: "TextPost" %>
+        
+        <div class="form-control">
+          <%= f.fields_for :postable_attributes do |text_post_form| %>
+            <%= text_post_form.text_area :body, 
+                placeholder: "コメントを入力してください...", 
+                class: "textarea textarea-bordered w-full h-24 bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+          <% end %>
+        </div>
+        <div class="flex justify-end gap-4">
+          <%= f.submit "投稿", class: "btn bg-custom-green hover:bg-custom-green/80 text-custom-white border-none" %>
+        </div>
       <% end %>
     </div>
-    <div class="flex justify-end gap-4">
-      <%= f.submit "投稿", class: "btn bg-custom-green hover:bg-custom-green/80 text-custom-white border-none" %>
+
+    <input type="radio" name="post_type" role="tab" class="tab text-custom-dark-green" style="background-color: #FCFCF9; border-color: rgba(232, 232, 226, 0.5);" aria-label="ドキュメント" />
+    <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-6">
+      <!-- DocumentPost フォーム -->
+      <%= form_with model: post, url: task_posts_path(task), method: :post, class: "space-y-4", id: "document-post-form" do |f| %>
+        <%= f.hidden_field :postable_type, value: "DocumentPost" %>
+        
+        <div class="form-control">
+          <%= f.fields_for :postable_attributes do |document_post_form| %>
+            <%= document_post_form.label :url, "URL", class: "label text-custom-dark-green" %>
+            <%= document_post_form.text_field :url, 
+                placeholder: "https://docs.example.com", 
+                class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+          <% end %>
+        </div>
+        <div class="flex justify-end gap-4">
+          <%= f.submit "投稿", class: "btn bg-custom-green hover:bg-custom-green/80 text-custom-white border-none" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 
   <!-- ⚠️ 上記のform_withタグ内で実装を行なっても、完了ボタンを押した場合、patchリクエストのurlがtask_post_path(task)になってしまい、ルーティングエラーが発生する。
     そのため、form_withタグの外でボタン群を実装することで、完了ボタンを押した時、patchリクエストは正常に動作し、タスクのステータスをトグルすることができた。

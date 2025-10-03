@@ -18,7 +18,11 @@
       <div class="chat-bubble bg-custom-off-white text-custom-dark-green border-none"
             data-post-context-menu-target="chatBubble"
             data-action="contextmenu->post-context-menu#showMenu">
-        <%= post.postable.body %>
+        <% if post.postable_type == 'TextPost' %>
+          <%= post.postable.body %>
+        <% elsif post.postable_type == 'DocumentPost' %>
+          <%= post.postable.document.url %>
+        <% end %>
       </div>
     </div>
 

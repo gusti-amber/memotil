@@ -4,11 +4,21 @@ class PostsController < ApplicationController
 
   def create
     # ネストした属性を使用して一度に作成
-    @post = @task.posts.build(
-      user: current_user,
-      postable_type: post_params[:postable_type],
-      postable_attributes: post_params[:postable_attributes]
-    )
+    if post_params[:postable_type] == "DocumentPost"
+      document_url = post_params[:postable_attributes][:url]
+      document = Document.find_or_create_by(url: document_url)
+      @post = @task.posts.build(
+        user: current_user,
+        postable_type: post_params[:postable_type],
+        postable_attributes: { document_id: document.id }
+      )
+    elsif post_params[:postable_type] == "TextPost"
+      @post = @task.posts.build(
+        user: current_user,
+        postable_type: post_params[:postable_type],
+        postable_attributes: post_params[:postable_attributes]
+      )
+    end
 
     if @post.save
       respond_to do |format|
@@ -44,6 +54,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:postable_type, postable_attributes: [ :body ])
+    params.require(:post).permit(:postable_type, postable_attributes: [ :body, :url ])
   end
 end
