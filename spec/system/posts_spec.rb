@@ -71,7 +71,9 @@ RSpec.describe 'Posts', type: :system do
   describe '投稿表示' do
     context '投稿が存在する場合' do
       let(:task) { create(:task, user: user) }
-      let!(:post) { create(:post, user: user, task: task, postable: create(:text_post, body: 'test_text_post')) }
+      let!(:text_post) { create(:post, user: user, task: task, postable: create(:text_post, body: 'test_text_post')) }
+      let!(:document) { create(:document, url: 'https://docs.example.com') }
+      let!(:document_post) { create(:post, user: user, task: task, postable: create(:document_post, document: document)) }
 
       before do
         sign_in user
@@ -82,7 +84,13 @@ RSpec.describe 'Posts', type: :system do
         it '投稿一覧にTextPostが正しく表示される' do
           expect(page).to have_content('test_text_post')
           expect(page).to have_content(user.name)
-          expect(page).to have_content(post.created_at.strftime("%Y年%m月%d日 %H:%M"))
+          expect(page).to have_content(text_post.created_at.strftime("%Y年%m月%d日 %H:%M"))
+        end
+
+        it '投稿一覧にDocumentPostが正しく表示される' do
+          expect(page).to have_content('https://docs.example.com')
+          expect(page).to have_content(user.name)
+          expect(page).to have_content(document_post.created_at.strftime("%Y年%m月%d日 %H:%M"))
         end
       end
     end
