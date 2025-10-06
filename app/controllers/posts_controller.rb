@@ -22,14 +22,18 @@ class PostsController < ApplicationController
 
     if @post.save
       respond_to do |format|
-        format.turbo_stream
+        format.turbo_stream { render :create }
         format.html { redirect_to @task, notice: "コメントが投稿されました。" }
       end
     else
-      # ⚠️ この実装では、501文字以上の文章を投稿しようとした場合、投稿フォーム上の文章が消えてしまう。
-      # また、投稿フォームパーシャル内にエラーメッセージを実装したい。
+      # 🎓 `app/views/tasks/show.html.erb`を再描画する際に必要な投稿一覧 @posts を取得。
+      @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
+
       respond_to do |format|
-        format.html { redirect_to @task, alert: "投稿の保存に失敗しました。" }
+        format.turbo_stream { render :create, status: :unprocessable_entity }
+        format.html do
+          render "tasks/show", status: :unprocessable_entity
+        end
       end
     end
   end
