@@ -1,0 +1,10 @@
+<% if object.errors.any? %>
+  <div class="text-sm text-custom-rust mt-1">
+    <!-- 空文字で投稿した場合、本来は存在性のバリデーションエラーが発生するはずだが、object.errors.full_messagesが空になってしまう。 -->
+    <% object.errors.full_messages.each do |message| %>
+      <div class="flex items-center gap-1">
+        <span><%= message %></span>
+      </div>
+    <% end %>
+  </div>
+<% end %>
