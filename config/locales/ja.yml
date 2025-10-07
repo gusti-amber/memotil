@@ -32,6 +32,8 @@ ja:
       # 詳細は、https://nisshiee.hatenablog.jp/entry/2017/05/09/195115
       task/todos:
         body: "ToDoの内容"
+      text_post:
+        body: "コメント"
 
   # エラーメッセージの和訳
   errors:
