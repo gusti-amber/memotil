@@ -6,12 +6,15 @@
     ここはdaisyUIやtailwindcss特有の設定方法がある可能性があるので、今後同じスタイルを使用する場合は改善の余地あり。 -->
     <input type="radio" name="post_type" role="tab" class="tab text-custom-dark-green" style="background-color: #FCFCF9; border-color: rgba(232, 232, 226, 0.5);" aria-label="テキスト" checked />
     <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-6">
+      <!-- エラーメッセージ -->
+      <%= render 'shared/inline_error_messages', object: post %>
+      
       <!-- TextPost フォーム -->
       <%= form_with model: post, url: task_posts_path(task), method: :post, class: "space-y-4", id: "text-post-form" do |f| %>
         <%= f.hidden_field :postable_type, value: "TextPost" %>
         
         <div class="form-control">
-          <%= f.fields_for :postable_attributes do |text_post_form| %>
+          <%= f.fields_for :postable_attributes, (post.postable || TextPost.new) do |text_post_form| %>
             <%= text_post_form.text_area :body, 
                 placeholder: "コメントを入力してください...", 
                 class: "textarea textarea-bordered w-full h-24 bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
