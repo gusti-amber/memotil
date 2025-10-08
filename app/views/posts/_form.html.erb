@@ -36,7 +36,7 @@
         <%= f.hidden_field :postable_type, value: "DocumentPost" %>
         
         <div class="form-control">
-          <%= f.fields_for :postable_attributes do |document_post_form| %>
+          <%= f.fields_for :postable_attributes, (post.postable&.document || Document.new) do |document_post_form| %>
             <%= document_post_form.label :url, "URL", class: "label text-custom-dark-green" %>
             <%= document_post_form.text_field :url, 
                 placeholder: "https://docs.example.com", 
