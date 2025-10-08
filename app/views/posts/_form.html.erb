@@ -28,6 +28,9 @@
 
     <input type="radio" name="post_type" role="tab" class="tab text-custom-dark-green" style="background-color: #FCFCF9; border-color: rgba(232, 232, 226, 0.5);" aria-label="ドキュメント" />
     <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-6">
+      <!-- DocumentPost エラーメッセージ -->
+      <%= render 'shared/inline_error_messages', object: post %>
+      
       <!-- DocumentPost フォーム -->
       <%= form_with model: post, url: task_posts_path(task), method: :post, class: "space-y-4", id: "document-post-form" do |f| %>
         <%= f.hidden_field :postable_type, value: "DocumentPost" %>
