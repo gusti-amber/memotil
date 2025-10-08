@@ -6,12 +6,27 @@ class PostsController < ApplicationController
     # ネストした属性を使用して一度に作成
     if post_params[:postable_type] == "DocumentPost"
       document_url = post_params[:postable_attributes][:url]
-      document = Document.find_or_create_by(url: document_url)
-      @post = @task.posts.build(
-        user: current_user,
-        postable_type: post_params[:postable_type],
-        postable_attributes: { document_id: document.id }
-      )
+      document = Document.new(url: document_url)
+      
+      # Documentのバリデーションを実行
+      unless document.valid?
+        @post = @task.posts.build(
+          user: current_user,
+          postable_type: post_params[:postable_type],
+          postable_attributes: { document: document }
+        )
+        # DocumentのエラーをPostに転送
+        document.errors.each do |error|
+          @post.errors.add(:base, "URL #{error.message}")
+        end
+      else
+        document.save
+        @post = @task.posts.build(
+          user: current_user,
+          postable_type: post_params[:postable_type],
+          postable_attributes: { document_id: document.id }
+        )
+      end
     elsif post_params[:postable_type] == "TextPost"
       @post = @task.posts.build(
         user: current_user,
@@ -20,7 +35,7 @@ class PostsController < ApplicationController
       )
     end
 
-    if @post.save
+    if @post.errors.empty? && @post.save
       respond_to do |format|
         format.turbo_stream { render :create }
         format.html { redirect_to @task, notice: "コメントが投稿されました。" }
