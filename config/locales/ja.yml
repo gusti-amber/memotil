@@ -28,6 +28,8 @@ ja:
         title: "タイトル"
         tag_ids: "タグ"
         status: "ステータス"
+      document:
+        url: "URL"
       # ネストした属性を日本語対応する場合、parent/childrenのように記述する。
       # 詳細は、https://nisshiee.hatenablog.jp/entry/2017/05/09/195115
       task/todos:
@@ -45,6 +47,8 @@ ja:
       invalid: "は無効な値です"
       taken: "はすでに登録済みです"
       confirmation: "と%{attribute}の入力が一致しません"
+      invalid_url_format: "は無効な形式です"
+      invalid_protocol: "はhttpまたはhttpsで始まる必要があります"
     attributes:
       tag_ids:
         too_many: "は最大5個まで選択できます"
