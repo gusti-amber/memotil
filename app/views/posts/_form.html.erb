@@ -13,7 +13,9 @@
             <%= 'checked' if post.postable_type.blank? || post.postable_type == 'TextPost' %> />
     <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-6">
       <!-- TextPost エラーメッセージ -->
-      <%= render 'shared/inline_error_messages', object: post %>
+      <% if post.postable_type.blank? || post.postable_type == 'TextPost' %>
+        <%= render 'shared/inline_error_messages', object: post %>
+      <% end %>
       
       <!-- TextPost フォーム -->
       <%= form_with model: post, url: task_posts_path(task), method: :post, class: "space-y-4", id: "text-post-form" do |f| %>
@@ -41,7 +43,9 @@
             <%= 'checked' if post.postable_type == 'DocumentPost' %> />
     <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-6">
       <!-- DocumentPost エラーメッセージ -->
-      <%= render 'shared/inline_error_messages', object: post %>
+      <% if post.postable_type == 'DocumentPost' %>
+        <%= render 'shared/inline_error_messages', object: post %>
+      <% end %>
       
       <!-- DocumentPost フォーム -->
       <%= form_with model: post, url: task_posts_path(task), method: :post, class: "space-y-4", id: "document-post-form" do |f| %>
