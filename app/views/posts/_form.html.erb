@@ -14,7 +14,7 @@
         <%= f.hidden_field :postable_type, value: "TextPost" %>
         
         <div class="form-control">
-          <%= f.fields_for :postable_attributes, (post.postable || TextPost.new) do |text_post_form| %>
+          <%= f.fields_for :postable_attributes, (post.postable.is_a?(TextPost) ? post.postable : TextPost.new) do |text_post_form| %>
             <%= text_post_form.text_area :body, 
                 placeholder: "コメントを入力してください...", 
                 class: "textarea textarea-bordered w-full h-24 bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
@@ -36,7 +36,7 @@
         <%= f.hidden_field :postable_type, value: "DocumentPost" %>
         
         <div class="form-control">
-          <%= f.fields_for :postable_attributes, (post.postable&.document || Document.new) do |document_post_form| %>
+          <%= f.fields_for :postable_attributes, (post.postable.is_a?(DocumentPost) ? post.postable.document : Document.new) do |document_post_form| %>
             <%= document_post_form.label :url, "URL", class: "label text-custom-dark-green" %>
             <%= document_post_form.text_field :url, 
                 placeholder: "https://docs.example.com", 
