@@ -51,11 +51,14 @@ RSpec.describe 'Posts', type: :system do
     end
 
     context 'DocumentPost作成' do
+
+      before do
+        # DocumentPost投稿フォームのタブをクリック
+        find('input[aria-label="ドキュメント"]').click
+      end
+
       context '正常な入力の場合' do
         it 'DocumentPostが正常に作成される' do
-          # DocumentPost投稿フォームのタブをクリック
-          find('input[aria-label="ドキュメント"]').click
-
           fill_in 'post[postable_attributes][url]', with: 'https://docs.example.com'
           within('#document-post-form') do
             click_button '投稿'
@@ -63,6 +66,40 @@ RSpec.describe 'Posts', type: :system do
 
           # ポスト一覧に投稿されたDocumentPostが表示されることを確認
           expect(page).to have_content('https://docs.example.com')
+          expect(current_path).to eq task_path(task)
+        end
+      end
+
+      context 'バリデーションエラーが発生する場合' do
+        it 'urlが空の場合、エラーメッセージが表示される' do
+          fill_in 'post[postable_attributes][url]', with: ''
+          within('#document-post-form') do
+            click_button '投稿'
+          end
+
+          expect(page).to have_content('URL を入力してください')
+          expect(current_path).to eq task_path(task)
+        end
+
+        it 'urlが無効な形式の場合、エラーメッセージが表示される' do
+          fill_in 'post[postable_attributes][url]', with: 'あかさたな'
+          within('#document-post-form') do
+            click_button '投稿'
+          end
+
+          expect(page).to have_content('URL は無効な形式です')
+          # expect(page).to have_content('あかさたな')
+          expect(current_path).to eq task_path(task)
+        end
+
+        it 'urlがhttpまたはhttpsで始まらない場合、エラーメッセージが表示される' do
+          fill_in 'post[postable_attributes][url]', with: 'ftp://example.com'
+          within('#document-post-form') do
+            click_button '投稿'
+          end
+
+          expect(page).to have_content('URL はhttpまたはhttpsで始まる必要があります')
+          # expect(page).to have_content('ftp://example.com')
           expect(current_path).to eq task_path(task)
         end
       end
