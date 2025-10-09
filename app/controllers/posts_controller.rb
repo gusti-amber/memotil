@@ -6,10 +6,10 @@ class PostsController < ApplicationController
     # ネストした属性を使用して一度に作成
     if post_params[:postable_type] == "DocumentPost"
       document_url = post_params[:postable_attributes][:url]
-      
+
       # 既存のDocumentレコードを検索、なければ新規作成
       document = Document.find_or_create_by(url: document_url)
-      
+
       # Documentのバリデーションを実行
       unless document.valid?
         @post = @task.posts.build(

@@ -51,7 +51,6 @@ RSpec.describe 'Posts', type: :system do
     end
 
     context 'DocumentPost作成' do
-
       before do
         # DocumentPost投稿フォームのタブをクリック
         find('input[aria-label="ドキュメント"]').click
