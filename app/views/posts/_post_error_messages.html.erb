@@ -1,0 +1,24 @@
+<!-- 🎓 ぼっち演算子&.を使わないと`spec/system/posts_spec.rb`のテストが失敗するので注意 -->
+<!-- おそらく、post.postableがnilの場合、NoMethodErrorが発生するため。 -->
+<% if post.errors.any? || post.postable&.errors&.any? %>
+  <div class="text-sm text-custom-rust mt-1">
+    <!-- post.postable(Postable)のエラー(TextPostの場合のみ表示) -->
+    <% if post.postable.is_a?(TextPost) %>
+      <% post.postable.errors.full_messages.each do |message| %>
+        <div class="flex items-center gap-1">
+          <span><%= message %></span>
+        </div>
+      <% end %>
+    
+    <!-- post(Post)自体のエラー（DocumentPostの場合のみ表示） -->
+    <!-- 🎓 DocumentPostの投稿が失敗した場合、post.postableはnilになるため、エラーメッセージを取得できない。 -->
+    <!-- そのため、Postsコントローラーでpostにerrorsを追加し、この箇所でエラーを表示する。-->
+    <% elsif post.postable.is_a?(DocumentPost) %>
+      <% post.errors.full_messages.each do |message| %>
+        <div class="flex items-center gap-1">
+          <span><%= message %></span>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
