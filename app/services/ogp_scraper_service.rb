@@ -35,7 +35,7 @@ class OgpScraperService
     # OGP description > meta description
     doc.at('meta[property="og:description"]')&.[]('content') ||
     doc.at('meta[name="description"]')&.[]('content') ||
-    '説明がありません'
+    '不明'
   end
 
   def extract_ogp_image
