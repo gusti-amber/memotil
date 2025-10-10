@@ -12,6 +12,7 @@ class OgpScraperService
       description: extract_description,
       image_url: extract_ogp_image
     }
+  # title, description, image_url、のいずれかが取得できない場合は例外処理を実行
   rescue => e
     Rails.logger.error "OGP scraping failed for #{@url}: #{e.message}"
     fallback_data
