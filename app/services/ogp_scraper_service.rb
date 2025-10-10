@@ -50,8 +50,11 @@ class OgpScraperService
   end
 
   def doc
+    # docが取得できない場合、beginブロック内の処理を実行
     @doc ||= begin
-      # タイムアウト設定とUser-Agentを設定
+      # オプション(User-Agent, タイムアウト)の設定
+      # 🎓 User-Agentを偽装することで、アクセス先のサイトのbot検出を回避
+      # library open-uri: https://docs.ruby-lang.org/ja/latest/library/open=2duri.html
       options = {
         'User-Agent' => 'Mozilla/5.0 (compatible; OGP-Scraper/1.0)',
         read_timeout: 10,
