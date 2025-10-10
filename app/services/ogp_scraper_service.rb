@@ -22,6 +22,9 @@ class OgpScraperService
 
   def extract_title
     # OGP title > meta title > h1 > URL
+    # 🎓 doc.at: 最初にマッチした要素のみ取得
+    # 🎓 .text: タグ要素のテキストを取得
+    # 🎓 .strip: テキストの前後の空白を削除
     doc.at('meta[property="og:title"]')&.[]('content') ||
     doc.at('title')&.text&.strip ||
     doc.at('h1')&.text&.strip ||
