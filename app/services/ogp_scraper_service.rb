@@ -14,7 +14,8 @@ class OgpScraperService
     }
   # docの取得に失敗した場合、例外処理を実行
   rescue => e
-    Rails.logger.error "OGP scraping failed for #{@url}: #{e.message}"
+    Rails.logger.error "以下のURLのOGP情報の取得に失敗しました: #{@url}\n
+                        エラーメッセージ: #{e.message}"
     fallback_data
   end
 
