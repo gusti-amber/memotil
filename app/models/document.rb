@@ -4,6 +4,24 @@ class Document < ApplicationRecord
   validates :url, presence: true, uniqueness: true
   validate :url_format_validation
 
+  # OGP情報を取得するメソッド
+  def ogp_info
+    @ogp_info ||= OgpScraperService.new(url).call
+  end
+
+  # カード表示用のヘルパーメソッド
+  def card_title
+    ogp_info[:title]
+  end
+
+  def card_description
+    ogp_info[:description]
+  end
+
+  def card_image_url
+    ogp_info[:image_url]
+  end
+
   private
 
   def url_format_validation
