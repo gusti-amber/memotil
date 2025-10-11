@@ -1,5 +1,5 @@
-require 'nokogiri'
-require 'open-uri'
+require "nokogiri"
+require "open-uri"
 
 class OgpScraperService
   def initialize(url)
@@ -26,26 +26,26 @@ class OgpScraperService
     # 🎓 doc.at: 最初にマッチした要素のみ取得
     # 🎓 .text: タグ要素のテキストを取得
     # 🎓 .strip: テキストの前後の空白を削除
-    doc.at('meta[property="og:title"]')&.[]('content') ||
-    doc.at('title')&.text&.strip ||
-    doc.at('h1')&.text&.strip ||
+    doc.at('meta[property="og:title"]')&.[]("content") ||
+    doc.at("title")&.text&.strip ||
+    doc.at("h1")&.text&.strip ||
     @url
   end
 
   def extract_description
     # OGP description > meta description
-    doc.at('meta[property="og:description"]')&.[]('content') ||
-    doc.at('meta[name="description"]')&.[]('content') ||
-    '不明'
+    doc.at('meta[property="og:description"]')&.[]("content") ||
+    doc.at('meta[name="description"]')&.[]("content") ||
+    "不明"
   end
 
   def extract_ogp_image
     # 1. OGP画像を優先取得
-    ogp_image = doc.at('meta[property="og:image"]')&.[]('content')
+    ogp_image = doc.at('meta[property="og:image"]')&.[]("content")
     return ogp_image if ogp_image.present?
 
     # 2. ページ内の最初の画像を取得
-    first_image = doc.at('img')&.[]('src')
+    first_image = doc.at("img")&.[]("src")
     return nil unless first_image.present?
 
     # 3. 最初の画像の相対URLを絶対URLに変換
@@ -61,7 +61,7 @@ class OgpScraperService
       # 🎓 User-Agentを偽装することで、アクセス先のサイトのbot検出を回避
       # library open-uri: https://docs.ruby-lang.org/ja/latest/library/open=2duri.html
       options = {
-        'User-Agent' => 'Mozilla/5.0 (compatible; OGP-Scraper/1.0)',
+        "User-Agent" => "Mozilla/5.0 (compatible; OGP-Scraper/1.0)",
         read_timeout: 10,
         open_timeout: 10
       }
@@ -72,7 +72,7 @@ class OgpScraperService
   def fallback_data
     {
       title: @url,
-      description: 'OGP情報の取得に失敗しました',
+      description: "OGP情報の取得に失敗しました",
       image_url: nil
     }
   end
