@@ -39,14 +39,15 @@ class OgpScraperService
   end
 
   def extract_ogp_image
-    # OGP image > 最初のimgタグ
+    # 1. OGP画像を優先取得
     ogp_image = doc.at('meta[property="og:image"]')&.[]('content')
     return ogp_image if ogp_image.present?
 
-    # 相対URLを絶対URLに変換
+    # 2. ページ内の最初の画像を取得
     first_image = doc.at('img')&.[]('src')
     return nil unless first_image.present?
 
+    # 3. 最初の画像の相対URLを絶対URLに変換
     URI.join(@url, first_image).to_s
   rescue URI::InvalidURIError
     first_image
