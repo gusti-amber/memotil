@@ -21,7 +21,7 @@
         <% if post.postable_type == 'TextPost' %>
           <%= post.postable.body %>
         <% elsif post.postable_type == 'DocumentPost' %>
-          <%= post.postable.document.url %>
+          <%= render 'posts/document_card', document: post.postable.document %>
         <% end %>
       </div>
     </div>
