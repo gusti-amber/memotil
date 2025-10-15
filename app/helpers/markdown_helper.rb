@@ -22,8 +22,10 @@ module MarkdownHelper
   # Markdown形式の解析を行うヘルパーメソッド
   def markdown(text)
     return "" if text.blank?
-    
-    renderer = CustomRenderer.new
+
+    renderer = CustomRenderer.new(
+      hard_wrap: true # Markdown形式が改行を含む時、<br>を挿入
+    )
     markdown = Redcarpet::Markdown.new(renderer, {
       fenced_code_blocks: true # コードブロックの解析を許可
     })
