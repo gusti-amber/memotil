@@ -19,7 +19,7 @@
             data-post-context-menu-target="chatBubble"
             data-action="contextmenu->post-context-menu#showMenu">
         <% if post.postable_type == 'TextPost' %>
-          <%= post.postable.body %>
+          <%= markdown(post.postable.body) %>
         <% elsif post.postable_type == 'DocumentPost' %>
           <%= render 'posts/document_card', document: post.postable.document %>
         <% end %>
