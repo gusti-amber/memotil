@@ -131,6 +131,7 @@ RSpec.describe 'Posts', type: :system do
     context '投稿が存在する場合' do
       let(:task) { create(:task, user: user) }
       let!(:text_post) { create(:post, user: user, task: task, postable: create(:text_post, body: 'test text post')) }
+      let!(:text_post_with_markdown) { create(:post, user: user, task: task, postable: create(:text_post, body: "```ruby\ndef add(x,y)\n  x+y\nend\n```")) }
       let!(:document) { create(:document, url: 'https://docs.example.com') }
       let!(:document_post) { create(:post, user: user, task: task, postable: create(:document_post, document: document)) }
 
@@ -143,6 +144,13 @@ RSpec.describe 'Posts', type: :system do
         expect(page).to have_content('test text post')
         expect(page).to have_content(user.name)
         expect(page).to have_content(text_post.created_at.strftime("%Y年%m月%d日 %H:%M"))
+      end
+
+      it '投稿一覧にMarkdown形式のTextPostが正しく表示される' do
+        expect(page).to have_content('add(x,y)')
+        expect(page).to have_selector('.highlight .ruby')
+        expect(page).to have_content(user.name)
+        expect(page).to have_content(text_post_with_markdown.created_at.strftime("%Y年%m月%d日 %H:%M"))
       end
 
       it '投稿一覧にDocumentPostが正しく表示される' do
