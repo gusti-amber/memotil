@@ -48,6 +48,28 @@ RSpec.describe 'Posts', type: :system do
           expect(current_path).to eq task_path(task)
         end
       end
+
+      context 'Markdown形式の入力の場合' do
+        it '言語が指定されている場合、シンタックスハイライトが適用される' do
+          fill_in 'post[postable_attributes][body]', with: "```ruby\ndef add(x,y)\n  x+y\nend\n```"
+          within('#text-post-form') do
+            click_button '投稿'
+          end
+
+          expect(page).to have_content('add(x,y)')
+          expect(page).to have_selector('.highlight .ruby')
+        end
+
+        it '言語が指定されていない場合、シンタックスハイライトが適用されない' do
+          fill_in 'post[postable_attributes][body]', with: "```\ndef add(x,y)\n  x+y\nend\n```"
+          within('#text-post-form') do
+            click_button '投稿'
+          end
+
+          expect(page).to have_content('add(x,y)')
+          expect(page).to have_selector('.highlight .plaintext')
+        end
+      end
     end
 
     context 'DocumentPost作成' do
