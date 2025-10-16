@@ -1,23 +1,12 @@
 module MarkdownHelper
-  class CustomRenderer < Redcarpet::Render::HTML
-    def block_code(code, language)
-      # Markdown形式で言語指定されている場合、シンタックスハイライトを行う
-      if language.present?
-        # 指定された言語からRougeの字句解析器を取得
-        lexer = Rouge::Lexer.find(language.downcase)
-        # 指定された言語が見つからない場合は、テキストの解析器を使用
-        lexer = Rouge::Lexer.find('text') unless lexer
+  require 'rouge'
+  require 'rouge/plugins/redcarpet'
 
-        # 🎓 Rouge::Formatters::HTMLInlineにより、style属性でコードをハイライトする
-        # Githubのテーマオブジェクトを渡して使用
-        formatter = Rouge::Formatters::HTMLInline.new(Rouge::Themes::Github)
-        formatter.format(lexer.lex(code))
-      else
-        # ♻️ 言語が指定されていない場合の例外処理（一時的）
-        raise NotImplementedError, "Language not specified - implementation pending"
-      end
-    end
+  class CustomRenderer < Redcarpet::Render::HTML
+    # 🎓 Rouge::Plugins::Redcarpet: https://github.com/rouge-ruby/rouge/blob/b30020bb8ac965ef2a29560e115ebf0fc3da32d1/lib/rouge/plugins/redcarpet.rb
+    include Rouge::Plugins::Redcarpet
   end
+  
 
   # Markdown形式の解析を行うヘルパーメソッド
   def markdown(text)
