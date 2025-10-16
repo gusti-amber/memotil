@@ -65,3 +65,5 @@ gem "tailwindcss-ruby", "3.4.17"
 
 gem "devise", "~> 4.9"
 gem "nokogiri"
+gem "redcarpet"
+gem "rouge"

@@ -14,13 +14,13 @@ RSpec.describe 'Posts', type: :system do
     context 'TextPost作成' do
       context '正常な入力の場合' do
         it 'TextPostが正常に作成される' do
-          fill_in 'post[postable_attributes][body]', with: 'test_text_post'
+          fill_in 'post[postable_attributes][body]', with: 'test text post'
           # text-post-formというidを持つformタグ内で投稿ボタンをクリック
           within('#text-post-form') do
             click_button '投稿'
           end
 
-          expect(page).to have_content('test_text_post')
+          expect(page).to have_content('test text post')
           # expect(page).to have_content('コメントが投稿されました。')
           expect(current_path).to eq task_path(task)
         end
@@ -46,6 +46,28 @@ RSpec.describe 'Posts', type: :system do
           expect(page).to have_content('コメント は500文字以下で入力してください')
           expect(page).to have_content('a' * 501)
           expect(current_path).to eq task_path(task)
+        end
+      end
+
+      context 'Markdown形式の入力の場合' do
+        it '言語が指定されている場合、シンタックスハイライトが適用される' do
+          fill_in 'post[postable_attributes][body]', with: "```ruby\ndef add(x,y)\n  x+y\nend\n```"
+          within('#text-post-form') do
+            click_button '投稿'
+          end
+
+          expect(page).to have_content('add(x,y)')
+          expect(page).to have_selector('.highlight .ruby')
+        end
+
+        it '言語が指定されていない場合、シンタックスハイライトが適用されない' do
+          fill_in 'post[postable_attributes][body]', with: "```\ndef add(x,y)\n  x+y\nend\n```"
+          within('#text-post-form') do
+            click_button '投稿'
+          end
+
+          expect(page).to have_content('add(x,y)')
+          expect(page).to have_selector('.highlight .plaintext')
         end
       end
     end
@@ -108,7 +130,8 @@ RSpec.describe 'Posts', type: :system do
   describe '投稿表示' do
     context '投稿が存在する場合' do
       let(:task) { create(:task, user: user) }
-      let!(:text_post) { create(:post, user: user, task: task, postable: create(:text_post, body: 'test_text_post')) }
+      let!(:text_post) { create(:post, user: user, task: task, postable: create(:text_post, body: 'test text post')) }
+      let!(:text_post_with_markdown) { create(:post, user: user, task: task, postable: create(:text_post, body: "```ruby\ndef add(x,y)\n  x+y\nend\n```")) }
       let!(:document) { create(:document, url: 'https://docs.example.com') }
       let!(:document_post) { create(:post, user: user, task: task, postable: create(:document_post, document: document)) }
 
@@ -117,25 +140,30 @@ RSpec.describe 'Posts', type: :system do
         visit task_path(task)
       end
 
-      context 'TextPostが存在する場合' do
-        it '投稿一覧にTextPostが正しく表示される' do
-          expect(page).to have_content('test_text_post')
-          expect(page).to have_content(user.name)
-          expect(page).to have_content(text_post.created_at.strftime("%Y年%m月%d日 %H:%M"))
-        end
+      it '投稿一覧にTextPostが正しく表示される' do
+        expect(page).to have_content('test text post')
+        expect(page).to have_content(user.name)
+        expect(page).to have_content(text_post.created_at.strftime("%Y年%m月%d日 %H:%M"))
+      end
 
-        it '投稿一覧にDocumentPostが正しく表示される' do
-          expect(page).to have_content('https://docs.example.com')
-          expect(page).to have_content(user.name)
-          expect(page).to have_content(document_post.created_at.strftime("%Y年%m月%d日 %H:%M"))
-        end
+      it '投稿一覧にMarkdown形式のTextPostが正しく表示される' do
+        expect(page).to have_content('add(x,y)')
+        expect(page).to have_selector('.highlight .ruby')
+        expect(page).to have_content(user.name)
+        expect(page).to have_content(text_post_with_markdown.created_at.strftime("%Y年%m月%d日 %H:%M"))
+      end
+
+      it '投稿一覧にDocumentPostが正しく表示される' do
+        expect(page).to have_content('https://docs.example.com')
+        expect(page).to have_content(user.name)
+        expect(page).to have_content(document_post.created_at.strftime("%Y年%m月%d日 %H:%M"))
       end
     end
   end
 
   describe '投稿削除' do
     let(:task) { create(:task, user: user) }
-    let!(:post) { create(:post, user: user, task: task, postable: create(:text_post, body: 'test_text_post')) }
+    let!(:post) { create(:post, user: user, task: task, postable: create(:text_post, body: 'test text post')) }
 
     before do
       sign_in user
@@ -156,7 +184,7 @@ RSpec.describe 'Posts', type: :system do
         end
 
         # 投稿が削除されることを確認
-        expect(page).not_to have_content('test_text_post')
+        expect(page).not_to have_content('test text post')
         expect(current_path).to eq task_path(task)
       end
 
@@ -173,7 +201,7 @@ RSpec.describe 'Posts', type: :system do
         end
 
         # 投稿が残っていることを確認
-        expect(page).to have_content('test_text_post')
+        expect(page).to have_content('test text post')
         expect(current_path).to eq task_path(task)
       end
     end
