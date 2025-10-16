@@ -1,4 +1,6 @@
 /* GitHubのシンタックスハイライトテーマをダウンロード*/
+/* 参考ドキュメント: https://github.com/rouge-ruby/rouge?tab=readme-ov-file#command-line*/
+/* 実行したコマンド: rougify style github > app/assets/stylesheets/rouge.css */
 .highlight table td {
   padding: 5px;
 }
