@@ -139,18 +139,16 @@ RSpec.describe 'Posts', type: :system do
         visit task_path(task)
       end
 
-      context 'TextPostが存在する場合' do
-        it '投稿一覧にTextPostが正しく表示される' do
-          expect(page).to have_content('test text post')
-          expect(page).to have_content(user.name)
-          expect(page).to have_content(text_post.created_at.strftime("%Y年%m月%d日 %H:%M"))
-        end
+      it '投稿一覧にTextPostが正しく表示される' do
+        expect(page).to have_content('test text post')
+        expect(page).to have_content(user.name)
+        expect(page).to have_content(text_post.created_at.strftime("%Y年%m月%d日 %H:%M"))
+      end
 
-        it '投稿一覧にDocumentPostが正しく表示される' do
-          expect(page).to have_content('https://docs.example.com')
-          expect(page).to have_content(user.name)
-          expect(page).to have_content(document_post.created_at.strftime("%Y年%m月%d日 %H:%M"))
-        end
+      it '投稿一覧にDocumentPostが正しく表示される' do
+        expect(page).to have_content('https://docs.example.com')
+        expect(page).to have_content(user.name)
+        expect(page).to have_content(document_post.created_at.strftime("%Y年%m月%d日 %H:%M"))
       end
     end
   end
