@@ -42,9 +42,10 @@ class TasksController < ApplicationController
 
   def toggle_status
     @task = current_user.tasks.find(params[:id])
-    new_status = @task.done? ? :doing : :done
+    new_status = @task.doing? ? :done : :doing
 
     if @task.update(status: new_status)
+      redirect_to @task, notice: "タスクのステータスが更新されました。"
     else
       render :show, status: :unprocessable_entity
     end
