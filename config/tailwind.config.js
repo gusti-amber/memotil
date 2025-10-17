@@ -20,6 +20,7 @@ module.exports = {
           "off-white": "#F3F3ED", // Off White
           white: "#FCFCF9", // White
           rust: "#A94B2E", // Rust
+          purple: "#9733FF", // Purple
         },
       },
     },
