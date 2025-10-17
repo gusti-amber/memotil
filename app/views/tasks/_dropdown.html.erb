@@ -15,6 +15,31 @@
       <% end %>
     </li>
     <li>
+      <% if task.todo? %>
+        <%= link_to toggle_status_task_path(task), data: { turbo_method: :patch }, class: "hover:bg-custom-off-white flex items-center gap-2 px-4 py-2 w-full text-left" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dot text-custom-green size-4">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+          </svg>
+          タスクに着手
+        <% end %>
+      <% elsif task.doing? %>
+        <%= link_to toggle_status_task_path(task), data: { turbo_method: :patch }, class: "hover:bg-custom-off-white flex items-center gap-2 px-4 py-2 w-full text-left" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check text-custom-purple size-4">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M9 12l2 2l4 -4" />
+          </svg>
+          タスクを完了
+        <% end %>
+      <% elsif task.done? %>
+        <%= link_to toggle_status_task_path(task), data: { turbo_method: :patch }, class: "hover:bg-custom-off-white flex items-center gap-2 px-4 py-2 w-full text-left" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dot text-custom-green size-4">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+          </svg>
+          再び着手
+        <% end %>
+      <% end %>
+    </li>
+    
+    <li>
       <!-- 🎓 button_toによる構造 li > form > button は、daisyuiのmenuクラスによるレイアウト調整が機能しないので、link_toを使用した。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus-->
       <%= link_to task_path(task),
           data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
