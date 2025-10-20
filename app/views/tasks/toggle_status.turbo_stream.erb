@@ -1,12 +1,14 @@
 <!--
-# app/views/tasks/toggle_status.turbo_stream.erb
-tasksコントローラーのtoggle_statusアクションが呼ばれたときに、
-task_status_button_#{@task.id}というidを持つ要素全体
-（idを持つタグ、例えば<div id="task_status_button_...">も含む全体）を、
-status_buttonsパーシャルで置き換える。
-つまり、status_buttonsパーシャルは、<div id="task_status_button_...">で括られていないと、
-次の置き換えの際に、idがtask_status_button_...の要素が見つからないため、置き換えが行われない。
+🎓 # app/views/tasks/toggle_status.turbo_stream.erb
+tasksコントローラーのtoggle_statusアクションが呼ばれたとき、
+task_status_#{@task.id}というidを持つ要素全体を、statusパーシャルで置換。
+つまり、statusパーシャルは、<div id="task_status_...">で括られていないと、
+次の置換の際に、idがtask_status_...の要素が見つからないため、置換が行われない。
 -->
-<%= turbo_stream.replace "task_status_button_#{@task.id}" do %>
-  <%= render "tasks/status_buttons", task: @task %>
-<% end %> 
+<%= turbo_stream.replace "task_status_#{@task.id}" do %>
+  <%= render 'tasks/status', task: @task %> 
+<% end %>
+
+<%= turbo_stream.replace "task_dropdown_#{@task.id}" do %>
+  <%= render 'tasks/dropdown', task: @task %> 
+<% end %>

@@ -374,4 +374,58 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
   end
+
+  describe 'タスクステータス変更' do
+    before do
+      sign_in user
+    end
+
+    context 'todoステータスの場合' do
+      let(:task) { create(:task, user: user, status: :todo) }
+
+      it '「タスクに着手」ボタンが表示され、クリックするとステータスがdoingに変更される' do
+        visit task_path(task)
+        expect(page).to have_content('Todo')
+
+        find('summary').click
+
+        expect(page).to have_link('タスクに着手')
+        click_link 'タスクに着手'
+
+        expect(page).to have_content('Doing')
+      end
+    end
+
+    context 'doingステータスの場合' do
+      let(:task) { create(:task, user: user, status: :doing) }
+
+      it '「タスクを完了」ボタンが表示され、クリックするとステータスがdoneに変更される' do
+        visit task_path(task)
+        expect(page).to have_content('Doing')
+
+        find('summary').click
+
+        expect(page).to have_link('タスクを完了')
+        click_link 'タスクを完了'
+
+        expect(page).to have_content('Done')
+      end
+    end
+
+    context 'doneステータスの場合' do
+      let(:task) { create(:task, user: user, status: :done) }
+
+      it '「再び着手」ボタンが表示され、クリックするとステータスがdoingに変更される' do
+        visit task_path(task)
+        expect(page).to have_content('Done')
+
+        find('summary').click
+
+        expect(page).to have_link('再び着手')
+        click_link '再び着手'
+
+        expect(page).to have_content('Doing')
+      end
+    end
+  end
 end

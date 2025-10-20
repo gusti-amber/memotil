@@ -1,0 +1,36 @@
+<div id="task_status_<%= task.id %>">
+  <% if task.todo? %>
+    <span class="badge badge-lg bg-custom-dark-green/80 text-custom-white text-sm font-bold border-none flex items-center gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed size-4">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
+        <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
+        <path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" />
+        <path d="M8.56 20.31a9 9 0 0 0 3.44 .69" />
+        <path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" />
+        <path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" />
+        <path d="M20.31 8.56a9 9 0 0 0 -1.95 -2.92" />
+        <path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" />
+      </svg>
+      Todo
+    </span>
+  <% elsif task.doing? %>
+    <span class="badge badge-lg bg-custom-green text-custom-white text-sm font-bold border-none flex items-center gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dot size-4">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+      </svg>
+      Doing
+    </span>
+  <% elsif task.done? %>
+    <span class="badge badge-lg bg-custom-purple text-custom-white text-sm font-bold border-none flex items-center gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check size-4">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+        <path d="M9 12l2 2l4 -4" />
+      </svg>
+      Done
+    </span>
+  <% end %>
+</div>

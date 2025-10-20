@@ -1,11 +1,11 @@
-<!-- dropdown（編集・削除） -->
-<details class="dropdown dropdown-end">
-  <summary class="btn m-1 border-none shadow-none bg-custom-white text-custom-dark-green hover:bg-custom-off-white">
+<!-- dropdown（編集・ステータス変更・削除） -->
+<details id="task_dropdown_<%= task.id %>" class="dropdown dropdown-end">
+  <summary class="btn btn-sm m-1 border-none shadow-none bg-custom-white text-custom-dark-green hover:bg-custom-off-white">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
     </svg>
   </summary>
-  <ul class="menu dropdown-content bg-custom-white rounded-box z-[1] w-28 p-2 shadow">
+  <ul class="menu dropdown-content bg-custom-white rounded-box z-[1] w-40 p-2 shadow">
     <li>
       <%= link_to edit_task_path(task), class: "hover:bg-custom-off-white flex items-center gap-2 px-4 py-2 w-full text-left" do %>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
@@ -14,6 +14,10 @@
         編集
       <% end %>
     </li>
+    <li>
+      <%= render 'tasks/status_buttons', task: task %>
+    </li>
+    
     <li>
       <!-- 🎓 button_toによる構造 li > form > button は、daisyuiのmenuクラスによるレイアウト調整が機能しないので、link_toを使用した。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus-->
       <%= link_to task_path(task),
@@ -27,4 +31,3 @@
     </li>
   </ul>
 </details>
-
