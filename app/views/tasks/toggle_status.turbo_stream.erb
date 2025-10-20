@@ -8,3 +8,7 @@ task_content_#{@task.id}というidを持つ要素全体（idを持つタグ、�
 <%= turbo_stream.replace "task_status_#{@task.id}" do %>
   <%= render 'tasks/status', task: @task %> 
 <% end %>
+
+<%= turbo_stream.replace "task_dropdown_#{@task.id}" do %>
+  <%= render 'tasks/dropdown', task: @task %> 
+<% end %>
