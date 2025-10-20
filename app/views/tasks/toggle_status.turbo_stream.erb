@@ -7,6 +7,6 @@ status_buttonsパーシャルで置き換える。
 つまり、status_buttonsパーシャルは、<div id="task_status_button_...">で括られていないと、
 次の置き換えの際に、idがtask_status_button_...の要素が見つからないため、置き換えが行われない。
 -->
-<%= turbo_stream.replace "task_status_button_#{@task.id}" do %>
-  <%= render "tasks/status_buttons", task: @task %>
+<%= turbo_stream.replace "task_content_#{@task.id}" do %>
+  <%= render 'tasks/task_content', task: @task %>
 <% end %> 
