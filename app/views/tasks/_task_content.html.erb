@@ -14,13 +14,7 @@
       <!-- ステータスバッジ -->
       <%= render 'tasks/status', task: task %>
       <!-- タグ一覧 -->
-      <% if task.tags.any? %>
-        <div class="flex flex-wrap gap-2">
-          <% task.tags.each do |tag| %>
-            <span class="badge bg-custom-dark-green text-custom-white border-none"><%= tag.name %></span>
-          <% end %>
-        </div>
-      <% end %>
+      <%= render 'tasks/tags', task: task %>
     </div>
 
     <!-- Todoリスト -->
