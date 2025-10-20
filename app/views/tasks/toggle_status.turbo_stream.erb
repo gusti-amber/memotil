@@ -1,9 +1,9 @@
 <!--
 🎓 # app/views/tasks/toggle_status.turbo_stream.erb
 tasksコントローラーのtoggle_statusアクションが呼ばれたとき、
-task_content_#{@task.id}というidを持つ要素全体（idを持つタグ、例えば<div id="task_content_...">も含む全体）を、task_contentパーシャルで置換。
-つまり、task_contentパーシャルは、<div id="task_content_...">で括られていないと、
-次の置換の際に、idがtask_content_...の要素が見つからないため、置換が行われない。
+task_status_#{@task.id}というidを持つ要素全体を、statusパーシャルで置換。
+つまり、statusパーシャルは、<div id="task_status_...">で括られていないと、
+次の置換の際に、idがtask_status_...の要素が見つからないため、置換が行われない。
 -->
 <%= turbo_stream.replace "task_status_#{@task.id}" do %>
   <%= render 'tasks/status', task: @task %> 
