@@ -10,7 +10,7 @@
       <%= render 'tasks/dropdown', task: task %>
     </div>
 
-    <div class="flex justify-start gap-4">
+    <div class="flex justify-start items-center gap-4">
       <!-- ステータスバッジ -->
       <% if task.todo? %>
         <span class="badge badge-lg bg-custom-dark-green/80 text-custom-white text-sm font-bold border-none flex items-center gap-1">
@@ -49,7 +49,7 @@
       
       <!-- タグ一覧 -->
       <% if task.tags.any? %>
-        <div class="flex flex-wrap gap-2 mb-8">
+        <div class="flex flex-wrap gap-2">
           <% task.tags.each do |tag| %>
             <span class="badge bg-custom-dark-green text-custom-white border-none"><%= tag.name %></span>
           <% end %>
