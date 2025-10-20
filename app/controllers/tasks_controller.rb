@@ -45,9 +45,15 @@ class TasksController < ApplicationController
     new_status = @task.doing? ? :done : :doing
 
     if @task.update(status: new_status)
-      redirect_to @task, notice: "タスクのステータスが更新されました。"
+      respond_to do |format|
+        format.turbo_stream { render :toggle_status }
+        format.html { redirect_to @task, notice: "タスクのステータスが更新されました。" }
+      end
     else
-      render :show, status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream { render :toggle_status, status: :unprocessable_entity }
+        format.html { render :show, status: :unprocessable_entity }
+      end
     end
   end
 
