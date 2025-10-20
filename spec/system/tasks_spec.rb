@@ -402,7 +402,7 @@ RSpec.describe 'Tasks', type: :system do
       it '「タスクを完了」ボタンが表示され、クリックするとステータスがdoneに変更される' do
         visit task_path(task)
         expect(page).to have_content('Doing')
-        
+
         find('summary').click
 
         expect(page).to have_link('タスクを完了')
@@ -418,7 +418,7 @@ RSpec.describe 'Tasks', type: :system do
       it '「再び着手」ボタンが表示され、クリックするとステータスがdoingに変更される' do
         visit task_path(task)
         expect(page).to have_content('Done')
-        
+
         find('summary').click
 
         expect(page).to have_link('再び着手')
