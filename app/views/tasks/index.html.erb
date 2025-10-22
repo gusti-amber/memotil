@@ -1,6 +1,20 @@
 <div class="flex flex-col h-full gap-10 px-20 py-10 bg-custom-white rounded-lg min-h-screen">
   <p class="text-4xl font-bold text-custom-dark-green text-center">タスク</p>
   <div class="flex justify-end gap-4">
+    <!-- ステータスフィルター -->
+    <%= form_with url: tasks_path, method: :get, data: { turbo_frame: "tasks_list" }, class: "flex items-center gap-2" do |form| %>
+      <%= form.select :status, 
+          options_for_select([
+            ['すべて', ''],
+            ['Todo', 'todo'],
+            ['Doing', 'doing'],
+            ['Done', 'done']
+          ], params[:status]),
+          {},
+          class: "select select-bordered bg-custom-white border-custom-dark-green text-custom-dark-green font-bold focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none w-full max-w-xs",
+          onchange: "this.form.requestSubmit()" %>
+    <% end %>
+    
     <!-- タスク作成ボタン -->
     <%= link_to new_task_path, class: "btn btn-outline border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-white bg-transparent" do %>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
