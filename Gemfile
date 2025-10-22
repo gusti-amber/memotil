@@ -60,8 +60,7 @@ group :test do
   gem "webdrivers"
 end
 
-gem "tailwindcss-rails"
-gem "tailwindcss-ruby", "3.4.17"
+gem "tailwindcss-rails", "~> 4.0"
 
 gem "devise", "~> 4.9"
 gem "nokogiri"
