@@ -428,4 +428,51 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
   end
+
+  describe "タスク一覧" do
+    let!(:todo_task) { create(:task, user: user, status: 'todo', title: 'Todo Task') }
+    let!(:doing_task) { create(:task, user: user, status: 'doing', title: 'Doing Task') }
+    let!(:done_task) { create(:task, user: user, status: 'done', title: 'Done Task') }
+
+    before do
+      sign_in user
+      visit tasks_path
+    end
+
+    context "セレクトボックスからtodoを選択した場合" do
+      it "Todoステータスのタスクのみが表示される" do
+        select 'Todo', from: 'status'
+        expect(page).to have_content('Todo Task')
+        expect(page).not_to have_content('Doing Task')
+        expect(page).not_to have_content('Done Task')
+      end
+    end
+
+    context "セレクトボックスからdoingを選択した場合" do
+      it "Doingステータスのタスクのみが表示される" do
+        select 'Doing', from: 'status'
+        expect(page).to have_content('Doing Task')
+        expect(page).not_to have_content('Todo Task')
+        expect(page).not_to have_content('Done Task')
+      end
+    end
+
+    context "セレクトボックスからdoneを選択した場合" do
+      it "Doneステータスのタスクのみが表示される" do
+        select 'Done', from: 'status'
+        expect(page).to have_content('Done Task')
+        expect(page).not_to have_content('Todo Task')
+        expect(page).not_to have_content('Doing Task')
+      end
+    end
+
+    context "セレクトボックスからすべてを選択した場合" do
+      it "全タスクが表示される" do
+        select 'すべて', from: 'status'
+        expect(page).to have_content('Todo Task')
+        expect(page).to have_content('Doing Task')
+        expect(page).to have_content('Done Task')
+      end
+    end
+  end
 end
