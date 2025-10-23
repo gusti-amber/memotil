@@ -4,12 +4,14 @@
     <p class="text-2xl font-bold text-custom-dark-green"><%= task.title %></p>
 
     <!-- ドロップダウンメニュー（編集・ステータス変更・削除） -->
-    <%= render 'tasks/dropdown', task: task %>
+    <%= turbo_frame_tag "task_dropdown" do %>
+      <%= render 'tasks/dropdown', task: task %>
+    <% end %>
   </div>
 
   <div class="flex justify-start items-center gap-4">
     <!-- ステータスバッジ -->
-    <%= turbo_frame_tag "status_badges_#{task.id}" do %>
+    <%= turbo_frame_tag "task_status_badge" do %>
       <%= render 'tasks/status_badge', task: task %>
     <% end %>
     
