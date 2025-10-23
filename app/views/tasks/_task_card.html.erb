@@ -15,9 +15,7 @@
 
     <!-- タグ一覧 -->
     <div class="card-actions">
-      <% task.tags.each do |tag| %>
-        <span class="badge badge-neutral"><%= tag.name %></span>
-      <% end %>
+      <%= render 'tasks/tag_badges', task: task %>
     </div>
   </div>
 <% end %>
