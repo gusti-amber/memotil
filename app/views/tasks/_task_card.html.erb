@@ -15,7 +15,7 @@
 
     <!-- タグ一覧 -->
     <div class="card-actions">
-      <%= render 'tasks/tag_badges', task: task %>
+      <%= render partial: "tasks/tag_badge", collection: task.tags, as: :tag %>
     </div>
   </div>
 <% end %>
