@@ -36,3 +36,14 @@
   --depth: 1;
   --noise: 0;
 }
+
+/* Tailwind CSS v4 カスタムカラー定義 */
+@theme {
+  --color-custom-green: #148f57;
+  --color-custom-dark-green: #233d31;
+  --color-custom-light-gray: #e8e8e2;
+  --color-custom-off-white: #f3f3ed;
+  --color-custom-white: #fcfcf9;
+  --color-custom-rust: #a94b2e;
+  --color-custom-purple: #9733ff;
+}

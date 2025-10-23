@@ -12,17 +12,8 @@ module.exports = {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
-      colors: {
-        custom: {
-          green: "#148F57", // Green
-          "dark-green": "#233D31", // Dark Green
-          "light-gray": "#E8E8E2", // Light Gray
-          "off-white": "#F3F3ED", // Off White
-          white: "#FCFCF9", // White
-          rust: "#A94B2E", // Rust
-          purple: "#9733FF", // Purple
-        },
-      },
+      // Tailwind CSS v4では、カスタムカラーはCSS変数として定義するため、
+      // ここでの色定義は不要（application.cssの@themeブロックで定義済み）
     },
   },
   plugins: [
