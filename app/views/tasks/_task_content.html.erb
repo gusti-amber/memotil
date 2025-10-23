@@ -19,8 +19,6 @@
 
   <!-- Todoリスト -->
   <div class="flex flex-col gap-2">
-    <% task.todos.each do |todo| %>
-      <%= render "todos/todo", todo: todo %>
-    <% end %>
+    <%= render partial: "todos/todo", collection: task.todos %>
   </div>
 </div>
