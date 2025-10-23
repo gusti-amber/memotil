@@ -8,11 +8,11 @@
         <%= link_to "タスクをみる", tasks_path, class: "text-custom-dark-green hover:text-custom-dark-green transition-colors" %>
       </div>
       <% if user_signed_in? %>
-        <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "flex-none btn btn-sm bg-custom-dark-green border-custom-dark-green hover:bg-custom-dark-green/80 hover:border-custom-dark-green/80 text-sm text-custom-white rounded-full" %>
+        <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "flex-none btn btn-secondary rounded-full" %>
       <% else %>
         <div class="flex-none flex gap-2">
-          <%= link_to "ログイン", new_user_session_path, class: "btn btn-sm bg-custom-dark-green border-custom-dark-green hover:bg-custom-dark-green/80 hover:border-custom-dark-green/80 text-sm text-custom-white rounded-full" %>
-          <%= link_to "サインアップ", new_user_registration_path, class: "btn btn-sm btn-outline bg-custom-white border-custom-dark-green text-sm text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-white rounded-full" %>
+          <%= link_to "ログイン", new_user_session_path, class: "btn btn-secondary rounded-full" %>
+          <%= link_to "サインアップ", new_user_registration_path, class: "btn btn-outline btn-secondary rounded-full" %>
         </div>
       <% end %>
     <% end %>
