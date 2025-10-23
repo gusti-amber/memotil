@@ -1,24 +1,23 @@
-<%= link_to task_path(task), class: "card bg-custom-white shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-custom-light-gray/50 h-48" do %>
-  <div class="card-body flex flex-col h-full p-6">
-    <div class="flex justify-start items-center gap-1">
+<%= link_to task_path(task), class: "card h-48 shadow-sm" do %>
+  <div class="card-body">
+    <div class="card-actions">
       <!-- ステータスアイコン -->
       <%= render 'tasks/status_icons', task: task %>
 
       <!-- 作成日 -->
-      <p class="text-sm text-custom-dark-green/70">
+      <p class="text-custom-dark-green/80">
         作成日: <%= task.created_at.strftime("%Y年%m月%d日 %H:%M") %>
       </p>
     </div>
-    <div class="flex-1">
-      <!-- タスクタイトル -->
-      <p class="card-title text-lg text-custom-dark-green line-clamp-2 mb-2"><%= task.title %></p>
 
-      <!-- タグ一覧 -->              
-      <div class="flex flex-wrap gap-2">
-        <% task.tags.each do |tag| %>
-          <span class="badge bg-custom-dark-green text-custom-white border-none"><%= tag.name %></span>
-        <% end %>
-      </div>
+    <!-- タイトル -->
+    <p class="card-title line-clamp-2"><%= task.title %></p>
+
+    <!-- タグ一覧 -->
+    <div class="card-actions">
+      <% task.tags.each do |tag| %>
+        <span class="badge badge-secondary"><%= tag.name %></span>
+      <% end %>
     </div>
   </div>
 <% end %>
