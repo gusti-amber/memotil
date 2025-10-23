@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: default --default;
+}
+
+@plugin "daisyui/theme" {
+  name: "default";
+  default: true;
+  prefersdark: false;
+  --color-base-100: #fcfcf9;
+  --color-base-200: #f3f3ed;
+  --color-base-300: #e8e8e2;
+  --color-base-content: #233d31;
+  --color-primary: #148f57;
+  --color-primary-content: #fcfcf9;
+  --color-secondary: #233d31;
+  --color-secondary-content: #fcfcf9;
+  --color-accent: #9733ff;
+  --color-accent-content: #fcfcf9;
+  --color-neutral: #233d31;
+  --color-neutral-content: #fcfcf9;
+  --color-info: oklch(74% 0.16 232.661);
+  --color-info-content: oklch(29% 0.066 243.157);
+  --color-success: #148f57;
+  --color-success-content: #fcfcf9;
+  --color-warning: oklch(82% 0.189 84.429);
+  --color-warning-content: oklch(41% 0.112 45.904);
+  --color-error: #a94b2e;
+  --color-error-content: #fcfcf9;
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+/* Tailwind CSS v4 カスタムカラー定義 */
+@theme {
+  --color-custom-green: #148f57;
+  --color-custom-dark-green: #233d31;
+  --color-custom-light-gray: #e8e8e2;
+  --color-custom-off-white: #f3f3ed;
+  --color-custom-white: #fcfcf9;
+  --color-custom-rust: #a94b2e;
+  --color-custom-purple: #9733ff;
+}
