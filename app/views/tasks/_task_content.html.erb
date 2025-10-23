@@ -9,7 +9,9 @@
 
   <div class="flex justify-start items-center gap-4">
     <!-- ステータスバッジ -->
-    <%= render 'tasks/status_badges', task: task %>
+    <%= turbo_frame_tag "status_badges_#{task.id}" do %>
+      <%= render 'tasks/status_badge', task: task %>
+    <% end %>
     
     <!-- タグ一覧 -->
     <div class="flex flex-wrap gap-2">
