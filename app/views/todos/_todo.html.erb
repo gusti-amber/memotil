@@ -3,7 +3,7 @@
     <%= f.check_box :done, 
         class: "checkbox", 
         checked: todo.done?,
-        data: { action: "change->todo-toggle#toggle" } %>
+        onchange: "this.form.requestSubmit()" %>
     <span class="<%= todo.done? ? 'line-through text-custom-dark-green/50' : 'text-custom-dark-green' %>">
       <%= todo.body %>
     </span>
