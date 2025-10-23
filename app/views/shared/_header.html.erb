@@ -6,9 +6,6 @@
     <% if !auth_page? %>
       <div class="flex-1 flex justify-start items-center gap-10">
         <%= link_to "タスクをみる", tasks_path, class: "text-custom-dark-green hover:text-custom-dark-green transition-colors" %>
-        <!-- マイリスト画面とさがす画面はまだ実装していないので、クリックしたらアラートが表示されるようにしている。 -->
-        <%= link_to "マイリスト", "#", onclick: "alert('Coming soon!'); return false;", class: "text-custom-dark-green hover:text-custom-dark-green transition-colors" %>
-        <%= link_to "さがす", "#", onclick: "alert('Coming soon!'); return false;", class: "text-custom-dark-green hover:text-custom-dark-green transition-colors" %>
       </div>
       <% if user_signed_in? %>
         <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "flex-none btn btn-sm bg-custom-dark-green border-custom-dark-green hover:bg-custom-dark-green/80 hover:border-custom-dark-green/80 text-sm text-custom-white rounded-full" %>
