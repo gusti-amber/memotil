@@ -24,24 +24,16 @@
         <!-- タグ選択セクション -->
         <div class="form-control">
           <%= f.label :tag_ids, class: "label text-custom-dark-green font-medium" %>
-          <!-- タグ選択ドロップダウン -->
+          
+          <!-- タグ選択ドロップダウンメニュー -->
           <div class="dropdown w-full">
-            <!-- ♻️safariブラウザ含むすべてのブラウザで動作するコード。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus -->
+            <!-- ♻️safariブラウザ含むすべてのブラウザで動作するコード。https://daisyui.com/components/dropdown/#method-3-css-focus -->
             <div tabindex="0" role="button" class="btn btn-outline w-full bg-custom-white border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-white">
               <span>選択</span>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                 <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
               </svg>
             </div>
-
-            <!-- ⚠️buttonタグを使用した場合、safariブラウザでは動作しない可能性がある。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus-->
-            <!-- <button type="button" class="btn btn-outline w-full bg-custom-white border-custom-dark-green text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-white">
-              <span>選択</span>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-              </svg>
-            </button>
-            -->
 
             <!-- 🎓tabindex="0"により、ラベルをクリックしても画面が閉じなくなる。-->
             <ul tabindex="0" class="dropdown-content bg-custom-white rounded-box z-[1] p-2 shadow w-full max-h-60 overflow-y-auto border border-custom-light-gray/50">
