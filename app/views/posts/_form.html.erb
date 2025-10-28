@@ -62,13 +62,3 @@
     <% end %>
   </div>
 </div>
-
-<!-- ⚠️ 上記のform_withタグ内で実装を行なっても、完了ボタンを押した場合、patchリクエストのurlがtask_post_path(task)になってしまい、ルーティングエラーが発生する。
-  そのため、form_withタグの外でボタン群を実装することで、完了ボタンを押した時、patchリクエストは正常に動作し、タスクのステータスをトグルすることができた。
-  しかし、form_withタグ外で送信ボタンを実装する場合、Turboフレームの制御が難しくなるため、タスクステータスの完了ボタンは廃止し、タスク項目画面右上に実装する予定-->
-<!-- <div class="flex justify-end gap-4"> %-->
-  <%#= render "tasks/status_buttons", task: task %>
-  <!-- <button type="submit" form="post_form_task.id" class="btn bg-custom-green hover:bg-custom-green/80 text-custom-white border-none">
-    投稿
-  </button> -->
-<!-- </div> -->
