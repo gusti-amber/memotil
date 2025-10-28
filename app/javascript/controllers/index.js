@@ -7,9 +7,6 @@ import { application } from "./application";
 import HelloController from "./hello_controller";
 application.register("hello", HelloController);
 
-import TodoToggleController from "./todo_toggle_controller";
-application.register("todo-toggle", TodoToggleController);
-
 import TodoFormController from "./todo_form_controller";
 application.register("todo-form", TodoFormController);
 

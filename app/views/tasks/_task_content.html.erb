@@ -1,27 +1,30 @@
-<div class="bg-custom-white rounded-lg shadow-lg p-6 relative border border-custom-light-gray/50">
-  <div class="flex flex-col gap-5">
-    <div class="flex justify-between items-center gap-12">
-      <!-- タイトル -->
-      <p class="text-2xl font-bold text-custom-dark-green">
-        <%= task.title %>
-      </p>
+<div class="flex flex-col gap-4">
+  <div class="flex justify-between items-center">
+    <!-- タイトル -->
+    <p class="text-2xl font-bold text-custom-dark-green"><%= task.title %></p>
 
-      <!-- ドロップダウンメニュー（編集・ステータス変更・削除） -->
+    <!-- ドロップダウンメニュー（編集・ステータス変更・削除） -->
+    <%= turbo_frame_tag "task_dropdown" do %>
       <%= render 'tasks/dropdown', task: task %>
-    </div>
+    <% end %>
+  </div>
 
-    <div class="flex justify-start items-center gap-4">
-      <!-- ステータスバッジ -->
-      <%= render 'tasks/status', task: task %>
-      <!-- タグ一覧 -->
-      <%= render 'tasks/tags', task: task %>
-    </div>
-
-    <!-- Todoリスト -->
-    <div class="flex flex-col gap-2" data-controller="todo-toggle">
-      <% task.todos.each do |todo| %>
-        <%= render "todos/todo", todo: todo %>
-      <% end %>
+  <div class="flex justify-start items-center gap-4">
+    <!-- ステータスバッジ -->
+    <%= turbo_frame_tag "task_status_badge" do %>
+      <%= render 'tasks/status_badge', task: task %>
+    <% end %>
+    
+    <!-- タグ一覧 -->
+    <div class="flex flex-wrap gap-2">
+      <%= render partial: "tasks/tag_badge", collection: task.tags, as: :tag %>
     </div>
   </div>
+
+  <!-- Todoリスト -->
+  <div class="flex flex-col gap-2">
+    <%= render partial: "todos/todo", collection: task.todos %>
+  </div>
+
+  <div class="divider"></div>
 </div>

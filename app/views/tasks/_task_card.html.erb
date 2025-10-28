@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="card-actions">
       <!-- ステータスアイコン -->
-      <%= render 'tasks/status_icons', task: task %>
+      <%= render 'tasks/status_icon', task: task %>
 
       <!-- 作成日 -->
       <p class="text-custom-dark-green/80">
@@ -15,9 +15,7 @@
 
     <!-- タグ一覧 -->
     <div class="card-actions">
-      <% task.tags.each do |tag| %>
-        <span class="badge badge-secondary rounded-full"><%= tag.name %></span>
-      <% end %>
+      <%= render partial: "tasks/tag_badge", collection: task.tags, as: :tag %>
     </div>
   </div>
 <% end %>

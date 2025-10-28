@@ -11,12 +11,12 @@
             ['Done', 'done']
           ], params[:status]),
           {},
-          class: "select select-bordered select-secondary font-semibold",
+          class: "select select-bordered select-neutral font-semibold",
           onchange: "this.form.requestSubmit()" %>
     <% end %>
     
     <!-- タスク作成ボタン -->
-    <%= link_to new_task_path, class: "btn btn-outline btn-secondary" do %>
+    <%= link_to new_task_path, class: "btn btn-outline btn-neutral" do %>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
         <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
       </svg>
@@ -27,10 +27,7 @@
   <!-- タスク一覧 -->
   <% if @tasks.any? %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <% @tasks.each do |task| %>
-        <!-- タスクカード -->
-        <%= render 'tasks/task_card', task: task %>
-      <% end %>
+      <%= render partial: "tasks/task_card", collection: @tasks, as: :task %>
     </div>
   <% else %>
     <div class="text-center py-10">

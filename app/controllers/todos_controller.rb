@@ -2,8 +2,17 @@ class TodosController < ApplicationController
   before_action :set_todo, only: [ :update ]
 
   def update
-    @todo.update(done: !@todo.done?) # 現在はtodoで変更できることはdoneカラムのトグルのみだが、今後bodyカラムも更新をする場合はここを変更する
-    render partial: "todos/todo", locals: { todo: @todo }
+    if @todo.update(done: !@todo.done?)
+      respond_to do |format|
+        format.turbo_stream { render :update }
+        format.html { redirect_to @todo.task, notice: "Todoが正常に更新されました。" }
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream { render :update, status: :unprocessable_entity }
+        format.html { redirect_to @todo.task, alert: "Todoの更新に失敗しました。" }
+      end
+    end
   end
 
   private
