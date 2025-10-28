@@ -33,7 +33,17 @@ export default class extends Controller {
   updateButtonState() {
     const isDisabled = !this.canAdd;
     this.addButtonTarget.disabled = isDisabled;
-    this.addButtonTarget.classList.toggle("btn-disabled", isDisabled);
+
+    // daisyUI v5対応: disabled状態の見た目を確実に適用
+    if (isDisabled) {
+      this.addButtonTarget.classList.add("btn-disabled");
+      this.addButtonTarget.classList.add("opacity-50");
+      this.addButtonTarget.classList.add("cursor-not-allowed");
+    } else {
+      this.addButtonTarget.classList.remove("btn-disabled");
+      this.addButtonTarget.classList.remove("opacity-50");
+      this.addButtonTarget.classList.remove("cursor-not-allowed");
+    }
   }
 
   get canAdd() {
