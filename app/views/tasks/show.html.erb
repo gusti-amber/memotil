@@ -2,16 +2,24 @@
   <!-- タスク項目 -->
   <%= render 'tasks/task_content', task: @task %>
 
-  <!-- 投稿一覧 -->
-  <%= turbo_frame_tag "posts" do %>
-    <% if @posts.any? %>
-      <%#= 🎓 render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
-      <%= render partial: "posts/post", collection: @posts %>
+  <% unless @task.todo? %>
+    <!-- 投稿一覧 -->
+    <%= turbo_frame_tag "posts" do %>
+      <% if @posts.any? %>
+        <%#= 🎓 render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
+        <%= render partial: "posts/post", collection: @posts %>
+      <% else %>
+        <%= turbo_frame_tag "posts_empty_state" do %>
+          <p class="text-center text-custom-gray">まだ投稿はありません</p>
+        <% end %>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <!-- 投稿フォーム -->
-  <%= turbo_frame_tag "post_form" do %>
-    <%= render 'posts/form', task: @task, post: @post %>
+    <!-- 投稿フォーム -->
+    <% if @task.doing? %>
+      <%= turbo_frame_tag "post_form" do %>
+        <%= render 'posts/form', task: @task, post: @post %>
+      <% end %>
+    <% end %>
   <% end %>
 </div>
