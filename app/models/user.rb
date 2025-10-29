@@ -9,4 +9,12 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   # カスタムバリデーション
   validates :name, presence: true, length: { minimum: 2, maximum: 20 }
+
+  def self.from_github(auth)
+    find_or_create_by(github_uid: auth.uid) do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+      user.name = auth.info.name || auth.info.nickname
+    end
+  end
 end
