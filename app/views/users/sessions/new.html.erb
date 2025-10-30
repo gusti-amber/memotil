@@ -21,13 +21,9 @@
           GitHubでログイン
         <% end %>
       </div>
-      
+
       <!-- 区切り線 -->
-      <div class="flex items-center w-full">
-        <div class="flex-1 border-t border-custom-light-gray/50"></div>
-        <span class="px-4 text-sm text-custom-dark-green/60">または</span>
-        <div class="flex-1 border-t border-custom-light-gray/50"></div>
-      </div>
+      <div class="divider divider-secondary text-custom-gray opacity-50">または</div>
       
       <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-5 w-full" }) do |f| %>        
         <% if flash[:alert] %>
