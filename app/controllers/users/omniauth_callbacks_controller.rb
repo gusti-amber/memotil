@@ -11,12 +11,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       set_flash_message(:notice, :success, kind: "GitHub") if is_navigational_format?
       redirect_to tasks_path
     else
-      redirect_to new_user_registration_url
+      redirect_to new_user_session_url
     end
   end
 
   def failure
-    redirect_to root_path
+    redirect_to new_user_session_path
   end
 end
 
