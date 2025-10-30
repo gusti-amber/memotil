@@ -5,5 +5,3 @@ class AddGithubToUsers < ActiveRecord::Migration[7.2]
     add_index :users, :github_uid, unique: true
   end
 end
-
-
