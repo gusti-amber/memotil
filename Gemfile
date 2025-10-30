@@ -46,6 +46,8 @@ group :development, :test do
 
   gem "rspec-rails", "~> 8.0.0"
   gem "factory_bot_rails"
+
+  gem "dotenv-rails" # 環境変数の管理
 end
 
 group :development do
@@ -66,3 +68,5 @@ gem "devise", "~> 4.9"
 gem "nokogiri"
 gem "redcarpet"
 gem "rouge"
+gem "omniauth-github"
+gem "omniauth-rails_csrf_protection"
