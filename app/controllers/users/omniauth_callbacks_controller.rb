@@ -9,6 +9,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.persisted?
       sign_in(@user)
       set_flash_message(:notice, :success, kind: "GitHub") if is_navigational_format?
+      redirect_to tasks_path
     else
       redirect_to new_user_registration_url
     end
