@@ -19,7 +19,7 @@
 
     <!-- README更新フォーム（POST） -->
     <% if @selected_repo %>
-      <%= form_with url: task_til_path(@task), method: :post, data: { turbo_frame: "til" }, class: "flex flex-col gap-1" do |f| %>
+      <%= form_with url: task_til_path(@task), method: :post, data: { turbo_frame: "til" }, class: "flex flex-col gap-2" do |f| %>
         <%= f.hidden_field :repo, value: @selected_repo %>
         <%= f.hidden_field :sha, value: @readme_sha %>
         <%= f.label :message, "コミットメッセージ", class: "label" %>
