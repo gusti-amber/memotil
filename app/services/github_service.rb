@@ -17,6 +17,16 @@ class GithubService
   rescue Octokit::NotFound
     { sha: nil, body: "" }
   end
+
+  def update_readme(repo, message:, new_body:, sha: nil)
+    @client.update_contents(
+      repo: repo,
+      path: "README.md",
+      message: message,
+      sha: sha,
+      content: new_body
+    )
+  end
 end
 
 
