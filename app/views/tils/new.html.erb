@@ -25,7 +25,7 @@
         <%= f.label :message, "コミットメッセージ", class: "label" %>
         <%= f.text_field :message, value: "Add TIL for #{(@task.title || 'task')}", class: "input input-bordered input-neutral w-full" %>
         <%= f.label :body, "README.md（追記）", class: "label" %>
-        <%= f.text_area :body, value: @readme_body, rows: 16, class: "textarea textarea-bordered w-full" %>
+        <%= f.text_area :body, value: @readme_body, rows: 16, class: "textarea textarea-bordered text-area-neutral w-full" %>
         <div class="flex justify-end">
           <%= f.submit "GitHubにプッシュ", class: "btn btn-primary" %>
         </div>
