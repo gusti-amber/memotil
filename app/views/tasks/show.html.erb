@@ -33,6 +33,12 @@
                   GitHubリポジトリにTILを保存
                 <% end %>
               </div>
+            <% else %>
+              <div class="card-actions justify-center">
+                <%= button_to user_github_omniauth_authorize_path, method: :post, data: { turbo: false }, params: { origin: task_url(@task) }, class: "btn btn-primary" do %>
+                  GitHubと連携しTILを保存
+                <% end %>
+              </div>
             <% end %>
           <% end %>
         </div>
