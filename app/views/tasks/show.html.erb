@@ -21,5 +21,28 @@
         <%= render 'posts/form', task: @task, post: @post %>
       <% end %>
     <% end %>
+
+    <!-- TIL 作成セクション -->
+    <% if @task.done? %>
+      <div class="card bg-base-200 shadow-sm">
+        <div class="card-body">
+          <%= turbo_frame_tag "til" do %>
+            <% if current_user.github_token.present? %>
+              <div class="card-actions justify-center">
+                <%= link_to new_task_til_path(@task), data: { turbo_frame: "til" }, class: "btn btn-primary" do %>
+                  GitHubリポジトリにTILを保存
+                <% end %>
+              </div>
+            <% else %>
+              <div class="card-actions justify-center">
+                <%= button_to user_github_omniauth_authorize_path, method: :post, data: { turbo: false }, params: { origin: task_url(@task) }, class: "btn btn-primary" do %>
+                  GitHubと連携しTILを保存
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 </div>

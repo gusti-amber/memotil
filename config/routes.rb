@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     patch :toggle_status, on: :member # toggle_statusというカスタムアクションの追加
     resources :posts, only: [ :create, :destroy ]
     resources :todos, only: [ :update ]
+    resource :til, only: [ :new, :create ]
   end
 
   root "static_pages#top"
