@@ -9,7 +9,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.persisted?
       sign_in(@user)
       set_flash_message(:notice, :success, kind: "GitHub") if is_navigational_format?
-      redirect_to tasks_path
+
+      # 🎓 origin_params: https://github.com/omniauth/omniauth?tab=readme-ov-file#origin-param
+      # params: {origin: URL} を指定すると、OmniAuthが"omniauth.origin"にコールバック時のURLを設定する
+      origin = request.env["omniauth.origin"].presence      
+      redirect_to(origin || stored_location_for(:user) || root_path)
     else
       redirect_to new_user_session_url
     end
