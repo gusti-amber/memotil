@@ -53,17 +53,25 @@ RSpec.configure do |config|
 
   # Capybaraの設定（Docker環境対応）
   config.before(:each, type: :system) do
-    # リモートChromeドライバーを使用（Docker内のSeleniumコンテナ）
-    driven_by :remote_chrome
+    # CI環境（GitHub Actions）の場合はheadless_chromeを使用
+    if ENV['CI'] == 'true'
+      driven_by :headless_chrome
+      Capybara.server_host = '127.0.0.1'
+      Capybara.server_port = 3000
+      Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
+    else
+      # リモートChromeドライバーを使用（Docker内のSeleniumコンテナ）
+      driven_by :remote_chrome
 
-    # RailsサーバーのIPアドレスを取得（Docker内での通信用）
-    Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
+      # RailsサーバーのIPアドレスを取得（Docker内での通信用）
+      Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
 
-    # Railsサーバーのポート番号を設定（通常の3000と競合を避けるため）
-    Capybara.server_port = 4444
+      # Railsサーバーのポート番号を設定（通常の3000と競合を避けるため）
+      Capybara.server_port = 4444
 
-    # ブラウザがアクセスするRailsアプリの完全なURLを設定
-    Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
+      # ブラウザがアクセスするRailsアプリの完全なURLを設定
+      Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
+    end
 
     # 隠れた要素（display: none等）も操作可能にする
     Capybara.ignore_hidden_elements = false
