@@ -12,7 +12,7 @@ class GithubService
     readme = @client.contents(repo, path: "README.md")
 
     # 取得したREADME.mdをBase64でデコードし、UTF-8でエンコード
-    body = Base64.decode64(readme[:content]).force_encoding('UTF-8')
+    body = Base64.decode64(readme[:content]).force_encoding("UTF-8")
     { sha: readme[:sha], body: body }
   rescue Octokit::NotFound
     { sha: nil, body: "" }
@@ -28,5 +28,3 @@ class GithubService
     )
   end
 end
-
-

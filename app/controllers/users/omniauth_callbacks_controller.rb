@@ -12,7 +12,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       # 🎓 origin_params: https://github.com/omniauth/omniauth?tab=readme-ov-file#origin-param
       # params: {origin: URL} を指定すると、OmniAuthが"omniauth.origin"にコールバック時のURLを設定する
-      origin = request.env["omniauth.origin"].presence      
+      origin = request.env["omniauth.origin"].presence
       redirect_to(origin || stored_location_for(:user) || root_path)
     else
       redirect_to new_user_session_url

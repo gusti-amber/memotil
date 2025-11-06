@@ -36,5 +36,3 @@ class TilsController < ApplicationController
     redirect_to @task, alert: "完了したタスクのみTILを反映できます" unless @task&.done?
   end
 end
-
-
