@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   scan_ruby:
@@ -82,4 +82,69 @@ jobs:
         with:
           name: screenshots
           path: ${{ github.workspace }}/tmp/screenshots
+          if-no-files-found: ignore
+
+  rspec:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: myapp_test
+        ports:
+          - 5432:5432
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Install packages
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.18.2"
+          cache: "yarn"
+
+      - name: Install Node.js dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build JavaScript assets
+        run: yarn build
+
+      - name: Build Tailwind CSS
+        run: bundle exec rails tailwindcss:build
+
+      - name: Database create and migrate
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+
+      - name: Run RSpec
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test
+          CI: "true"
+        run: bundle exec rspec
+
+      - name: Keep screenshots from failed system tests
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: rspec-screenshots
+          path: ${{ github.workspace }}/tmp/capybara
           if-no-files-found: ignore

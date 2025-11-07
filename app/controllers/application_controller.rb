@@ -53,6 +53,13 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
   end
 
+  # ログイン後のリダイレクト先を指定するメソッド（Deviseのデフォルトメソッドをオーバーライド）
+  def after_sign_in_path_for(resource)
+    # 🎓 before_action :authenticate_user! で保護されたページに未認証でアクセスした場合は、そのURLがstored_location_for(resource)に記録される。
+    # 保護されていないページ（例えば、ログイン画面や新規登録画面など）にアクセスした場合は、stored_location_for(resource)はnilになるため、tasks_pathにリダイレクトされる。
+    stored_location_for(resource) || tasks_path
+  end
+
   private
 
   # called (once) when the user logs in, insert any code your application needs

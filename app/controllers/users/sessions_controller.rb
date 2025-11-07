@@ -17,7 +17,7 @@ class Users::SessionsController < Devise::SessionsController
   # ゲストユーザー作成アクション
   def create_guest
     guest_user
-    redirect_to root_path
+    redirect_to after_sign_in_path_for(current_user)
   end
 
   # DELETE /resource/sign_out

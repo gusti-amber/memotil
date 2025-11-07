@@ -59,7 +59,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem "webdrivers"
+  # webdrivers gemは不要（selenium-webdriver 4.6以降でChromeDriverを自動管理）
 end
 
 gem "tailwindcss-rails", "~> 4.0"
