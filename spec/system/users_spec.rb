@@ -30,7 +30,9 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
-        # エラーメッセージの要素が表示されるまで待つ
+        # 💡 GitHub ActionsのCI環境上でこのテストを実行した際に、エラーメッセージの表示が確認できなかった。
+        # そのため、エラーメッセージの要素が表示されるまで5秒待つことで解決した。
+        # Usersシステムスペックでは、実行順序が最初のエラーメッセージの表示テストなので、処理が遅れている可能性がある。
         expect(page).to have_css('.alert', wait: 5)
         expect(page).to have_content('名前 を入力してください')
       end
