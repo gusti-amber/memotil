@@ -30,6 +30,8 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
+        # エラーメッセージの要素が表示されるまで待つ
+        expect(page).to have_css('.alert', wait: 5)
         expect(page).to have_content('名前 を入力してください')
       end
 
