@@ -123,6 +123,9 @@ jobs:
       - name: Build JavaScript assets
         run: yarn build
 
+      - name: Build Tailwind CSS
+        run: bundle exec rails tailwindcss:build
+
       - name: Database create and migrate
         env:
           RAILS_ENV: test
