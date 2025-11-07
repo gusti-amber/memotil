@@ -6,12 +6,11 @@
       <!-- ステータスフィルター -->
       <%= form.select :status_eq,
           [
-            ['すべて', ''],
             ['Todo', 0],
             ['Doing', 1],
             ['Done', 2]
           ],
-          { selected: params.dig(:q, :status_eq) },
+          { include_blank: 'すべての状態', selected: params.dig(:q, :status_eq) },
           class: "select select-bordered select-neutral font-semibold",
           onchange: "this.form.requestSubmit()" %>
       
