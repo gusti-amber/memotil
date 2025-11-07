@@ -17,6 +17,14 @@ class Task < ApplicationRecord
   validate :tags_must_be_five_or_less
   validate :todos_must_be_three_or_less
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[title status]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[tags]
+  end
+
   private
 
   def tags_must_be_five_or_less
