@@ -11,9 +11,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       set_flash_message(:notice, :success, kind: "GitHub") if is_navigational_format?
 
       # 🎓 origin_params: https://github.com/omniauth/omniauth?tab=readme-ov-file#origin-param
+      # OmniAuthのドキュメントでは、`origin` パラメータが空のときに `omniauth.origin` に HTTP_REFERER がセットされる、と説明されている。
+      # つまり明示的な `origin` が無い場合は参照元URLを「戻り先候補」として使う
       # params: {origin: URL} を指定すると、OmniAuthが"omniauth.origin"にコールバック時のURLを設定する
       origin = request.env["omniauth.origin"].presence
-      redirect_to(origin || stored_location_for(:user) || root_path)
+      redirect_to(origin || after_sign_in_path_for(@user))
     else
       redirect_to new_user_session_url
     end
