@@ -17,7 +17,7 @@ RSpec.describe 'Users', type: :system do
 
         # 登録後はログアウトボタンが表示される（自動ログイン）
         expect(page).to have_content('ログアウト')
-        expect(page).to have_current_path(root_path)
+        expect(page).to have_current_path(tasks_path)
       end
     end
 
@@ -119,7 +119,7 @@ RSpec.describe 'Users', type: :system do
         click_button 'ログイン'
 
         expect(page).to have_content('ログアウト')
-        expect(page).to have_current_path(root_path)
+        expect(page).to have_current_path(tasks_path)
       end
     end
 
@@ -166,7 +166,7 @@ RSpec.describe 'Users', type: :system do
         visit new_user_session_path
 
         # 既にログインしている場合はルートページにリダイレクト
-        expect(page).to have_current_path(root_path)
+        expect(page).to have_current_path(tasks_path)
       end
     end
   end
