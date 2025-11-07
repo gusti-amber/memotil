@@ -19,5 +19,9 @@ Capybara.register_driver :headless_chrome do |app|
   options.add_argument('--disable-infobars')
   options.add_argument('--disable-extensions')
 
-  Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: options)
+  # selenium-webdriver 4.6以降では、ChromeDriverを自動的に管理する機能が組み込まれている
+  # Service.chromeを使うと、自動的にChromeDriverをダウンロード・管理してくれる
+  # CI環境でも自動的に適切なChromeDriverが使用される
+  service = Selenium::WebDriver::Service.chrome
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options, service: service)
 end
