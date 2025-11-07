@@ -2,18 +2,17 @@
   <p class="text-4xl font-bold text-custom-dark-green text-center">タスク</p>
   <div class="flex gap-4 justify-between">
     <!-- 検索フォーム -->
-    <%= form_with url: tasks_path, method: :get, data: { turbo_frame: "tasks_list" }, class: "flex items-center gap-2 flex-1" do |form| %>
+    <%= form_with url: tasks_path, method: :get, scope: :q, data: { turbo_frame: "tasks_list" }, class: "flex items-center gap-2 flex-1" do |form| %>
       <!-- ステータスフィルター -->
-      <%= form.select :status,
+      <%= form.select :status_eq,
           [
             ['すべて', ''],
-            ['Todo', 'todo'],
-            ['Doing', 'doing'],
-            ['Done', 'done']
+            ['Todo', 0],
+            ['Doing', 1],
+            ['Done', 2]
           ],
-          { selected: params[:status] },
+          { selected: params.dig(:q, :status_eq) },
           class: "select select-bordered select-neutral font-semibold",
-          style: "width: 8rem;",
           onchange: "this.form.requestSubmit()" %>      
     <% end %>
     
