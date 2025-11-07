@@ -1,18 +1,40 @@
 <div class="flex flex-col h-full gap-10 px-20 py-10 bg-custom-white rounded-lg min-h-screen">
   <p class="text-4xl font-bold text-custom-dark-green text-center">タスク</p>
-  <div class="flex justify-end gap-4">
-    <!-- ステータスフィルター -->
-    <%= form_with url: tasks_path, method: :get, data: { turbo_frame: "tasks_list" }, class: "flex items-center gap-2" do |form| %>
-      <%= form.select :status, 
-          options_for_select([
-            ['すべて', ''],
-            ['Todo', 'todo'],
-            ['Doing', 'doing'],
-            ['Done', 'done']
-          ], params[:status]),
-          {},
-          class: "select select-bordered select-neutral font-semibold",
-          onchange: "this.form.requestSubmit()" %>
+  <div class="flex gap-4 justify-between">
+    <!-- 検索フォーム -->
+    <%= form_with url: tasks_path, method: :get, scope: :q, data: { turbo_frame: "tasks_list" }, class: "flex items-center gap-2 flex-1" do |form| %>
+      <!-- ステータスフィルター -->
+      <div class="w-24">
+        <%= form.select :status_eq,
+            [
+              ['Todo', 0],
+              ['Doing', 1],
+              ['Done', 2]
+            ],
+            { include_blank: 'すべての状態', selected: params.dig(:q, :status_eq) },
+            class: "select select-bordered select-neutral font-semibold w-full",
+            onchange: "this.form.requestSubmit()" %>
+      </div>
+      
+      <!-- タグ検索 -->
+      <div class="w-24">
+        <%= form.select :tags_name_eq,
+            @tags.map { |tag| tag.name },
+            { include_blank: 'すべてのタグ', selected: params.dig(:q, :tags_name_eq) },
+            class: "select select-bordered select-neutral font-semibold w-full",
+            onchange: "this.form.requestSubmit()" %>
+      </div>
+      
+      <!-- キーワード検索 -->
+      <label class="input input-bordered input-neutral flex items-center gap-2 grow">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+          <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd" />
+        </svg>
+        <%= form.search_field :title_cont, 
+            value: params.dig(:q, :title_cont),
+            placeholder: "キーワード検索",
+            onchange: "this.form.requestSubmit()" %>
+      </label>
     <% end %>
     
     <!-- タスク作成ボタン -->

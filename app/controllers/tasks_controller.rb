@@ -2,9 +2,11 @@ class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_task, only: %i[show edit update destroy]
   def index
-    @tasks = current_user.tasks.includes(:tags)
-    @tasks = @tasks.where(status: params[:status]) if params[:status].present?
-    @tasks = @tasks.order(created_at: :desc)
+    @q = current_user.tasks.ransack(params[:q])
+    @tasks = @q.result
+                .includes(:tags)
+                .order(created_at: :desc)
+    @tags = Tag.all
   end
 
   def new
