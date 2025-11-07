@@ -4,22 +4,26 @@
     <!-- 検索フォーム -->
     <%= form_with url: tasks_path, method: :get, scope: :q, data: { turbo_frame: "tasks_list" }, class: "flex items-center gap-2 flex-1" do |form| %>
       <!-- ステータスフィルター -->
-      <%= form.select :status_eq,
-          [
-            ['Todo', 0],
-            ['Doing', 1],
-            ['Done', 2]
-          ],
-          { include_blank: 'すべての状態', selected: params.dig(:q, :status_eq) },
-          class: "select select-bordered select-neutral font-semibold",
-          onchange: "this.form.requestSubmit()" %>
+      <div class="w-24">
+        <%= form.select :status_eq,
+            [
+              ['Todo', 0],
+              ['Doing', 1],
+              ['Done', 2]
+            ],
+            { include_blank: 'すべての状態', selected: params.dig(:q, :status_eq) },
+            class: "select select-bordered select-neutral font-semibold w-full",
+            onchange: "this.form.requestSubmit()" %>
+      </div>
       
       <!-- タグ検索 -->
-      <%= form.select :tags_name_eq,
-          @tags.map { |tag| tag.name },
-          { include_blank: 'すべてのタグ', selected: params.dig(:q, :tags_name_eq) },
-          class: "select select-bordered select-neutral font-semibold",
-          onchange: "this.form.requestSubmit()" %>
+      <div class="w-24">
+        <%= form.select :tags_name_eq,
+            @tags.map { |tag| tag.name },
+            { include_blank: 'すべてのタグ', selected: params.dig(:q, :tags_name_eq) },
+            class: "select select-bordered select-neutral font-semibold w-full",
+            onchange: "this.form.requestSubmit()" %>
+      </div>
       
       <!-- キーワード検索 -->
       <label class="input input-bordered input-neutral flex items-center gap-2 grow">
