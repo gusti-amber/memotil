@@ -518,5 +518,48 @@ RSpec.describe 'Tasks', type: :system do
         end
       end
     end
+
+    context "キーワード検索" do
+      context "キーワードで検索した場合" do
+        it "該当するタスクのみが表示される" do
+          fill_in 'q[title_cont]', with: 'Todo'
+          find('input[name="q[title_cont]"]').send_keys(:enter)
+          expect(page).to have_content('Todo Task')
+          expect(page).not_to have_content('Doing Task')
+          expect(page).not_to have_content('Done Task')
+        end
+      end
+
+      context "部分一致で検索した場合" do
+        it "該当するタスクのみが表示される" do
+          fill_in 'q[title_cont]', with: 'Tag'
+          find('input[name="q[title_cont]"]').send_keys(:enter)
+          expect(page).to have_content('Both Tags Task')
+          expect(page).to have_content('No Tag Task')
+          expect(page).not_to have_content('Ruby Task')
+        end
+      end
+
+      context "存在しないキーワードで検索した場合" do
+        it "タスクが表示されない" do
+          fill_in 'q[title_cont]', with: 'NonExistent'
+          find('input[name="q[title_cont]"]').send_keys(:enter)
+          expect(page).not_to have_content('Todo Task')
+          expect(page).not_to have_content('Doing Task')
+          expect(page).not_to have_content('Done Task')
+          expect(page).to have_content('タスクがありません')
+        end
+      end
+
+      context "空のキーワードで検索した場合" do
+        it "全タスクが表示される" do
+          fill_in 'q[title_cont]', with: ''
+          find('input[name="q[title_cont]"]').send_keys(:enter)
+          expect(page).to have_content('Todo Task')
+          expect(page).to have_content('Doing Task')
+          expect(page).to have_content('Done Task')
+        end
+      end
+    end
   end
 end
