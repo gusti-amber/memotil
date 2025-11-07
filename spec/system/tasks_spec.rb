@@ -441,7 +441,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context "セレクトボックスからtodoを選択した場合" do
       it "Todoステータスのタスクのみが表示される" do
-        select 'Todo', from: 'status'
+        select 'Todo', from: 'q[status_eq]'
         expect(page).to have_content('Todo Task')
         expect(page).not_to have_content('Doing Task')
         expect(page).not_to have_content('Done Task')
@@ -450,7 +450,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context "セレクトボックスからdoingを選択した場合" do
       it "Doingステータスのタスクのみが表示される" do
-        select 'Doing', from: 'status'
+        select 'Doing', from: 'q[status_eq]'
         expect(page).to have_content('Doing Task')
         expect(page).not_to have_content('Todo Task')
         expect(page).not_to have_content('Done Task')
@@ -459,7 +459,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context "セレクトボックスからdoneを選択した場合" do
       it "Doneステータスのタスクのみが表示される" do
-        select 'Done', from: 'status'
+        select 'Done', from: 'q[status_eq]'
         expect(page).to have_content('Done Task')
         expect(page).not_to have_content('Todo Task')
         expect(page).not_to have_content('Doing Task')
@@ -468,7 +468,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context "セレクトボックスからすべてを選択した場合" do
       it "全タスクが表示される" do
-        select 'すべて', from: 'status'
+        select 'すべての状態', from: 'q[status_eq]'
         expect(page).to have_content('Todo Task')
         expect(page).to have_content('Doing Task')
         expect(page).to have_content('Done Task')
