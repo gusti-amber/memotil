@@ -433,8 +433,18 @@ RSpec.describe 'Tasks', type: :system do
     let!(:todo_task) { create(:task, user: user, status: 'todo', title: 'Todo Task') }
     let!(:doing_task) { create(:task, user: user, status: 'doing', title: 'Doing Task') }
     let!(:done_task) { create(:task, user: user, status: 'done', title: 'Done Task') }
+    let!(:ruby_tag) { create(:tag, name: 'Ruby') }
+    let!(:rails_tag) { create(:tag, name: 'Rails') }
+    let!(:task_with_ruby_tag) { create(:task, user: user, status: 'todo', title: 'Ruby Task') }
+    let!(:task_with_rails_tag) { create(:task, user: user, status: 'todo', title: 'Rails Task') }
+    let!(:task_with_both_tags) { create(:task, user: user, status: 'todo', title: 'Both Tags Task') }
+    let!(:task_without_tag) { create(:task, user: user, status: 'todo', title: 'No Tag Task') }
 
     before do
+      task_with_ruby_tag.tags << ruby_tag
+      task_with_rails_tag.tags << rails_tag
+      task_with_both_tags.tags << ruby_tag
+      task_with_both_tags.tags << rails_tag
       sign_in user
       visit tasks_path
     end
@@ -473,6 +483,38 @@ RSpec.describe 'Tasks', type: :system do
           expect(page).to have_content('Todo Task')
           expect(page).to have_content('Doing Task')
           expect(page).to have_content('Done Task')
+        end
+      end
+    end
+
+    context "タグフィルター" do
+      context "セレクトボックスからRubyを選択した場合" do
+        it "Rubyタグが付いたタスクのみが表示される" do
+          select 'Ruby', from: 'q[tags_name_eq]'
+          expect(page).to have_content('Ruby Task')
+          expect(page).to have_content('Both Tags Task')
+          expect(page).not_to have_content('Rails Task')
+          expect(page).not_to have_content('No Tag Task')
+        end
+      end
+
+      context "セレクトボックスからRailsを選択した場合" do
+        it "Railsタグが付いたタスクのみが表示される" do
+          select 'Rails', from: 'q[tags_name_eq]'
+          expect(page).to have_content('Rails Task')
+          expect(page).to have_content('Both Tags Task')
+          expect(page).not_to have_content('Ruby Task')
+          expect(page).not_to have_content('No Tag Task')
+        end
+      end
+
+      context "セレクトボックスからすべてのタグを選択した場合" do
+        it "全タスクが表示される" do
+          select 'すべてのタグ', from: 'q[tags_name_eq]'
+          expect(page).to have_content('Ruby Task')
+          expect(page).to have_content('Rails Task')
+          expect(page).to have_content('Both Tags Task')
+          expect(page).to have_content('No Tag Task')
         end
       end
     end
