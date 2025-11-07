@@ -439,39 +439,41 @@ RSpec.describe 'Tasks', type: :system do
       visit tasks_path
     end
 
-    context "セレクトボックスからtodoを選択した場合" do
-      it "Todoステータスのタスクのみが表示される" do
-        select 'Todo', from: 'q[status_eq]'
-        expect(page).to have_content('Todo Task')
-        expect(page).not_to have_content('Doing Task')
-        expect(page).not_to have_content('Done Task')
+    context "ステータスフィルター" do
+      context "セレクトボックスからtodoを選択した場合" do
+        it "Todoステータスのタスクのみが表示される" do
+          select 'Todo', from: 'q[status_eq]'
+          expect(page).to have_content('Todo Task')
+          expect(page).not_to have_content('Doing Task')
+          expect(page).not_to have_content('Done Task')
+        end
       end
-    end
 
-    context "セレクトボックスからdoingを選択した場合" do
-      it "Doingステータスのタスクのみが表示される" do
-        select 'Doing', from: 'q[status_eq]'
-        expect(page).to have_content('Doing Task')
-        expect(page).not_to have_content('Todo Task')
-        expect(page).not_to have_content('Done Task')
+      context "セレクトボックスからdoingを選択した場合" do
+        it "Doingステータスのタスクのみが表示される" do
+          select 'Doing', from: 'q[status_eq]'
+          expect(page).to have_content('Doing Task')
+          expect(page).not_to have_content('Todo Task')
+          expect(page).not_to have_content('Done Task')
+        end
       end
-    end
 
-    context "セレクトボックスからdoneを選択した場合" do
-      it "Doneステータスのタスクのみが表示される" do
-        select 'Done', from: 'q[status_eq]'
-        expect(page).to have_content('Done Task')
-        expect(page).not_to have_content('Todo Task')
-        expect(page).not_to have_content('Doing Task')
+      context "セレクトボックスからdoneを選択した場合" do
+        it "Doneステータスのタスクのみが表示される" do
+          select 'Done', from: 'q[status_eq]'
+          expect(page).to have_content('Done Task')
+          expect(page).not_to have_content('Todo Task')
+          expect(page).not_to have_content('Doing Task')
+        end
       end
-    end
 
-    context "セレクトボックスからすべてを選択した場合" do
-      it "全タスクが表示される" do
-        select 'すべての状態', from: 'q[status_eq]'
-        expect(page).to have_content('Todo Task')
-        expect(page).to have_content('Doing Task')
-        expect(page).to have_content('Done Task')
+      context "セレクトボックスからすべてを選択した場合" do
+        it "全タスクが表示される" do
+          select 'すべての状態', from: 'q[status_eq]'
+          expect(page).to have_content('Todo Task')
+          expect(page).to have_content('Doing Task')
+          expect(page).to have_content('Done Task')
+        end
       end
     end
   end
