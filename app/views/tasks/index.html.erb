@@ -51,6 +51,33 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <%= render partial: "tasks/task_card", collection: @tasks, as: :task %>
     </div>
+    
+    <!-- ページネーション -->
+    <% if @tasks.total_pages > 1 %>
+      <div class="flex justify-center">
+        <div class="join">
+          <% if @tasks.prev_page %>
+            <%= link_to tasks_path(page: @tasks.prev_page, q: @search_params), class: "join-item btn" do %>
+              «
+            <% end %>
+          <% else %>
+            <button class="join-item btn" disabled>«</button>
+          <% end %>
+          
+          <button class="join-item btn btn-active">
+            <%= @tasks.current_page %>
+          </button>
+          
+          <% if @tasks.next_page %>
+            <%= link_to tasks_path(page: @tasks.next_page, q: @search_params), class: "join-item btn" do %>
+              »
+            <% end %>
+          <% else %>
+            <button class="join-item btn" disabled>»</button>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   <% else %>
     <div class="text-center py-10">
       <p class="text-custom-dark-green/60">タスクがありません</p>
