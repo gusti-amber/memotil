@@ -52,7 +52,7 @@ if Rails.env.development?
     100.times do |i|
       task = test_user.tasks.create!(
         title: "test_task_#{i + 1}",
-        status: [:todo, :doing, :done].sample,
+        status: [ :todo, :doing, :done ].sample,
         created_at: rand(30.days).seconds.ago
       )
 
