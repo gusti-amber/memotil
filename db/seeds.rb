@@ -33,3 +33,31 @@ tag_names = [
 tag_names.each do |tag_name|
   Tag.find_or_create_by!(name: tag_name)
 end
+
+# 開発環境でのテストデータ作成
+if Rails.env.development?
+  # テスト用ユーザーの作成
+  test_user = User.find_or_create_by!(email: "test@example.com") do |user|
+    user.name = "test_user"
+    user.password = "password"
+    user.password_confirmation = "password"
+  end
+
+  # 既存のタスクを削除してから新規作成（開発環境でのみ）
+  if test_user.tasks.count < 100
+    test_user.tasks.destroy_all
+    tags = Tag.all
+
+    # 100件のタスクを作成
+    100.times do |i|
+      task = test_user.tasks.create!(
+        title: "test_task_#{i + 1}",
+        status: [:todo, :doing, :done].sample,
+        created_at: rand(30.days).seconds.ago
+      )
+
+      # ランダムに1〜5個のタグを紐づけ
+      task.tags << tags.sample(rand(1..5))
+    end
+  end
+end
