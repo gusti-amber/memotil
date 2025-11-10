@@ -2,7 +2,8 @@ class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_task, only: %i[show edit update destroy]
   def index
-    @q = current_user.tasks.ransack(search_params)
+    @search_params = search_params
+    @q = current_user.tasks.ransack(@search_params)
     @tasks = @q.result
                 .includes(:tags)
                 .order(created_at: :desc)

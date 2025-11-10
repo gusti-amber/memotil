@@ -57,7 +57,7 @@
       <div class="flex justify-center">
         <div class="join">
           <% if @tasks.prev_page %>
-            <%= link_to tasks_path(page: @tasks.prev_page, q: params[:q]), class: "join-item btn" do %>
+            <%= link_to tasks_path(page: @tasks.prev_page, q: @search_params), class: "join-item btn" do %>
               «
             <% end %>
           <% else %>
@@ -69,7 +69,7 @@
           </button>
           
           <% if @tasks.next_page %>
-            <%= link_to tasks_path(page: @tasks.next_page, q: params[:q]), class: "join-item btn" do %>
+            <%= link_to tasks_path(page: @tasks.next_page, q: @search_params), class: "join-item btn" do %>
               »
             <% end %>
           <% else %>
