@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_task, only: %i[show edit update destroy]
   def index
-    @q = current_user.tasks.ransack(params[:q])
+    @q = current_user.tasks.ransack(search_params)
     @tasks = @q.result
                 .includes(:tags)
                 .order(created_at: :desc)
@@ -60,6 +60,11 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, tag_ids: [], todos_attributes: [ :id, :body, :done, :_destroy ])
+  end
+
+  def search_params
+    return {} unless params[:q]
+    params[:q].permit(:status_eq, :tags_name_eq, :title_cont)
   end
 
   def set_task
