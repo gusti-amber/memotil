@@ -4,7 +4,7 @@
     <!-- 検索フォーム -->
     <%= form_with url: tasks_path, method: :get, scope: :q, data: { turbo_frame: "tasks_list" }, class: "flex items-center gap-2 flex-1" do |form| %>
       <!-- ステータスフィルター -->
-      <div class="w-24">
+      <div class="w-32">
         <%= form.select :status_eq,
             [
               ['Todo', 0],
@@ -17,7 +17,7 @@
       </div>
       
       <!-- タグ検索 -->
-      <div class="w-24">
+      <div class="w-32">
         <%= form.select :tags_name_eq,
             @tags.map { |tag| tag.name },
             { include_blank: 'すべてのタグ', selected: params.dig(:q, :tags_name_eq) },
