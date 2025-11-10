@@ -6,6 +6,7 @@ class TasksController < ApplicationController
     @tasks = @q.result
                 .includes(:tags)
                 .order(created_at: :desc)
+                .page(params[:page]).per(24)
     @tags = Tag.all
   end
 
