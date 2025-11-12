@@ -24,6 +24,10 @@ export default class extends Controller {
   }
 
   displayResults(tasks) {
+    if (!tasks.length) {
+      this.hideDropdown();
+      return;
+    }
     this.resultsTarget.innerHTML = tasks
       .map((task) => {
         return `
@@ -51,5 +55,9 @@ export default class extends Controller {
     if (form) {
       form.requestSubmit();
     }
+  }
+
+  hideDropdown() {
+    this.resultsTarget.classList.add("hidden");
   }
 }
