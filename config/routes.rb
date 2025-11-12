@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   end
 
   resources :tasks do
-    patch :toggle_status, on: :member # toggle_statusというカスタムアクションの追加
+    member do
+      patch :toggle_status # toggle_statusというカスタムアクションの追加
+    end
     collection do
       get :autocomplete
     end
