@@ -17,9 +17,25 @@ export default class extends Controller {
       const response = await fetch(url);
       // ResponseからJSON形式でデータを取得
       const data = await response.json();
-      console.log(`data:`, data);
+      this.displayResults(data.tasks);
     } catch (error) {
       console.error(error.message);
     }
+  }
+
+  displayResults(tasks) {
+    this.resultsTarget.innerHTML = tasks
+      .map((task) => {
+        return `
+          <li>
+            <button type="button" class="w-full text-left p-2 hover:bg-base-200 rounded">
+              ${task.title}
+            </button>
+          </li>
+        `;
+      })
+      .join("");
+
+    this.resultsTarget.classList.remove("hidden");
   }
 }
