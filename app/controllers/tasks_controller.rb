@@ -60,6 +60,8 @@ class TasksController < ApplicationController
   def autocomplete
     query = params[:query].to_s.strip
 
+    return render json: { tasks: [] } if query.length < 2
+
     tasks = current_user.tasks
                         .where("LOWER(title) LIKE ?", "%#{query.downcase}%")
                         .limit(10)
