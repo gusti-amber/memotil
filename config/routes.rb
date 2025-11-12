@@ -12,6 +12,9 @@ Rails.application.routes.draw do
 
   resources :tasks do
     patch :toggle_status, on: :member # toggle_statusというカスタムアクションの追加
+    collection do
+      get :autocomplete
+    end
     resources :posts, only: [ :create, :destroy ]
     resources :todos, only: [ :update ]
     resource :til, only: [ :new, :create ]
