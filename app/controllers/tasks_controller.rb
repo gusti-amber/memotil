@@ -57,6 +57,21 @@ class TasksController < ApplicationController
     end
   end
 
+  def autocomplete
+    query = params[:query].to_s.strip
+
+    return render json: { tasks: [] } if query.length < 2
+
+    tasks = current_user.tasks
+                        .where("LOWER(title) LIKE ?", "%#{query.downcase}%")
+                        .limit(10)
+                        .select(:id, :title)
+                        .order(created_at: :desc)
+
+    # 🎓 オブジェクトからJSON形式に変換しレンダリングする方法: https://railsguides.jp/v7.2/layouts_and_rendering.html#json%E3%82%92%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0%E3%81%99%E3%82%8B
+    render json: { tasks: tasks }
+  end
+
   private
 
   def task_params

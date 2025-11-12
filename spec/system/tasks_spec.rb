@@ -561,5 +561,43 @@ RSpec.describe 'Tasks', type: :system do
         end
       end
     end
+
+    context "オートコンプリート機能", js: true do
+      let!(:ruby_task) { create(:task, user: user, title: "Ruby on Railsの学習") }
+      let!(:ruby_method_task) { create(:task, user: user, title: "Rubyのメソッドを理解する") }
+      let(:other_user) { create(:user, email: 'other@example.com') }
+      let!(:other_user_task) { create(:task, user: other_user, title: "Other User Ruby Task") }
+
+      context "2文字以上入力した場合" do
+        it "候補がドロップダウンで表示される" do
+          fill_in 'q[title_cont]', with: 'Ru'
+          sleep 0.5
+
+          expect(page).to have_css('ul[data-task-search-autocomplete-target="results"]:not(.hidden)')
+          expect(page).to have_content('Ruby on Railsの学習')
+          expect(page).to have_content('Rubyのメソッドを理解する')
+        end
+      end
+
+      context "候補選択" do
+        it "候補をクリックすると検索フォームが送信され、検索結果が表示される" do
+          fill_in 'q[title_cont]', with: 'Ruby'
+          sleep 0.5
+
+          find('button', text: 'Ruby on Railsの学習').click
+
+          expect(page).to have_content('Ruby on Railsの学習')
+        end
+      end
+
+      context "セキュリティ" do
+        it "他のユーザーのタスクは表示されない" do
+          fill_in 'q[title_cont]', with: 'Ruby'
+          sleep 0.5
+
+          expect(page).not_to have_content('Other User Ruby Task')
+        end
+      end
+    end
   end
 end
