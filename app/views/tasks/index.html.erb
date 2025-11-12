@@ -39,6 +39,10 @@
                 action: "input->task-search-autocomplete#search"
               } %>
         </label>
+        <ul data-task-search-autocomplete-target="results" 
+            class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full max-h-60 overflow-y-auto absolute top-full left-0 z-50 hidden">
+          <!-- 検索結果がここに動的に表示される -->
+        </ul>
       </div>
     <% end %>
     
