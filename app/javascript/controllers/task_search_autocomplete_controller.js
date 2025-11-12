@@ -28,7 +28,8 @@ export default class extends Controller {
       .map((task) => {
         return `
           <li>
-            <button type="button" class="w-full text-left p-2 hover:bg-base-200 rounded">
+            <button type="button" class="w-full text-left p-2 hover:bg-base-200 rounded"
+                    data-action="click->task-search-autocomplete#selectTask">
               ${task.title}
             </button>
           </li>
@@ -37,5 +38,18 @@ export default class extends Controller {
       .join("");
 
     this.resultsTarget.classList.remove("hidden");
+  }
+
+  // タスク検索の候補を選択した時の処理
+  selectTask(event) {
+    const taskTitle = event.currentTarget.textContent.trim();
+    // キーワード検索フィールドに選択したタスクのタイトルを表示
+    this.inputTarget.value = taskTitle;
+
+    // タスク検索フォームを送信
+    const form = this.inputTarget.closest("form");
+    if (form) {
+      form.requestSubmit();
+    }
   }
 }
