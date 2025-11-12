@@ -5,6 +5,10 @@ export default class extends Controller {
 
   search(event) {
     const query = event.target.value.trim();
+    if (query.length < 2) {
+      this.hideDropdown();
+      return;
+    }
     this.fetchSuggestions(query);
   }
 
