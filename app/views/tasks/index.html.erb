@@ -34,6 +34,7 @@
           <%= form.search_field :title_cont,
               value: params.dig(:q, :title_cont),
               placeholder: "キーワード検索",
+              autocomplete: "off",
               data: {
                 task_search_autocomplete_target: "input",
                 action: "input->task-search-autocomplete#search"
