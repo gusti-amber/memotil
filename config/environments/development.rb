@@ -41,6 +41,11 @@ Rails.application.configure do
   # caching is enabled.
   config.action_mailer.perform_caching = false
 
+  # Use letter_opener to open emails in browser during development
+  # 🎓 letter_openerの設定方法: https://github.com/ryanb/letter_opener?tab=readme-ov-file#rails-setup
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
+
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
   # Print deprecation notices to the Rails logger.
