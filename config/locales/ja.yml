@@ -64,4 +64,4 @@ ja:
         unauthenticated: "ログインしてください"
     mailer:
       reset_password_instructions:
-        subject: "【めもTIL】パスワード再設定のお手続き"
+        subject: "【めもTIL】パスワード再設定のご案内"
