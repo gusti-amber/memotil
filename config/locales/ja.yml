@@ -62,3 +62,6 @@ ja:
         invalid: "メールアドレスまたはパスワードが違います"
         not_found_in_database: "メールアドレスまたはパスワードが違います"
         unauthenticated: "ログインしてください"
+    mailer:
+      reset_password_instructions:
+        subject: "【めもTIL】パスワード再設定のお手続き"
