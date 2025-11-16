@@ -201,7 +201,7 @@ RSpec.describe 'Users', type: :system do
 
         # メールが送信されたことを確認
         expect(page).to have_current_path(new_user_session_path)
-        
+
         # メール送信を確認
         expect(ActionMailer::Base.deliveries.size).to eq(1)
       end
@@ -261,7 +261,7 @@ RSpec.describe 'Users', type: :system do
       it '有効期限が切れたパスワードリセットトークンの場合はエラーが表示される' do
         # 有効期限を切らせるため、reset_password_sent_atを6時間以上後に設定
         user.update_column(:reset_password_sent_at, 7.hours.ago)
-        
+
         visit edit_user_password_path(reset_password_token: @reset_token)
 
         # フォームは表示されるが、送信時にエラーが発生する
