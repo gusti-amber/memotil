@@ -24,6 +24,7 @@ ja:
         email: "メールアドレス"
         password: "パスワード"
         password_confirmation: "パスワード（確認）"
+        reset_password_token: "パスワードリセットトークン"
       task:
         title: "タイトル"
         tag_ids: "タグ"
@@ -50,6 +51,7 @@ ja:
       invalid_url_format: "は無効な形式です"
       invalid_protocol: "はhttpまたはhttpsで始まる必要があります"
       not_found: "が見つかりませんでした"
+      expired: "の有効期限が切れています"
     attributes:
       tag_ids:
         too_many: "は最大5個まで選択できます"
