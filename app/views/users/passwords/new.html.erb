@@ -1,16 +1,24 @@
-<h2>Forgot your password?</h2>
+<div class="bg-custom-white rounded-lg flex items-center justify-center py-10">
+  <div class="bg-custom-white rounded-lg shadow-lg px-12 py-6 relative mx-auto max-w-md border border-custom-light-gray/50">
+    <div class="flex flex-col items-center h-full gap-5 my-5 w-full">
+      <p class="text-2xl font-bold text-custom-dark-green">パスワード再設定のお手続き</p>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "flex flex-col gap-5 w-full" }) do |f| %>
+        <%= render "users/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <p class="text-sm text-custom-dark-green text-center">
+          登録されているメールアドレス宛にパスワード再設定のご案内が送信されます。
+        </p>
+
+        <div class="field w-full">
+          <%= f.label :email, class: "text-custom-dark-green font-medium" %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "id@gmail.com", class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+        </div>
+
+        <div class="actions flex justify-center w-full">
+          <%= f.submit "設定メールを送信する", class: "btn btn-primary w-full" %>
+        </div>
+      <% end %>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</div>
