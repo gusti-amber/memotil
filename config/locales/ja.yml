@@ -49,6 +49,7 @@ ja:
       confirmation: "と%{attribute}の入力が一致しません"
       invalid_url_format: "は無効な形式です"
       invalid_protocol: "はhttpまたはhttpsで始まる必要があります"
+      not_found: "が見つかりませんでした"
     attributes:
       tag_ids:
         too_many: "は最大5個まで選択できます"
