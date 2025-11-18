@@ -1,11 +1,12 @@
 <!-- dropdown（編集・ステータス変更・削除） -->
-<details class="dropdown dropdown-end">
-  <summary class="btn border-none shadow-none bg-custom-white text-custom-dark-green hover:bg-custom-off-white">
+<!-- 🎓 CSS Focusを使用したdropdown: https://daisyui.com/components/dropdown/#method-3-css-focus -->
+<div class="dropdown dropdown-end">
+  <div tabindex="0" role="button" class="btn border-none shadow-none bg-custom-white text-custom-dark-green hover:bg-custom-off-white">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
     </svg>
-  </summary>
-  <ul class="menu dropdown-content bg-custom-white rounded-box z-[1] w-40 p-2 shadow">
+  </div>
+  <ul tabindex="0" class="menu dropdown-content bg-custom-white rounded-box z-[1] w-40 p-2 shadow">
     <li>
       <%= link_to edit_task_path(task),
           data: { turbo: false },
@@ -36,4 +37,4 @@
       <% end %>
     </li>
   </ul>
-</details>
+</div>
