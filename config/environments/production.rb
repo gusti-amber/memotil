@@ -78,6 +78,13 @@ Rails.application.configure do
   # caching is enabled.
   config.action_mailer.perform_caching = false
 
+  # Set default URL options for Action Mailer
+  # This is required for generating URLs in email templates (e.g., password reset links)
+  # ENV["HOST"]: デプロイ時にカスタム設定する環境変数
+  # ENV["RENDER_EXTERNAL_HOSTNAME"]: Renderが自動設定する場合の環境変数
+  host = ENV["HOST"] || ENV["RENDER_EXTERNAL_HOSTNAME"] || "memotil.onrender.com"
+  config.action_mailer.default_url_options = { host: host, protocol: "https" }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
