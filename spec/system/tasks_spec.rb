@@ -357,8 +357,8 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'ドロップダウンメニューから削除を選択した場合' do
       it 'タスクは正常に削除される' do
-        # ドロップダウンメニューを開く
-        find('summary').click
+        # ドロップダウンメニューを開く（CSS Focusを使用したdropdown）
+        find('[aria-label="open-task-menu"]').click
 
         # 削除ボタンをクリック
         accept_confirm do
@@ -387,7 +387,8 @@ RSpec.describe 'Tasks', type: :system do
         visit task_path(task)
         expect(page).to have_content('Todo')
 
-        find('summary').click
+        # ドロップダウンメニューを開く（CSS Focusを使用したdropdown）
+        find('[aria-label="open-task-menu"]').click
 
         expect(page).to have_link('タスクに着手')
         click_link 'タスクに着手'
@@ -403,7 +404,8 @@ RSpec.describe 'Tasks', type: :system do
         visit task_path(task)
         expect(page).to have_content('Doing')
 
-        find('summary').click
+        # ドロップダウンメニューを開く（CSS Focusを使用したdropdown）
+        find('[aria-label="open-task-menu"]').click
 
         expect(page).to have_link('タスクを完了')
         click_link 'タスクを完了'
@@ -419,7 +421,8 @@ RSpec.describe 'Tasks', type: :system do
         visit task_path(task)
         expect(page).to have_content('Done')
 
-        find('summary').click
+        # ドロップダウンメニューを開く（CSS Focusを使用したdropdown）
+        find('[aria-label="open-task-menu"]').click
 
         expect(page).to have_link('再び着手')
         click_link '再び着手'
