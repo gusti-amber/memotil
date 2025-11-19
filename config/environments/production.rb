@@ -85,6 +85,21 @@ Rails.application.configure do
   host = ENV["HOST"] || ENV["RENDER_EXTERNAL_HOSTNAME"] || "memotil.onrender.com"
   config.action_mailer.default_url_options = { host: host, protocol: "https" }
 
+  # Configure Action Mailer to use SMTP for email delivery
+  # SMTP settings are retrieved from environment variables for security
+  # 🎓 Gmail用のAction Mailer設定: https://railsguides.jp/v7.2/action_mailer_basics.html#gmail%E7%94%A8%E3%81%AEaction-mailer%E8%A8%AD%E5%AE%9A
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587,
+    domain: host,
+    user_name: ENV["SMTP_USERNAME"],
+    password: ENV["SMTP_PASSWORD"],
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
