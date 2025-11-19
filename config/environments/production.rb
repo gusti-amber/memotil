@@ -82,8 +82,23 @@ Rails.application.configure do
   # This is required for generating URLs in email templates (e.g., password reset links)
   # ENV["HOST"]: デプロイ時にカスタム設定する環境変数
   # ENV["RENDER_EXTERNAL_HOSTNAME"]: Renderが自動設定する場合の環境変数
-  host = ENV["HOST"] || ENV["RENDER_EXTERNAL_HOSTNAME"] || "memotil.onrender.com"
+  host = ENV["HOST"] || ENV["RENDER_EXTERNAL_HOSTNAME"] || "memotil.onrender.com" # ⚠️ 独自ドメイン設定後に、再度ドメイン名を設定し直す
   config.action_mailer.default_url_options = { host: host, protocol: "https" }
+
+  # Configure Action Mailer to use SMTP for email delivery
+  # SMTP settings are retrieved from environment variables for security
+  # 🎓 Gmail用のAction Mailer設定: https://railsguides.jp/v7.2/action_mailer_basics.html#gmail%E7%94%A8%E3%81%AEaction-mailer%E8%A8%AD%E5%AE%9A
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587,
+    domain: host,
+    user_name: ENV["SMTP_USERNAME"],
+    password: ENV["SMTP_PASSWORD"],
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
