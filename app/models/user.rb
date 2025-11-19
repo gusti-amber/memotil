@@ -19,4 +19,10 @@ class User < ApplicationRecord
       user.github_token = auth.credentials.token
     end
   end
+
+  def guest_user?
+    return false unless email
+
+    email.start_with?("guest_") && email.end_with?("@example.com")
+  end
 end

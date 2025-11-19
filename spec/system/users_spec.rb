@@ -144,12 +144,13 @@ RSpec.describe 'Users', type: :system do
 
     before do
       sign_in user
-      visit root_path
+      visit tasks_path
     end
 
     it 'ユーザーが正常にログアウトされる' do
-      # ログアウトボタンをクリック
-      click_button 'ログアウト'
+      # ユーザーメニューを開き、「ログアウト」ボタンをクリック
+      find('[aria-label="open-user-menu"]').click
+      click_link 'ログアウト'
 
       # ログアウト後はログイン・サインアップボタンが表示される
       expect(page).to have_content('ログイン')
