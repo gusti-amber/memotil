@@ -18,8 +18,8 @@
           <ul tabindex="-1" class="menu dropdown-content z-[1] p-4 shadow bg-base-100 rounded-box">
             <!-- ユーザー情報セクション -->
             <li class="p-0">
-              <!-- 🎓 hover時の背景色を親のmenuの背景色と同一色にすることで、hover時の変化を無効化 -->
-              <div class="flex items-center gap-3 py-3 hover:bg-base-100">
+              <!-- 🎓 hover, active時の背景色を親のmenuの背景色と同一色にすることで、hover, active時の変化を無効化 -->
+              <div class="flex items-center gap-3 py-3 hover:bg-base-100 active:bg-base-100">
                 <div class="avatar avatar-placeholder">
                   <div class="w-8 rounded-full bg-neutral text-neutral-content">
                     <span class="text-base font-semibold"><%= current_user.name.first.upcase %></span>
