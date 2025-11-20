@@ -47,7 +47,9 @@ group :development, :test do
   gem "rspec-rails", "~> 8.0.0"
   gem "factory_bot_rails"
 
-  gem "dotenv-rails" # 環境変数の管理
+  # See https://github.com/bkeepers/dotenv
+  # 開発環境でのみ使用する環境変数を管理する、それ以外の環境変数はインフラ(Render)側で管理する
+  gem "dotenv-rails"
 end
 
 group :development do
