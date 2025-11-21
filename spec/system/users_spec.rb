@@ -296,4 +296,71 @@ RSpec.describe 'Users', type: :system do
       end
     end
   end
+
+  describe 'プロフィール編集' do
+    let(:user) { create(:user, name: 'original_name', email: 'test@example.com', password: 'password123', password_confirmation: 'password123') }
+
+    before do
+      sign_in user
+      visit tasks_path
+    end
+
+    context 'ユーザーメニューからアカウント設定画面へ遷移する場合' do
+      it 'ユーザーメニューから「アカウント設定」ボタンをクリックすると、アカウント設定画面へ遷移する' do
+        find('[aria-label="open-user-menu"]').click
+        click_link 'アカウント設定'
+
+        expect(page).to have_current_path(edit_user_registration_path)
+        expect(page).to have_content('アカウント設定')
+      end
+    end
+
+    context '有効な情報でプロフィールを更新する場合' do
+      it 'ユーザー名を更新すると、元いた画面へリダイレクトされ、プロフィールが正しく更新される' do
+        find('[aria-label="open-user-menu"]').click
+        click_link 'アカウント設定'
+
+        fill_in '名前', with: 'updated_name'
+        click_button '変更'
+
+        expect(page).to have_current_path(tasks_path)
+
+        # ユーザーメニューを開いてプロフィールが更新されているか確認
+        find('[aria-label="open-user-menu"]').click
+        expect(page).to have_content('updated_name')
+      end
+    end
+
+    context '無効な情報でプロフィールを更新する場合' do
+      it '名前が空の場合はエラーが表示される' do
+        find('[aria-label="open-user-menu"]').click
+        click_link 'アカウント設定'
+
+        fill_in '名前', with: ''
+        click_button '変更'
+
+        expect(page).to have_content('名前 を入力してください')
+      end
+
+      it '名前が1文字の場合はエラーが表示される' do
+        find('[aria-label="open-user-menu"]').click
+        click_link 'アカウント設定'
+
+        fill_in '名前', with: 'a'
+        click_button '変更'
+
+        expect(page).to have_content('名前 は2文字以上で入力してください')
+      end
+
+      it '名前が21文字以上の場合はエラーが表示される' do
+        find('[aria-label="open-user-menu"]').click
+        click_link 'アカウント設定'
+
+        fill_in '名前', with: 'a' * 21
+        click_button '変更'
+
+        expect(page).to have_content('名前 は20文字以下で入力してください')
+      end
+    end
+  end
 end
