@@ -60,4 +60,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  # 🎓 Deviseのupdate_resourceメソッドをオーバーライド。current password 不要で更新できるように変更: https://github.com/heartcombo/devise/wiki/How-To:-Allow-users-to-edit-their-account-without-providing-a-password
+  # ⚠️ 今後、メールアドレスやパスワードの更新を実装する際には、current password を要求するように条件分岐する必要がある
+  def update_resource(resource, params)
+    resource.update_without_password(params)
+  end
 end
