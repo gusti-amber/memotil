@@ -3,11 +3,13 @@
     <div class="flex flex-col items-center h-full gap-5 my-5 w-full">
       <p class="text-2xl font-bold text-custom-dark-green">アカウント設定</p>
 
+      <!-- 🎨 エラーメッセージ表示を一つにまとめたが、UIの改善の余地あり。 -->
+      <%= render "users/shared/error_messages", resource: resource %>
+
       <div class="flex flex-col items-start gap-5 w-full border border-base-content/20 p-6 rounded-lg">
         <p class="text-xl font-bold text-neutral text-start">プロフィール</p>
 
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "flex flex-col gap-5 w-full" }) do |f| %>
-          <%= render "users/shared/error_messages", resource: resource %>
 
           <div class="field w-full">
             <%= f.label :name, class: "text-custom-dark-green font-medium" %><br />
@@ -24,7 +26,6 @@
         <p class="text-xl font-bold text-neutral text-start">メールアドレス</p>
 
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "flex flex-col gap-5 w-full" }) do |f| %>
-          <%= render "users/shared/error_messages", resource: resource %>
 
           <!-- 現在のメールアドレスの表示 -->
           <div class="field w-full">
