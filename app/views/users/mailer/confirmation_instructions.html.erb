@@ -1,0 +1,76 @@
+<div style="background-color:rgb(250,250,250);margin-top:auto;margin-bottom:auto;margin-left:auto;margin-right:auto">
+  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:480px;background-color:rgb(255,255,255);margin-left:auto;margin-right:auto">
+    <tbody>
+      <tr style="width:100%">
+        <td>
+          <!-- ロゴエリア -->
+          <!-- ✨ 今後、ここにロゴ画像を追加する -->
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:37.5em;padding-left:1rem;padding-right:1rem;margin-bottom:0.25rem;padding-top:1.5rem">
+            <tbody>
+              <tr style="width:100%">
+                <td>
+                  <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:37.5em;background-color:rgb(245,245,245);border-radius:0.25rem">
+                    <tbody>
+                      <tr style="width:100%">
+                        <td style="text-align:center;padding:0.625rem 0;">
+                          <p style="margin:0;font-size:24px;font-weight:bold;color:#233d31;">めもTIL</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- メインコンテンツ -->
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:37.5em;padding-left:1rem;padding-right:1rem">
+            <tbody>
+              <tr style="width:100%">
+                <td>
+                  <p style="font-size:17px;line-height:23.8px;margin:16px 0;color:rgb(51,51,51);font-weight:700">メールアドレスの変更</p>
+
+                  <p style="font-size:15px;line-height:21px;margin:16px 0;color:rgb(51,51,51)">こんにちは、<%= @resource.name %>さん</p>
+
+                  <p style="font-size:15px;line-height:21px;margin:16px 0;margin-top:1.5rem;color:rgb(51,51,51)">めもTILをご利用いただきありがとうございます。</p>
+
+                  <p style="font-size:15px;line-height:21px;margin:16px 0;margin-top:1.5rem;margin-bottom:0px;color:rgb(51,51,51)">以下のボタンをクリックし、メールアドレス変更手続きを完了してください。</p>
+
+                  <p style="font-size:15px;line-height:21px;margin:16px 0;margin-top:0px;color:rgb(51,51,51)">有効期限は24時間です。</p>
+
+                  <!-- CTAボタン -->
+                  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-top:1rem;">
+                    <tr>
+                      <td align="center" style="padding:0;">
+                        <%= link_to confirmation_url(@resource, confirmation_token: @token), style: "line-height:21px;text-decoration:none;display:inline-block;max-width:100%;border-radius:0.25rem;width:100%;text-align:center;padding-left:1rem;padding-right:1rem;padding-top:0.75rem;padding-bottom:0.75rem;font-weight:700;font-size:15px;box-sizing:border-box;color:rgb(255,255,255);background-color:#148f57;padding:12px 16px 12px 16px;" do %>
+                          <span style="max-width:100%;display:inline-block;line-height:120%">変更手続きを完了</span>
+                        <% end %>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- フッター -->
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin-top:2.5rem;padding-left:1rem;padding-right:1rem;background-color:rgb(245,245,245)">
+            <tbody>
+              <tr>
+                <td>
+                  <!-- ✨ お問い合わせ機能を追加した後、お問い合わせフォームへのリンクを追加する -->
+                  <p style="font-size:10px;line-height:14px;margin:16px 0;margin-top:2rem;color:rgb(102,102,102)">こちらのメールにご返信いただいてもお答えできません。</p>
+
+                  <hr style="width:100%;border:none;border-top:1px solid rgb(229,229,229);margin-top:1.5rem;margin-bottom:1.5rem;">
+
+                  <p style="font-size:10px;line-height:14px;margin:16px 0;margin-bottom:0.25rem;color:rgb(102,102,102);text-align:center;">© 2025 めもTIL</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
