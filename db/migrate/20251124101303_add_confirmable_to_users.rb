@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # 🎓 UsersテーブルにConfirmable関連のカラムを追加する方法: https://github.com/heartcombo/devise/wiki/How-To:-Add-:confirmable-to-Users
 
 class AddConfirmableToUsers < ActiveRecord::Migration[7.2]
