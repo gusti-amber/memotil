@@ -19,4 +19,3 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     stored_location_for(resource) || tasks_path
   end
 end
-
