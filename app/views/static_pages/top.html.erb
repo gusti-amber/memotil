@@ -1,27 +1,25 @@
-<div class="bg-base-100 text-base-content rounded-lg min-h-screen">
-  <div class="flex justify-center items-start h-full w-full p-10 gap-6">
-    <div class="flex flex-col items-center justify-center gap-6">
-      <%= image_tag "description.png", class: "w-2/3" %>
-      <p class="text-xl font-bold text-custom-dark-green">タスクでの気づきをメモする、メモをTILにまとめて残す。<br>学びを形にするタスクメモアプリ</p>
-      <%= link_to "タスクをみる", tasks_path, class: "btn btn-primary" %>
+<div class="flex justify-center items-start h-full w-full p-10 gap-6">
+  <div class="flex flex-col items-center justify-center gap-6">
+    <%= image_tag "description.png", class: "w-2/3" %>
+    <p class="text-xl font-bold text-custom-dark-green">タスクでの気づきをメモする、メモをTILにまとめて残す。<br>学びを形にするタスクメモアプリ</p>
+    <%= link_to "タスクをみる", tasks_path, class: "btn btn-primary" %>
+  </div>
+  <div class="flex flex-col items-start justify-center gap-6">
+    <div class ="bg-custom-white rounded-lg p-4 shadow-md">
+      <h2 class="text-lg font-bold text-custom-dark-green">1. タスクページを作成</h2>
+      <p class="text-sm text-custom-dark-green">新機能開発やバグ修正など、取り組む技術タスクに応じたタスクページを作成します。</p>
     </div>
-    <div class="flex flex-col items-start justify-center gap-6">
-      <div class ="bg-custom-white rounded-lg p-4 shadow-md">
-        <h2 class="text-lg font-bold text-custom-dark-green">1. タスクページを作成</h2>
-        <p class="text-sm text-custom-dark-green">新機能開発やバグ修正など、取り組む技術タスクに応じたタスクページを作成します。</p>
-      </div>
-      <div class ="bg-custom-white rounded-lg p-4 shadow-md">
-        <h2 class="text-lg font-bold text-custom-dark-green">2. タスクページで気軽にメモ</h2>
-        <p class="text-sm text-custom-dark-green">タスクでの気づきや調査内容、参照した記事やコードスニペットをスレッド形式でメモします。</p>
-      </div>
-      <div class ="bg-custom-white rounded-lg p-4 shadow-md">
-        <h2 class="text-lg font-bold text-custom-dark-green">3. メモをもとに「今日学んだこと（TIL）」を編集</h2>
-        <p class="text-sm text-custom-dark-green">タスク完了後、メモをまとめて「今日学んだこと（TIL）」を編集します。</p>
-      </div>
-      <div class ="bg-custom-white rounded-lg p-4 shadow-md">
-        <h2 class="text-lg font-bold text-custom-dark-green">4. GitHubリポジトリにTILを記録</h2>
-        <p class="text-sm text-custom-dark-green">編集したTILをGitHubのリモートリポジトリに学習成果として記録します。</p>
-      </div>
+    <div class ="bg-custom-white rounded-lg p-4 shadow-md">
+      <h2 class="text-lg font-bold text-custom-dark-green">2. タスクページで気軽にメモ</h2>
+      <p class="text-sm text-custom-dark-green">タスクでの気づきや調査内容、参照した記事やコードスニペットをスレッド形式でメモします。</p>
+    </div>
+    <div class ="bg-custom-white rounded-lg p-4 shadow-md">
+      <h2 class="text-lg font-bold text-custom-dark-green">3. メモをもとに「今日学んだこと（TIL）」を編集</h2>
+      <p class="text-sm text-custom-dark-green">タスク完了後、メモをまとめて「今日学んだこと（TIL）」を編集します。</p>
+    </div>
+    <div class ="bg-custom-white rounded-lg p-4 shadow-md">
+      <h2 class="text-lg font-bold text-custom-dark-green">4. GitHubリポジトリにTILを記録</h2>
+      <p class="text-sm text-custom-dark-green">編集したTILをGitHubのリモートリポジトリに学習成果として記録します。</p>
     </div>
   </div>
 </div>

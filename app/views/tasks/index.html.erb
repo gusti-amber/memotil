@@ -1,98 +1,96 @@
-<div class="bg-base-100 text-base-content rounded-lg min-h-screen">
-  <div class="flex flex-col h-full gap-10 px-20 py-10">
-    <p class="text-4xl font-bold text-custom-dark-green text-center">タスク</p>
-    <div class="flex gap-4 justify-between">
-      <!-- 検索フォーム -->
-      <%= form_with url: tasks_path, method: :get, scope: :q, data: { turbo_frame: "tasks_list" }, class: "flex items-center gap-2 flex-1" do |form| %>
-        <!-- ステータスフィルター -->
-        <div class="w-32">
-          <%= form.select :status_eq,
-              [
-                ['Todo', 0],
-                ['Doing', 1],
-                ['Done', 2]
-              ],
-              { include_blank: 'すべての状態', selected: params.dig(:q, :status_eq) },
-              class: "select select-bordered select-neutral font-semibold w-full",
-              onchange: "this.form.requestSubmit()" %>
-        </div>
-        
-        <!-- タグ検索 -->
-        <div class="w-32">
-          <%= form.select :tags_name_eq,
-              @tags.map { |tag| tag.name },
-              { include_blank: 'すべてのタグ', selected: params.dig(:q, :tags_name_eq) },
-              class: "select select-bordered select-neutral font-semibold w-full",
-              onchange: "this.form.requestSubmit()" %>
-        </div>
-        
-        <!-- キーワード検索 -->
-        <div class="relative grow" data-controller="task-search-autocomplete">
-          <label class="input input-bordered input-neutral flex items-center gap-2 w-full">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-              <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd" />
-            </svg>
-            <%= form.search_field :title_cont,
-                value: params.dig(:q, :title_cont),
-                placeholder: "キーワード検索",
-                autocomplete: "off",
-                data: {
-                  task_search_autocomplete_target: "input",
-                  action: "input->task-search-autocomplete#search"
-                } %>
-          </label>
-          <ul data-task-search-autocomplete-target="results" 
-              class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full max-h-60 overflow-y-auto absolute top-full left-0 z-50 hidden">
-            <!-- 検索結果がここに動的に表示される -->
-          </ul>
-        </div>
-      <% end %>
-      
-      <!-- タスク作成ボタン -->
-      <%= link_to new_task_path, class: "btn btn-outline btn-neutral" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-          <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-        </svg>
-        作成
-      <% end %>
-    </div>
-    
-    <!-- タスク一覧 -->
-    <% if @tasks.any? %>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <%= render partial: "tasks/task_card", collection: @tasks, as: :task %>
+<div class="flex flex-col h-full gap-10 px-20 py-10">
+  <p class="text-4xl font-bold text-custom-dark-green text-center">タスク</p>
+  <div class="flex gap-4 justify-between">
+    <!-- 検索フォーム -->
+    <%= form_with url: tasks_path, method: :get, scope: :q, data: { turbo_frame: "tasks_list" }, class: "flex items-center gap-2 flex-1" do |form| %>
+      <!-- ステータスフィルター -->
+      <div class="w-32">
+        <%= form.select :status_eq,
+            [
+              ['Todo', 0],
+              ['Doing', 1],
+              ['Done', 2]
+            ],
+            { include_blank: 'すべての状態', selected: params.dig(:q, :status_eq) },
+            class: "select select-bordered select-neutral font-semibold w-full",
+            onchange: "this.form.requestSubmit()" %>
       </div>
       
-      <!-- ページネーション -->
-      <% if @tasks.total_pages > 1 %>
-        <div class="flex justify-center">
-          <div class="join">
-            <% if @tasks.prev_page %>
-              <%= link_to tasks_path(page: @tasks.prev_page, q: @search_params), class: "join-item btn" do %>
-                «
-              <% end %>
-            <% else %>
-              <button class="join-item btn" disabled>«</button>
-            <% end %>
-            
-            <button class="join-item btn btn-active">
-              <%= @tasks.current_page %>
-            </button>
-            
-            <% if @tasks.next_page %>
-              <%= link_to tasks_path(page: @tasks.next_page, q: @search_params), class: "join-item btn" do %>
-                »
-              <% end %>
-            <% else %>
-              <button class="join-item btn" disabled>»</button>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-    <% else %>
-      <div class="text-center py-10">
-        <p class="text-custom-dark-green/60">タスクがありません</p>
+      <!-- タグ検索 -->
+      <div class="w-32">
+        <%= form.select :tags_name_eq,
+            @tags.map { |tag| tag.name },
+            { include_blank: 'すべてのタグ', selected: params.dig(:q, :tags_name_eq) },
+            class: "select select-bordered select-neutral font-semibold w-full",
+            onchange: "this.form.requestSubmit()" %>
+      </div>
+      
+      <!-- キーワード検索 -->
+      <div class="relative grow" data-controller="task-search-autocomplete">
+        <label class="input input-bordered input-neutral flex items-center gap-2 w-full">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd" />
+          </svg>
+          <%= form.search_field :title_cont,
+              value: params.dig(:q, :title_cont),
+              placeholder: "キーワード検索",
+              autocomplete: "off",
+              data: {
+                task_search_autocomplete_target: "input",
+                action: "input->task-search-autocomplete#search"
+              } %>
+        </label>
+        <ul data-task-search-autocomplete-target="results" 
+            class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full max-h-60 overflow-y-auto absolute top-full left-0 z-50 hidden">
+          <!-- 検索結果がここに動的に表示される -->
+        </ul>
       </div>
     <% end %>
+    
+    <!-- タスク作成ボタン -->
+    <%= link_to new_task_path, class: "btn btn-outline btn-neutral" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+        <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+      </svg>
+      作成
+    <% end %>
   </div>
+  
+  <!-- タスク一覧 -->
+  <% if @tasks.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <%= render partial: "tasks/task_card", collection: @tasks, as: :task %>
+    </div>
+    
+    <!-- ページネーション -->
+    <% if @tasks.total_pages > 1 %>
+      <div class="flex justify-center">
+        <div class="join">
+          <% if @tasks.prev_page %>
+            <%= link_to tasks_path(page: @tasks.prev_page, q: @search_params), class: "join-item btn" do %>
+              «
+            <% end %>
+          <% else %>
+            <button class="join-item btn" disabled>«</button>
+          <% end %>
+          
+          <button class="join-item btn btn-active">
+            <%= @tasks.current_page %>
+          </button>
+          
+          <% if @tasks.next_page %>
+            <%= link_to tasks_path(page: @tasks.next_page, q: @search_params), class: "join-item btn" do %>
+              »
+            <% end %>
+          <% else %>
+            <button class="join-item btn" disabled>»</button>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="text-center py-10">
+      <p class="text-custom-dark-green/60">タスクがありません</p>
+    </div>
+  <% end %>
 </div>

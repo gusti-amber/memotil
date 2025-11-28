@@ -1,74 +1,72 @@
-<div class="bg-base-100 text-base-content rounded-lg min-h-screen">
-  <div class="bg-custom-white rounded-lg shadow-lg px-12 py-6 relative mx-auto max-w-md border border-custom-light-gray/50">
-    <div class="flex flex-col items-center h-full gap-5 my-5 w-full">
-      <p class="text-2xl font-bold text-custom-dark-green">ログイン</p>
+<div class="bg-custom-white rounded-lg shadow-lg px-12 py-6 relative mx-auto max-w-md border border-custom-light-gray/50">
+  <div class="flex flex-col items-center h-full gap-5 my-5 w-full">
+    <p class="text-2xl font-bold text-custom-dark-green">ログイン</p>
 
-      <%= form_with url: guest_session_path, method: :post, html: { class: "w-full" } do |f| %>
-        <button type="submit" class="btn btn-secondary w-full">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-            <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
-          </svg>
-          ゲストとしてログイン
-        </button>
+    <%= form_with url: guest_session_path, method: :post, html: { class: "w-full" } do |f| %>
+      <button type="submit" class="btn btn-secondary w-full">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+          <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+        </svg>
+        ゲストとしてログイン
+      </button>
+    <% end %>
+
+    <!-- GitHub認証 -->
+    <div class="w-full">
+      <%= button_to user_github_omniauth_authorize_path, data: { turbo: false }, class: "btn btn-neutral w-full flex items-center gap-2" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+          <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.478 2 12.004c0 4.424 2.865 8.18 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.607.069-.607 1.004.07 1.532 1.031 1.532 1.031.892 1.529 2.341 1.088 2.91.833.091-.647.35-1.088.636-1.339-2.22-.253-4.555-1.112-4.555-4.948 0-1.092.39-1.987 1.029-2.688-.103-.253-.446-1.27.098-2.647 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.748-1.026 2.748-1.026.546 1.377.203 2.394.1 2.647.64.701 1.028 1.596 1.028 2.688 0 3.845-2.339 4.692-4.566 4.941.36.31.68.92.68 1.855 0 1.338-.012 2.417-.012 2.747 0 .268.18.58.688.481A10.01 10.01 0 0 0 22 12.004C22 6.478 17.522 2 12 2Z" clip-rule="evenodd" />
+        </svg>
+        GitHubでログイン
       <% end %>
+    </div>
 
-      <!-- GitHub認証 -->
-      <div class="w-full">
-        <%= button_to user_github_omniauth_authorize_path, data: { turbo: false }, class: "btn btn-neutral w-full flex items-center gap-2" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.478 2 12.004c0 4.424 2.865 8.18 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.607.069-.607 1.004.07 1.532 1.031 1.532 1.031.892 1.529 2.341 1.088 2.91.833.091-.647.35-1.088.636-1.339-2.22-.253-4.555-1.112-4.555-4.948 0-1.092.39-1.987 1.029-2.688-.103-.253-.446-1.27.098-2.647 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.748-1.026 2.748-1.026.546 1.377.203 2.394.1 2.647.64.701 1.028 1.596 1.028 2.688 0 3.845-2.339 4.692-4.566 4.941.36.31.68.92.68 1.855 0 1.338-.012 2.417-.012 2.747 0 .268.18.58.688.481A10.01 10.01 0 0 0 22 12.004C22 6.478 17.522 2 12 2Z" clip-rule="evenodd" />
-          </svg>
-          GitHubでログイン
-        <% end %>
-      </div>
-
-      <!-- 区切り線 -->
-      <div class="divider divider-secondary text-custom-gray opacity-50">または</div>
-      
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-5 w-full" }) do |f| %>        
-        <% if flash[:alert] %>
-          <div class="alert bg-custom-white border border-custom-rust text-custom-rust mb-4">
-            <div class="flex flex-col gap-2">
-              <div class="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0" stroke="currentColor" class="size-5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                </svg>
-                <h3 class="font-bold text-custom-rust">ログインエラー</h3>
-              </div>
-              <div class="text-sm text-custom-rust">
-                <%= flash[:alert] %>
-              </div>
+    <!-- 区切り線 -->
+    <div class="divider divider-secondary text-custom-gray opacity-50">または</div>
+    
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-5 w-full" }) do |f| %>        
+      <% if flash[:alert] %>
+        <div class="alert bg-custom-white border border-custom-rust text-custom-rust mb-4">
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0" stroke="currentColor" class="size-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+              </svg>
+              <h3 class="font-bold text-custom-rust">ログインエラー</h3>
+            </div>
+            <div class="text-sm text-custom-rust">
+              <%= flash[:alert] %>
             </div>
           </div>
-        <% end %>
-        <div class="field w-full">
-          <%= f.label :email, class: "text-custom-dark-green font-medium" %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "id@example.com", class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
         </div>
+      <% end %>
+      <div class="field w-full">
+        <%= f.label :email, class: "text-custom-dark-green font-medium" %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "id@example.com", class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+      </div>
 
-        <div class="field w-full">
-          <%= f.label :password, class: "text-custom-dark-green font-medium" %><br />
-          <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
-        </div>
+      <div class="field w-full">
+        <%= f.label :password, class: "text-custom-dark-green font-medium" %><br />
+        <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+      </div>
 
-        <% if devise_mapping.rememberable? %>
-          <div class="form-control w-full">
-            <label class="label cursor-pointer">
-              <%= f.check_box :remember_me, class: "checkbox checkbox-neutral" %>
-              <span class="label-text text-custom-dark-green">ログイン状態を保持</span>
-            </label>
-          </div>
-        <% end %>
-
-        <div class="actions flex justify-center w-full">
-          <%= f.submit "ログイン", class: "btn btn-primary w-full" %>
+      <% if devise_mapping.rememberable? %>
+        <div class="form-control w-full">
+          <label class="label cursor-pointer">
+            <%= f.check_box :remember_me, class: "checkbox checkbox-neutral" %>
+            <span class="label-text text-custom-dark-green">ログイン状態を保持</span>
+          </label>
         </div>
       <% end %>
 
-      <div class="flex justify-center gap-10">
-        <%= link_to "新規アカウントを作成", new_registration_path(resource_name), class: "text-xs font-semibold text-custom-dark-green underline hover:text-custom-dark-green/80" %>
-        <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "text-xs font-semibold text-custom-dark-green underline hover:text-custom-dark-green/80" %>
+      <div class="actions flex justify-center w-full">
+        <%= f.submit "ログイン", class: "btn btn-primary w-full" %>
       </div>
+    <% end %>
+
+    <div class="flex justify-center gap-10">
+      <%= link_to "新規アカウントを作成", new_registration_path(resource_name), class: "text-xs font-semibold text-custom-dark-green underline hover:text-custom-dark-green/80" %>
+      <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "text-xs font-semibold text-custom-dark-green underline hover:text-custom-dark-green/80" %>
     </div>
   </div>
 </div>

@@ -1,42 +1,40 @@
-<div class="bg-base-100 text-base-content rounded-lg min-h-screen">
-  <div class="bg-custom-white rounded-lg shadow-lg px-12 py-6 relative mx-auto max-w-md border border-custom-light-gray/50">
-    <div class="flex flex-col items-center h-full gap-5 my-5 w-full">
-      <p class="text-2xl font-bold text-custom-dark-green">新規登録</p>
+<div class="bg-custom-white rounded-lg shadow-lg px-12 py-6 relative mx-auto max-w-md border border-custom-light-gray/50">
+  <div class="flex flex-col items-center h-full gap-5 my-5 w-full">
+    <p class="text-2xl font-bold text-custom-dark-green">新規登録</p>
 
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "flex flex-col gap-5 w-full" }) do |f| %>
-        <%= render "users/shared/error_messages", resource: resource %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "flex flex-col gap-5 w-full" }) do |f| %>
+      <%= render "users/shared/error_messages", resource: resource %>
 
-        <div class="field w-full">
-          <%= f.label :name, class: "text-custom-dark-green font-medium" %><br />
-          <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "name", class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
-        </div>
-
-        <div class="field w-full">
-          <%= f.label :email, class: "text-custom-dark-green font-medium" %><br />
-          <%= f.email_field :email, autocomplete: "email", placeholder: "id@example.com", class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
-        </div>
-
-        <div class="field w-full">
-          <%= f.label :password, class: "text-custom-dark-green font-medium" %>
-          <% if @minimum_password_length %>
-            <p class="text-sm text-custom-dark-green/60"><%= @minimum_password_length %> 文字以上の半角英数字</p>
-          <% end %>
-          <%= f.password_field :password, autocomplete: "new-password", placeholder: "password", class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
-        </div>
-
-        <div class="field w-full">
-          <%= f.label :password_confirmation, class: "text-custom-dark-green font-medium" %><br />
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "password(confirmation)", class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
-        </div>
-
-        <div class="actions flex justify-center w-full">
-          <%= f.submit "新規登録", class: "btn btn-primary w-full" %>
-        </div>
-      <% end %>
-
-      <div class="flex justify-center gap-10">
-        <%= link_to "すでにアカウントをお持ちですか？ - ログイン", new_session_path(resource_name), class: "text-xs font-semibold text-custom-dark-green underline hover:text-custom-dark-green/80" %>
+      <div class="field w-full">
+        <%= f.label :name, class: "text-custom-dark-green font-medium" %><br />
+        <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "name", class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
       </div>
+
+      <div class="field w-full">
+        <%= f.label :email, class: "text-custom-dark-green font-medium" %><br />
+        <%= f.email_field :email, autocomplete: "email", placeholder: "id@example.com", class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+      </div>
+
+      <div class="field w-full">
+        <%= f.label :password, class: "text-custom-dark-green font-medium" %>
+        <% if @minimum_password_length %>
+          <p class="text-sm text-custom-dark-green/60"><%= @minimum_password_length %> 文字以上の半角英数字</p>
+        <% end %>
+        <%= f.password_field :password, autocomplete: "new-password", placeholder: "password", class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+      </div>
+
+      <div class="field w-full">
+        <%= f.label :password_confirmation, class: "text-custom-dark-green font-medium" %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "password(confirmation)", class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+      </div>
+
+      <div class="actions flex justify-center w-full">
+        <%= f.submit "新規登録", class: "btn btn-primary w-full" %>
+      </div>
+    <% end %>
+
+    <div class="flex justify-center gap-10">
+      <%= link_to "すでにアカウントをお持ちですか？ - ログイン", new_session_path(resource_name), class: "text-xs font-semibold text-custom-dark-green underline hover:text-custom-dark-green/80" %>
     </div>
   </div>
 </div>
