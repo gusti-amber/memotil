@@ -39,14 +39,14 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body class="bg-base-200 p-2 flex flex-col">
+  <body class="bg-base-200 p-2 flex flex-col gap-2">
     <%= render 'shared/header' %>
     
     <% if Rails.env.development? %>
       <%#= render 'shared/debug_user_info' %>
     <% end %>
     
-    <main class="w-full flex-1 pt-2">
+    <main class="w-full flex-1">
       <%= yield %>
     </main>
     
