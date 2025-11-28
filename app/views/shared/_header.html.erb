@@ -1,11 +1,11 @@
-<header class="bg-custom-white rounded-lg">
+<header class="bg-base-100 text-base-content rounded-lg">
   <div class="flex justify-between items-center p-4 gap-10">
     <%= link_to root_path do %>
       <%= image_tag "logo.png", class: "flex-none" %>
     <% end %>
     <% if !auth_page? %>
       <div class="flex-1 flex justify-start items-center gap-10">
-        <%= link_to "タスクをみる", tasks_path, class: "text-lg text-custom-dark-green/80 hover:text-custom-dark-green transition-colors" %>
+        <%= link_to "タスクをみる", tasks_path, class: "text-lg text-neutral/80 hover:text-neutral transition-colors" %>
       </div>
       <% if user_signed_in? %>
         <%= render 'shared/user_menu' %>
