@@ -2,9 +2,9 @@
   <!-- 削除ボタン -->
   <button type="button" 
           data-action="click->todo-form#remove"
-          class="btn btn-circle btn-sm border-custom-rust text-custom-rust hover:bg-custom-rust hover:text-custom-white hover:border-custom-rust bg-transparent">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-      <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+          class="btn btn-sm btn-circle border-custom-rust text-custom-rust hover:bg-custom-rust hover:text-custom-white hover:border-custom-rust bg-transparent">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
     </svg>
   </button>
   <!-- ToDoフィールド -->
@@ -12,7 +12,7 @@
     <!-- 既存のTodo用（Railsフォームヘルパー） -->
     <%= todo_form.text_field :body, 
         placeholder: "やることを入力してください", 
-        class: "input input-bordered flex-1 bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+        class: "input input-lg input-bordered flex-1 bg-custom-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
     <%= todo_form.hidden_field :id %>
     <!--
       🎓 隠しフィールド_destroyは、削除マークとして機能する。
@@ -30,7 +30,7 @@
     <input type="text" 
             name="task[todos_attributes][INDEX][body]" 
             placeholder="やることを入力してください" 
-            class="input input-bordered flex-1 bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50">
+            class="input input-lg input-bordered flex-1 bg-custom-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50">
     <input type="hidden" name="task[todos_attributes][INDEX][id]" value="">
   <% end %>
 </div>
