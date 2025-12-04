@@ -22,7 +22,7 @@
         <%= f.fields_for :postable_attributes, (post.postable.is_a?(TextPost) ? post.postable : TextPost.new) do |text_post_form| %>
           <%= text_post_form.text_area :body, 
               placeholder: "調べたことや思いついたことを書きましょう", 
-              class: "textarea textarea-bordered w-full h-24 bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+              class: "textarea textarea-ghost w-full h-24 text-neutral placeholder:text-neutral/50 focus:outline-none" %>
         <% end %>
       </div>
       <div class="flex justify-end gap-4">
