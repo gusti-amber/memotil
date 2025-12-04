@@ -38,14 +38,14 @@
           class="tab text-custom-dark-green"
           aria-label="参照URL" 
           <%= 'checked' if post.postable_type == 'DocumentPost' %> />
-  <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-6">
+  <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-1">
     <!-- DocumentPost エラーメッセージ -->
     <% if post.postable_type == 'DocumentPost' %>
       <%= render 'posts/post_error_messages', post: post %>
     <% end %>
     
     <!-- DocumentPost フォーム -->
-    <%= form_with model: post, url: task_posts_path(task), method: :post, class: "space-y-4", id: "document-post-form" do |f| %>
+    <%= form_with model: post, url: task_posts_path(task), method: :post, class: "flex flex-col gap-1", id: "document-post-form" do |f| %>
       <%= f.hidden_field :postable_type, value: "DocumentPost" %>
       
       <div class="form-control">
