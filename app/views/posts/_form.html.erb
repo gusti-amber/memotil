@@ -6,7 +6,7 @@
           name="post_type" 
           role="tab" 
           class="tab text-custom-dark-green"
-          aria-label="テキスト" 
+          aria-label="メモ" 
           <%= 'checked' if post.postable_type.blank? || post.postable_type == 'TextPost' %> />
   <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-6">
     <!-- TextPost エラーメッセージ -->
@@ -36,7 +36,7 @@
           name="post_type" 
           role="tab" 
           class="tab text-custom-dark-green"
-          aria-label="ドキュメント" 
+          aria-label="参照URL" 
           <%= 'checked' if post.postable_type == 'DocumentPost' %> />
   <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-6">
     <!-- DocumentPost エラーメッセージ -->
