@@ -10,9 +10,6 @@ application.register("hello", HelloController);
 import TodoFormController from "./todo_form_controller";
 application.register("todo-form", TodoFormController);
 
-import PostContextMenuController from "./post_context_menu_controller";
-application.register("post-context-menu", PostContextMenuController);
-
 import TaskSearchAutocompleteController from "./task_search_autocomplete_controller";
 application.register(
   "task-search-autocomplete",
