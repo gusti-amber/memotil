@@ -1,9 +1,5 @@
 <%= turbo_frame_tag "post_#{post.id}" do %>
-  <div class="group px-6 py-2" 
-      data-controller="post-context-menu" 
-      data-post-context-menu-hidden-class="hidden"
-      data-post-context-menu-open-class="dropdown-open"
-      data-post-context-menu-fading-class="opacity-0">
+  <div class="group px-6 py-2">
     
     <!-- 投稿内容 -->
     <div class="chat chat-start">
@@ -15,9 +11,7 @@
           <%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
         </span>
       </div>
-      <div class="chat-bubble bg-custom-off-white text-custom-dark-green border-none"
-            data-post-context-menu-target="chatBubble"
-            data-action="contextmenu->post-context-menu#showMenu">
+      <div class="chat-bubble bg-custom-off-white text-custom-dark-green border-none">
         <% if post.postable_type == 'TextPost' %>
           <!-- ♻️ 今後、サニタイズの実装を行う -->
           <%= markdown(post.postable.body) %>
