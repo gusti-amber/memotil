@@ -8,14 +8,14 @@
           class="tab text-custom-dark-green"
           aria-label="メモ" 
           <%= 'checked' if post.postable_type.blank? || post.postable_type == 'TextPost' %> />
-  <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-6">
+  <div role="tabpanel" class="tab-content bg-custom-white border-custom-light-gray/50 rounded-box p-1">
     <!-- TextPost エラーメッセージ -->
     <% if post.postable_type.blank? || post.postable_type == 'TextPost' %>
       <%= render 'posts/post_error_messages', post: post %>
     <% end %>
     
     <!-- TextPost フォーム -->
-    <%= form_with model: post, url: task_posts_path(task), method: :post, class: "space-y-4", id: "text-post-form" do |f| %>
+    <%= form_with model: post, url: task_posts_path(task), method: :post, class: "flex flex-col gap-1", id: "text-post-form" do |f| %>
       <%= f.hidden_field :postable_type, value: "TextPost" %>
       
       <div class="form-control">
