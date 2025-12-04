@@ -50,7 +50,6 @@
       
       <div class="form-control">
         <%= f.fields_for :postable_attributes, (post.postable.is_a?(DocumentPost) ? post.postable.document : Document.new) do |document_post_form| %>
-          <%= document_post_form.label :url, "URL", class: "label text-custom-dark-green" %>
           <%= document_post_form.text_field :url, 
               placeholder: "https://docs.example.com", 
               class: "input input-bordered w-full bg-custom-white border-custom-dark-green text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
