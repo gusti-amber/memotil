@@ -15,20 +15,7 @@
     <% end %>
     
     <!-- TextPost フォーム -->
-    <%= form_with model: post, url: task_posts_path(task), method: :post, class: "flex flex-col gap-1", id: "text-post-form" do |f| %>
-      <%= f.hidden_field :postable_type, value: "TextPost" %>
-      
-      <div class="form-control">
-        <%= f.fields_for :postable_attributes, (post.postable.is_a?(TextPost) ? post.postable : TextPost.new) do |text_post_form| %>
-          <%= text_post_form.text_area :body, 
-              placeholder: "調べたことや思いついたことを書きましょう", 
-              class: "textarea textarea-ghost w-full h-24 text-neutral placeholder:text-neutral/50 focus:outline-none" %>
-        <% end %>
-      </div>
-      <div class="flex justify-end gap-4">
-        <%= f.submit "送信", class: "btn btn-neutral rounded-full shadow-none" %>
-      </div>
-    <% end %>
+    <%= render 'posts/text_post_form', post: post, task: task %>
   </div>
 
   <!-- DocumentPost タブ -->
