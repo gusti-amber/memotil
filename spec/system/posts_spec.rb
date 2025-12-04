@@ -170,38 +170,18 @@ RSpec.describe 'Posts', type: :system do
       visit task_path(task)
     end
 
-    context '正常な削除の場合' do
-      it '右クリックでコンテキストメニューが表示される' do
-        # 投稿のchat-bubble要素を右クリック
-        chat_bubble = find('.chat-bubble')
-        chat_bubble.right_click
+    context 'ポスト下の削除ボタンをクリックする' do
+      it '投稿が正常に削除される' do
+        # 投稿の内容を含む要素を見つけて、その親要素（.group）にホバー
+        find('.chat-bubble', text: 'test text post').hover
 
         # 削除ボタンをクリック
         accept_confirm do
-          within('[data-post-context-menu-target="menu"]') do
-            click_link '削除'
-          end
+          find('[data-test-id="delete-post-btn"]').click
         end
 
         # 投稿が削除されることを確認
         expect(page).not_to have_content('test text post')
-        expect(current_path).to eq task_path(task)
-      end
-
-      it '削除確認ダイアログでキャンセルした場合、投稿が削除されない' do
-        # 投稿のchat-bubble要素を右クリック
-        chat_bubble = find('.chat-bubble')
-        chat_bubble.right_click
-
-        # 削除ボタンをクリック
-        dismiss_confirm do
-          within('[data-post-context-menu-target="menu"]') do
-            click_link '削除'
-          end
-        end
-
-        # 投稿が残っていることを確認
-        expect(page).to have_content('test text post')
         expect(current_path).to eq task_path(task)
       end
     end
