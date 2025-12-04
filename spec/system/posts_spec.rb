@@ -15,9 +15,9 @@ RSpec.describe 'Posts', type: :system do
       context '正常な入力の場合' do
         it 'TextPostが正常に作成される' do
           fill_in 'post[postable_attributes][body]', with: 'test text post'
-          # text-post-formというidを持つformタグ内で投稿ボタンをクリック
+          # text-post-formというidを持つformタグ内で送信ボタンをクリック
           within('#text-post-form') do
-            click_button '投稿'
+            click_button '送信'
           end
 
           expect(page).to have_content('test text post')
@@ -30,7 +30,7 @@ RSpec.describe 'Posts', type: :system do
         it 'bodyが空の場合、エラーメッセージが表示される' do
           fill_in 'post[postable_attributes][body]', with: ''
           within('#text-post-form') do
-            click_button '投稿'
+            click_button '送信'
           end
 
           expect(page).to have_content('コメント を入力してください')
@@ -40,7 +40,7 @@ RSpec.describe 'Posts', type: :system do
         it 'bodyが501文字以上の場合、エラーメッセージが表示される' do
           fill_in 'post[postable_attributes][body]', with: 'a' * 501
           within('#text-post-form') do
-            click_button '投稿'
+            click_button '送信'
           end
 
           expect(page).to have_content('コメント は500文字以下で入力してください')
@@ -53,7 +53,7 @@ RSpec.describe 'Posts', type: :system do
         it '言語が指定されている場合、シンタックスハイライトが適用される' do
           fill_in 'post[postable_attributes][body]', with: "```ruby\ndef add(x,y)\n  x+y\nend\n```"
           within('#text-post-form') do
-            click_button '投稿'
+            click_button '送信'
           end
 
           expect(page).to have_content('add(x,y)')
@@ -63,7 +63,7 @@ RSpec.describe 'Posts', type: :system do
         it '言語が指定されていない場合、シンタックスハイライトが適用されない' do
           fill_in 'post[postable_attributes][body]', with: "```\ndef add(x,y)\n  x+y\nend\n```"
           within('#text-post-form') do
-            click_button '投稿'
+            click_button '送信'
           end
 
           expect(page).to have_content('add(x,y)')
@@ -75,14 +75,14 @@ RSpec.describe 'Posts', type: :system do
     context 'DocumentPost作成' do
       before do
         # DocumentPost投稿フォームのタブをクリック
-        find('input[aria-label="ドキュメント"]').click
+        find('input[aria-label="参照URL"]').click
       end
 
       context '正常な入力の場合' do
         it 'DocumentPostが正常に作成される' do
           fill_in 'post[postable_attributes][url]', with: 'https://docs.example.com'
           within('#document-post-form') do
-            click_button '投稿'
+            click_button '送信'
           end
 
           # ポスト一覧に投稿されたDocumentPostが表示されることを確認
@@ -95,7 +95,7 @@ RSpec.describe 'Posts', type: :system do
         it 'urlが空の場合、エラーメッセージが表示される' do
           fill_in 'post[postable_attributes][url]', with: ''
           within('#document-post-form') do
-            click_button '投稿'
+            click_button '送信'
           end
 
           expect(page).to have_content('URL を入力してください')
@@ -105,7 +105,7 @@ RSpec.describe 'Posts', type: :system do
         it 'urlが無効な形式の場合、エラーメッセージが表示される' do
           fill_in 'post[postable_attributes][url]', with: 'あかさたな'
           within('#document-post-form') do
-            click_button '投稿'
+            click_button '送信'
           end
 
           expect(page).to have_content('URL は無効な形式です')
@@ -116,7 +116,7 @@ RSpec.describe 'Posts', type: :system do
         it 'urlがhttpまたはhttpsで始まらない場合、エラーメッセージが表示される' do
           fill_in 'post[postable_attributes][url]', with: 'ftp://example.com'
           within('#document-post-form') do
-            click_button '投稿'
+            click_button '送信'
           end
 
           expect(page).to have_content('URL はhttpまたはhttpsで始まる必要があります')
