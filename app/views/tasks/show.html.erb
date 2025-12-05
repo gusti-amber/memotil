@@ -36,6 +36,7 @@
             <p class="text-md text-neutral font-semibold">やることリスト</p>
             <%= render partial: "todos/todo", collection: @task.todos %>
           </div>
+          <%= render 'tasks/status_button', task: @task %>
         <% elsif @task.done? %>
           <!-- TIL 作成カード -->
           <div class="card bg-base-200 shadow-sm">
@@ -57,6 +58,7 @@
               <% end %>
             </div>
           </div>
+          <%= render 'tasks/status_button', task: @task %>
         <% end %>
       </div>
     </div>
