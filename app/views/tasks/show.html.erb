@@ -40,8 +40,11 @@
               </div>
             </div>
           </div>
-          <%= render 'tasks/status_button', task: @task %>
-          <%= render 'tasks/destroy_button', task: @task %>
+          <!-- ボタン群 -->
+          <div class="flex flex-col items-start gap-1">
+            <%= render 'tasks/status_button', task: @task %>
+            <%= render 'tasks/destroy_button', task: @task %>
+          </div>
         <% elsif @task.done? %>
           <!-- TIL 作成カード -->
           <div class="card bg-base-200 shadow-sm w-full">
@@ -66,8 +69,11 @@
               <% end %>
             </div>
           </div>
-          <%= render 'tasks/status_button', task: @task %>
-          <%= render 'tasks/destroy_button', task: @task %>
+          <!-- ボタン群 -->
+          <div class="flex flex-col items-start gap-1">
+            <%= render 'tasks/status_button', task: @task %>
+            <%= render 'tasks/destroy_button', task: @task %>
+          </div>
         <% end %>
       </div>
     </div>
