@@ -355,14 +355,11 @@ RSpec.describe 'Tasks', type: :system do
       visit task_path(task)
     end
 
-    context 'ドロップダウンメニューから削除を選択した場合' do
+    context 'サイドバーから削除ボタンをクリックした場合' do
       it 'タスクは正常に削除される' do
-        # ドロップダウンメニューを開く（CSS Focusを使用したdropdown）
-        find('[aria-label="open-task-menu"]').click
-
         # 削除ボタンをクリック
         accept_confirm do
-          click_link '削除'
+          click_link 'タスクを削除する'
         end
 
         # タスク一覧ページに遷移するまで待ってから確認
@@ -380,52 +377,40 @@ RSpec.describe 'Tasks', type: :system do
       sign_in user
     end
 
-    context 'todoステータスの場合' do
+    context 'ステータスがTodoの場合' do
       let(:task) { create(:task, user: user, status: :todo) }
 
-      it '「タスクに着手」ボタンが表示され、クリックするとステータスがdoingに変更される' do
+      it '「タスクに取り組む」ボタンをクリックすると、ステータスがDoingに変更される' do
         visit task_path(task)
         expect(page).to have_content('Todo')
 
-        # ドロップダウンメニューを開く（CSS Focusを使用したdropdown）
-        find('[aria-label="open-task-menu"]').click
-
-        expect(page).to have_link('タスクに着手')
-        click_link 'タスクに着手'
+        click_link 'タスクに取り組む'
 
         expect(page).to have_content('Doing')
       end
     end
 
-    context 'doingステータスの場合' do
+    context 'ステータスがDoingの場合' do
       let(:task) { create(:task, user: user, status: :doing) }
 
-      it '「タスクを完了」ボタンが表示され、クリックするとステータスがdoneに変更される' do
+      it '「タスクを完了する」ボタンをクリックすると、ステータスがDoneに変更される' do
         visit task_path(task)
         expect(page).to have_content('Doing')
 
-        # ドロップダウンメニューを開く（CSS Focusを使用したdropdown）
-        find('[aria-label="open-task-menu"]').click
-
-        expect(page).to have_link('タスクを完了')
-        click_link 'タスクを完了'
+        click_link 'タスクを完了する'
 
         expect(page).to have_content('Done')
       end
     end
 
-    context 'doneステータスの場合' do
+    context 'ステータスがDoneの場合' do
       let(:task) { create(:task, user: user, status: :done) }
 
-      it '「再び着手」ボタンが表示され、クリックするとステータスがdoingに変更される' do
+      it '「再びタスクに取り組む」ボタンをクリックすると、ステータスがDoingに変更される' do
         visit task_path(task)
         expect(page).to have_content('Done')
 
-        # ドロップダウンメニューを開く（CSS Focusを使用したdropdown）
-        find('[aria-label="open-task-menu"]').click
-
-        expect(page).to have_link('再び着手')
-        click_link '再び着手'
+        click_link '再びタスクに取り組む'
 
         expect(page).to have_content('Doing')
       end
