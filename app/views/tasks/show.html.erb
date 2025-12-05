@@ -29,10 +29,10 @@
       <div class="divider divider-horizontal"></div>
 
       <!-- タスクのサブ情報セクション -->
-      <div class="flex flex-col items-center max-w-sm w-full">
+      <div class="flex flex-col items-start max-w-sm w-full">
         <% if @task.doing? %>
           <!-- やることリスト -->
-          <div class="flex flex-col items-start gap-2">
+          <div class="flex flex-col gap-2">
             <p class="text-md text-neutral font-semibold">やることリスト</p>
             <%= render partial: "todos/todo", collection: @task.todos %>
           </div>
