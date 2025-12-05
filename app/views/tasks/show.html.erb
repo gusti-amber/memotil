@@ -30,7 +30,13 @@
 
       <!-- タスクのサブ情報セクション -->
       <div class="flex flex-col items-center max-w-sm w-full">
-        <% if @task.done? %>
+        <% if @task.doing? %>
+          <!-- やることリスト -->
+          <div class="flex flex-col items-start gap-2">
+            <p class="text-md text-neutral font-semibold">やることリスト</p>
+            <%= render partial: "todos/todo", collection: @task.todos %>
+          </div>
+        <% elsif @task.done? %>
           <!-- TIL 作成カード -->
           <div class="card bg-base-200 shadow-sm">
             <div class="card-body">
