@@ -45,7 +45,7 @@
               <%= turbo_frame_tag "til" do %>
                 <% if current_user.github_token.present? %>
                   <div class="card-actions justify-center">
-                    <%= link_to new_task_til_path(@task), data: { turbo_frame: "til" }, class: "btn btn-primary" do %>
+                    <%= link_to new_task_til_path(@task), data: { turbo_frame: "til" }, class: "btn btn-lg btn-primary rounded-full text-base" do %>
                       GitHubリポジトリにTILを保存
                     <% end %>
                   </div>
