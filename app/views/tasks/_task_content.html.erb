@@ -20,11 +20,6 @@
       <%= render partial: "tasks/tag_badge", collection: task.tags, as: :tag %>
     </div>
   </div>
-
-  <!-- Todoリスト -->
-  <div class="flex flex-col gap-2">
-    <%= render partial: "todos/todo", collection: task.todos %>
-  </div>
-
+  
   <div class="divider"></div>
 </div>
