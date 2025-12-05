@@ -2,11 +2,6 @@
   <div class="flex justify-between items-center">
     <!-- タイトル -->
     <p class="text-2xl font-bold text-custom-dark-green"><%= task.title %></p>
-
-    <!-- ドロップダウンメニュー（編集・ステータス変更・削除） -->
-    <%= turbo_frame_tag "task_dropdown" do %>
-      <%= render 'tasks/dropdown', task: task %>
-    <% end %>
   </div>
 
   <div class="flex justify-start items-center gap-4">
