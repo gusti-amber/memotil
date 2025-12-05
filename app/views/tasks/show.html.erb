@@ -40,7 +40,7 @@
           <%= render 'tasks/destroy_button', task: @task %>
         <% elsif @task.done? %>
           <!-- TIL 作成カード -->
-          <div class="card bg-base-200 shadow-sm">
+          <div class="card bg-base-200 shadow-sm w-full">
             <div class="card-body">
               <%= turbo_frame_tag "til" do %>
                 <% if current_user.github_token.present? %>
