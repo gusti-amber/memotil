@@ -27,7 +27,7 @@
         <%= f.label :body, "README.md", class: "label" %>
         <%= f.text_area :body, value: @readme_body, rows: 16, class: "textarea textarea-bordered text-area-neutral w-full" %>
         <div class="flex justify-end">
-          <%= f.submit "GitHubにプッシュ", class: "btn btn-primary" %>
+          <%= f.submit "GitHubにプッシュ", class: "btn btn-primary rounded-full shadow-none w-full" %>
         </div>
       <% end %>
     <% end %>
