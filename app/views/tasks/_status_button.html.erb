@@ -6,11 +6,11 @@
     タスクに着手
   <% end %>
 <% elsif task.doing? %>
-  <%= link_to toggle_status_task_path(task), data: { turbo_method: :patch, turbo_frame: "_top" }, class: "hover:bg-custom-off-white flex items-center gap-2 px-4 py-2 w-full text-left text-custom-dark-green" do %>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check text-custom-purple size-4">
+  <%= link_to toggle_status_task_path(task), data: { turbo_method: :patch, turbo_frame: "_top" }, class: "btn btn-outline btn-accent rounded-full" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="size-5">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M9 12l2 2l4 -4" />
     </svg>
-    タスクを完了
+    タスクを完了する
   <% end %>
 <% elsif task.done? %>
   <%= link_to toggle_status_task_path(task), data: { turbo_method: :patch, turbo_frame: "_top" }, class: "hover:bg-custom-off-white flex items-center gap-2 px-4 py-2 w-full text-left text-custom-dark-green" do %>
