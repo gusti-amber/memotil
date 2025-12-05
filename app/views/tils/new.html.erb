@@ -1,7 +1,7 @@
 <%= turbo_frame_tag "til" do %>
   <div class="flex flex-col gap-6">
     <div class="flex items-center justify-between">
-      <h2 class="text-xl font-bold text-custom-dark-green">README.mdを編集</h2>
+      <p class="text-xl font-bold text-neutral">README.mdを編集</p>
       <%= link_to task_path(@task), data: { turbo_frame: "til" }, class: "btn btn-ghost" do %>
         戻る
       <% end %>
@@ -9,7 +9,7 @@
 
     <!-- リポジトリ選択フォーム（GET） -->
     <%= form_with url: new_task_til_path(@task), method: :get, data: { turbo_frame: "til" }, class: "flex flex-col gap-1" do |f| %>
-      <%= f.label :repo, "リポジトリを選択", class: "label" %>
+      <%= f.label :repo, "リポジトリを選択", class: "label text-sm text-neutral font-semibold" %>
       <%= f.select :repo,
                     @repositories.map { |r| ["#{r.owner.login}/#{r.name}", r.full_name] },
                     { include_blank: "選択してください", selected: @selected_repo },
@@ -22,12 +22,12 @@
       <%= form_with url: task_til_path(@task), method: :post, data: { turbo_frame: "til" }, class: "flex flex-col gap-2" do |f| %>
         <%= f.hidden_field :repo, value: @selected_repo %>
         <%= f.hidden_field :sha, value: @readme_sha %>
-        <%= f.label :message, "コミットメッセージ", class: "label" %>
+        <%= f.label :message, "コミットメッセージ", class: "label text-sm text-neutral font-semibold" %>
         <%= f.text_field :message, value: "Add TIL for #{(@task.title || 'task')}", class: "input input-bordered input-neutral w-full" %>
-        <%= f.label :body, "README.md", class: "label" %>
+        <%= f.label :body, "README.md", class: "label text-sm text-neutral font-semibold" %>
         <%= f.text_area :body, value: @readme_body, rows: 16, class: "textarea textarea-bordered text-area-neutral w-full" %>
         <div class="flex justify-end">
-          <%= f.submit "GitHubにプッシュ", class: "btn btn-primary" %>
+          <%= f.submit "GitHubにプッシュ", class: "btn btn-primary rounded-full shadow-none w-full" %>
         </div>
       <% end %>
     <% end %>
