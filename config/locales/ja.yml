@@ -11,7 +11,7 @@ ja:
       task:
         title: "タイトル"
         tag_ids: "タグ"
-        todos: "ToDoリスト"
+        todos: "タスクの完了条件"
 
   # ActiveRecordの属性名の和訳
   activerecord:
