@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = ["container", "addButton", "template", "todoField"];
   static values = {
-    maxCount: { type: Number, default: 3 },
+    maxCount: { type: Number, default: 5 },
     confirmMessage: { type: String, default: "この項目を削除しますか？" },
   };
 
