@@ -1,5 +1,5 @@
 <!-- TIL 作成カード -->
-<div class="card bg-base-200 shadow-sm w-full">
+<div class="card bg-base-200 shadow-sm w-full mb-1">
   <div class="card-body">
     <%= turbo_frame_tag "til" do %>
       <% if current_user.github_token.present? %>
