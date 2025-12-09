@@ -1,10 +1,7 @@
 <!-- やることリストカード -->
 <div class="card bg-base-200 shadow-sm w-full mb-1">
   <div class="card-body">
-    <p class="text-neutral font-semibold">タスクの完了条件</p>
-    <div class="flex flex-col gap-2">
-      <%= render partial: "todos/todo", collection: task.todos %>
-    </div>
+    <%= render "todo_list", task: task %>
   </div>
 </div>
 <!-- ボタン群 -->
