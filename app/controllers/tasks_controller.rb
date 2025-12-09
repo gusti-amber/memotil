@@ -35,9 +35,25 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to @task, notice: "タスクが正常に更新されました。"
+      # todo_formからのリクエストかどうかを判別
+      if from_todo_form?
+        # todo_formからのリクエストの場合、showページをレンダリング
+        @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
+        @post = Post.new
+        render :show, status: :ok
+      else
+        # edit.html.erbからのリクエストの場合、リダイレクト
+        redirect_to @task, notice: "タスクが正常に更新されました。"
+      end
     else
-      render :edit, status: :unprocessable_entity
+      # エラー時も同様に判別
+      if from_todo_form?
+        @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
+        @post = Post.new
+        render :show, status: :unprocessable_entity
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
   end
 
