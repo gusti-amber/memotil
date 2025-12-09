@@ -1,4 +1,4 @@
-<div data-controller="todo-section">
+<div data-controller="todo-section" class="@container">
   <div data-todo-section-target="todoList" class="<%= 'hidden' if task.todos.empty? %>">
     <%= render 'tasks/todo_list', task: task %>
   </div>
