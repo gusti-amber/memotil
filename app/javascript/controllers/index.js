@@ -15,3 +15,6 @@ application.register(
   "task-search-autocomplete",
   TaskSearchAutocompleteController
 );
+
+import TodoSectionController from "./todo_section_controller";
+application.register("todo-section", TodoSectionController);
