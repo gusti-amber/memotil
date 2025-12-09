@@ -9,11 +9,14 @@
         <div class="card bg-base-200 shadow-sm w-full mb-1">
           <%= turbo_frame_tag "todo_section" do %>
             <div class="card-body">
-              <% if @task.todos.any? %>
-                <%= render 'tasks/todo_list', task: @task %>
-              <% else %>
-                <%= render 'tasks/todo_form', task: @task %>
-              <% end %>
+              <div data-controller="todo-section">
+                <div data-todo-section-target="todoList" class="<%= 'hidden' if @task.todos.empty? %>">
+                  <%= render 'tasks/todo_list', task: @task %>
+                </div>
+                <div data-todo-section-target="todoForm" class="<%= 'hidden' unless @task.todos.empty? %>">
+                  <%= render 'tasks/todo_form', task: @task %>
+                </div>
+              </div>
             </div>
           <% end %>
         </div>
