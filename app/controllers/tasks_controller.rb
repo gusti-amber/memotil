@@ -37,10 +37,15 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       # todo_formからのリクエストかどうかを判別
       if from_todo_form?
-        # todo_formからのリクエストの場合、showページをレンダリング
-        @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
-        @post = Post.new
-        render :show, status: :ok
+        # todo_formからのリクエストの場合、Turbo Streamでtodo_sectionを更新
+        respond_to do |format|
+          format.turbo_stream
+          format.html do
+            @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
+            @post = Post.new
+            render :show, status: :ok
+          end
+        end
       else
         # edit.html.erbからのリクエストの場合、リダイレクト
         redirect_to @task, notice: "タスクが正常に更新されました。"
@@ -48,9 +53,14 @@ class TasksController < ApplicationController
     else
       # エラー時も同様に判別
       if from_todo_form?
-        @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
-        @post = Post.new
-        render :show, status: :unprocessable_entity
+        respond_to do |format|
+          format.turbo_stream { render :update, status: :unprocessable_entity }
+          format.html do
+            @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
+            @post = Post.new
+            render :show, status: :unprocessable_entity
+          end
+        end
       else
         render :edit, status: :unprocessable_entity
       end
