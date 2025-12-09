@@ -1,0 +1,9 @@
+<%= turbo_stream.update "todo_section" do %>
+  <div class="card-body">
+    <% if @task.todos.any? %>
+      <%= render 'tasks/todo_list', task: @task %>
+    <% else %>
+      <%= render 'tasks/todo_form', task: @task %>
+    <% end %>
+  </div>
+<% end %>
