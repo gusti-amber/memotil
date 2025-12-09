@@ -88,4 +88,9 @@ class TasksController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     redirect_to tasks_path, alert: "アクセス権限がありません"
   end
+
+  def from_todo_form?
+    # todos_attributesパラメータが存在し、かつ値がある場合、todo_formからのリクエストと判断
+    params[:task] && params[:task][:todos_attributes].present?
+  end
 end
