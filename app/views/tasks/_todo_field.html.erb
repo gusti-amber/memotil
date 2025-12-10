@@ -8,9 +8,9 @@
       <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
     </svg>
   </button>
-  <!-- ToDoフィールド -->
+  <!-- ToDoフィールド(2種類のフィールドを使用) -->
   <% if todo_form %>
-    <!-- 既存のTodo用（Railsフォームヘルパー） -->
+    <!-- 1. 既存のTodoフィールド用、Railsフォームヘルパーを使用。 -->
     <%= todo_form.text_field :body, 
         placeholder: "やることを入力してください", 
         class: "input bg-base-100 border-base-content text-base text-base-content w-full
@@ -29,7 +29,7 @@
     -->
     <%= todo_form.hidden_field :_destroy, class: "hidden" %>
   <% else %>
-    <!-- テンプレート用（INDEXプレースホルダー） -->
+    <!-- 2. 新規追加のToDoフィールド用テンプレート、INDEXプレースホルダーを使用。 -->
     <input type="hidden" name="task[todos_attributes][INDEX][_destroy]" value="0" class="hidden">
     <input type="text"
            name="task[todos_attributes][INDEX][body]" 
