@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["container", "addButton", "template", "todoField"];
+  static targets = ["todoFields", "addButton", "template", "todoField"];
   static values = {
     maxCount: { type: Number, default: 5 },
     confirmMessage: { type: String, default: "この項目を削除しますか？" },
@@ -15,7 +15,7 @@ export default class extends Controller {
     // canAddでToDoフィールドがmaxCount(Taskが保持するToDoの最大数)を超えてないか判定
     // 超えていない場合、新規追加のToDoフィールドを作成し、ToDo追加ボタンの状態を更新
     if (this.canAdd) {
-      this.containerTarget.appendChild(this.createNewTodo());
+      this.todoFieldsTarget.appendChild(this.createNewTodo());
       this.updateButtonState();
     }
   }
@@ -82,7 +82,7 @@ export default class extends Controller {
   createNewTodo() {
     const template = this.templateTarget.content.cloneNode(true);
     // ここで取得するtodoの数は非表示のtodoも含む
-    const todoCount = this.containerTarget.children.length;
+    const todoCount = this.todoFieldsTarget.children.length;
 
     // インデックスを置換
     template.querySelectorAll('input[name*="INDEX"]').forEach((input) => {
