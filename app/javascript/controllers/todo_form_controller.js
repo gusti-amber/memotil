@@ -89,12 +89,12 @@ export default class extends Controller {
 
   createNewTodo() {
     const template = this.todoTemplateTarget.content.cloneNode(true);
-    // ここで取得するtodoの数は非表示のtodoも含む
-    const todoCount = this.todoFieldsTarget.children.length;
+    // ここで取得するToDoフィールドの数は非表示のToDoフィールドも含む
+    const allTodoFieldCount = this.todoFieldsTarget.children.length;
 
     // インデックスを置換
     template.querySelectorAll('input[name*="INDEX"]').forEach((input) => {
-      input.name = input.name.replace(/INDEX/g, todoCount);
+      input.name = input.name.replace(/INDEX/g, allTodoFieldCount);
     });
 
     return template;
