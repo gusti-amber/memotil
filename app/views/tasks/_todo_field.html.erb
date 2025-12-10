@@ -1,7 +1,7 @@
 <div class="flex items-center gap-2" data-todo-form-target="todoField">                
   <!-- 削除ボタン -->
   <button type="button" 
-          data-action="click->todo-form#remove"
+          data-action="click->todo-form#removeTodoField"
           class="btn btn-circle btn-outline btn-error shadow-none
                  btn-xs @md:btn-sm">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 @md:size-6">
@@ -25,7 +25,7 @@
       _destroyがtrueの場合、削除マークがONになり、編集画面のデータ更新が行われると、該当するtodoレコードは削除される。
       詳しくは以下を参照: https://railsguides.jp/form_helpers.html#%E9%96%A2%E9%80%A3%E4%BB%98%E3%81%91%E3%82%89%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%82%92%E5%89%8A%E9%99%A4%E3%81%99%E3%82%8B
 
-      上記の削除ボタンをクリックすると、todo_formコントローラーのremoveメソッドにより、既存のtodoの場合は_destroyがtrueに変更される。
+      上記の削除ボタンをクリックすると、todo_formコントローラーのremoveTodoFieldメソッドにより、既存のtodoの場合は_destroyがtrueに変更される。
       詳しくは`app/javascript/controllers/todo_form_controller.js`を参照。
     -->
   <% else %>

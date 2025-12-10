@@ -20,7 +20,7 @@ export default class extends Controller {
     }
   }
 
-  remove(event) {
+  removeTodoField(event) {
     // クリックされたToDo削除ボタンの親要素(ToDo削除ボタン+ToDoフィールドのコンテナ)を取得
     const todoField = event.target.closest(
       "[data-todo-form-target='todoField']"
@@ -29,7 +29,7 @@ export default class extends Controller {
     // ブラウザの確認メッセージを表示し、OKが押されたか判定
     // 押された場合、ToDo削除ボタンの親要素(ToDo削除ボタン+ToDoフィールドのコンテナ)を削除し、ToDo追加ボタンの状態を更新
     if (confirm(this.confirmMessageValue)) {
-      this.removeTodo(todoField);
+      this.destroyTodoField(todoField);
       this.updateButtonState();
     }
   }
@@ -64,7 +64,7 @@ export default class extends Controller {
     }).length;
   }
 
-  removeTodo(todoField) {
+  destroyTodoField(todoField) {
     // input要素のname属性:idからToDoのIDを取得
     const todoId = todoField.querySelector('input[name*="[id]"]')?.value;
 
