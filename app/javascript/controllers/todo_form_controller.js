@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["todoFields", "addButton", "template", "todoField"];
+  static targets = ["todoFields", "addButton", "todoTemplate", "todoField"];
   static values = {
     maxCount: { type: Number, default: 5 },
     confirmMessage: { type: String, default: "この項目を削除しますか？" },
@@ -80,7 +80,7 @@ export default class extends Controller {
   }
 
   createNewTodo() {
-    const template = this.templateTarget.content.cloneNode(true);
+    const template = this.todoTemplateTarget.content.cloneNode(true);
     // ここで取得するtodoの数は非表示のtodoも含む
     const todoCount = this.todoFieldsTarget.children.length;
 
