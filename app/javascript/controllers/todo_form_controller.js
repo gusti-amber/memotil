@@ -15,7 +15,7 @@ export default class extends Controller {
     // canAddでToDoフィールドがmaxCount(Taskが保持するToDoの最大数)を超えてないか判定
     // 超えていない場合、新規追加のToDoフィールドを作成し、ToDo追加ボタンの状態を更新
     if (this.canAdd) {
-      this.todoFieldsTarget.appendChild(this.createNewTodo());
+      this.todoFieldsTarget.appendChild(this.createNewTodoField());
       this.updateButtonState();
     }
   }
@@ -87,7 +87,7 @@ export default class extends Controller {
     }
   }
 
-  createNewTodo() {
+  createNewTodoField() {
     const template = this.todoTemplateTarget.content.cloneNode(true);
     // ここで取得するToDoフィールドの数は非表示のToDoフィールドも含む
     const allTodoFieldCount = this.todoFieldsTarget.children.length;
