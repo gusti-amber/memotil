@@ -70,9 +70,17 @@ export default class extends Controller {
 
     if (todoId) {
       // todoIdが存在する(既存のToDoフィールドである)場合
-      // _destroyをtrueにして、ToDoフィールドを非表示にする
+      // _destroyフィールドのvalueをtrueに設定
       todoField.querySelector('input[name*="[_destroy]"]').value = "true";
-      todoField.style.display = "none";
+
+      // disabled属性の更新
+      const textInput = todoField.querySelector('input[type="text"]');
+      const removeButton = todoField.querySelector('button[type="button"]');
+      if (textInput) textInput.disabled = true;
+      if (removeButton) removeButton.disabled = true;
+
+      // cssクラスの更新
+      todoField.classList.add("opacity-50");
     } else {
       // 新規追加のToDoフィールドである場合、直接DOMツリーから削除する
       todoField.remove();
