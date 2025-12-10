@@ -17,7 +17,7 @@
     <!-- ToDoフィールド(2種類のフィールドを使用) -->
     <!-- 1. 既存のTodoフィールド用
             formオブジェクトを渡し、Railsフォームヘルパーを使用。 -->
-    <div id="todos-container" data-todo-form-target="todoFields" class="space-y-2">
+    <div data-todo-form-target="todoFields" class="space-y-2">
       <%= f.fields_for :todos do |todo_form| %>
         <%= render "todo_field", todo_form: todo_form %>
       <% end %>
