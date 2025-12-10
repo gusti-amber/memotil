@@ -62,7 +62,7 @@ export default class extends Controller {
 
     if (todoId) {
       // 既存のtodo: 削除マークを設定して非表示
-      todoField.querySelector('input[name*="[_destroy]"]').value = "1";
+      todoField.querySelector('input[name*="[_destroy]"]').value = "true";
       todoField.style.display = "none";
     } else {
       // 新規todo: 直接削除

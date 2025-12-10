@@ -21,11 +21,11 @@
     <%= todo_form.hidden_field :_destroy, class: "hidden" %>
     <!--
       🎓 隠しフィールド_destroyは、削除マークとして機能する。
-      _destroyは通常はfalseとなっている。
-      _destroyが"1"の場合、削除マークがONになり、編集画面のデータ更新が行われると、該当するtodoレコードは削除される。
+      _destroyは通常は"false"となっている。
+      _destroyが"true"の場合、削除マークがONになり、編集画面のデータ更新が行われると、該当するtodoレコードは削除される。
       詳しくは以下を参照: https://railsguides.jp/form_helpers.html#%E9%96%A2%E9%80%A3%E4%BB%98%E3%81%91%E3%82%89%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%82%92%E5%89%8A%E9%99%A4%E3%81%99%E3%82%8B
 
-      上記の削除ボタンをクリックすると、todo_formコントローラーのremoveメソッドにより、既存のtodoの場合は_destroyが"1"に変更される。
+      上記の削除ボタンをクリックすると、todo_formコントローラーのremoveメソッドにより、既存のtodoの場合は_destroyが"true"に変更される。
       詳しくは`app/javascript/controllers/todo_form_controller.js`を参照。
     -->
   <% else %>
@@ -38,6 +38,6 @@
                   placeholder:text-base-content/50
                   input-md @md:input-lg text-sm @md:text-base">
     <input type="hidden" name="task[todos_attributes][INDEX][id]" value="">
-    <input type="hidden" name="task[todos_attributes][INDEX][_destroy]" value="0" class="hidden">
+    <input type="hidden" name="task[todos_attributes][INDEX][_destroy]" value="false" class="hidden">
   <% end %>
 </div>
