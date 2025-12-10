@@ -43,11 +43,9 @@ export default class extends Controller {
 
     // cssクラスの更新
     if (isDisabled) {
-      this.addButtonTarget.classList.add("btn-disabled");
       this.addButtonTarget.classList.add("opacity-50");
       this.addButtonTarget.classList.add("cursor-not-allowed");
     } else {
-      this.addButtonTarget.classList.remove("btn-disabled");
       this.addButtonTarget.classList.remove("opacity-50");
       this.addButtonTarget.classList.remove("cursor-not-allowed");
     }
