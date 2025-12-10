@@ -60,7 +60,7 @@ export default class extends Controller {
     // _destroyフィールドのvalueがfalseのToDoフィールドの数をカウント
     return this.todoFieldTargets.filter((todo) => {
       const destroyField = todo.querySelector('input[name*="[_destroy]"]');
-      return !destroyField || destroyField.value == "false";
+      return !destroyField || destroyField.value === "false";
     }).length;
   }
 
@@ -71,7 +71,7 @@ export default class extends Controller {
     if (todoId) {
       // todoIdが存在する(既存のToDoフィールドである)場合
       // _destroyフィールドのvalueをtrueに設定
-      todoField.querySelector('input[name*="[_destroy]"]').value = "true";
+      todoField.querySelector('input[name*="[_destroy]"]').value = true;
 
       // disabled属性の更新
       const textInput = todoField.querySelector('input[type="text"]');
