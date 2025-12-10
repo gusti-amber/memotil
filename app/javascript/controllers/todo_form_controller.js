@@ -59,9 +59,11 @@ export default class extends Controller {
   }
 
   get todoCount() {
-    // 非表示のtodoはフィルタリングし、表示されているtodoの数をカウント
-    return this.todoFieldTargets.filter((todo) => todo.style.display !== "none")
-      .length;
+    // _destroyフィールドのvalueがfalseのToDoフィールドの数をカウント
+    return this.todoFieldTargets.filter((todo) => {
+      const destroyField = todo.querySelector('input[name*="[_destroy]"]');
+      return !destroyField || destroyField.value == "false";
+    }).length;
   }
 
   removeTodo(todoField) {
