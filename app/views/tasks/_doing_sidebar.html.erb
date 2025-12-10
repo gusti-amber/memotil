@@ -1,8 +1,10 @@
 <!-- やることリストカード -->
 <div class="card bg-base-200 shadow-sm w-full mb-1">
-  <div class="card-body">
-    <%= render "todo_list", task: task %>
-  </div>
+  <%= turbo_frame_tag "todo_section" do %>
+    <div class="card-body">
+      <%= render 'tasks/todo_section', task: @task %>
+    </div>
+  <% end %>
 </div>
 <!-- ボタン群 -->
 <div class="flex justify-center">
