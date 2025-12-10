@@ -53,10 +53,10 @@ export default class extends Controller {
 
   get canAdd() {
     // ToDoフィールドがmaxCount(Taskが保持するToDoの最大数)を超えてないか判定
-    return this.todoCount < this.maxCountValue;
+    return this.enabledTodoFieldCount < this.maxCountValue;
   }
 
-  get todoCount() {
+  get enabledTodoFieldCount() {
     // _destroyフィールドのvalueがfalseのToDoフィールドの数をカウント
     return this.todoFieldTargets.filter((todo) => {
       const destroyField = todo.querySelector('input[name*="[_destroy]"]');
