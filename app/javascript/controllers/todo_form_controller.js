@@ -12,6 +12,8 @@ export default class extends Controller {
   }
 
   add() {
+    // canAddでToDoフィールドがmaxCount(Taskが保持するToDoの最大数)を超えてないか判定
+    // 超えていない場合、新規追加のToDoフィールドを作成し、ToDo追加ボタンの状態を更新
     if (this.canAdd) {
       this.containerTarget.appendChild(this.createNewTodo());
       this.updateButtonState();
@@ -19,11 +21,13 @@ export default class extends Controller {
   }
 
   remove(event) {
-    // クリックされた削除ボタンを子要素に持つtodoFieldを取得
+    // クリックされたToDo削除ボタンの親要素(ToDo削除ボタン+ToDoフィールドのコンテナ)を取得
     const todoField = event.target.closest(
       "[data-todo-form-target='todoField']"
     );
 
+    // ブラウザの確認メッセージを表示し、OKが押されたか判定
+    // 押された場合、ToDo削除ボタンの親要素(ToDo削除ボタン+ToDoフィールドのコンテナ)を削除し、ToDo追加ボタンの状態を更新
     if (confirm(this.confirmMessageValue)) {
       this.removeTodo(todoField);
       this.updateButtonState();
@@ -31,10 +35,13 @@ export default class extends Controller {
   }
 
   updateButtonState() {
+    // canAddの真偽により、ToDo追加ボタンのdisabled属性とcssクラスを更新
     const isDisabled = !this.canAdd;
+
+    // disabled属性の更新
     this.addButtonTarget.disabled = isDisabled;
 
-    // daisyUI v5対応: disabled状態の見た目を確実に適用
+    // cssクラスの更新
     if (isDisabled) {
       this.addButtonTarget.classList.add("btn-disabled");
       this.addButtonTarget.classList.add("opacity-50");
@@ -47,6 +54,7 @@ export default class extends Controller {
   }
 
   get canAdd() {
+    // ToDoフィールドがmaxCount(Taskが保持するToDoの最大数)を超えてないか判定
     return this.todoCount < this.maxCountValue;
   }
 
@@ -57,15 +65,16 @@ export default class extends Controller {
   }
 
   removeTodo(todoField) {
-    // input要素のname属性に[id]が含まれている場合のみ、todoField要素のidを取得
+    // input要素のname属性:idからToDoのIDを取得
     const todoId = todoField.querySelector('input[name*="[id]"]')?.value;
 
     if (todoId) {
-      // 既存のtodo: 削除マークを設定して非表示
+      // todoIdが存在する(既存のToDoフィールドである)場合
+      // _destroyをtrueにして、ToDoフィールドを非表示にする
       todoField.querySelector('input[name*="[_destroy]"]').value = "true";
       todoField.style.display = "none";
     } else {
-      // 新規todo: 直接削除
+      // 新規追加のToDoフィールドである場合、直接DOMツリーから削除する
       todoField.remove();
     }
   }
