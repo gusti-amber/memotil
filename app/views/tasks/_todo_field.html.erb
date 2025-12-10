@@ -18,6 +18,7 @@
                 placeholder:text-base-content/50
                 input-md @md:input-lg text-sm @md:text-base" %>
     <%= todo_form.hidden_field :id %>
+    <%= todo_form.hidden_field :_destroy, class: "hidden" %>
     <!--
       🎓 隠しフィールド_destroyは、削除マークとして機能する。
       _destroyは通常はfalseとなっている。
@@ -27,10 +28,8 @@
       上記の削除ボタンをクリックすると、todo_formコントローラーのremoveメソッドにより、既存のtodoの場合は_destroyが"1"に変更される。
       詳しくは`app/javascript/controllers/todo_form_controller.js`を参照。
     -->
-    <%= todo_form.hidden_field :_destroy, class: "hidden" %>
   <% else %>
     <!-- 2. 新規追加のToDoフィールド用テンプレート、INDEXプレースホルダーを使用。 -->
-    <input type="hidden" name="task[todos_attributes][INDEX][_destroy]" value="0" class="hidden">
     <input type="text"
            name="task[todos_attributes][INDEX][body]" 
            placeholder="やることを入力してください" 
@@ -39,5 +38,6 @@
                   placeholder:text-base-content/50
                   input-md @md:input-lg text-sm @md:text-base">
     <input type="hidden" name="task[todos_attributes][INDEX][id]" value="">
+    <input type="hidden" name="task[todos_attributes][INDEX][_destroy]" value="0" class="hidden">
   <% end %>
 </div>
