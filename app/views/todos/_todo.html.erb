@@ -1,10 +1,10 @@
 <%= turbo_frame_tag todo do %>
   <%= form_with model: [todo.task, todo], local: false, class: "flex items-center gap-2" do |f| %>
     <%= f.check_box :done, 
-        class: "checkbox checkbox-neutral", 
+        class: "checkbox checkbox-neutral @md:checkbox-lg", 
         checked: todo.done?,
         onchange: "this.form.requestSubmit()" %>
-    <span class="<%= todo.done? ? 'line-through text-custom-dark-green/50' : 'text-custom-dark-green' %>">
+    <span class="text-base <%= todo.done? ? 'line-through text-neutral/50' : 'text-neutral' %>">
       <%= todo.body %>
     </span>
   <% end %>
