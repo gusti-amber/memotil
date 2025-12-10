@@ -14,14 +14,17 @@
       </button>
     </div>
 
-    <!-- ToDoフィールド -->
+    <!-- ToDoフィールド(2種類のフィールドを使用) -->
+    <!-- 1. 既存のTodoフィールド用
+            formオブジェクトを渡し、Railsフォームヘルパーを使用。 -->
     <div id="todos-container" data-todo-form-target="container" class="space-y-2">
       <%= f.fields_for :todos do |todo_form| %>
         <%= render "todo_field", todo_form: todo_form %>
       <% end %>
     </div>
 
-    <!-- Stimulusコントローラーで使用する新規ToDoフィールド用テンプレート（ブラウザでは非表示） -->
+    <!-- 2. 新規追加のToDoフィールド用テンプレート、Stimulusコントローラーで使用。
+            formオブジェクトは渡さず、INDEXプレースホルダーを使用。ブラウザでは非表示 -->
     <template data-todo-form-target="template">
       <%= render "todo_field", todo_form: nil %>
     </template>
