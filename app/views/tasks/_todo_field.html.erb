@@ -2,8 +2,9 @@
   <!-- 削除ボタン -->
   <button type="button" 
           data-action="click->todo-form#remove"
-          class="btn btn-sm btn-circle btn-outline btn-error shadow-none">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          class="btn btn-circle btn-outline btn-error shadow-none
+                 btn-xs @md:btn-sm">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 @md:size-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
     </svg>
   </button>
@@ -12,7 +13,10 @@
     <!-- 既存のTodo用（Railsフォームヘルパー） -->
     <%= todo_form.text_field :body, 
         placeholder: "やることを入力してください", 
-        class: "input input-lg input-bordered flex-1 bg-custom-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+        class: "input bg-base-100 border-base-content text-base text-base-content w-full
+                focus:ring-2 focus:ring-base-content/20 focus:outline-none
+                placeholder:text-base-content/50
+                input-md @md:input-lg text-sm @md:text-base" %>
     <%= todo_form.hidden_field :id %>
     <!--
       🎓 隠しフィールド_destroyは、削除マークとして機能する。
@@ -27,10 +31,13 @@
   <% else %>
     <!-- テンプレート用（INDEXプレースホルダー） -->
     <input type="hidden" name="task[todos_attributes][INDEX][_destroy]" value="0" class="hidden">
-    <input type="text" 
-            name="task[todos_attributes][INDEX][body]" 
-            placeholder="やることを入力してください" 
-            class="input input-lg input-bordered flex-1 bg-custom-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50">
+    <input type="text"
+           name="task[todos_attributes][INDEX][body]" 
+           placeholder="やることを入力してください" 
+           class="input bg-base-100 border-base-content text-base text-base-content w-full
+                  focus:ring-2 focus:ring-base-content/20 focus:outline-none
+                  placeholder:text-base-content/50
+                  input-md @md:input-lg text-sm @md:text-base">
     <input type="hidden" name="task[todos_attributes][INDEX][id]" value="">
   <% end %>
 </div>
