@@ -1,19 +1,22 @@
-<%= form_with model: @task, local: false do |f| %>
-  <div class="flex flex-col gap-4" data-controller="todo-form">
-    <div class="flex items-center justify-between">
-      <%= f.label :todos, class: "text-sm @md:text-lg text-neutral font-semibold" %>
-      <button type="button" 
-              data-todo-form-target="addButton"
-              data-action="click->todo-form#addTodoField"
-              class="btn btn-neutral rounded-full shadow-none
-                     btn-sm @md:btn-md text-xs @md:text-sm">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-          <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
-        </svg>
-        <span>追加</span>
-      </button>
-    </div>
+<div class="flex flex-col gap-4" data-controller="todo-form">
+  <!-- エラーメッセージ -->
+  <%= render 'shared/error_messages', object: task %>
 
+  <div class="flex items-center justify-between">
+    <p class="text-sm @md:text-lg text-neutral font-semibold">タスクの完了条件</p>
+    <button type="button"
+            data-todo-form-target="addButton"
+            data-action="click->todo-form#addTodoField"
+            class="btn btn-neutral rounded-full shadow-none
+                    btn-sm @md:btn-md text-xs @md:text-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+        <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
+      </svg>
+      <span>追加</span>
+    </button>
+  </div>
+
+  <%= form_with model: task, local: false, html: { class: "flex flex-col gap-4" } do |f| %>
     <!-- ToDoフィールド(2種類のフィールドを使用) -->
     <!-- 1. 既存のTodoフィールド用
             formオブジェクトを渡し、Railsフォームヘルパーを使用。 -->
