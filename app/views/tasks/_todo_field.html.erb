@@ -16,7 +16,8 @@
         class: "input bg-base-100 border-base-content text-base text-base-content w-full
                 focus:ring-2 focus:ring-base-content/20 focus:outline-none
                 placeholder:text-base-content/50
-                input-md @md:input-lg text-sm @md:text-base" %>
+                input-md @md:input-lg text-sm @md:text-base",
+        data: { test_id: "existing-todo-field" } %>
     <%= todo_form.hidden_field :id %>
     <%= todo_form.hidden_field :_destroy, class: "hidden" %>
     <!--
@@ -36,7 +37,8 @@
            class="input bg-base-100 border-base-content text-base text-base-content w-full
                   focus:ring-2 focus:ring-base-content/20 focus:outline-none
                   placeholder:text-base-content/50
-                  input-md @md:input-lg text-sm @md:text-base">
+                  input-md @md:input-lg text-sm @md:text-base"
+           data-test-id="new-todo-field">
     <input type="hidden" name="task[todos_attributes][INDEX][id]" value="">
     <input type="hidden" name="task[todos_attributes][INDEX][_destroy]" value=false class="hidden">
   <% end %>
