@@ -3,7 +3,8 @@
     <%= f.check_box :done, 
         class: "checkbox checkbox-neutral @md:checkbox-lg", 
         checked: todo.done?,
-        onchange: "this.form.requestSubmit()" %>
+        onchange: "this.form.requestSubmit()",
+        data: { test_id: "todo-checkbox" } %>
     <span class="text-base <%= todo.done? ? 'line-through text-neutral/50' : 'text-neutral' %>">
       <%= todo.body %>
     </span>
