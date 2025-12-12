@@ -213,12 +213,12 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
   end
-  
+
   describe 'タスク詳細' do
     before do
       sign_in user
     end
-    
+
     describe 'Todoタスク詳細' do
       before do
         visit task_path(todo_task)
@@ -256,13 +256,13 @@ RSpec.describe 'Tasks', type: :system do
             it '更新は成功する' do
               # 更新前のToDo数を記録
               todo_count_before = task.todos.count
-              
+
               # ToDoを追加
               click_button '追加'
-      
+
               # ToDoフィールドを空のままにする
               first('[data-test-id="new-todo-field"]').fill_in with: ''
-      
+
               click_button '保存'
 
               # 空のToDoは記録されないため、ToDo数は変わらない
@@ -280,7 +280,7 @@ RSpec.describe 'Tasks', type: :system do
 
               # 既存のToDoフィールドに入力
               first('[data-test-id="existing-todo-field"]').fill_in with: 'update_todo'
-              
+
               click_button '保存'
 
               expect(page).to have_content('update_todo')
@@ -294,20 +294,20 @@ RSpec.describe 'Tasks', type: :system do
 
               # 既存のToDoフィールドを空にする
               first('[data-test-id="existing-todo-field"]').fill_in with: ''
-      
+
               click_button '保存'
-      
+
               expect(page).to have_content('ToDoの内容 を入力してください')
             end
-          
+
             it '既存のToDoフィールドに256文字以上の値を入力した場合、エラーメッセージが表示される' do
               # ToDoフォームへの切り替えボタンをクリック
               find('[data-test-id="show-todo-form-button"]').click
 
               first('[data-test-id="existing-todo-field"]').fill_in with: 'a' * 256
-      
+
               click_button '保存'
-      
+
               expect(page).to have_content('ToDoの内容 は255文字以下で入力してください')
             end
           end
@@ -334,36 +334,36 @@ RSpec.describe 'Tasks', type: :system do
           it '追加ボタンが非表示になる' do
             # 追加ボタンが表示されていることを確認
             expect(page).to have_button('追加')
-    
+
             # 最大個数のToDoを追加
             max_todos.times do |i|
               click_button '追加'
             end
-    
+
             # 追加ボタンが非表示になっていることを確認
             expect(page).not_to have_button('追加')
           end
         end
       end
     end
-  
+
     describe 'Doingタスク詳細' do
       before do
         visit task_path(doing_task)
       end
-  
+
       context 'Todoのチェックボックスをクリックした場合' do
         it 'Todoの完了状態がトグルされる' do
           # 初期状態の確認
           expect(todo.reload.done?).to be false
-    
+
           checkbox = find("[data-test-id='todo-checkbox']")
-    
+
           # 完了にする
           checkbox.click
           expect(checkbox).to be_checked
           expect(todo.reload.done?).to be true
-    
+
           # 未完了に戻す
           checkbox.click
           expect(checkbox).not_to be_checked
@@ -371,12 +371,12 @@ RSpec.describe 'Tasks', type: :system do
         end
       end
     end
-    
+
     describe 'Doneタスク詳細' do
       before do
         visit task_path(done_task)
       end
-    end  
+    end
 
     context '他のユーザーのタスクにアクセスしようとする場合' do
       skip '詳細ページにアクセスするとタスク一覧ページにリダイレクトされる' do
