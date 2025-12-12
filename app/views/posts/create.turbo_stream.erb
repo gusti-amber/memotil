@@ -1,9 +1,24 @@
-<% if @post.persisted? %>
-  <%= turbo_stream.append "posts" do %>
-    <%= render partial: "posts/post", locals: { post: @post } %>
+<% if @post.persisted? %>  
+  <!-- 保存前のポスト一覧が空だった場合 -->
+  <% if @posts_empty_before %>
+    <!-- postsフレーム全体を更新 -->
+    <%= turbo_stream.update "posts" do %>
+      <% if @posts.any? %>
+        <%#= 🎓 render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
+        <%= render partial: "posts/post", collection: @posts %>
+      <% else %>
+        <%= turbo_frame_tag "posts_empty_state" do %>
+          <p class="text-center text-custom-gray">まだ投稿はありません</p>
+        <% end %>
+      <% end %>
+    <% end %>
+  <!-- 保存前のポスト一覧が空でなかった場合 -->
+  <% else %>
+    <!-- ポストを追加 -->
+    <%= turbo_stream.append "posts" do %>
+      <%= render partial: "posts/post", locals: { post: @post } %>
+    <% end %>
   <% end %>
-
-  <%= turbo_stream.remove "posts_empty_state" %>
 
   <%= turbo_stream.update "post_form" do %>
     <%= render "posts/form", task: @task, post: Post.new %>
