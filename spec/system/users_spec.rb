@@ -391,8 +391,11 @@ RSpec.describe 'Users', type: :system do
         fill_in '新しいメールアドレス', with: new_email
         click_button '確認メールを送信'
 
+        # タスク一覧画面へ遷移するまで待機
+        expect(page).to have_current_path(tasks_path)
+
         # メールが送信されたことを確認
-        # expect(ActionMailer::Base.deliveries.size).to eq(1)
+        expect(ActionMailer::Base.deliveries.size).to eq(1)
 
         # メールアドレスはまだ変更されていない（unconfirmed_emailに保存されている）
         user.reload
