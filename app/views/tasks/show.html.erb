@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-  <% else %>
+  <% elsif @task.doing? || @task.done? %>
     <div class="flex justify-center">
       <!-- 投稿セクション -->
       <div class="flex-1 flex flex-col justify-between w-full">
