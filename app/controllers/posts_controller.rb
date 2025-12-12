@@ -3,6 +3,9 @@ class PostsController < ApplicationController
   before_action :set_post, only: [ :destroy ]
 
   def create
+    # 保存前の投稿一覧が空だったかを記録（buildする前にチェック）
+    @posts_empty_before = @task.posts.empty?
+
     # ネストした属性を使用して一度に作成
     if post_params[:postable_type] == "DocumentPost"
       document_url = post_params[:postable_attributes][:url]
