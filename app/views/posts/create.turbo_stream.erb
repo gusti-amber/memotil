@@ -3,14 +3,7 @@
   <% if @posts_empty_before %>
     <!-- postsフレーム全体を更新 -->
     <%= turbo_stream.update "posts" do %>
-      <% if @posts.any? %>
-        <%#= 🎓 render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
-        <%= render partial: "posts/post", collection: @posts %>
-      <% else %>
-        <%= turbo_frame_tag "posts_empty_state" do %>
-          <p class="text-center text-custom-gray">まだ投稿はありません</p>
-        <% end %>
-      <% end %>
+      <%= render "posts/posts_list" %>
     <% end %>
   <!-- 保存前のポスト一覧が空でなかった場合 -->
   <% else %>

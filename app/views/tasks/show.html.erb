@@ -27,14 +27,7 @@
       <div class="flex-1 flex flex-col justify-between w-full">
         <!-- 投稿一覧 -->
         <%= turbo_frame_tag "posts" do %>
-          <% if @posts.any? %>
-            <%#= 🎓 render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
-            <%= render partial: "posts/post", collection: @posts %>
-          <% else %>
-            <%= turbo_frame_tag "posts_empty_state" do %>
-              <p class="text-center text-custom-gray">まだ投稿はありません</p>
-            <% end %>
-          <% end %>
+          <%= render "posts/posts_list" %>
         <% end %>
 
         <!-- 投稿フォーム -->
