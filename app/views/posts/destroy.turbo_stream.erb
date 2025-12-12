@@ -1,6 +1,6 @@
 <% if @posts.empty? %>
   <!-- 投稿が0件になった場合、postsフレーム全体を更新して空の状態を表示 -->
-  <%= turbo_stream.update "posts" do %>
+  <%= turbo_stream.update "posts_list" do %>
     <%= render "posts/posts_list" %>
   <% end %>
 <% else %>
