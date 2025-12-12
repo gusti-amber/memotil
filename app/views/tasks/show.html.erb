@@ -1,48 +1,60 @@
-<div class="flex flex-col h-full gap-10 px-20 py-10">
-  <!-- タスク項目 -->
+<div class="flex flex-col h-full px-20 py-10">
+  <!-- タスクのメイン情報セクション -->
   <%= render 'tasks/task_content', task: @task %>
 
-  <% unless @task.todo? %>
-    <!-- 投稿一覧 -->
-    <%= turbo_frame_tag "posts" do %>
-      <% if @posts.any? %>
-        <%#= 🎓 render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
-        <%= render partial: "posts/post", collection: @posts %>
-      <% else %>
-        <%= turbo_frame_tag "posts_empty_state" do %>
-          <p class="text-center text-custom-gray">まだ投稿はありません</p>
-        <% end %>
-      <% end %>
-    <% end %>
-
-    <!-- 投稿フォーム -->
-    <% if @task.doing? %>
-      <%= turbo_frame_tag "post_form" do %>
-        <%= render 'posts/form', task: @task, post: @post %>
-      <% end %>
-    <% end %>
-
-    <!-- TIL 作成セクション -->
-    <% if @task.done? %>
-      <div class="card bg-base-200 shadow-sm">
-        <div class="card-body">
-          <%= turbo_frame_tag "til" do %>
-            <% if current_user.github_token.present? %>
-              <div class="card-actions justify-center">
-                <%= link_to new_task_til_path(@task), data: { turbo_frame: "til" }, class: "btn btn-primary" do %>
-                  GitHubリポジトリにTILを保存
-                <% end %>
-              </div>
-            <% else %>
-              <div class="card-actions justify-center">
-                <%= button_to user_github_omniauth_authorize_path, method: :post, data: { turbo: false }, params: { origin: task_url(@task) }, class: "btn btn-primary" do %>
-                  GitHubと連携しTILを保存
-                <% end %>
-              </div>
-            <% end %>
+  <% if @task.todo? %>
+    <div class="flex justify-center">
+      <div class="flex flex-col gap-6 p-12 max-w-2xl w-full">
+        <!-- ToDoセクション -->
+        <div class="card bg-base-200 shadow-sm w-full mb-1">
+          <%= turbo_frame_tag "todo_section" do %>
+            <div class="card-body">
+              <%= render 'tasks/todo_section', task: @task %>
+            </div>
           <% end %>
         </div>
+
+        <!-- ボタン群 -->
+        <div class="flex flex-col items-start gap-1 w-full">
+          <%= render 'tasks/status_button', task: @task %>
+          <%= render 'tasks/destroy_button', task: @task %>
+        </div>
       </div>
-    <% end %>
+    </div>
+  <% else %>
+    <div class="flex justify-center">
+      <!-- 投稿セクション -->
+      <div class="flex-1 flex flex-col justify-between w-full">
+        <!-- 投稿一覧 -->
+        <%= turbo_frame_tag "posts" do %>
+          <% if @posts.any? %>
+            <%#= 🎓 render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
+            <%= render partial: "posts/post", collection: @posts %>
+          <% else %>
+            <%= turbo_frame_tag "posts_empty_state" do %>
+              <p class="text-center text-custom-gray">まだ投稿はありません</p>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <!-- 投稿フォーム -->
+        <% if @task.doing? %>
+          <%= turbo_frame_tag "post_form" do %>
+            <%= render 'posts/form', task: @task, post: @post %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="divider divider-horizontal"></div>
+
+      <!-- タスクのサブ情報サイドバー -->
+      <div class="flex flex-col items-start gap-1 max-w-sm w-full">
+        <% if @task.doing? %>
+          <%= render 'tasks/doing_sidebar', task: @task %>
+        <% elsif @task.done? %>
+          <%= render 'tasks/done_sidebar', task: @task %>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 </div>

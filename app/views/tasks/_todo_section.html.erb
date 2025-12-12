@@ -1,0 +1,10 @@
+<div data-controller="todo-section" class="@container">
+  <% show_form = task.todos.empty? || task.errors.any? %>
+  <div data-todo-section-target="todoList" class="<%= 'hidden' if show_form %>">
+    <%= render 'tasks/todo_list', task: task %>
+  </div>
+  <div data-todo-section-target="todoForm" class="<%= 'hidden' unless show_form %>">
+    <%= render 'tasks/todo_form', task: task %>
+  </div>
+</div>
+

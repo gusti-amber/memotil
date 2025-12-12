@@ -1,36 +1,46 @@
 <div class="flex items-center gap-2" data-todo-form-target="todoField">                
   <!-- 削除ボタン -->
   <button type="button" 
-          data-action="click->todo-form#remove"
-          class="btn btn-sm btn-circle border-custom-rust text-custom-rust hover:bg-custom-rust hover:text-custom-white hover:border-custom-rust bg-transparent">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          data-action="click->todo-form#removeTodoField"
+          class="btn btn-circle btn-outline btn-error shadow-none
+                 btn-xs @md:btn-sm"
+          data-test-id="delete-todo-button">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 @md:size-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
     </svg>
   </button>
-  <!-- ToDoフィールド -->
+  <!-- ToDoフィールド(2種類のフィールドを使用) -->
   <% if todo_form %>
-    <!-- 既存のTodo用（Railsフォームヘルパー） -->
+    <!-- 1. 既存のTodoフィールド用、Railsフォームヘルパーを使用。 -->
     <%= todo_form.text_field :body, 
         placeholder: "やることを入力してください", 
-        class: "input input-lg input-bordered flex-1 bg-custom-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+        class: "input bg-base-100 border-base-content text-base text-base-content w-full
+                focus:ring-2 focus:ring-base-content/20 focus:outline-none
+                placeholder:text-base-content/50
+                input-md @md:input-lg text-sm @md:text-base",
+        data: { test_id: "existing-todo-field" } %>
     <%= todo_form.hidden_field :id %>
+    <%= todo_form.hidden_field :_destroy, class: "hidden" %>
     <!--
       🎓 隠しフィールド_destroyは、削除マークとして機能する。
       _destroyは通常はfalseとなっている。
-      _destroyが"1"の場合、削除マークがONになり、編集画面のデータ更新が行われると、該当するtodoレコードは削除される。
+      _destroyがtrueの場合、削除マークがONになり、編集画面のデータ更新が行われると、該当するtodoレコードは削除される。
       詳しくは以下を参照: https://railsguides.jp/form_helpers.html#%E9%96%A2%E9%80%A3%E4%BB%98%E3%81%91%E3%82%89%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%82%92%E5%89%8A%E9%99%A4%E3%81%99%E3%82%8B
 
-      上記の削除ボタンをクリックすると、todo_formコントローラーのremoveメソッドにより、既存のtodoの場合は_destroyが"1"に変更される。
+      上記の削除ボタンをクリックすると、todo_formコントローラーのremoveTodoFieldメソッドにより、既存のtodoの場合は_destroyがtrueに変更される。
       詳しくは`app/javascript/controllers/todo_form_controller.js`を参照。
     -->
-    <%= todo_form.hidden_field :_destroy, class: "hidden" %>
   <% else %>
-    <!-- テンプレート用（INDEXプレースホルダー） -->
-    <input type="hidden" name="task[todos_attributes][INDEX][_destroy]" value="0" class="hidden">
-    <input type="text" 
-            name="task[todos_attributes][INDEX][body]" 
-            placeholder="やることを入力してください" 
-            class="input input-lg input-bordered flex-1 bg-custom-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50">
+    <!-- 2. 新規追加のToDoフィールド用テンプレート、INDEXプレースホルダーを使用。 -->
+    <input type="text"
+           name="task[todos_attributes][INDEX][body]" 
+           placeholder="やることを入力してください" 
+           class="input bg-base-100 border-base-content text-base text-base-content w-full
+                  focus:ring-2 focus:ring-base-content/20 focus:outline-none
+                  placeholder:text-base-content/50
+                  input-md @md:input-lg text-sm @md:text-base"
+           data-test-id="new-todo-field">
     <input type="hidden" name="task[todos_attributes][INDEX][id]" value="">
+    <input type="hidden" name="task[todos_attributes][INDEX][_destroy]" value=false class="hidden">
   <% end %>
 </div>

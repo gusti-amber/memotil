@@ -56,9 +56,6 @@
       <!-- ♻️タグ検索セクション 将来的に以下の実装で行いたいが、jsがまだ理解不足なので置いておく-->
       <%#= render partial: "tag_search_form", locals: { f: f, task: @task } %>
 
-      <!-- ToDoフォーム -->
-      <%= render "todo_form", f: f %>
-
       <!-- アクションボタン -->
       <div class="flex justify-end gap-4">
         <%= link_to "戻る", task_path(@task), class: "btn btn-lg btn-outline border-custom-dark-green text-base text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-white bg-transparent" %>

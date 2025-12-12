@@ -6,10 +6,14 @@ RSpec.describe 'Tasks', type: :system do
   let(:other_user) { create(:user, email: 'other@example.com') }
   let(:other_user_task) { create(:task, user: other_user) }
   let(:max_tags) { 5 }
-  let(:max_todos) { 3 }
+  let(:max_todos) { 5 }
   let!(:tags) { create_list(:tag, max_tags + 1) }
-  let(:task_with_todo) { create(:task, user: user) }
-  let!(:todo) { create(:todo, task: task_with_todo, body: 'test_todo') }
+
+  # ステータス(Todo, Doing, Done)ごとのタスクを作成
+  let(:todo_task) { create(:todo_task, user: user) }
+  let(:doing_task) { create(:doing_task, user: user) }
+  let!(:todo) { create(:todo, task: doing_task, body: 'test_todo') }
+  let(:done_task) { create(:done_task, user: user) }
 
   describe '認証フィルター' do
     context '未ログインユーザーの場合' do
@@ -145,34 +149,6 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content(tags.first.name)
       end
 
-      it 'ToDoを追加してタスクが正常に更新される' do
-        visit edit_task_path(task)
-
-        # ToDoを追加
-        click_button '追加'
-
-        # 最初のToDoフィールドに入力
-        first('input[placeholder="やることを入力してください"]').fill_in with: 'first_todo'
-
-        click_button '変更'
-
-        expect(page).to have_content(task.title)
-        expect(page).to have_content('first_todo')
-      end
-
-      it 'ToDoを削除してタスクが正常に更新される' do
-        visit edit_task_path(task_with_todo)
-
-        # 最初のToDoの削除ボタンをクリック
-        accept_confirm do
-          first('button[data-action="click->todo-form#remove"]').click
-        end
-
-        click_button '変更'
-
-        expect(page).not_to have_content('test_todo')
-      end
-
       it '戻るボタンをクリックすると詳細ページに戻る' do
         visit edit_task_path(task)
         click_link '戻る'
@@ -228,84 +204,7 @@ RSpec.describe 'Tasks', type: :system do
         expect(current_path).to eq edit_task_path(task)
         expect(page).to have_content("タグ は最大#{max_tags}個まで選択できます")
       end
-
-      it '既存のToDoのbodyを空にした場合、エラーメッセージが表示される' do
-        visit edit_task_path(task_with_todo)
-
-        # 既存のToDoフィールドを空にする
-        first('input[placeholder="やることを入力してください"]').fill_in with: ''
-
-        click_button '変更'
-
-        expect(current_path).to eq edit_task_path(task_with_todo)
-        expect(page).to have_content('ToDoの内容 を入力してください')
-      end
-
-      it '新しく追加したToDoフィールドを空のままにした場合、更新は成功する' do
-        # 更新前のToDo数を記録
-        todo_count_before = task.todos.count
-
-        visit edit_task_path(task)
-
-        # ToDoを追加
-        click_button '追加'
-
-        # ToDoフィールドを空のままにする
-        first('input[placeholder="やることを入力してください"]').fill_in with: ''
-
-        click_button '変更'
-
-        # 更新が成功し、タスク詳細ページに遷移する
-        expect(page).to have_content(task.title)
-        # 空のToDoは記録されないため、ToDo数は変わらない
-        expect(task.reload.todos.count).to eq todo_count_before
-      end
-
-      it 'ToDoのbodyが256文字以上の場合、エラーメッセージが表示される' do
-        visit edit_task_path(task)
-
-        # ToDoを追加
-        click_button '追加'
-
-        # ToDoフィールドに256文字以上入力
-        first('input[placeholder="やることを入力してください"]').fill_in with: 'a' * 256
-
-        click_button '変更'
-
-        expect(current_path).to eq edit_task_path(task)
-        expect(page).to have_content('ToDoの内容 は255文字以下で入力してください')
-      end
     end
-
-    context 'UI制御' do
-      it '追加ボタンを押し、ToDoフィールドが最大個数に達した場合、追加ボタンが非表示になる' do
-        visit edit_task_path(task)
-
-        # 追加ボタンが表示されていることを確認
-        expect(page).to have_button('追加')
-
-        # 最大個数のToDoを追加
-        max_todos.times do |i|
-          click_button '追加'
-          all('input[placeholder="やることを入力してください"]')[i].fill_in with: "todo_#{i + 1}"
-        end
-
-        # 追加ボタンが非表示になっていることを確認
-        expect(page).not_to have_button('追加')
-      end
-
-      it '初めからToDoが最大個数に達しているタスクでは、追加ボタンが非表示になっている' do
-        # 初めから最大個数のToDoを持つタスクを作成
-        task_with_max_todos = create(:task, user: user)
-        create_list(:todo, max_todos, task: task_with_max_todos)
-
-        visit edit_task_path(task_with_max_todos)
-
-        # 追加ボタンが非表示になっていることを確認
-        expect(page).not_to have_button('追加')
-      end
-    end
-
     context '他のユーザーのタスクにアクセスしようとする場合' do
       skip '編集ページにアクセスするとタスク一覧ページにリダイレクトされる' do
         visit edit_task_path(other_user_task)
@@ -318,25 +217,164 @@ RSpec.describe 'Tasks', type: :system do
   describe 'タスク詳細' do
     before do
       sign_in user
-      visit task_path(task_with_todo)
     end
 
-    context 'Todoのチェックボックスをクリックした場合' do
-      it 'Todoの完了状態がトグルされる' do
-        # 初期状態の確認
-        expect(todo.reload.done?).to be false
+    describe 'Todoタスク詳細' do
+      before do
+        visit task_path(todo_task)
+      end
 
-        checkbox = find("input[type='checkbox']", visible: :all)
+      context 'ToDoフォームの表示' do
+        context 'ToDoフォームの「追加」ボタンをクリックする場合' do
+          it 'ToDoフォームに新しいToDoフィールドが追加される' do
+            # 初期状態では新規ToDoフィールドが0個であることを確認
+            expect(all('[data-test-id="new-todo-field"]').count).to eq(0)
 
-        # 完了にする
-        checkbox.click
-        expect(checkbox).to be_checked # Capybara が状態変化まで待機
-        expect(todo.reload.done?).to be true
+            # ToDoを追加
+            click_button '追加'
 
-        # 未完了に戻す
-        checkbox.click
-        expect(checkbox).not_to be_checked
-        expect(todo.reload.done?).to be false
+            # 新しいToDoフィールドが1個追加されたことを確認
+            expect(all('[data-test-id="new-todo-field"]').count).to eq(1)
+          end
+        end
+
+        context '追加したToDoフィールドに入力し、「保存」ボタンをクリックする場合' do
+          context '正常な入力の場合' do
+            it 'ToDoが正常に保存される' do
+              click_button '追加'
+
+              # 最初のToDoフィールドに入力
+              first('[data-test-id="new-todo-field"]').fill_in with: 'new_todo'
+
+              click_button '保存'
+
+              expect(page).to have_content('new_todo')
+            end
+          end
+
+          context '追加したToDoフィールドを空のままにした場合' do
+            it '更新は成功する' do
+              # 更新前のToDo数を記録
+              todo_count_before = task.todos.count
+
+              # ToDoを追加
+              click_button '追加'
+
+              # ToDoフィールドを空のままにする
+              first('[data-test-id="new-todo-field"]').fill_in with: ''
+
+              click_button '保存'
+
+              # 空のToDoは記録されないため、ToDo数は変わらない
+              expect(task.reload.todos.count).to eq todo_count_before
+            end
+          end
+        end
+
+        context '既存のToDoフィールドに入力し、「保存」ボタンをクリックする場合' do
+          let!(:todo) { create(:todo, task: todo_task, body: 'existing_todo') }
+          context '正常な入力の場合' do
+            it 'ToDoが正常に更新される' do
+              # ToDoフォームへの切り替えボタンをクリック
+              find('[data-test-id="show-todo-form-button"]').click
+
+              # 既存のToDoフィールドに入力
+              first('[data-test-id="existing-todo-field"]').fill_in with: 'update_todo'
+
+              click_button '保存'
+
+              expect(page).to have_content('update_todo')
+            end
+          end
+
+          context 'バリデーションエラーが発生する場合' do
+            it '既存のToDoフィールドを空にした場合、エラーメッセージが表示される' do
+              # ToDoフォームへの切り替えボタンをクリック
+              find('[data-test-id="show-todo-form-button"]').click
+
+              # 既存のToDoフィールドを空にする
+              first('[data-test-id="existing-todo-field"]').fill_in with: ''
+
+              click_button '保存'
+
+              expect(page).to have_content('ToDoの内容 を入力してください')
+            end
+
+            it '既存のToDoフィールドに256文字以上の値を入力した場合、エラーメッセージが表示される' do
+              # ToDoフォームへの切り替えボタンをクリック
+              find('[data-test-id="show-todo-form-button"]').click
+
+              first('[data-test-id="existing-todo-field"]').fill_in with: 'a' * 256
+
+              click_button '保存'
+
+              expect(page).to have_content('ToDoの内容 は255文字以下で入力してください')
+            end
+          end
+        end
+
+        context '既存のToDoフィールドの削除ボタンをクリックした後、「保存」ボタンをクリックする場合' do
+          let!(:todo) { create(:todo, task: todo_task, body: 'existing_todo') }
+          it 'ToDoが正常に削除される' do
+            # ToDoフォームへの切り替えボタンをクリック
+            find('[data-test-id="show-todo-form-button"]').click
+
+            accept_confirm do
+              # 削除ボタンをクリック
+              first('[data-test-id="delete-todo-button"]').click
+            end
+
+            click_button '保存'
+
+            expect(page).not_to have_content('existing_todo')
+          end
+        end
+
+        context '「追加」ボタンをクリックし、表示されるToDoフィールドが最大個数(5個)に達した場合' do
+          it '追加ボタンが非表示になる' do
+            # 追加ボタンが表示されていることを確認
+            expect(page).to have_button('追加')
+
+            # 最大個数のToDoを追加
+            max_todos.times do |i|
+              click_button '追加'
+            end
+
+            # 追加ボタンが非表示になっていることを確認
+            expect(page).not_to have_button('追加')
+          end
+        end
+      end
+    end
+
+    describe 'Doingタスク詳細' do
+      before do
+        visit task_path(doing_task)
+      end
+
+      context 'Todoのチェックボックスをクリックした場合' do
+        it 'Todoの完了状態がトグルされる' do
+          # 初期状態の確認
+          expect(todo.reload.done?).to be false
+
+          checkbox = find("[data-test-id='todo-checkbox']")
+
+          # 完了にする
+          checkbox.click
+          expect(checkbox).to be_checked
+          expect(todo.reload.done?).to be true
+
+          # 未完了に戻す
+          checkbox.click
+          expect(checkbox).not_to be_checked
+          expect(todo.reload.done?).to be false
+        end
+      end
+    end
+
+    describe 'Doneタスク詳細' do
+      before do
+        visit task_path(done_task)
       end
     end
 
@@ -349,20 +387,18 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
+
   describe 'タスク削除' do
     before do
       sign_in user
       visit task_path(task)
     end
 
-    context 'ドロップダウンメニューから削除を選択した場合' do
+    context 'サイドバーから削除ボタンをクリックした場合' do
       it 'タスクは正常に削除される' do
-        # ドロップダウンメニューを開く（CSS Focusを使用したdropdown）
-        find('[aria-label="open-task-menu"]').click
-
         # 削除ボタンをクリック
         accept_confirm do
-          click_link '削除'
+          click_link 'タスクを削除する'
         end
 
         # タスク一覧ページに遷移するまで待ってから確認
@@ -380,52 +416,40 @@ RSpec.describe 'Tasks', type: :system do
       sign_in user
     end
 
-    context 'todoステータスの場合' do
+    context 'ステータスがTodoの場合' do
       let(:task) { create(:task, user: user, status: :todo) }
 
-      it '「タスクに着手」ボタンが表示され、クリックするとステータスがdoingに変更される' do
+      it '「タスクに取り組む」ボタンをクリックすると、ステータスがDoingに変更される' do
         visit task_path(task)
         expect(page).to have_content('Todo')
 
-        # ドロップダウンメニューを開く（CSS Focusを使用したdropdown）
-        find('[aria-label="open-task-menu"]').click
-
-        expect(page).to have_link('タスクに着手')
-        click_link 'タスクに着手'
+        click_link 'タスクに取り組む'
 
         expect(page).to have_content('Doing')
       end
     end
 
-    context 'doingステータスの場合' do
+    context 'ステータスがDoingの場合' do
       let(:task) { create(:task, user: user, status: :doing) }
 
-      it '「タスクを完了」ボタンが表示され、クリックするとステータスがdoneに変更される' do
+      it '「タスクを完了する」ボタンをクリックすると、ステータスがDoneに変更される' do
         visit task_path(task)
         expect(page).to have_content('Doing')
 
-        # ドロップダウンメニューを開く（CSS Focusを使用したdropdown）
-        find('[aria-label="open-task-menu"]').click
-
-        expect(page).to have_link('タスクを完了')
-        click_link 'タスクを完了'
+        click_link 'タスクを完了する'
 
         expect(page).to have_content('Done')
       end
     end
 
-    context 'doneステータスの場合' do
+    context 'ステータスがDoneの場合' do
       let(:task) { create(:task, user: user, status: :done) }
 
-      it '「再び着手」ボタンが表示され、クリックするとステータスがdoingに変更される' do
+      it '「再びタスクに取り組む」ボタンをクリックすると、ステータスがDoingに変更される' do
         visit task_path(task)
         expect(page).to have_content('Done')
 
-        # ドロップダウンメニューを開く（CSS Focusを使用したdropdown）
-        find('[aria-label="open-task-menu"]').click
-
-        expect(page).to have_link('再び着手')
-        click_link '再び着手'
+        click_link '再びタスクに取り組む'
 
         expect(page).to have_content('Doing')
       end

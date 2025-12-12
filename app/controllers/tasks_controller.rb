@@ -35,9 +35,35 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to @task, notice: "タスクが正常に更新されました。"
+      # todo_formからのリクエストかどうかを判別
+      if from_todo_form?
+        # todo_formからのリクエストの場合、Turbo Streamでtodo_sectionを更新
+        respond_to do |format|
+          format.turbo_stream
+          format.html do
+            @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
+            @post = Post.new
+            render :show, status: :ok
+          end
+        end
+      else
+        # edit.html.erbからのリクエストの場合、リダイレクト
+        redirect_to @task, notice: "タスクが正常に更新されました。"
+      end
     else
-      render :edit, status: :unprocessable_entity
+      # エラー時も同様に判別
+      if from_todo_form?
+        respond_to do |format|
+          format.turbo_stream { render :update, status: :unprocessable_entity }
+          format.html do
+            @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
+            @post = Post.new
+            render :show, status: :unprocessable_entity
+          end
+        end
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
   end
 
@@ -87,5 +113,10 @@ class TasksController < ApplicationController
     @task = current_user.tasks.includes(:tags, :posts, :todos).find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to tasks_path, alert: "アクセス権限がありません"
+  end
+
+  def from_todo_form?
+    # todos_attributesパラメータが存在し、かつ値がある場合、todo_formからのリクエストと判断
+    params[:task] && params[:task][:todos_attributes].present?
   end
 end

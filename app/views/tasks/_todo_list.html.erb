@@ -1,0 +1,19 @@
+<div class="flex flex-col gap-4">
+  <div class="flex justify-between items-center">
+    <!-- タイトル -->
+    <p class="text-neutral text-sm font-semibold @md:text-lg @md:font-bold">タスクの完了条件</p>
+    <!-- ToDoフォームへの切り替えボタン -->
+    <button type="button" 
+            data-action="click->todo-section#showForm"
+            class="btn btn-circle btn-ghost text-neutral border-none shadow-none hover:bg-neutral/10"
+            data-test-id="show-todo-form-button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="size-5 @md:size-6">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <%= render partial: "todos/todo", collection: task.todos %>
+  </div>
+</div>

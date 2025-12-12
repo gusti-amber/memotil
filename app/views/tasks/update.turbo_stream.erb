@@ -1,0 +1,5 @@
+<%= turbo_stream.update "todo_section" do %>
+  <div class="card-body">
+    <%= render 'tasks/todo_section', task: @task %>
+  </div>
+<% end %>

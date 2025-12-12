@@ -15,7 +15,7 @@ class Task < ApplicationRecord
   validates :title, presence: true, length: { minimum: 2, maximum: 255 }
   validates :status, presence: true
   validate :tags_must_be_five_or_less
-  validate :todos_must_be_three_or_less
+  validate :todos_must_be_five_or_less
 
   def self.ransackable_attributes(auth_object = nil)
     %w[title status]
@@ -33,8 +33,8 @@ class Task < ApplicationRecord
     end
   end
 
-  def todos_must_be_three_or_less
-    if todos.count > 3
+  def todos_must_be_five_or_less
+    if todos.count > 5
       errors.add(:todos, :too_many)
     end
   end
