@@ -60,7 +60,7 @@ RSpec.describe Task, type: :model do
 
   describe 'Todoの個数制限バリデーション' do
     let(:user) { create(:user) }
-    let(:max_todos) { 3 }
+    let(:max_todos) { 5 }
 
     it 'Todoが存在しない場合は有効' do
       task = build(:task, user: user)
