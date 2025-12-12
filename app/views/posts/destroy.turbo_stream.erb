@@ -1,1 +1,16 @@
-<%= turbo_stream.remove "post_#{@post.id}" %>
+<% if @posts.empty? %>
+  <!-- 投稿が0件になった場合、postsフレーム全体を更新して空の状態を表示 -->
+  <%= turbo_stream.update "posts" do %>
+    <% if @posts.any? %>
+      <%#= 🎓 render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
+      <%= render partial: "posts/post", collection: @posts %>
+    <% else %>
+      <%= turbo_frame_tag "posts_empty_state" do %>
+        <p class="text-center text-custom-gray">まだ投稿はありません</p>
+      <% end %>
+    <% end %>
+  <% end %>
+<% else %>
+  <!-- 投稿が残っている場合、個別の投稿のみ削除（パフォーマンス最適化） -->
+  <%= turbo_stream.remove "post_#{@post.id}" %>
+<% end %>
