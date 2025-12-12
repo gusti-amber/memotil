@@ -56,6 +56,8 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
+    # 削除後にタスクが持つすべてのポストを取得
+    @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
 
     respond_to do |format|
       format.turbo_stream
