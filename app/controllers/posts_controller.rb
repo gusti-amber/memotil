@@ -40,6 +40,10 @@ class PostsController < ApplicationController
     end
 
     if @post.errors.empty? && @post.save
+      # 保存前のポスト一覧が空だった場合、postsフレーム全体を更新するために必要な投稿一覧 @posts を取得。
+      if @posts_empty_before
+        @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
+      end
       respond_to do |format|
         format.turbo_stream { render :create }
         format.html { redirect_to @task, notice: "コメントが投稿されました。" }
