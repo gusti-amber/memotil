@@ -2,5 +2,5 @@
   <%#= 🎓 render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %>
   <%= render partial: "posts/post", collection: @posts %>
 <% else %>
-  <p class="text-center text-custom-gray">まだ投稿はありません</p>
+  <p class="text-center text-neutral/50">まだ投稿はありません</p>
 <% end %>
