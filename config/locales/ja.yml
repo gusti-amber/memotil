@@ -53,6 +53,7 @@ ja:
       not_found: "が見つかりませんでした"
       expired: "の有効期限が切れています"
     attributes:
+      # ♻️ 最大個数は変数で管理するようにする。
       tag_ids:
         too_many: "は最大5個まで選択できます"
       todos:
