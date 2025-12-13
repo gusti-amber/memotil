@@ -69,6 +69,7 @@ ja:
     omniauth_callbacks:
       user:
         github_already_linked: "このGitHubアカウントは既に別のアカウントに連携されています"
+        success: "%{kind}との連携に成功しました"
     mailer:
       confirmation_instructions:
         subject: "【めもTIL】メールアドレス変更のご案内"
