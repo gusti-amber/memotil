@@ -6,11 +6,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def github
     auth = request.env["omniauth.auth"]
 
+    # ログイン済みユーザーがDoneタスク詳細画面からGitHub連携を行う場合
     if user_signed_in?
-      # 既存のログインユーザーにGitHub情報を追加
       @user = current_user
 
       begin
+        # 既存のログインユーザーにGitHub情報を追加
         @user.update(github_uid: auth.uid, github_token: auth.credentials.token)
         set_flash_message(:notice, :success, kind: "GitHub") if is_navigational_format?
       rescue ActiveRecord::RecordNotUnique
@@ -24,8 +25,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       # params: {origin: URL} を指定すると、OmniAuthが"omniauth.origin"にコールバック時のURLを設定する
       origin = request.env["omniauth.origin"].presence
       redirect_to(origin || tasks_path)
+    
+    # ログイン画面からGitHub認証を行う場合
     else
-      # ログインしていない場合は既存のロジックを使用
       @user = User.from_github(auth)
 
       if @user.persisted?
