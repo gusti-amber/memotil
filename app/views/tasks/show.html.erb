@@ -26,9 +26,11 @@
       <!-- 投稿セクション -->
       <div class="flex-1 flex flex-col justify-between w-full">
         <!-- 投稿一覧 -->
-        <%= turbo_frame_tag "posts_list" do %>
-          <%= render "posts/posts_list" %>
-        <% end %>
+        <div class="flex-1 flex flex-col justify-start max-h-screen overflow-y-auto">
+          <%= turbo_frame_tag "posts_list" do %>
+            <%= render "posts/posts_list" %>
+          <% end %>
+        </div>
 
         <!-- 投稿フォーム -->
         <% if @task.doing? %>
