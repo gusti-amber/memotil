@@ -1,6 +1,6 @@
 <!-- やることリストカード -->
 <div class="card bg-base-200 shadow-sm w-full mb-1">
-  <%= turbo_frame_tag "todo_section" do %>
+  <%= turbo_frame_tag "todos_section" do %>
     <div class="card-body">
       <%= render 'tasks/todos_section', task: @task %>
     </div>
