@@ -9,8 +9,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if user_signed_in?
       # 既存のログインユーザーにGitHub情報を追加
       @user = current_user
-      @user.update(github_uid: auth.uid, github_token: auth.credentials.token)
-      set_flash_message(:notice, :success, kind: "GitHub") if is_navigational_format?
+
+      begin
+        @user.update(github_uid: auth.uid, github_token: auth.credentials.token)
+        set_flash_message(:notice, :success, kind: "GitHub") if is_navigational_format?
+      rescue ActiveRecord::RecordNotUnique
+        # 既存の別ユーザーが同じGitHubアカウントを連携している場合
+        set_flash_message(:alert, :github_already_linked) if is_navigational_format?
+      end
 
       # 🎓 origin_params: https://github.com/omniauth/omniauth?tab=readme-ov-file#origin-param
       # OmniAuthのドキュメントでは、`origin` パラメータが空のときに `omniauth.origin` に HTTP_REFERER がセットされる、と説明されている。
