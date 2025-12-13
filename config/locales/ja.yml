@@ -66,6 +66,9 @@ ja:
         invalid: "メールアドレスまたはパスワードが違います"
         not_found_in_database: "メールアドレスまたはパスワードが違います"
         unauthenticated: "ログインしてください"
+    omniauth_callbacks:
+      user:
+        github_already_linked: "このGitHubアカウントは既に別のアカウントに連携されています"
     mailer:
       confirmation_instructions:
         subject: "【めもTIL】メールアドレス変更のご案内"
