@@ -3,6 +3,9 @@ class PostsController < ApplicationController
   before_action :set_post, only: [ :destroy ]
 
   def create
+    # 保存前の投稿一覧が空だったかを記録（buildする前にチェック）
+    @posts_empty_before = @task.posts.empty?
+
     # ネストした属性を使用して一度に作成
     if post_params[:postable_type] == "DocumentPost"
       document_url = post_params[:postable_attributes][:url]
@@ -37,6 +40,10 @@ class PostsController < ApplicationController
     end
 
     if @post.errors.empty? && @post.save
+      # 保存前のポスト一覧が空だった場合、postsフレーム全体を更新するために必要な投稿一覧 @posts を取得。
+      if @posts_empty_before
+        @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
+      end
       respond_to do |format|
         format.turbo_stream { render :create }
         format.html { redirect_to @task, notice: "コメントが投稿されました。" }
@@ -56,6 +63,8 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
+    # 削除後にタスクが持つすべてのポストを取得
+    @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
 
     respond_to do |format|
       format.turbo_stream

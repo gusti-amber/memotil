@@ -1,9 +1,17 @@
-<% if @post.persisted? %>
-  <%= turbo_stream.append "posts" do %>
-    <%= render partial: "posts/post", locals: { post: @post } %>
+<% if @post.persisted? %>  
+  <!-- 保存前のポスト一覧が空だった場合 -->
+  <% if @posts_empty_before %>
+    <!-- postsフレーム全体を更新 -->
+    <%= turbo_stream.update "posts_list" do %>
+      <%= render "posts/posts_list" %>
+    <% end %>
+  <!-- 保存前のポスト一覧が空でなかった場合 -->
+  <% else %>
+    <!-- ポストを追加 -->
+    <%= turbo_stream.append "posts_list" do %>
+      <%= render partial: "posts/post", locals: { post: @post } %>
+    <% end %>
   <% end %>
-
-  <%= turbo_stream.remove "posts_empty_state" %>
 
   <%= turbo_stream.update "post_form" do %>
     <%= render "posts/form", task: @task, post: Post.new %>

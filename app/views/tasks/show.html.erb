@@ -7,9 +7,9 @@
       <div class="flex flex-col gap-6 p-12 max-w-2xl w-full">
         <!-- ToDoセクション -->
         <div class="card bg-base-200 shadow-sm w-full mb-1">
-          <%= turbo_frame_tag "todo_section" do %>
+          <%= turbo_frame_tag "todos_section" do %>
             <div class="card-body">
-              <%= render 'tasks/todo_section', task: @task %>
+              <%= render 'tasks/todos_section', task: @task %>
             </div>
           <% end %>
         </div>
@@ -21,29 +21,10 @@
         </div>
       </div>
     </div>
-  <% else %>
-    <div class="flex justify-center">
-      <!-- 投稿セクション -->
-      <div class="flex-1 flex flex-col justify-between w-full">
-        <!-- 投稿一覧 -->
-        <%= turbo_frame_tag "posts" do %>
-          <% if @posts.any? %>
-            <%#= 🎓 render @posts の記述では、scan_rubyのエラーが発生するため、以下のようにパーシャルは明示的に指定 %> 
-            <%= render partial: "posts/post", collection: @posts %>
-          <% else %>
-            <%= turbo_frame_tag "posts_empty_state" do %>
-              <p class="text-center text-custom-gray">まだ投稿はありません</p>
-            <% end %>
-          <% end %>
-        <% end %>
-
-        <!-- 投稿フォーム -->
-        <% if @task.doing? %>
-          <%= turbo_frame_tag "post_form" do %>
-            <%= render 'posts/form', task: @task, post: @post %>
-          <% end %>
-        <% end %>
-      </div>
+  <% elsif @task.doing? || @task.done? %>
+    <div class="flex justify-center min-h-screen">
+      <!-- ポストセクション -->
+      <%= render 'tasks/posts_section', task: @task, post: @post %>
 
       <div class="divider divider-horizontal"></div>
 
