@@ -24,22 +24,7 @@
     <!-- 区切り線 -->
     <div class="divider divider-secondary/50 text-neutral">または</div>
     
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-4 w-full" }) do |f| %>        
-      <% if flash[:alert] %>
-        <div class="alert bg-custom-white border border-custom-rust text-custom-rust">
-          <div class="flex flex-col gap-2">
-            <div class="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0" stroke="currentColor" class="size-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-              </svg>
-              <h3 class="font-bold text-custom-rust">ログインエラー</h3>
-            </div>
-            <div class="text-sm text-custom-rust">
-              <%= flash[:alert] %>
-            </div>
-          </div>
-        </div>
-      <% end %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-4 w-full" }) do |f| %>
       <div class="field w-full">
         <%= f.label :email, class: "text-sm text-custom-dark-green font-semibold" %><br />
         <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "id@example.com", class: "input input-lg input-bordered w-full bg-custom-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
