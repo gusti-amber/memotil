@@ -20,7 +20,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         end
       rescue ActiveRecord::RecordNotUnique
         # 既存の別ユーザーが同じGitHubアカウントを連携している場合
-        set_flash_message(:alert, :github_already_linked) if is_navigational_format?
+        set_flash_message(:alert, :already_linked, kind: "GitHub") if is_navigational_format?
       end
 
       # 🎓 origin_params: https://github.com/omniauth/omniauth?tab=readme-ov-file#origin-param

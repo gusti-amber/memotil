@@ -68,7 +68,7 @@ ja:
         unauthenticated: "ログインしてください"
     omniauth_callbacks:
       user:
-        github_already_linked: "このGitHubアカウントは既に別のアカウントに連携されています"
+        already_linked: "%{kind}アカウントは既に他のユーザーと連携されています"
         success: "%{kind}との連携に成功しました"
         failure: "%{kind}との連携に失敗しました"
     mailer:
