@@ -64,7 +64,7 @@ RSpec.describe "GitHub OAuth", type: :system do
           mock_github_success
 
           click_button "GitHubと連携する"
-          
+
           expect(page).to have_current_path(task_path(done_task))
           expect(page).to have_content("GitHubとの連携に成功しました")
         end

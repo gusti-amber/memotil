@@ -29,7 +29,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       # params: {origin: URL} を指定すると、OmniAuthが"omniauth.origin"にコールバック時のURLを設定する
       origin = request.env["omniauth.origin"].presence
       redirect_to(origin || tasks_path)
-    
+
     # 未ログインユーザーがログイン画面からGitHub認証を行う場合
     else
       @user = User.from_github(auth)
