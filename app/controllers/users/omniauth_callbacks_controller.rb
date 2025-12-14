@@ -6,7 +6,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def github
     auth = request.env["omniauth.auth"]
 
-    # ログイン済みユーザーがDoneタスク詳細画面からGitHub連携を行う場合
+    # ログイン済みユーザーがDoneタスク詳細画面やアカウント設定画面からGitHub連携を行う場合
     if user_signed_in?
       @user = current_user
 
@@ -26,7 +26,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       origin = request.env["omniauth.origin"].presence
       redirect_to(origin || tasks_path)
     
-    # ログイン画面からGitHub認証を行う場合
+    # 未ログインユーザーがログイン画面からGitHub認証を行う場合
     else
       @user = User.from_github(auth)
 
@@ -35,6 +35,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         set_flash_message(:notice, :success, kind: "GitHub") if is_navigational_format?
 
         origin = request.env["omniauth.origin"].presence
+
+        # originか、Deviseのafter_sign_in_path_forメソッド(正確にはオーバーライドしたもの)で指定されたパスにリダイレクト
         redirect_to(origin || after_sign_in_path_for(@user))
       else
         redirect_to new_user_session_url
