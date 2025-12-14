@@ -12,8 +12,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       begin
         # 既存のログインユーザーにGitHub情報を追加
-        @user.update(github_uid: auth.uid, github_token: auth.credentials.token)
-        set_flash_message(:notice, :success, kind: "GitHub") if is_navigational_format?
+        if @user.update(github_uid: auth.uid, github_token: auth.credentials.token)
+          set_flash_message(:notice, :success, kind: "GitHub") if is_navigational_format?
+        else
+          # バリデーションエラーが発生した場合（通常は発生しない）
+          set_flash_message(:alert, :failure, kind: "GitHub") if is_navigational_format?
+        end
       rescue ActiveRecord::RecordNotUnique
         # 既存の別ユーザーが同じGitHubアカウントを連携している場合
         set_flash_message(:alert, :github_already_linked) if is_navigational_format?
