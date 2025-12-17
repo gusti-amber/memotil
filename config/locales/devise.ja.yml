@@ -20,6 +20,9 @@ ja:
         signed_up: "ユーザー登録が完了しました"
         updated: "ユーザー名が変更されました"
         update_needs_confirmation: "新しいメールアドレスへ確認メールを送信しました"
+    confirmations:
+      user:
+        confirmed: "メールアドレスが変更されました"
     mailer:
       confirmation_instructions:
         subject: "【めもTIL】メールアドレス変更のご案内"
