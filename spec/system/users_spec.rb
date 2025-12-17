@@ -356,6 +356,10 @@ RSpec.describe 'Users', type: :system do
 
         expect(page).to have_current_path(tasks_path)
 
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ユーザー名を変更しました')
+
         # ユーザーメニューを開いてプロフィールが更新されているか確認
         find('[aria-label="open-user-menu"]').click
         expect(page).to have_content('updated_name')
