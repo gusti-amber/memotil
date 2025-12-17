@@ -358,7 +358,7 @@ RSpec.describe 'Users', type: :system do
 
         # サクセスメッセージの表示
         expect(page).to have_css('.alert.alert-success')
-        expect(page).to have_content('ユーザー名を変更しました')
+        expect(page).to have_content('ユーザー名が変更されました')
 
         # ユーザーメニューを開いてプロフィールが更新されているか確認
         find('[aria-label="open-user-menu"]').click

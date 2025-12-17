@@ -18,7 +18,7 @@ ja:
     registrations:
       user:
         signed_up: "ユーザー登録が完了しました"
-        updated: "ユーザー名を変更しました"
+        updated: "ユーザー名が変更されました"
         update_needs_confirmation: "新しいメールアドレスへ確認メールを送信しました"
     mailer:
       confirmation_instructions:
