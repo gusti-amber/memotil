@@ -15,6 +15,9 @@ ja:
       user:
         signed_in: "ログインしました"
         signed_out: "ログアウトしました"
+    registrations:
+      user:
+        signed_up: "ユーザー登録が完了しました"
     mailer:
       confirmation_instructions:
         subject: "【めもTIL】メールアドレス変更のご案内"
