@@ -19,6 +19,18 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_content('ログアウト')
         expect(page).to have_current_path(tasks_path)
       end
+
+      it 'サインアップ成功時にフラッシュメッセージが表示される' do
+        fill_in '名前', with: 'test_user'
+        fill_in 'メールアドレス', with: 'test@example.com'
+        fill_in 'パスワード', with: 'password'
+        fill_in 'パスワード（確認）', with: 'password'
+
+        click_button '新規登録'
+
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ユーザー登録が完了しました')
+      end
     end
 
     context '無効な情報で登録する場合' do
