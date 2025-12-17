@@ -36,6 +36,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       if @user.persisted?
         sign_in(@user)
+        
+        # 🎓 set_flash_message: Devise専用のフラッシュメッセージを設定するメソッド
         set_flash_message(:notice, :success, kind: "GitHub") if is_navigational_format?
 
         # ログイン後にDeviseのafter_sign_in_path_forメソッド(正確にはオーバーライドしたもの)で指定されたパスにリダイレクト
