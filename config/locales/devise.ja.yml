@@ -11,6 +11,10 @@ ja:
         already_linked: "%{kind}アカウントは既に他のユーザーと連携されています"
         success: "%{kind}との連携に成功しました"
         failure: "%{kind}との連携に失敗しました"
+    sessions:
+      user:
+        signed_in: "ログインしました"
+        signed_out: "ログアウトしました"
     mailer:
       confirmation_instructions:
         subject: "【めもTIL】メールアドレス変更のご案内"
