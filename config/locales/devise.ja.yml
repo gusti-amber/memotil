@@ -18,6 +18,7 @@ ja:
     registrations:
       user:
         signed_up: "ユーザー登録が完了しました"
+        updated: "ユーザー名を変更しました"
     mailer:
       confirmation_instructions:
         subject: "【めもTIL】メールアドレス変更のご案内"
