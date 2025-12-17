@@ -234,6 +234,10 @@ RSpec.describe 'Users', type: :system do
         # メールが送信されたことを確認
         expect(page).to have_current_path(new_user_session_path)
 
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('パスワード再設定のメールを送信しました')
+
         # メール送信を確認
         expect(ActionMailer::Base.deliveries.size).to eq(1)
       end
@@ -283,6 +287,10 @@ RSpec.describe 'Users', type: :system do
         # 自動的にログイン状態になることを確認（パスワード更新成功時）
         expect(page).to have_content('ログアウト')
         expect(page).to have_current_path(tasks_path)
+
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('パスワードが変更されました')
 
         # パスワードが更新されたことを確認（新しいパスワードでログインできる）
         user.reload
