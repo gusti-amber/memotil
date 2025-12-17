@@ -483,6 +483,10 @@ RSpec.describe 'Users', type: :system do
         # 自動的にログイン状態になることを確認
         expect(page).to have_content('ログアウト')
         expect(page).to have_current_path(tasks_path)
+
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('メールアドレスが変更されました')
       end
 
       # ✨ 以下のテストは確認メール再送画面`app/views/users/confirmations/new.html.erb`を実装する際に書く
