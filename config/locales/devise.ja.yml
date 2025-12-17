@@ -23,6 +23,10 @@ ja:
     confirmations:
       user:
         confirmed: "メールアドレスが変更されました"
+    passwords:
+      user:
+        send_instructions: "パスワード再設定のメールを送信しました"
+        updated: "パスワードが変更されました"
     mailer:
       confirmation_instructions:
         subject: "【めもTIL】メールアドレス変更のご案内"
