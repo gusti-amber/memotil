@@ -429,6 +429,10 @@ RSpec.describe 'Users', type: :system do
         # タスク一覧画面へ遷移するまで待機
         expect(page).to have_current_path(tasks_path)
 
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('新しいメールアドレスへ確認メールを送信しました')
+
         # メールが送信されたことを確認
         expect(ActionMailer::Base.deliveries.size).to eq(1)
 
