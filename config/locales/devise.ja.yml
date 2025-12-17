@@ -1,0 +1,18 @@
+# Deviseのエラーメッセージの和訳
+ja:
+  devise:
+    failure:
+      user:
+        invalid: "メールアドレスまたはパスワードが違います"
+        not_found_in_database: "メールアドレスまたはパスワードが違います"
+        unauthenticated: "ログインしてください"
+    omniauth_callbacks:
+      user:
+        already_linked: "%{kind}アカウントは既に他のユーザーと連携されています"
+        success: "%{kind}との連携に成功しました"
+        failure: "%{kind}との連携に失敗しました"
+    mailer:
+      confirmation_instructions:
+        subject: "【めもTIL】メールアドレス変更のご案内"
+      reset_password_instructions:
+        subject: "【めもTIL】パスワード再設定のご案内"
