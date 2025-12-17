@@ -125,6 +125,16 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_content('ログアウト')
         expect(page).to have_current_path(tasks_path)
       end
+
+      it 'ログイン成功時にフラッシュメッセージが表示される' do
+        fill_in 'メールアドレス', with: user.email
+        fill_in 'パスワード', with: user.password
+
+        click_button 'ログイン'
+
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ログインしました')
+      end
     end
 
     context '無効な情報でログインする場合' do
@@ -156,6 +166,15 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_content('ログイン')
       expect(page).to have_content('サインアップ')
       expect(page).to have_current_path(root_path)
+    end
+
+    it 'ログアウト時にフラッシュメッセージが表示される' do
+      # ユーザーメニューを開き、「ログアウト」ボタンをクリック
+      find('[aria-label="open-user-menu"]').click
+      click_link 'ログアウト'
+
+      expect(page).to have_css('.alert.alert-success')
+      expect(page).to have_content('ログアウトしました')
     end
   end
 
