@@ -8,7 +8,18 @@
         <%= link_to "タスクをみる", tasks_path, class: "text-lg text-neutral/80 hover:text-neutral transition-colors" %>
       </div>
       <% if user_signed_in? %>
-        <%= render 'shared/user_menu' %>
+        <% if current_user.guest_user? %>
+          <!-- ゲストユーザーの場合はログアウトボタンのみ表示 -->
+          <%= link_to "ログアウト", destroy_user_session_path,
+              data: { 
+                turbo_method: :delete,
+                turbo_frame: "_top"
+              },
+              class: "btn btn-neutral rounded-full" %>
+        <% else %>
+          <!-- その他のユーザーの場合はユーザーメニューを表示 -->
+          <%= render 'shared/user_menu' %>
+        <% end %>
       <% else %>
         <div class="flex-none flex gap-2">
           <%= link_to "ログイン", new_user_session_path, class: "btn btn-neutral rounded-full" %>
