@@ -7,4 +7,11 @@ FactoryBot.define do
     # confirmableモジュールが有効なため、テスト用ユーザーは確認済みとして扱う
     confirmed_at { Time.current }
   end
+
+  factory :guest_user, parent: :user do
+    name { "guest" }
+    sequence(:email) { |n| "guest_#{Time.now.to_i}#{n}@example.com" }
+    # ゲストユーザーはバリデーションをスキップして作成される
+    to_create { |guest_user| guest_user.save!(validate: false) }
+  end
 end
