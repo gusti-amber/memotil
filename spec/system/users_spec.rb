@@ -420,68 +420,68 @@ RSpec.describe 'Users', type: :system do
       end
     end
   end
-
+  
   describe 'メールアドレス変更' do
     let(:user) { create(:user, email: 'test@example.com', password: 'password123', password_confirmation: 'password123') }
-
+    
     before do
       sign_in user
       # メール送信をクリア
       ActionMailer::Base.deliveries.clear
     end
-
+    
     context 'メールアドレス変更リクエスト' do
       before do
         visit tasks_path
         find('[aria-label="open-user-menu"]').click
         click_link 'アカウント設定'
       end
-
+      
       it 'アカウント設定画面で現在のメールアドレスが表示される' do
         expect(page).to have_content('アカウント設定')
         expect(page).to have_content('test@example.com')
         expect(page).to have_content('現在のメールアドレス')
       end
-
+      
       it '新しいメールアドレスを入力して送信すると、確認メールが送信される' do
         new_email = 'newemail@example.com'
         fill_in '新しいメールアドレス', with: new_email
         click_button '確認メールを送信'
-
+        
         # タスク一覧画面へ遷移するまで待機
         expect(page).to have_current_path(tasks_path)
-
+        
         # サクセスメッセージの表示
         expect(page).to have_css('.alert.alert-success')
         expect(page).to have_content('新しいメールアドレスへ確認メールを送信しました')
-
+        
         # メールが送信されたことを確認
         expect(ActionMailer::Base.deliveries.size).to eq(1)
-
+        
         # メールアドレスはまだ変更されていない（unconfirmed_emailに保存されている）
         user.reload
         expect(user.email).to eq('test@example.com')
         expect(user.unconfirmed_email).to eq(new_email)
       end
-
+      
       it 'メールアドレスが空の場合はエラーが表示される' do
         fill_in '新しいメールアドレス', with: ''
         click_button '確認メールを送信'
-
+        
         expect(page).to have_content('メールアドレス を入力してください')
       end
-
+      
       it '既に登録済みのメールアドレスの場合はエラーが表示される' do
         # 別のユーザーを作成
         create(:user, email: 'existing@example.com')
-
+        
         fill_in '新しいメールアドレス', with: 'existing@example.com'
         click_button '確認メールを送信'
-
+        
         expect(page).to have_content('メールアドレス はすでに登録済みです')
       end
     end
-
+    
     context 'メールアドレス変更確認' do
       before do
         # 確認トークンを生成
@@ -492,28 +492,50 @@ RSpec.describe 'Users', type: :system do
         @confirmation_token = user.confirmation_token
         user.update(confirmation_sent_at: Time.current)
       end
-
+      
       it '確認メール内のリンクからメールアドレスが変更され、ログイン状態になり、タスク一覧画面へ遷移する' do
         visit user_confirmation_path(confirmation_token: @confirmation_token)
-
+        
         # メールアドレスが変更されたことを確認
         user.reload
         expect(user.email).to eq('newemail@example.com')
         expect(user.unconfirmed_email).to be_nil
         expect(user.confirmed_at).to be_present
-
+        
         # 自動的にログイン状態になることを確認
         expect(page).to have_content('ログアウト')
         expect(page).to have_current_path(tasks_path)
-
+        
         # サクセスメッセージの表示
         expect(page).to have_css('.alert.alert-success')
         expect(page).to have_content('メールアドレスが変更されました')
       end
-
+      
       # ✨ 以下のテストは確認メール再送画面`app/views/users/confirmations/new.html.erb`を実装する際に書く
       it '有効期限が切れた確認トークンの場合はエラーが表示される'
       it '無効な確認トークンの場合はエラーが表示される'
+    end
+  end
+
+  describe 'ゲストユーザーの機能制限' do
+    before do
+      visit new_user_session_path
+      click_button 'ゲストとしてログイン'
+      expect(page).to have_current_path(tasks_path)
+    end
+  
+    context 'アカウント設定画面へのアクセス制限' do
+      it 'URLで直接アカウント設定画面にアクセスしようとすると、直前のページにリダイレクトされ、エラーメッセージが表示される' do
+        # タスク一覧画面からアカウント設定画面にアクセスしようとする
+        visit edit_user_registration_path
+  
+        # タスク一覧画面にリダイレクトされる
+        expect(page).to have_current_path(tasks_path)
+  
+        # アラートメッセージの表示
+        expect(page).to have_css('.alert.alert-error')
+        expect(page).to have_content('ゲストユーザーはアカウント設定画面にアクセスできません')
+      end
     end
   end
 end
