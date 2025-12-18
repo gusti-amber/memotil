@@ -19,6 +19,18 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_content('ログアウト')
         expect(page).to have_current_path(tasks_path)
       end
+
+      it 'サインアップ成功時にフラッシュメッセージが表示される' do
+        fill_in '名前', with: 'test_user'
+        fill_in 'メールアドレス', with: 'test@example.com'
+        fill_in 'パスワード', with: 'password'
+        fill_in 'パスワード（確認）', with: 'password'
+
+        click_button '新規登録'
+
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ユーザー登録が完了しました')
+      end
     end
 
     context '無効な情報で登録する場合' do
@@ -125,6 +137,16 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_content('ログアウト')
         expect(page).to have_current_path(tasks_path)
       end
+
+      it 'ログイン成功時にフラッシュメッセージが表示される' do
+        fill_in 'メールアドレス', with: user.email
+        fill_in 'パスワード', with: user.password
+
+        click_button 'ログイン'
+
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ログインしました')
+      end
     end
 
     context '無効な情報でログインする場合' do
@@ -156,6 +178,15 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_content('ログイン')
       expect(page).to have_content('サインアップ')
       expect(page).to have_current_path(root_path)
+    end
+
+    it 'ログアウト時にフラッシュメッセージが表示される' do
+      # ユーザーメニューを開き、「ログアウト」ボタンをクリック
+      find('[aria-label="open-user-menu"]').click
+      click_link 'ログアウト'
+
+      expect(page).to have_css('.alert.alert-success')
+      expect(page).to have_content('ログアウトしました')
     end
   end
 
@@ -325,6 +356,10 @@ RSpec.describe 'Users', type: :system do
 
         expect(page).to have_current_path(tasks_path)
 
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ユーザー名が変更されました')
+
         # ユーザーメニューを開いてプロフィールが更新されているか確認
         find('[aria-label="open-user-menu"]').click
         expect(page).to have_content('updated_name')
@@ -394,6 +429,10 @@ RSpec.describe 'Users', type: :system do
         # タスク一覧画面へ遷移するまで待機
         expect(page).to have_current_path(tasks_path)
 
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('新しいメールアドレスへ確認メールを送信しました')
+
         # メールが送信されたことを確認
         expect(ActionMailer::Base.deliveries.size).to eq(1)
 
@@ -444,6 +483,10 @@ RSpec.describe 'Users', type: :system do
         # 自動的にログイン状態になることを確認
         expect(page).to have_content('ログアウト')
         expect(page).to have_current_path(tasks_path)
+
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('メールアドレスが変更されました')
       end
 
       # ✨ 以下のテストは確認メール再送画面`app/views/users/confirmations/new.html.erb`を実装する際に書く
