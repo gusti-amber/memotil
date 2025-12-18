@@ -516,4 +516,51 @@ RSpec.describe 'Users', type: :system do
       it '無効な確認トークンの場合はエラーが表示される'
     end
   end
+
+  describe 'ゲストユーザーの機能制限' do
+    let(:guest_user) { create(:guest_user) }
+
+    before do
+      # ゲストユーザーでログイン
+      sign_in guest_user
+      visit tasks_path
+    end
+
+    context 'ヘッダーの表示' do
+      it 'ヘッダーにユーザーメニューは表示されず、ログアウトボタンのみ表示される' do
+        expect(page).not_to have_css('[data-test-id="user-menu"]')
+        expect(page).to have_link('ログアウト')
+      end
+    end
+
+    context 'アカウント設定画面へのアクセス制限' do
+      it 'URLで直接アカウント設定画面にアクセスしようとすると、直前のページにリダイレクトされ、アラートメッセージが表示される' do
+        # タスク一覧画面からアカウント設定画面にアクセスしようとする
+        visit edit_user_registration_path
+
+        # タスク一覧画面にリダイレクトされる
+        expect(page).to have_current_path(tasks_path)
+
+        # アラートメッセージの表示
+        expect(page).to have_css('.alert.alert-error')
+        expect(page).to have_content('ゲストユーザーはアカウント設定画面にアクセスできません')
+      end
+    end
+
+    context 'Doneタスク詳細画面でのGitHub連携機能の制限' do
+      let(:done_task) { create(:done_task, user: guest_user) }
+
+      it 'Doneタスク詳細画面でGitHub連携ボタンが非アクティブになっている' do
+        # Doneタスク詳細画面にアクセス
+        visit task_path(done_task)
+
+        # GitHub連携ボタンが非アクティブになっていることを確認
+        github_button = find('button', text: 'GitHubと連携する', match: :first)
+        expect(github_button).to be_disabled
+
+        # 注意書きの表示を確認
+        expect(page).to have_content('ゲストユーザーはGitHub連携を利用できません')
+      end
+    end
+  end
 end
