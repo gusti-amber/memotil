@@ -518,10 +518,12 @@ RSpec.describe 'Users', type: :system do
   end
 
   describe 'ゲストユーザーの機能制限' do
+    let(:guest_user) { create(:guest_user) }
+
     before do
-      visit new_user_session_path
-      click_button 'ゲストとしてログイン'
-      expect(page).to have_current_path(tasks_path)
+      # ゲストユーザーでログイン
+      sign_in guest_user
+      visit tasks_path
     end
   
     context 'ヘッダーの表示' do
@@ -542,6 +544,22 @@ RSpec.describe 'Users', type: :system do
         # アラートメッセージの表示
         expect(page).to have_css('.alert.alert-error')
         expect(page).to have_content('ゲストユーザーはアカウント設定画面にアクセスできません')
+      end
+    end
+
+    context 'Doneタスク詳細画面でのGitHub連携機能の制限' do
+      let(:done_task) { create(:done_task, user: guest_user) }
+
+      it 'Doneタスク詳細画面でGitHub連携ボタンが非アクティブになっている' do
+        # Doneタスク詳細画面にアクセス
+        visit task_path(done_task)
+
+        # GitHub連携ボタンが非アクティブになっていることを確認
+        github_button = find('button', text: 'GitHubと連携する', match: :first)
+        expect(github_button).to be_disabled
+
+        # 注意書きの表示を確認
+        expect(page).to have_content('ゲストユーザーはGitHub連携を利用できません')
       end
     end
   end
