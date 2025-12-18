@@ -17,6 +17,7 @@ class Users::SessionsController < Devise::SessionsController
   # ゲストユーザー作成アクション
   def create_guest
     guest_user
+    set_flash_message(:notice, :signed_in_as_guest) if is_navigational_format?
     redirect_to after_sign_in_path_for(current_user)
   end
 

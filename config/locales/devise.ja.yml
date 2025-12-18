@@ -16,6 +16,7 @@ ja:
       user:
         signed_in: "ログインしました"
         signed_out: "ログアウトしました"
+        signed_in_as_guest: "ゲストユーザーでログインしました"
     registrations:
       user:
         signed_up: "ユーザー登録が完了しました"
