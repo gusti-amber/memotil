@@ -4,6 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [ :update ]
   before_action :store_previous_path, only: [ :edit ]
+  before_action :reject_guest_user, only: [ :edit, :update ]
 
   # GET /resource/sign_up
   # def new
@@ -80,5 +81,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # ⚠️ 今後、メールアドレスやパスワードの更新を実装する際には、current password を要求するように条件分岐する必要がある
   def update_resource(resource, params)
     resource.update_without_password(params)
+  end
+
+  private
+
+  # ゲストユーザーのアクセスを拒否
+  def reject_guest_user
+    return unless current_user&.guest_user?
+
+    # 直前のページへリダイレクト、直前のページがない場合はタスク一覧画面にリダイレクト
+    redirect_back(fallback_location: tasks_path, alert: "ゲストユーザーはアカウント設定画面にアクセスできません")
   end
 end
