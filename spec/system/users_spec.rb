@@ -524,8 +524,15 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_current_path(tasks_path)
     end
   
+    context 'ヘッダーの表示' do
+      it 'ヘッダーにユーザーメニューは表示されず、ログアウトボタンのみ表示される' do
+        expect(page).not_to have_css('[data-test-id="user-menu"]')
+        expect(page).to have_link('ログアウト')
+      end
+    end
+
     context 'アカウント設定画面へのアクセス制限' do
-      it 'URLで直接アカウント設定画面にアクセスしようとすると、直前のページにリダイレクトされ、エラーメッセージが表示される' do
+      it 'URLで直接アカウント設定画面にアクセスしようとすると、直前のページにリダイレクトされ、アラートメッセージが表示される' do
         # タスク一覧画面からアカウント設定画面にアクセスしようとする
         visit edit_user_registration_path
   
