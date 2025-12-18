@@ -36,7 +36,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       if @user.persisted?
         sign_in(@user)
-        
+
         # 🎓 set_flash_message: Devise専用のフラッシュメッセージを設定するメソッド
         set_flash_message(:notice, :signed_in_with_omniauth, kind: "GitHub") if is_navigational_format?
 
