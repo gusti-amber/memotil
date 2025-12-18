@@ -149,6 +149,20 @@ RSpec.describe 'Users', type: :system do
       end
     end
 
+    context 'ゲストユーザーでログインする場合' do
+      it 'ゲストユーザーで正常にログインされる' do
+        click_button 'ゲストとしてログイン'
+
+        # タスク一覧画面へリダイレクト
+        expect(page).to have_current_path(tasks_path)
+        expect(page).to have_content('ログアウト')
+
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ゲストユーザーでログインしました')
+      end
+    end
+
     context '無効な情報でログインする場合' do
       it '無効な認証情報の場合はエラーが表示される' do
         fill_in 'メールアドレス', with: 'wrong@example.com'
@@ -234,6 +248,10 @@ RSpec.describe 'Users', type: :system do
         # メールが送信されたことを確認
         expect(page).to have_current_path(new_user_session_path)
 
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('パスワード再設定のメールを送信しました')
+
         # メール送信を確認
         expect(ActionMailer::Base.deliveries.size).to eq(1)
       end
@@ -283,6 +301,10 @@ RSpec.describe 'Users', type: :system do
         # 自動的にログイン状態になることを確認（パスワード更新成功時）
         expect(page).to have_content('ログアウト')
         expect(page).to have_current_path(tasks_path)
+
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('パスワードが変更されました')
 
         # パスワードが更新されたことを確認（新しいパスワードでログインできる）
         user.reload

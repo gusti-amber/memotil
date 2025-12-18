@@ -36,12 +36,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       if @user.persisted?
         sign_in(@user)
-        set_flash_message(:notice, :success, kind: "GitHub") if is_navigational_format?
 
-        origin = request.env["omniauth.origin"].presence
+        # 🎓 set_flash_message: Devise専用のフラッシュメッセージを設定するメソッド
+        set_flash_message(:notice, :signed_in_with_omniauth, kind: "GitHub") if is_navigational_format?
 
-        # originか、Deviseのafter_sign_in_path_forメソッド(正確にはオーバーライドしたもの)で指定されたパスにリダイレクト
-        redirect_to(origin || after_sign_in_path_for(@user))
+        # ログイン後にDeviseのafter_sign_in_path_forメソッド(正確にはオーバーライドしたもの)で指定されたパスにリダイレクト
+        redirect_to after_sign_in_path_for(@user)
       else
         redirect_to new_user_session_url
       end
