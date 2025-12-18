@@ -1,26 +1,6 @@
 <!-- GitHub連携カード -->
-<div class="card bg-base-200 shadow-sm w-full mb-1">
-  <div class="card-body">
-    <%= turbo_frame_tag "til" do %>
-      <% if current_user.github_token.present? %>
-        <div class="card-actions justify-center">
-          <%= link_to new_task_til_path(task), data: { turbo_frame: "til" }, class: "btn btn-lg btn-primary rounded-full text-base" do %>
-            GitHubリポジトリにTILを保存
-          <% end %>
-        </div>
-      <% else %>
-        <div class="card-actions justify-center">
-          <%= button_to user_github_omniauth_authorize_path, method: :post, data: { turbo: false }, params: { origin: task_url(task) }, class: "btn btn-lg btn-neutral rounded-full text-base flex items-center gap-2" do %>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-              <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.478 2 12.004c0 4.424 2.865 8.18 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.607.069-.607 1.004.07 1.532 1.031 1.532 1.031.892 1.529 2.341 1.088 2.91.833.091-.647.35-1.088.636-1.339-2.22-.253-4.555-1.112-4.555-4.948 0-1.092.39-1.987 1.029-2.688-.103-.253-.446-1.27.098-2.647 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.748-1.026 2.748-1.026.546 1.377.203 2.394.1 2.647.64.701 1.028 1.596 1.028 2.688 0 3.845-2.339 4.692-4.566 4.941.36.31.68.92.68 1.855 0 1.338-.012 2.417-.012 2.747 0 .268.18.58.688.481A10.01 10.01 0 0 0 22 12.004C22 6.478 17.522 2 12 2Z" clip-rule="evenodd" />
-            </svg>
-            GitHubと連携する
-          <% end %>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-</div>
+<%= render 'tasks/github_integration_card', task: task %>
+
 <!-- ボタン群 -->
 <div class="flex justify-center">
   <%= render 'tasks/status_button', task: task %>
@@ -28,4 +8,3 @@
 <div class="flex justify-center">
   <%= render 'tasks/destroy_button', task: task %>
 </div>
-
