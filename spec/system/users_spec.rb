@@ -149,6 +149,20 @@ RSpec.describe 'Users', type: :system do
       end
     end
 
+    context 'ゲストユーザーでログインする場合' do
+      it 'ゲストユーザーで正常にログインされる' do
+        click_button 'ゲストとしてログイン'
+
+        # タスク一覧画面へリダイレクト
+        expect(page).to have_current_path(tasks_path)
+        expect(page).to have_content('ログアウト')
+
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ゲストユーザーでログインしました')
+      end
+    end
+
     context '無効な情報でログインする場合' do
       it '無効な認証情報の場合はエラーが表示される' do
         fill_in 'メールアドレス', with: 'wrong@example.com'
