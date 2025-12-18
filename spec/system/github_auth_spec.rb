@@ -32,6 +32,10 @@ RSpec.describe "GitHub OAuth", type: :system do
 
           expect(page).to have_current_path(tasks_path)
           expect(page).to have_content("ログアウト") # 成功後はサインイン済み（ヘッダーにログアウトが表示される想定）
+
+          # サクセスメッセージの表示
+          expect(page).to have_css('.alert.alert-success')
+          expect(page).to have_content('GitHubアカウントでログインしました')
         end
       end
     end
