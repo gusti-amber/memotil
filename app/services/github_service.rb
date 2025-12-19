@@ -19,12 +19,14 @@ class GithubService
   end
 
   def update_readme(repo, message:, new_body:, sha: nil)
+    # 🎓 update_contentsメソッドは位置引数を取るので注意（キーワード引数ではない）
+    # 公式ドキュメント: https://octokit.github.io/octokit.rb/Octokit/Client/Contents.html#update_contents-instance_method
     @client.update_contents(
-      repo: repo,
-      path: "README.md",
-      message: message,
-      sha: sha,
-      content: new_body
+      repo, # GitHubのリポジトリ
+      "README.md", # 更新するコンテンツのパス
+      message, # コンテンツ更新時のコミットメッセージ
+      sha, # 更新するコンテンツのSHA
+      new_body # 更新するコンテンツの内容
     )
   end
 end
