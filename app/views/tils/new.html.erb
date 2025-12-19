@@ -23,11 +23,11 @@
         <%= f.hidden_field :repo, value: @selected_repo %>
         <%= f.hidden_field :sha, value: @readme_sha %>
         <%= f.label :message, "コミットメッセージ", class: "label text-sm text-neutral font-semibold" %>
-        <%= f.text_field :message, value: "Add TIL for #{(@task.title || 'task')}", class: "input input-bordered input-neutral w-full" %>
+        <%= f.text_field :message, value: "Add TIL: #{(@task.title || 'task')}", class: "input input-bordered input-neutral w-full" %>
         <%= f.label :body, "README.md", class: "label text-sm text-neutral font-semibold" %>
         <%= f.text_area :body, value: @readme_body, rows: 16, class: "textarea textarea-bordered text-area-neutral w-full" %>
         <div class="flex justify-end">
-          <%= f.submit "GitHubにプッシュ", class: "btn btn-primary rounded-full shadow-none w-full" %>
+          <%= f.submit "GitHubリポジトリに保存", class: "btn btn-primary rounded-full shadow-none w-full" %>
         </div>
       <% end %>
     <% end %>

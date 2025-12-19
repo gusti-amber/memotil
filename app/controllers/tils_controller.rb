@@ -21,7 +21,7 @@ class TilsController < ApplicationController
     # ✨ リポジトリ内にREADME.mdがない場合の処理も今後実装予定
     client = GithubService.new(current_user.github_token)
     client.update_readme(params[:repo], message: params[:message], new_body: params[:body], sha: params[:sha])
-    redirect_to @task, notice: "GitHubにTILを反映しました"
+    redirect_to @task, notice: "GitHubリポジトリにTILを保存しました"
   end
 
   private
