@@ -282,7 +282,7 @@ Devise.setup do |config|
   # 🎓 GitHub OAuth App における OAuth 2.0 scopes 一覧:
   # https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes
   
-  config.omniauth :github, ENV["GITHUB_CLIENT_ID"], ENV["GITHUB_CLIENT_SECRET"], scope: "user,public_repo"
+  config.omniauth :github, ENV["GITHUB_CLIENT_ID"], ENV["GITHUB_CLIENT_SECRET"], scope: "user,repo"
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
