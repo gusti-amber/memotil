@@ -275,6 +275,13 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
+
+  # 🎓 OmniAuthの設定方法:
+  # https://github.com/heartcombo/devise?tab=readme-ov-file#omniauth
+  
+  # 🎓 GitHub OAuth App における OAuth 2.0 scopes 一覧:
+  # https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes
+  
   config.omniauth :github, ENV["GITHUB_CLIENT_ID"], ENV["GITHUB_CLIENT_SECRET"], scope: "user,public_repo"
 
   # ==> Warden configuration
