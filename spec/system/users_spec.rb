@@ -202,6 +202,11 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_css('.alert.alert-success')
       expect(page).to have_content('ログアウトしました')
     end
+
+    # ✨ 再ログアウト時の検証テストは保留
+    context '既にログアウトしているユーザーが再度ログアウトを試みる場合' do
+      it 'タブBでログアウトすると、サクセスメッセージが表示される'
+    end
   end
 
   describe '認証フィルター' do
