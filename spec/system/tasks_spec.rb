@@ -444,6 +444,11 @@ RSpec.describe 'Tasks', type: :system do
 
         click_link 'タスクに取り組む'
 
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ステータスが変更されました')
+
+        # ステータスがDoingに変更されたことを確認
         expect(page).to have_content('Doing')
       end
     end
@@ -457,6 +462,11 @@ RSpec.describe 'Tasks', type: :system do
 
         click_link 'タスクを完了する'
 
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ステータスが変更されました')
+
+        # ステータスがDoneに変更されたことを確認
         expect(page).to have_content('Done')
       end
     end
@@ -470,6 +480,11 @@ RSpec.describe 'Tasks', type: :system do
 
         click_link '再びタスクに取り組む'
 
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ステータスが変更されました')
+
+        # ステータスがDoingに変更されたことを確認
         expect(page).to have_content('Doing')
       end
     end
