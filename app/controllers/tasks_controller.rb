@@ -48,7 +48,7 @@ class TasksController < ApplicationController
         end
       else
         # edit.html.erbからのリクエストの場合、リダイレクト
-        redirect_to @task, notice: "タスクが正常に更新されました。"
+        redirect_to @task, notice: "タスクが更新されました"
       end
     else
       # エラー時も同様に判別
