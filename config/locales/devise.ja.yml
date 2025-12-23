@@ -1,4 +1,4 @@
-# Deviseのエラーメッセージの和訳
+# Deviseメッセージの日本語化
 ja:
   devise:
     failure:
@@ -6,6 +6,7 @@ ja:
         invalid: "メールアドレスまたはパスワードが違います"
         not_found_in_database: "メールアドレスまたはパスワードが違います"
         unauthenticated: "ログインしてください"
+        already_authenticated: "すでにログインしています"
     omniauth_callbacks:
       user:
         already_linked: "%{kind}アカウントは既に他のユーザーと連携されています"
@@ -17,6 +18,7 @@ ja:
         signed_in: "ログインしました"
         signed_out: "ログアウトしました"
         signed_in_as_guest: "ゲストユーザーでログインしました"
+        already_signed_out: "すでにログアウトしています"
     registrations:
       user:
         signed_up: "ユーザー登録が完了しました"

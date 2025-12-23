@@ -202,6 +202,11 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_css('.alert.alert-success')
       expect(page).to have_content('ログアウトしました')
     end
+
+    # ✨ 再ログアウト時の検証テストは保留
+    context '既にログアウトしているユーザーが再度ログアウトを試みる場合' do
+      it 'タブBでログアウトすると、サクセスメッセージが表示される'
+    end
   end
 
   describe '認証フィルター' do
@@ -215,8 +220,12 @@ RSpec.describe 'Users', type: :system do
       it 'ルートページにリダイレクトされる' do
         visit new_user_session_path
 
-        # 既にログインしている場合はルートページにリダイレクト
+        # 既にログインしている場合はタスク一覧画面にリダイレクト
         expect(page).to have_current_path(tasks_path)
+
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-error')
+        expect(page).to have_content('すでにログインしています')
       end
     end
   end
