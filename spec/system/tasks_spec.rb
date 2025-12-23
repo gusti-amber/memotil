@@ -153,6 +153,14 @@ RSpec.describe 'Tasks', type: :system do
 
         click_button '変更'
 
+        # タスク詳細画面へリダイレクト（パスは正規表現でチェック）
+        expect(page).to have_current_path(%r{/tasks/\d+})
+
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('タスクが更新されました')
+
+        # コンテンツの表示
         expect(page).to have_content('updated_task_title')
         expect(page).to have_content(tags.first.name)
       end
