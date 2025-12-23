@@ -77,7 +77,7 @@ class TasksController < ApplicationController
     new_status = @task.doing? ? :done : :doing
 
     if @task.update(status: new_status)
-      redirect_to @task, notice: "タスクのステータスが更新されました。"
+      redirect_to @task, notice: "ステータスが変更されました"
     else
       render :show, status: :unprocessable_entity
     end
