@@ -215,8 +215,12 @@ RSpec.describe 'Users', type: :system do
       it 'ルートページにリダイレクトされる' do
         visit new_user_session_path
 
-        # 既にログインしている場合はルートページにリダイレクト
+        # 既にログインしている場合はタスク一覧画面にリダイレクト
         expect(page).to have_current_path(tasks_path)
+
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-error')
+        expect(page).to have_content('すでにログインしています')
       end
     end
   end
