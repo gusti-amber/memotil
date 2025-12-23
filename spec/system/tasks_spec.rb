@@ -417,12 +417,15 @@ RSpec.describe 'Tasks', type: :system do
           click_link 'タスクを削除する'
         end
 
-        # タスク一覧ページに遷移するまで待ってから確認
+        # タスク一覧画面へリダイレクト
         expect(page).to have_current_path(tasks_path, ignore_query: true)
 
-        # 削除完了を確認
-        # expect(page).to have_content('タスクが削除されました')
-        expect(Task.find_by(id: task.id)).to be_nil
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('タスクが削除されました')
+
+        # タスク一覧に削除されたタスクが表示されないことを確認
+        expect(page).not_to have_content(task.title)
       end
     end
   end
