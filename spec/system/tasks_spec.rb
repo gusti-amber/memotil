@@ -65,6 +65,14 @@ RSpec.describe 'Tasks', type: :system do
 
         click_button '作成'
 
+        # タスク詳細画面へリダイレクト（パスは正規表現でチェック）
+        expect(page).to have_current_path(%r{/tasks/\d+})
+
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('タスクが作成されました')
+
+        # コンテンツの表示
         expect(page).to have_content('test_task_with_tag')
         expect(page).to have_content(tags.first.name)
       end
@@ -145,6 +153,14 @@ RSpec.describe 'Tasks', type: :system do
 
         click_button '変更'
 
+        # タスク詳細画面へリダイレクト（パスは正規表現でチェック）
+        expect(page).to have_current_path(%r{/tasks/\d+})
+
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('タスクが更新されました')
+
+        # コンテンツの表示
         expect(page).to have_content('updated_task_title')
         expect(page).to have_content(tags.first.name)
       end
@@ -401,12 +417,15 @@ RSpec.describe 'Tasks', type: :system do
           click_link 'タスクを削除する'
         end
 
-        # タスク一覧ページに遷移するまで待ってから確認
+        # タスク一覧画面へリダイレクト
         expect(page).to have_current_path(tasks_path, ignore_query: true)
 
-        # 削除完了を確認
-        # expect(page).to have_content('タスクが削除されました')
-        expect(Task.find_by(id: task.id)).to be_nil
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('タスクが削除されました')
+
+        # タスク一覧に削除されたタスクが表示されないことを確認
+        expect(page).not_to have_content(task.title)
       end
     end
   end
@@ -425,6 +444,11 @@ RSpec.describe 'Tasks', type: :system do
 
         click_link 'タスクに取り組む'
 
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ステータスが変更されました')
+
+        # ステータスがDoingに変更されたことを確認
         expect(page).to have_content('Doing')
       end
     end
@@ -438,6 +462,11 @@ RSpec.describe 'Tasks', type: :system do
 
         click_link 'タスクを完了する'
 
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ステータスが変更されました')
+
+        # ステータスがDoneに変更されたことを確認
         expect(page).to have_content('Done')
       end
     end
@@ -451,6 +480,11 @@ RSpec.describe 'Tasks', type: :system do
 
         click_link '再びタスクに取り組む'
 
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('ステータスが変更されました')
+
+        # ステータスがDoingに変更されたことを確認
         expect(page).to have_content('Doing')
       end
     end
