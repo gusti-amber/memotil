@@ -19,7 +19,7 @@ class TasksController < ApplicationController
     @task = current_user.tasks.build(task_params)
 
     if @task.save
-      redirect_to @task, notice: "タスクが正常に作成されました。"
+      redirect_to @task, notice: "タスクが作成されました"
     else
       render :new, status: :unprocessable_entity
     end
