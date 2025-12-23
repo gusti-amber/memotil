@@ -1,4 +1,4 @@
-# Deviseのエラーメッセージの和訳
+# Deviseメッセージの日本語化
 ja:
   devise:
     failure:
