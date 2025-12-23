@@ -65,6 +65,14 @@ RSpec.describe 'Tasks', type: :system do
 
         click_button '作成'
 
+        # タスク詳細画面へリダイレクト（パスは正規表現でチェック）
+        expect(page).to have_current_path(%r{/tasks/\d+})
+
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('タスクが作成されました')
+
+        # コンテンツの表示
         expect(page).to have_content('test_task_with_tag')
         expect(page).to have_content(tags.first.name)
       end
