@@ -58,3 +58,11 @@ ja:
         too_many: "は最大5個まで選択できます"
       todos:
         too_many: "は最大5個まで作成できます"
+
+  # フラッシュメッセージ
+  flash:
+    tasks:
+      create: "タスクが作成されました"
+      update: "タスクが更新されました"
+      destroy: "タスクが削除されました"
+      status_changed: "ステータスが変更されました"

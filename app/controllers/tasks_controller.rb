@@ -19,7 +19,7 @@ class TasksController < ApplicationController
     @task = current_user.tasks.build(task_params)
 
     if @task.save
-      redirect_to @task, notice: "タスクが作成されました"
+      redirect_to @task, notice: t("flash.tasks.create")
     else
       render :new, status: :unprocessable_entity
     end
@@ -48,7 +48,7 @@ class TasksController < ApplicationController
         end
       else
         # edit.html.erbからのリクエストの場合、リダイレクト
-        redirect_to @task, notice: "タスクが更新されました"
+        redirect_to @task, notice: t("flash.tasks.update")
       end
     else
       # エラー時も同様に判別
@@ -69,7 +69,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to tasks_path, notice: "タスクが削除されました"
+    redirect_to tasks_path, notice: t("flash.tasks.destroy")
   end
 
   def toggle_status
@@ -77,7 +77,7 @@ class TasksController < ApplicationController
     new_status = @task.doing? ? :done : :doing
 
     if @task.update(status: new_status)
-      redirect_to @task, notice: "ステータスが変更されました"
+      redirect_to @task, notice: t("flash.tasks.status_changed")
     else
       render :show, status: :unprocessable_entity
     end
