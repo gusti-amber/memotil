@@ -6,6 +6,7 @@ ja:
         invalid: "メールアドレスまたはパスワードが違います"
         not_found_in_database: "メールアドレスまたはパスワードが違います"
         unauthenticated: "ログインしてください"
+        already_authenticated: "すでにログインしています"
     omniauth_callbacks:
       user:
         already_linked: "%{kind}アカウントは既に他のユーザーと連携されています"
