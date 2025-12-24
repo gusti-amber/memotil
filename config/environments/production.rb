@@ -82,7 +82,7 @@ Rails.application.configure do
   # This is required for generating URLs in email templates (e.g., password reset links)
   # ENV["HOST"]: デプロイ時にカスタム設定する環境変数
   # ENV["RENDER_EXTERNAL_HOSTNAME"]: Renderが自動設定する場合の環境変数
-  host = ENV["HOST"] || ENV["RENDER_EXTERNAL_HOSTNAME"] || "memotil.onrender.com" # ⚠️ 独自ドメイン設定後に、再度ドメイン名を設定し直す
+  host = ENV["HOST"] || ENV["RENDER_EXTERNAL_HOSTNAME"] || "memotil.com"
   config.action_mailer.default_url_options = { host: host, protocol: "https" }
 
   # Configure Action Mailer to use SMTP for email delivery
@@ -115,10 +115,10 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-  # ]
+  config.hosts = [
+    "memotil.com",        # Allow requests from memotil.com
+    /.*\.memotil\.com/    # Allow requests from subdomains like www.memotil.com
+  ]
   # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end

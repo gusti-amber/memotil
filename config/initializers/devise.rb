@@ -25,8 +25,7 @@ Devise.setup do |config|
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
   # 送信元メールアドレスの設定
-  # ⚠️ 独自ドメイン設定後に、再度メールアドレスを設定し直す
-  config.mailer_sender = "no-reply@memotil.onrender.com"
+  config.mailer_sender = "no-reply@memotil.com"
 
   # Configure the class responsible to send e-mails.
   config.mailer = "Users::Mailer"
