@@ -4,6 +4,18 @@
     <title><%= content_for(:title) || "めもTIL" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Google Analytics - Google tag (gtag.js) -->
+    <% if Rails.env.production? %>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-0M74NW9ZRG"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-0M74NW9ZRG');
+      </script>
+    <% end %>
     
     <!-- OGP設定 -->
     <meta property="og:title" content="<%= content_for(:og_title) || 'めもTIL - メモするだけで、学びが形になる。' %>">
