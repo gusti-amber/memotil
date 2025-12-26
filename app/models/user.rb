@@ -32,4 +32,11 @@ class User < ApplicationRecord
 
     email.start_with?("guest_") && email.end_with?("@example.com")
   end
+
+  # 確認メール必須かどうかを判定するメソッド
+  # ゲストユーザーの場合はfalse(確認不要)、通常ユーザーの場合はtrue(確認メール必須)
+  # 参考wiki: https://www.rubydoc.info/github/plataformatec/devise/Devise/Models/Confirmable#confirmation_required%3F-instance_method
+  def confirmation_required?
+    !guest_user?
+  end
 end
