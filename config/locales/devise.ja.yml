@@ -26,7 +26,7 @@ ja:
         update_needs_confirmation: "新しいメールアドレスへ確認メールを送信しました"
     confirmations:
       user:
-        confirmed: "メールアドレスが変更されました"
+        confirmed: "メールアドレスの登録が完了しました"
     passwords:
       user:
         send_instructions: "パスワード再設定のメールを送信しました"
