@@ -41,10 +41,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
-        # 💡 GitHub ActionsのCI環境上でこのテストを実行した際に、エラーメッセージの表示が確認できなかった。
-        # そのため、エラーメッセージの要素が表示されるまで5秒待つことで解決した。
-        # Usersシステムスペックでは、実行順序が最初のエラーメッセージの表示テストなので、処理が遅れている可能性がある。
-        expect(page).to have_css('.alert', wait: 5)
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')
         expect(page).to have_content('名前 を入力してください')
       end
 
@@ -56,6 +57,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')
         expect(page).to have_content('名前 は2文字以上で入力してください')
       end
 
@@ -67,6 +73,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')
         expect(page).to have_content('名前 は20文字以下で入力してください')
       end
 
@@ -78,6 +89,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')
         expect(page).to have_content('メールアドレス を入力してください')
       end
 
@@ -92,6 +108,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')
         expect(page).to have_content('メールアドレス はすでに登録済みです')
       end
 
@@ -103,6 +124,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')
         expect(page).to have_content('パスワード は8文字以上で入力してください')
       end
 
@@ -114,6 +140,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')        
         expect(page).to have_content('パスワード（確認） とパスワードの入力が一致しません')
       end
     end
