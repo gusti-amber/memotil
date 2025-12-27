@@ -256,6 +256,29 @@ RSpec.describe 'Users', type: :system do
     end
   end
 
+  describe 'ユーザーアカウント削除' do
+    let(:user) { create(:user) }
+
+    before do
+      sign_in user
+      visit edit_user_registration_path
+    end
+    
+    context 'アカウント削除ボタンをクリックした場合' do
+      it 'ユーザーアカウントは削除される' do
+        click_link 'アカウントを削除'
+
+        # トップ画面へリダイレクト
+        expect(page).to have_current_path(root_path)
+        expect(page).to have_content('ログイン')
+
+        # サクセスメッセージの表示
+        expect(page).to have_css('.alert.alert-success')
+        expect(page).to have_content('アカウントが削除されました')
+      end
+    end
+  end
+
   describe '認証フィルター' do
     context 'ログイン状態でログインページにアクセスしようとした場合' do
       let(:user) { create(:user) }
