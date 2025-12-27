@@ -14,4 +14,9 @@ FactoryBot.define do
     # ゲストユーザーはバリデーションをスキップして作成される
     to_create { |guest_user| guest_user.save!(validate: false) }
   end
+
+  factory :unconfirmed_user, parent: :user do
+    sequence(:email) { |n| "unconfirmed_#{n}@example.com" }
+    confirmed_at { nil }
+  end
 end
