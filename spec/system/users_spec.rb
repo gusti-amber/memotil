@@ -538,22 +538,24 @@ RSpec.describe 'Users', type: :system do
         user.update(confirmation_sent_at: Time.current)
       end
 
-      it '確認メール内のリンクからメールアドレスが変更され、ログイン状態になり、タスク一覧画面へ遷移する' do
-        visit user_confirmation_path(confirmation_token: @confirmation_token)
+      context '確認メール内のリンクをクリックする場合' do
+        it 'メールアドレスが変更され、タスク一覧画面へリダイレクトし、ログイン状態になる' do
+          visit user_confirmation_path(confirmation_token: @confirmation_token)
 
-        # メールアドレスが変更されたことを確認
-        user.reload
-        expect(user.email).to eq('newemail@example.com')
-        expect(user.unconfirmed_email).to be_nil
-        expect(user.confirmed_at).to be_present
+          # メールアドレスが変更されたことを確認
+          user.reload
+          expect(user.email).to eq('newemail@example.com')
+          expect(user.unconfirmed_email).to be_nil
+          expect(user.confirmed_at).to be_present
 
-        # 自動的にログイン状態になることを確認
-        expect(page).to have_content('ログアウト')
-        expect(page).to have_current_path(tasks_path)
+          # タスク一覧画面へリダイレクトし、ログイン状態になる
+          expect(page).to have_current_path(tasks_path)
+          expect(page).to have_content('ログアウト')
 
-        # サクセスメッセージの表示
-        expect(page).to have_css('.alert.alert-success')
-        expect(page).to have_content('メールアドレスが変更されました')
+          # サクセスメッセージの表示
+          expect(page).to have_css('.alert.alert-success')
+          expect(page).to have_content('メールアドレスの登録が完了しました')
+        end
       end
 
       # ✨ 以下のテストは確認メール再送画面`app/views/users/confirmations/new.html.erb`を実装する際に書く
