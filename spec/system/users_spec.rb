@@ -266,7 +266,9 @@ RSpec.describe 'Users', type: :system do
 
     context 'アカウント削除ボタンをクリックした場合' do
       it 'ユーザーアカウントは削除される' do
-        click_link 'アカウントを削除'
+        accept_confirm do
+          click_link 'アカウントを削除'
+        end
 
         # トップ画面へリダイレクト
         expect(page).to have_current_path(root_path)
