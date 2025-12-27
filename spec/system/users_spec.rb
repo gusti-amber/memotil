@@ -152,6 +152,7 @@ RSpec.describe 'Users', type: :system do
 
   describe 'ユーザーログイン' do
     let(:user) { create(:user) }
+    let(:unconfirmed_user) { create(:unconfirmed_user) }
 
     before do
       visit new_user_session_path
@@ -190,6 +191,22 @@ RSpec.describe 'Users', type: :system do
         # サクセスメッセージの表示
         expect(page).to have_css('.alert.alert-success')
         expect(page).to have_content('ゲストユーザーでログインしました')
+      end
+    end
+
+    context '未確認のメールアドレスでログインする場合' do
+      it 'ログインに失敗し、アラートメッセージが表示される' do
+        fill_in 'メールアドレス', with: unconfirmed_user.email
+        fill_in 'パスワード', with: unconfirmed_user.password
+
+        click_button 'ログイン'
+
+        # ログイン画面を再レンダリング
+        expect(page).to have_current_path(new_user_session_path)
+
+        # アラートメッセージの表示
+        expect(page).to have_css('.alert.alert-error')
+        expect(page).to have_content('メールアドレスの確認ができていません')
       end
     end
 
