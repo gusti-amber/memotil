@@ -544,7 +544,7 @@ RSpec.describe 'Users', type: :system do
       end
     end
 
-    context 'メールアドレス変更確認' do
+    context '確認メール内のリンクをクリックする場合' do
       before do
         # 確認トークンを生成
         # unconfirmed_emailを設定してから、send_confirmation_instructionsを呼び出すことで、confirmation_tokenが生成される
@@ -555,7 +555,7 @@ RSpec.describe 'Users', type: :system do
         user.update(confirmation_sent_at: Time.current)
       end
 
-      context '確認メール内のリンクをクリックする場合' do
+      context 'リンクが有効な確認トークンを持つ場合' do
         it 'メールアドレスが変更され、タスク一覧画面へリダイレクトし、ログイン状態になる' do
           visit user_confirmation_path(confirmation_token: @confirmation_token)
 
@@ -576,8 +576,14 @@ RSpec.describe 'Users', type: :system do
       end
 
       # ✨ 以下のテストは確認メール再送画面`app/views/users/confirmations/new.html.erb`を実装する際に書く
-      it '有効期限が切れた確認トークンの場合はエラーが表示される'
-      it '無効な確認トークンの場合はエラーが表示される'
+      context 'リンクが有効期限切れの確認トークンを持つ場合' do
+        it '確認メール再送信画面へリダイレクトし、エラーメッセージが表示される' do
+        end
+      end
+      context 'リンクが無効な確認トークンを持つ場合' do
+        it '確認メール再送信画面へリダイレクトし、エラーメッセージが表示される' do
+        end
+      end
     end
   end
 
