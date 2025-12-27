@@ -63,9 +63,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_inactive_sign_up_path_for(_resource)
+    new_user_session_path
+  end
 
   # 🎓 プロフィール更新後、sessionに保存された、前のページにリダイレクトする。sessionに値がない場合はタスク一覧画面にフォールバック
   # 参考wiki: https://github.com/heartcombo/devise/wiki/How-To:-Customize-the-redirect-after-a-user-edits-their-profile
