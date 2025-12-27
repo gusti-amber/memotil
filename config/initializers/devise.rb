@@ -144,9 +144,9 @@ Devise.setup do |config|
   # without confirming their account.
   # Default is 0.days, meaning the user cannot access the website without
   # confirming their account.
-  # 🎓 未確認ユーザーのアクセスを許可するため、猶予期間を1年に設定
+  # 🎓 未確認ユーザーのアクセスを拒否するため、猶予期間を0日に設定（nilにすると確認なしで無制限にアクセス可能になる）
   # 参考wiki: https://github.com/heartcombo/devise/wiki/How-To:-Add-:confirmable-to-Users
-  config.allow_unconfirmed_access_for = 365.days
+  config.allow_unconfirmed_access_for = 0.days
 
   # A period that the user is allowed to confirm their account before their
   # token becomes invalid. For example, if set to 3.days, the user can confirm
