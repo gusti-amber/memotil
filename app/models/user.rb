@@ -17,6 +17,7 @@ class User < ApplicationRecord
       u.password = Devise.friendly_token[0, 20]
       u.name = auth.info.name || auth.info.nickname
       u.github_token = auth.credentials.token
+      u.skip_confirmation! # GitHub認証を行うユーザーはメールアドレスの確認処理をスキップ
     end
 
     # 既存ユーザーの場合もトークンを更新する（スコープ変更に対応するため）
