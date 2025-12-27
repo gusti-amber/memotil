@@ -483,6 +483,38 @@ RSpec.describe 'Users', type: :system do
     end
   end
 
+  describe 'メールアドレス確認' do
+    let!(:unconfirmed_user) { create(:unconfirmed_user) }
+
+    before do
+      # 確認トークンを生成
+      # unconfirmed_userを作成した時点で確認メールが送信されているが、テストで使用するために明示的に確認トークンを生成
+      unconfirmed_user.send_confirmation_instructions
+      unconfirmed_user.reload
+      @confirmation_token = unconfirmed_user.confirmation_token
+      unconfirmed_user.update(confirmation_sent_at: Time.current)
+    end
+
+    context '確認メール内のリンクをクリックする場合' do
+      context 'リンクが有効な確認トークンを持つ場合' do
+        it 'メールアドレスが確認され、ログイン画面へリダイレクトし、サクセスメッセージが表示される' do
+          visit user_confirmation_path(confirmation_token: @confirmation_token)
+
+          # メールアドレスが確認されたことを確認
+          unconfirmed_user.reload
+          expect(unconfirmed_user.confirmed_at).to be_present
+
+          # ログイン画面へリダイレクト
+          expect(page).to have_current_path(new_user_session_path)
+
+          # サクセスメッセージの表示
+          expect(page).to have_css('.alert.alert-success')
+          expect(page).to have_content('メールアドレスの登録が完了しました')
+        end
+      end
+    end
+  end
+
   describe 'メールアドレス変更' do
     let(:user) { create(:user, email: 'test@example.com', password: 'password123', password_confirmation: 'password123') }
 
