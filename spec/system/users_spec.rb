@@ -4,35 +4,34 @@ RSpec.describe 'Users', type: :system do
   describe 'ユーザー登録' do
     before do
       visit new_user_registration_path
+      ActionMailer::Base.deliveries.clear
     end
 
     context '有効な情報で登録する場合' do
-      it 'ユーザーが正常に登録される' do
+      it '登録したメールアドレスへ確認メールを送信し、ログイン画面へリダイレクトする' do
         fill_in '名前', with: 'test_user'
         fill_in 'メールアドレス', with: 'test@example.com'
         fill_in 'パスワード', with: 'password'
         fill_in 'パスワード（確認）', with: 'password'
 
         click_button '新規登録'
-
-        # 登録後はログアウトボタンが表示される（自動ログイン）
-        expect(page).to have_content('ログアウト')
-        expect(page).to have_current_path(tasks_path)
-      end
-
-      it 'サインアップ成功時にフラッシュメッセージが表示される' do
-        fill_in '名前', with: 'test_user'
-        fill_in 'メールアドレス', with: 'test@example.com'
-        fill_in 'パスワード', with: 'password'
-        fill_in 'パスワード（確認）', with: 'password'
-
-        click_button '新規登録'
-
+        
+        # ログイン画面へリダイレクト
+        expect(page).to have_current_path(new_user_session_path)
+        
+        # サクセスメッセージの表示
         expect(page).to have_css('.alert.alert-success')
-        expect(page).to have_content('ユーザー登録が完了しました')
+        expect(page).to have_content('確認メールを送信しました')
+
+        # 正しい宛先へ、登録手続き用の確認メールが送信されたことを確認
+        expect(ActionMailer::Base.deliveries.size).to eq(1)
+    
+        mail = ActionMailer::Base.deliveries.last
+        expect(mail.to).to eq(['test@example.com'])
+        expect(mail.subject).to eq('【めもTIL】登録手続きのご案内')
       end
     end
-
+    
     context '無効な情報で登録する場合' do
       it '名前が空の場合はエラーが表示される' do
         fill_in '名前', with: ''
