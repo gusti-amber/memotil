@@ -512,6 +512,17 @@ RSpec.describe 'Users', type: :system do
           expect(page).to have_content('メールアドレスの登録が完了しました')
         end
       end
+
+      # ✨ 以下のテストは確認メール再送信画面`app/views/users/confirmations/new.html.erb`を実装する際に書く
+      context 'リンクが有効期限切れの確認トークンを持つ場合' do
+        it '確認メール再送信画面へリダイレクトし、エラーメッセージが表示される' do
+        end
+      end
+
+      context 'リンクが無効な確認トークンを持つ場合' do
+        it '確認メール再送信画面へリダイレクトし、エラーメッセージが表示される' do
+        end
+      end
     end
   end
 
