@@ -263,7 +263,7 @@ RSpec.describe 'Users', type: :system do
       sign_in user
       visit edit_user_registration_path
     end
-    
+
     context 'アカウント削除ボタンをクリックした場合' do
       it 'ユーザーアカウントは削除される' do
         click_link 'アカウントを削除'
