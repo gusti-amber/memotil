@@ -261,10 +261,10 @@ RSpec.describe 'Users', type: :system do
   end
 
   describe 'パスワードリセット' do
-    let(:user) { create(:user, email: 'test@example.com', password: 'password123', password_confirmation: 'password123') }
+    let!(:user) { create(:user, email: 'test@example.com', password: 'password123', password_confirmation: 'password123') }
 
     before do
-      # メール送信をクリア
+      # 上記のユーザー作成で確認メールが送信されるため、メール送信をクリア
       ActionMailer::Base.deliveries.clear
     end
 
@@ -278,21 +278,27 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_content('パスワード再設定のお手続き')
       end
 
-      it '登録済みメールアドレスを入力して送信すると、リセット用リンクを含むメールが送信される' do
-        visit new_user_password_path
+      context '登録済みメールアドレスを入力し、送信する場合' do
+        it 'ログイン画面へリダイレクトし、パスワードリセット用の確認メールが送信される' do
+          visit new_user_password_path
 
-        fill_in 'メールアドレス', with: user.email
-        click_button '設定メールを送信'
+          fill_in 'メールアドレス', with: user.email
+          click_button '設定メールを送信'
 
-        # メールが送信されたことを確認
-        expect(page).to have_current_path(new_user_session_path)
+          # ログイン画面へリダイレクト
+          expect(page).to have_current_path(new_user_session_path)
 
-        # サクセスメッセージの表示
-        expect(page).to have_css('.alert.alert-success')
-        expect(page).to have_content('パスワード再設定のメールを送信しました')
+          # サクセスメッセージの表示
+          expect(page).to have_css('.alert.alert-success')
+          expect(page).to have_content('パスワード再設定のメールを送信しました')
 
-        # メール送信を確認
-        expect(ActionMailer::Base.deliveries.size).to eq(1)
+          # 正しい宛先へ、パスワードリセット用の確認メールが送信されたことを確認
+          expect(ActionMailer::Base.deliveries.size).to eq(1)
+          
+          mail = ActionMailer::Base.deliveries.last
+          expect(mail.to).to eq([user.email])
+          expect(mail.subject).to eq('【めもTIL】パスワード再設定のご案内')
+        end
       end
 
       it 'メールアドレスが空の場合はエラーが表示される' do
