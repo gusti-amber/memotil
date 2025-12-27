@@ -24,6 +24,12 @@ class User < ApplicationRecord
       user.update(github_token: auth.credentials.token)
     end
 
+    # 既存ユーザーが未確認の場合、確認処理をスキップ
+    if user.persisted? && user.confirmed_at.nil?
+      user.skip_confirmation!
+      user.save
+    end
+
     user
   end
 
