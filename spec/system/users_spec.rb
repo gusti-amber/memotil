@@ -15,23 +15,23 @@ RSpec.describe 'Users', type: :system do
         fill_in 'パスワード（確認）', with: 'password'
 
         click_button '新規登録'
-        
+
         # ログイン画面へリダイレクト
         expect(page).to have_current_path(new_user_session_path)
-        
+
         # サクセスメッセージの表示
         expect(page).to have_css('.alert.alert-success')
         expect(page).to have_content('確認メールを送信しました')
 
         # 正しい宛先へ、登録手続き用の確認メールが送信されたことを確認
         expect(ActionMailer::Base.deliveries.size).to eq(1)
-    
+
         mail = ActionMailer::Base.deliveries.last
-        expect(mail.to).to eq(['test@example.com'])
+        expect(mail.to).to eq([ 'test@example.com' ])
         expect(mail.subject).to eq('【めもTIL】登録手続きのご案内')
       end
     end
-    
+
     context '無効な情報で登録する場合' do
       it '名前が空の場合はエラーが表示される' do
         fill_in '名前', with: ''
@@ -144,7 +144,7 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_current_path(new_user_registration_path)
 
         # エラーメッセージの表示
-        expect(page).to have_css('.alert')        
+        expect(page).to have_css('.alert')
         expect(page).to have_content('パスワード（確認） とパスワードの入力が一致しません')
       end
     end
@@ -311,9 +311,9 @@ RSpec.describe 'Users', type: :system do
 
           # 正しい宛先へ、パスワードリセット用の確認メールが送信されたことを確認
           expect(ActionMailer::Base.deliveries.size).to eq(1)
-          
+
           mail = ActionMailer::Base.deliveries.last
-          expect(mail.to).to eq([user.email])
+          expect(mail.to).to eq([ user.email ])
           expect(mail.subject).to eq('【めもTIL】パスワード再設定のご案内')
         end
       end
