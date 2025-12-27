@@ -17,11 +17,18 @@ class User < ApplicationRecord
       u.password = Devise.friendly_token[0, 20]
       u.name = auth.info.name || auth.info.nickname
       u.github_token = auth.credentials.token
+      u.skip_confirmation! # GitHub認証を行うユーザーはメールアドレスの確認処理をスキップ
     end
 
     # 既存ユーザーの場合もトークンを更新する（スコープ変更に対応するため）
     if user.persisted? && user.github_token != auth.credentials.token
       user.update(github_token: auth.credentials.token)
+    end
+
+    # 既存ユーザーが未確認の場合、確認処理をスキップ
+    if user.persisted? && user.confirmed_at.nil?
+      user.skip_confirmation!
+      user.save
     end
 
     user
@@ -31,5 +38,16 @@ class User < ApplicationRecord
     return false unless email
 
     email.start_with?("guest_") && email.end_with?("@example.com")
+  end
+
+  def github_user?
+    github_uid.present?
+  end
+
+  # 確認メール必須かどうかを判定するメソッド
+  # ゲストユーザーとGitHub認証ユーザーの場合はfalse(確認不要)、通常ユーザーの場合はtrue(確認メール必須)
+  # 参考wiki: https://www.rubydoc.info/github/plataformatec/devise/Devise/Models/Confirmable#confirmation_required%3F-instance_method
+  def confirmation_required?
+    !guest_user? && !github_user?
   end
 end

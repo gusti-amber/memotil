@@ -7,6 +7,7 @@ ja:
         not_found_in_database: "メールアドレスまたはパスワードが違います"
         unauthenticated: "ログインしてください"
         already_authenticated: "すでにログインしています"
+        unconfirmed: "メールアドレスの確認ができていません"
     omniauth_callbacks:
       user:
         already_linked: "%{kind}アカウントは既に他のユーザーと連携されています"
@@ -22,17 +23,18 @@ ja:
     registrations:
       user:
         signed_up: "ユーザー登録が完了しました"
+        signed_up_but_unconfirmed: "確認メールを送信しました"
         updated: "ユーザー名が変更されました"
         update_needs_confirmation: "新しいメールアドレスへ確認メールを送信しました"
     confirmations:
       user:
-        confirmed: "メールアドレスが変更されました"
+        confirmed: "メールアドレスの登録が完了しました"
     passwords:
       user:
         send_instructions: "パスワード再設定のメールを送信しました"
         updated: "パスワードが変更されました"
     mailer:
       confirmation_instructions:
-        subject: "【めもTIL】メールアドレス変更のご案内"
+        subject: "【めもTIL】登録手続きのご案内"
       reset_password_instructions:
         subject: "【めもTIL】パスワード再設定のご案内"

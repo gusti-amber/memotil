@@ -30,8 +30,9 @@ RSpec.describe "GitHub OAuth", type: :system do
           visit new_user_session_path
           click_button "GitHubでログイン"
 
+          # タスク一覧画面へリダイレクトし、ログイン状態になる
           expect(page).to have_current_path(tasks_path)
-          expect(page).to have_content("ログアウト") # 成功後はサインイン済み（ヘッダーにログアウトが表示される想定）
+          expect(page).to have_content("ログアウト")
 
           # サクセスメッセージの表示
           expect(page).to have_css('.alert.alert-success')

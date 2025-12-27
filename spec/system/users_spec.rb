@@ -4,10 +4,11 @@ RSpec.describe 'Users', type: :system do
   describe 'ユーザー登録' do
     before do
       visit new_user_registration_path
+      ActionMailer::Base.deliveries.clear
     end
 
     context '有効な情報で登録する場合' do
-      it 'ユーザーが正常に登録される' do
+      it '登録したメールアドレスへ確認メールを送信し、ログイン画面へリダイレクトする' do
         fill_in '名前', with: 'test_user'
         fill_in 'メールアドレス', with: 'test@example.com'
         fill_in 'パスワード', with: 'password'
@@ -15,21 +16,19 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
-        # 登録後はログアウトボタンが表示される（自動ログイン）
-        expect(page).to have_content('ログアウト')
-        expect(page).to have_current_path(tasks_path)
-      end
+        # ログイン画面へリダイレクト
+        expect(page).to have_current_path(new_user_session_path)
 
-      it 'サインアップ成功時にフラッシュメッセージが表示される' do
-        fill_in '名前', with: 'test_user'
-        fill_in 'メールアドレス', with: 'test@example.com'
-        fill_in 'パスワード', with: 'password'
-        fill_in 'パスワード（確認）', with: 'password'
-
-        click_button '新規登録'
-
+        # サクセスメッセージの表示
         expect(page).to have_css('.alert.alert-success')
-        expect(page).to have_content('ユーザー登録が完了しました')
+        expect(page).to have_content('確認メールを送信しました')
+
+        # 正しい宛先へ、登録手続き用の確認メールが送信されたことを確認
+        expect(ActionMailer::Base.deliveries.size).to eq(1)
+
+        mail = ActionMailer::Base.deliveries.last
+        expect(mail.to).to eq([ 'test@example.com' ])
+        expect(mail.subject).to eq('【めもTIL】登録手続きのご案内')
       end
     end
 
@@ -42,10 +41,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
-        # 💡 GitHub ActionsのCI環境上でこのテストを実行した際に、エラーメッセージの表示が確認できなかった。
-        # そのため、エラーメッセージの要素が表示されるまで5秒待つことで解決した。
-        # Usersシステムスペックでは、実行順序が最初のエラーメッセージの表示テストなので、処理が遅れている可能性がある。
-        expect(page).to have_css('.alert', wait: 5)
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')
         expect(page).to have_content('名前 を入力してください')
       end
 
@@ -57,6 +57,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')
         expect(page).to have_content('名前 は2文字以上で入力してください')
       end
 
@@ -68,6 +73,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')
         expect(page).to have_content('名前 は20文字以下で入力してください')
       end
 
@@ -79,6 +89,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')
         expect(page).to have_content('メールアドレス を入力してください')
       end
 
@@ -93,6 +108,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')
         expect(page).to have_content('メールアドレス はすでに登録済みです')
       end
 
@@ -104,6 +124,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')
         expect(page).to have_content('パスワード は8文字以上で入力してください')
       end
 
@@ -115,6 +140,11 @@ RSpec.describe 'Users', type: :system do
 
         click_button '新規登録'
 
+        # サインアップ画面を再レンダリング
+        expect(page).to have_current_path(new_user_registration_path)
+
+        # エラーメッセージの表示
+        expect(page).to have_css('.alert')
         expect(page).to have_content('パスワード（確認） とパスワードの入力が一致しません')
       end
     end
@@ -122,6 +152,7 @@ RSpec.describe 'Users', type: :system do
 
   describe 'ユーザーログイン' do
     let(:user) { create(:user) }
+    let(:unconfirmed_user) { create(:unconfirmed_user) }
 
     before do
       visit new_user_session_path
@@ -160,6 +191,22 @@ RSpec.describe 'Users', type: :system do
         # サクセスメッセージの表示
         expect(page).to have_css('.alert.alert-success')
         expect(page).to have_content('ゲストユーザーでログインしました')
+      end
+    end
+
+    context '未確認のメールアドレスでログインする場合' do
+      it 'ログインに失敗し、アラートメッセージが表示される' do
+        fill_in 'メールアドレス', with: unconfirmed_user.email
+        fill_in 'パスワード', with: unconfirmed_user.password
+
+        click_button 'ログイン'
+
+        # ログイン画面を再レンダリング
+        expect(page).to have_current_path(new_user_session_path)
+
+        # アラートメッセージの表示
+        expect(page).to have_css('.alert.alert-error')
+        expect(page).to have_content('メールアドレスの確認ができていません')
       end
     end
 
@@ -231,10 +278,10 @@ RSpec.describe 'Users', type: :system do
   end
 
   describe 'パスワードリセット' do
-    let(:user) { create(:user, email: 'test@example.com', password: 'password123', password_confirmation: 'password123') }
+    let!(:user) { create(:user, email: 'test@example.com', password: 'password123', password_confirmation: 'password123') }
 
     before do
-      # メール送信をクリア
+      # 上記のユーザー作成で確認メールが送信されるため、メール送信をクリア
       ActionMailer::Base.deliveries.clear
     end
 
@@ -248,21 +295,27 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_content('パスワード再設定のお手続き')
       end
 
-      it '登録済みメールアドレスを入力して送信すると、リセット用リンクを含むメールが送信される' do
-        visit new_user_password_path
+      context '登録済みメールアドレスを入力し、送信する場合' do
+        it 'ログイン画面へリダイレクトし、パスワードリセット用の確認メールが送信される' do
+          visit new_user_password_path
 
-        fill_in 'メールアドレス', with: user.email
-        click_button '設定メールを送信'
+          fill_in 'メールアドレス', with: user.email
+          click_button '設定メールを送信'
 
-        # メールが送信されたことを確認
-        expect(page).to have_current_path(new_user_session_path)
+          # ログイン画面へリダイレクト
+          expect(page).to have_current_path(new_user_session_path)
 
-        # サクセスメッセージの表示
-        expect(page).to have_css('.alert.alert-success')
-        expect(page).to have_content('パスワード再設定のメールを送信しました')
+          # サクセスメッセージの表示
+          expect(page).to have_css('.alert.alert-success')
+          expect(page).to have_content('パスワード再設定のメールを送信しました')
 
-        # メール送信を確認
-        expect(ActionMailer::Base.deliveries.size).to eq(1)
+          # 正しい宛先へ、パスワードリセット用の確認メールが送信されたことを確認
+          expect(ActionMailer::Base.deliveries.size).to eq(1)
+
+          mail = ActionMailer::Base.deliveries.last
+          expect(mail.to).to eq([ user.email ])
+          expect(mail.subject).to eq('【めもTIL】パスワード再設定のご案内')
+        end
       end
 
       it 'メールアドレスが空の場合はエラーが表示される' do
@@ -430,6 +483,49 @@ RSpec.describe 'Users', type: :system do
     end
   end
 
+  describe 'メールアドレス確認' do
+    let!(:unconfirmed_user) { create(:unconfirmed_user) }
+
+    before do
+      # 確認トークンを生成
+      # unconfirmed_userを作成した時点で確認メールが送信されているが、テストで使用するために明示的に確認トークンを生成
+      unconfirmed_user.send_confirmation_instructions
+      unconfirmed_user.reload
+      @confirmation_token = unconfirmed_user.confirmation_token
+      unconfirmed_user.update(confirmation_sent_at: Time.current)
+    end
+
+    context '確認メール内のリンクをクリックする場合' do
+      context 'リンクが有効な確認トークンを持つ場合' do
+        it 'メールアドレスが確認され、ログイン画面へリダイレクトし、サクセスメッセージが表示される' do
+          visit user_confirmation_path(confirmation_token: @confirmation_token)
+
+          # メールアドレスが確認されたことを確認
+          unconfirmed_user.reload
+          expect(unconfirmed_user.confirmed_at).to be_present
+
+          # ログイン画面へリダイレクト
+          expect(page).to have_current_path(new_user_session_path)
+
+          # サクセスメッセージの表示
+          expect(page).to have_css('.alert.alert-success')
+          expect(page).to have_content('メールアドレスの登録が完了しました')
+        end
+      end
+
+      # ✨ 以下のテストは確認メール再送信画面`app/views/users/confirmations/new.html.erb`を実装する際に書く
+      context 'リンクが有効期限切れの確認トークンを持つ場合' do
+        it '確認メール再送信画面へリダイレクトし、エラーメッセージが表示される' do
+        end
+      end
+
+      context 'リンクが無効な確認トークンを持つ場合' do
+        it '確認メール再送信画面へリダイレクトし、エラーメッセージが表示される' do
+        end
+      end
+    end
+  end
+
   describe 'メールアドレス変更' do
     let(:user) { create(:user, email: 'test@example.com', password: 'password123', password_confirmation: 'password123') }
 
@@ -491,7 +587,7 @@ RSpec.describe 'Users', type: :system do
       end
     end
 
-    context 'メールアドレス変更確認' do
+    context '確認メール内のリンクをクリックする場合' do
       before do
         # 確認トークンを生成
         # unconfirmed_emailを設定してから、send_confirmation_instructionsを呼び出すことで、confirmation_tokenが生成される
@@ -502,27 +598,35 @@ RSpec.describe 'Users', type: :system do
         user.update(confirmation_sent_at: Time.current)
       end
 
-      it '確認メール内のリンクからメールアドレスが変更され、ログイン状態になり、タスク一覧画面へ遷移する' do
-        visit user_confirmation_path(confirmation_token: @confirmation_token)
+      context 'リンクが有効な確認トークンを持つ場合' do
+        it 'メールアドレスが変更され、タスク一覧画面へリダイレクトし、ログイン状態になる' do
+          visit user_confirmation_path(confirmation_token: @confirmation_token)
 
-        # メールアドレスが変更されたことを確認
-        user.reload
-        expect(user.email).to eq('newemail@example.com')
-        expect(user.unconfirmed_email).to be_nil
-        expect(user.confirmed_at).to be_present
+          # メールアドレスが変更されたことを確認
+          user.reload
+          expect(user.email).to eq('newemail@example.com')
+          expect(user.unconfirmed_email).to be_nil
+          expect(user.confirmed_at).to be_present
 
-        # 自動的にログイン状態になることを確認
-        expect(page).to have_content('ログアウト')
-        expect(page).to have_current_path(tasks_path)
+          # タスク一覧画面へリダイレクトし、ログイン状態になる
+          expect(page).to have_current_path(tasks_path)
+          expect(page).to have_content('ログアウト')
 
-        # サクセスメッセージの表示
-        expect(page).to have_css('.alert.alert-success')
-        expect(page).to have_content('メールアドレスが変更されました')
+          # サクセスメッセージの表示
+          expect(page).to have_css('.alert.alert-success')
+          expect(page).to have_content('メールアドレスの登録が完了しました')
+        end
       end
 
       # ✨ 以下のテストは確認メール再送画面`app/views/users/confirmations/new.html.erb`を実装する際に書く
-      it '有効期限が切れた確認トークンの場合はエラーが表示される'
-      it '無効な確認トークンの場合はエラーが表示される'
+      context 'リンクが有効期限切れの確認トークンを持つ場合' do
+        it '確認メール再送信画面へリダイレクトし、エラーメッセージが表示される' do
+        end
+      end
+      context 'リンクが無効な確認トークンを持つ場合' do
+        it '確認メール再送信画面へリダイレクトし、エラーメッセージが表示される' do
+        end
+      end
     end
   end
 
