@@ -23,14 +23,14 @@ ja:
     registrations:
       user:
         signed_up: "サインアップしました"
-        signed_up_but_unconfirmed: "サインアップしました（ログインするには送信した登録メールの確認が必要です）"
+        signed_up_but_unconfirmed: "サインアップしました（ログインするには送信した確認メール内のリンクをクリックする必要があります）"
         updated: "ユーザー名が変更されました"
-        update_needs_confirmation: "新しいメールアドレスへ登録メールを送信しました"
+        update_needs_confirmation: "新しいメールアドレスへ確認メールを送信しました"
         destroyed: "アカウントが削除されました"
     confirmations:
       user:
-        confirmed: "メールアドレスの登録が完了しました"
-        send_instructions: "登録メールを送信しました"
+        confirmed: "メールアドレスの確認が完了しました"
+        send_instructions: "確認メールを送信しました"
     passwords:
       user:
         send_instructions: "パスワード再設定のメールを送信しました"
