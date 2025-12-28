@@ -30,6 +30,7 @@ ja:
     confirmations:
       user:
         confirmed: "メールアドレスの登録が完了しました"
+        send_instructions: "登録メールを送信しました"
     passwords:
       user:
         send_instructions: "パスワード再設定のメールを送信しました"
