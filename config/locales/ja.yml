@@ -25,6 +25,7 @@ ja:
         password: "パスワード"
         password_confirmation: "パスワード（確認）"
         reset_password_token: "パスワードリセットトークン"
+        confirmation_token: "確認トークン"
       task:
         title: "タイトル"
         tag_ids: "タグ"
