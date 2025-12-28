@@ -534,18 +534,34 @@ RSpec.describe 'Users', type: :system do
 
           # サクセスメッセージの表示
           expect(page).to have_css('.alert.alert-success')
-          expect(page).to have_content('メールアドレスの登録が完了しました')
+          expect(page).to have_content('メールアドレスの確認が完了しました')
         end
       end
 
       # ✨ 以下のテストは確認メール再送信画面`app/views/users/confirmations/new.html.erb`を実装する際に書く
       context 'リンクが有効期限切れの確認トークンを持つ場合' do
         it '確認メール再送信画面へリダイレクトし、エラーメッセージが表示される' do
+          # 有効期限切れにするため、confirmation_sent_atを過去の時刻に設定
+          unconfirmed_user.update(confirmation_sent_at: 25.hours.ago)
+          
+          visit user_confirmation_path(confirmation_token: @confirmation_token)
+
+          # エラーメッセージの表示
+          expect(page).to have_css('.alert')
+          expect(page).to have_content('メールアドレス は有効期限内に確認する必要があります')
         end
       end
 
       context 'リンクが無効な確認トークンを持つ場合' do
         it '確認メール再送信画面へリダイレクトし、エラーメッセージが表示される' do
+          # 無効なトークンを使用
+          invalid_token = 'invalid_confirmation_token'
+          
+          visit user_confirmation_path(confirmation_token: invalid_token)
+
+          # エラーメッセージの表示
+          expect(page).to have_css('.alert')
+          expect(page).to have_content('確認トークン は無効な値です')
         end
       end
     end
