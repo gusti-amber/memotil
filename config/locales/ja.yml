@@ -52,6 +52,7 @@ ja:
       invalid_protocol: "はhttpまたはhttpsで始まる必要があります"
       not_found: "が見つかりませんでした"
       expired: "の有効期限が切れています"
+      already_confirmed: "はすでに確認済みです"
     attributes:
       # ♻️ 最大個数は変数で管理するようにする。
       tag_ids:
