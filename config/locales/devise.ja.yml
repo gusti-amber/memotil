@@ -25,7 +25,7 @@ ja:
         signed_up: "ユーザー登録が完了しました"
         signed_up_but_unconfirmed: "サインアップしました（ログインするには送信した登録メールの確認が必要です）"
         updated: "ユーザー名が変更されました"
-        update_needs_confirmation: "新しいメールアドレスへ確認メールを送信しました"
+        update_needs_confirmation: "新しいメールアドレスへ登録メールを送信しました"
         destroyed: "アカウントが削除されました"
     confirmations:
       user:
