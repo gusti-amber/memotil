@@ -37,6 +37,6 @@ ja:
         updated: "パスワードが変更されました"
     mailer:
       confirmation_instructions:
-        subject: "【めもTIL】登録手続きのご案内"
+        subject: "【めもTIL】メールアドレス確認手続きのご案内"
       reset_password_instructions:
         subject: "【めもTIL】パスワード再設定のご案内"
