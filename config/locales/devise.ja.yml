@@ -7,7 +7,7 @@ ja:
         not_found_in_database: "メールアドレスまたはパスワードが違います"
         unauthenticated: "ログインしてください"
         already_authenticated: "すでにログインしています"
-        unconfirmed: "メールアドレスの確認ができていません"
+        unconfirmed: "メールアドレスの確認が完了していません"
     omniauth_callbacks:
       user:
         already_linked: "%{kind}アカウントは既に他のユーザーと連携されています"
