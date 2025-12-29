@@ -23,7 +23,7 @@ ja:
     registrations:
       user:
         signed_up: "サインアップしました"
-        signed_up_but_unconfirmed: "サインアップしました（ログインするには送信した確認メール内のリンクをクリックする必要があります）"
+        signed_up_but_unconfirmed: "サインアップしました（ログインするには送信した確認メール内のリンクをクリックしてください）"
         updated: "ユーザー名が変更されました"
         update_needs_confirmation: "新しいメールアドレスへ確認メールを送信しました"
         destroyed: "アカウントが削除されました"
