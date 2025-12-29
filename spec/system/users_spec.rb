@@ -723,6 +723,71 @@ RSpec.describe 'Users', type: :system do
           expect(mail.subject).to eq('【めもTIL】メールアドレス確認手続きのご案内')
         end
       end
+
+      context '異常な値を入力した場合' do
+        context 'メールアドレスが空の場合' do
+          it 'メール送信は失敗し、エラーメッセージが表示される' do
+            fill_in 'メールアドレス', with: ''
+
+            # 確認メールを送信
+            click_button '確認メールを送信'
+
+            # 確認メール送信画面を再レンダリング
+            expect(page).to have_current_path(new_user_confirmation_path)
+
+            # エラーメッセージの表示
+            expect(page).to have_css('.alert')
+            expect(page).to have_content('メールアドレス を入力してください')
+
+            # メールが送信されていないことを確認
+            expect(ActionMailer::Base.deliveries.size).to eq(0)
+          end
+        end
+
+        context 'メールアドレスが未登録の場合' do
+          it 'メール送信は失敗し、エラーメッセージが表示される' do
+            fill_in 'メールアドレス', with: 'not_registered@example.com'
+
+            # 確認メールを送信
+            click_button '確認メールを送信'
+
+            # 確認メール送信画面を再レンダリング
+            expect(page).to have_current_path(new_user_confirmation_path)
+
+            # エラーメッセージの表示
+            expect(page).to have_css('.alert')
+            expect(page).to have_content('メールアドレス が見つかりませんでした')
+
+            # メールが送信されていないことを確認
+            expect(ActionMailer::Base.deliveries.size).to eq(0)
+          end
+        end
+
+        context 'メールアドレスが確認済みの場合' do
+          let!(:confirmed_user) { create(:user) }
+
+          before do
+            ActionMailer::Base.deliveries.clear
+          end
+
+          it 'メール送信は失敗し、エラーメッセージが表示される' do
+            fill_in 'メールアドレス', with: confirmed_user.email
+
+            # 確認メールを送信
+            click_button '確認メールを送信'
+
+            # 確認メール送信画面を再レンダリング
+            expect(page).to have_current_path(new_user_confirmation_path)
+
+            # エラーメッセージの表示
+            expect(page).to have_css('.alert')
+            expect(page).to have_content('メールアドレス はすでに確認済みです')
+
+            # メールが送信されていないことを確認
+            expect(ActionMailer::Base.deliveries.size).to eq(0)
+          end
+        end
+      end
     end
   end
 
