@@ -723,7 +723,7 @@ RSpec.describe 'Users', type: :system do
           # 確認メールが送信されたことを確認
           expect(ActionMailer::Base.deliveries.size).to eq(1)
           mail = ActionMailer::Base.deliveries.last
-          expect(mail.to).to eq([unconfirmed_user.email])
+          expect(mail.to).to eq([ unconfirmed_user.email ])
           expect(mail.subject).to eq('【めもTIL】メールアドレス確認手続きのご案内')
         end
       end
