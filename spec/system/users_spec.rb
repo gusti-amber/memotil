@@ -543,7 +543,7 @@ RSpec.describe 'Users', type: :system do
         it '確認メール再送信画面へリダイレクトし、エラーメッセージが表示される' do
           # 有効期限切れにするため、confirmation_sent_atを過去の時刻に設定
           unconfirmed_user.update(confirmation_sent_at: 25.hours.ago)
-          
+
           visit user_confirmation_path(confirmation_token: @confirmation_token)
 
           # エラーメッセージの表示
@@ -556,7 +556,7 @@ RSpec.describe 'Users', type: :system do
         it '確認メール再送信画面へリダイレクトし、エラーメッセージが表示される' do
           # 無効なトークンを使用
           invalid_token = 'invalid_confirmation_token'
-          
+
           visit user_confirmation_path(confirmation_token: invalid_token)
 
           # エラーメッセージの表示
