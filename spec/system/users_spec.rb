@@ -686,6 +686,46 @@ RSpec.describe 'Users', type: :system do
     end
   end
 
+  describe '確認メールの再送信' do
+    let!(:unconfirmed_user) { create(:unconfirmed_user) }
+
+    context '未確認ユーザーがアラートメッセージのリンクから確認メール送信画面へリダイレクトする場合' do
+      before do
+        # ログイン画面で未確認ユーザーがログインを試みる
+        visit new_user_session_path
+        fill_in 'メールアドレス', with: unconfirmed_user.email
+        fill_in 'パスワード', with: unconfirmed_user.password
+        click_button 'ログイン'
+
+        # アラートメッセージのリンクをクリックして確認メール送信画面へ移動
+        click_link 'こちら'
+        ActionMailer::Base.deliveries.clear
+      end
+
+      context '正常な値を入力した場合' do
+        it '確認メールが送信され、サクセスメッセージが表示される' do
+          fill_in 'メールアドレス', with: unconfirmed_user.email
+
+          # 確認メールを送信
+          click_button '確認メールを送信'
+
+          # ログイン画面へリダイレクト
+          expect(page).to have_current_path(new_user_session_path)
+
+          # サクセスメッセージの表示
+          expect(page).to have_css('.alert.alert-success')
+          expect(page).to have_content('確認メールを送信しました')
+
+          # 確認メールが送信されたことを確認
+          expect(ActionMailer::Base.deliveries.size).to eq(1)
+          mail = ActionMailer::Base.deliveries.last
+          expect(mail.to).to eq([unconfirmed_user.email])
+          expect(mail.subject).to eq('【めもTIL】メールアドレス確認手続きのご案内')
+        end
+      end
+    end
+  end
+
   describe 'ゲストユーザーの機能制限' do
     let(:guest_user) { create(:guest_user) }
 
