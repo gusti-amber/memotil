@@ -195,7 +195,7 @@ RSpec.describe 'Users', type: :system do
     end
 
     context '未確認のメールアドレスでログインする場合' do
-      it 'ログインに失敗し、アラートメッセージが表示される' do
+      it 'ログインに失敗し、アラートメッセージのリンクから確認メール送信画面へリダイレクトする' do
         fill_in 'メールアドレス', with: unconfirmed_user.email
         fill_in 'パスワード', with: unconfirmed_user.password
 
@@ -206,7 +206,11 @@ RSpec.describe 'Users', type: :system do
 
         # アラートメッセージの表示
         expect(page).to have_css('.alert.alert-error')
-        expect(page).to have_content('メールアドレスの確認が完了していません')
+        expect(page).to have_content('メールアドレスの確認が完了していません（確認メールが見つからない方はこちらから新しいメールを再送信してください）')
+
+        # リンクから確認メール送信画面へリダイレクト
+        click_link 'こちら'
+        expect(page).to have_current_path(new_user_confirmation_path)
       end
     end
 
