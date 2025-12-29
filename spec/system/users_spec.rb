@@ -21,14 +21,14 @@ RSpec.describe 'Users', type: :system do
 
         # サクセスメッセージの表示
         expect(page).to have_css('.alert.alert-success')
-        expect(page).to have_content('確認メールを送信しました')
+        expect(page).to have_content('サインアップしました（ログインするには送信した確認メール内のリンクをクリックしてください）')
 
         # 正しい宛先へ、登録手続き用の確認メールが送信されたことを確認
         expect(ActionMailer::Base.deliveries.size).to eq(1)
 
         mail = ActionMailer::Base.deliveries.last
         expect(mail.to).to eq([ 'test@example.com' ])
-        expect(mail.subject).to eq('【めもTIL】登録手続きのご案内')
+        expect(mail.subject).to eq('【めもTIL】メールアドレス確認手続きのご案内')
       end
     end
 
@@ -206,7 +206,7 @@ RSpec.describe 'Users', type: :system do
 
         # アラートメッセージの表示
         expect(page).to have_css('.alert.alert-error')
-        expect(page).to have_content('メールアドレスの確認ができていません')
+        expect(page).to have_content('メールアドレスの確認が完了していません')
       end
     end
 
