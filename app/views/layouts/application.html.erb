@@ -32,6 +32,37 @@
     <meta name="twitter:description" content="<%= content_for(:og_description) || '学習中の気づきをメモする。メモをTILにまとめて残す。学びを形にする学習メモアプリ' %>">
     <meta name="twitter:image" content="<%= content_for(:og_image) || asset_url('ogp.png') %>">
     <meta name="twitter:image:alt" content="めもTIL - 学習メモアプリのOGP画像">
+    
+    <!-- Google検索向け構造化データ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "めもTIL",
+      "url": "<%= request.base_url %>",
+      "logo": "<%= request.base_url %><%= asset_path('icon.png') %>",
+      "description": "学習中の気づきをメモする。メモをTILにまとめて残す。学びを形にする学習メモアプリ",
+      "sameAs": []
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "めもTIL",
+      "url": "<%= request.base_url %>",
+      "description": "学習中の気づきをメモする。メモをTILにまとめて残す。学びを形にする学習メモアプリ",
+      "publisher": {
+        "@type": "Organization",
+        "name": "めもTIL",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "<%= request.base_url %><%= asset_path('icon.png') %>"
+        }
+      }
+    }
+    </script>
+    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
