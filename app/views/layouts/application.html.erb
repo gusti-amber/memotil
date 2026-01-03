@@ -18,20 +18,20 @@
     <% end %>
     
     <!-- OGP設定 -->
-    <meta property="og:title" content="<%= content_for(:og_title) || 'めもTIL - メモするだけで、学びが形になる。' %>">
-    <meta property="og:description" content="<%= content_for(:og_description) || 'タスクでの気づきをメモする、メモをTILにまとめて残す。学びを形にするタスクメモアプリ' %>">
+    <meta property="og:title" content="<%= content_for(:og_title) || 'めもTIL - メモから始めて、学びを形にする。' %>">
+    <meta property="og:description" content="<%= content_for(:og_description) || '学習中の気づきをメモする。メモをTILにまとめて残す。学びを形にする学習メモアプリ' %>">
     <meta property="og:type" content="<%= content_for(:og_type) || 'website' %>">
     <meta property="og:url" content="<%= request.original_url %>">
     <meta property="og:image" content="<%= content_for(:og_image) || asset_url('ogp.png') %>">
     <meta property="og:site_name" content="めもTIL">
     <meta property="og:locale" content="ja_JP">
     
-    <!-- Twitter Card -->
+    <!-- 𝕏 Card設定 -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<%= content_for(:og_title) || 'めもTIL - メモするだけで、学びが形になる。' %>">
-    <meta name="twitter:description" content="<%= content_for(:og_description) || 'タスクでの気づきをメモする、メモをTILにまとめて残す。学びを形にするタスクメモアプリ' %>">
+    <meta name="twitter:title" content="<%= content_for(:og_title) || 'めもTIL - メモから始めて、学びを形にする。' %>">
+    <meta name="twitter:description" content="<%= content_for(:og_description) || '学習中の気づきをメモする。メモをTILにまとめて残す。学びを形にする学習メモアプリ' %>">
     <meta name="twitter:image" content="<%= content_for(:og_image) || asset_url('ogp.png') %>">
-    <meta name="twitter:image:alt" content="めもTIL - タスクメモアプリのOGP画像">
+    <meta name="twitter:image:alt" content="めもTIL - 学習メモアプリのOGP画像">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
