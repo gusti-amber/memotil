@@ -9,6 +9,12 @@
 #   end
 
 tag_names = [
+  # 概念
+  "アルゴリズム", "UI/UX", "セキュリティ", "パフォーマンス", "テスト", "設計",
+
+  # 行動・作業
+  "実装", "デバッグ", "リファクタリング", "調査", "読書",
+
   # Programming Languages
   "JavaScript", "TypeScript", "Python", "Ruby", "PHP",
   "Go", "Rust", "Java", "C#", "Shell",
