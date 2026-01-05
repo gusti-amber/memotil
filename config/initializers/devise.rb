@@ -25,7 +25,7 @@ Devise.setup do |config|
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
   # 送信元メールアドレスの設定
-  config.mailer_sender = "no-reply@memotil.com"
+  config.mailer_sender = "めもTIL <noreply@memotil.com>"
 
   # Configure the class responsible to send e-mails.
   config.mailer = "Users::Mailer"
