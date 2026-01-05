@@ -4,7 +4,11 @@
       <tr style="width:100%">
         <td>
           <!-- ✨ 本番環境で静的ファイル（ロゴ画像）を配信できないので、一時コメントアウト。可能であれば今後実装予定 -->
-          <!-- ロゴエリア
+          <!-- 🎓 アセットパイプライン経由であれば、<%= image_tag "logo.svg", ... %>  -->
+          <!-- 静的ファイルとして直接参照する場合は、<%= image_tag "/logo.svg", ... %> -->
+          
+          <!-- ロゴエリア -->
+          <!--
           <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:37.5em;padding-left:1rem;padding-right:1rem;margin-bottom:0.25rem;padding-top:1.5rem">
             <tbody>
               <tr style="width:100%">
