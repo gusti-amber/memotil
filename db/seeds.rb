@@ -9,26 +9,40 @@
 #   end
 
 tag_names = [
+  # 概念
+  "アルゴリズム", "UI/UX", "セキュリティ", "パフォーマンス", "テスト", "設計",
+
+  # 行動・作業
+  "実装", "デバッグ", "リファクタリング", "調査", "読書",
+
   # Programming Languages
-  "JavaScript", "TypeScript", "Python", "Ruby", "PHP", "Go", "Rust", "Java", "C#", "Shell",
+  "JavaScript", "TypeScript", "Python", "Ruby", "PHP",
+  "Go", "Rust", "Java", "C#", "Shell",
 
   # Frameworks
-  "React", "Vue.js", "Next.js", "Nuxt", "Angular", "Express", "FastAPI", "Django", "Rails", "Laravel", "Spring Boot",
+  "React", "Vue.js", "Next.js", "Nuxt",
+  "Angular", "Express", "Django", "FastAPI",
+  "Rails", "Laravel", "Spring Boot",
 
   # Databases
-  "PostgreSQL", "MySQL", "MongoDB", "SQLite", "Oracle", "Redis", "Firebase", "SQL",
+  "PostgreSQL", "MySQL", "MongoDB", "SQLite",
+  "Oracle", "Redis", "Firebase", "SQL", "DynamoDB",
 
   # Infrastructure / Cloud
-  "AWS", "Azure", "GoogleCloud", "Docker", "Docker Compose", "Kubernetes", "Terraform", "Vagrant",
-  "Heroku", "Netlify", "Vercel", "Cloudflare", "Lambda", "EC2", "S3",
+  "AWS", "Azure", "GoogleCloud",
+  "Docker", "Docker Compose", "Kubernetes",
+  "Terraform", "Heroku",
+  "Cloudflare", "Netlify", "Vercel",
+  "Lambda", "EC2", "S3", "Nginx",
 
   # Development Tools
-  "Git", "GitHub", "GitHub-Actions", "CI-CD", "Jenkins", "ESLint", "Prettier", "Webpack",
-  "pnpm", "Yarn", "Vite", "VSCode", "Vim", "Slack", "Zsh", "Bash", "Postman",
-
-  # Rails Gems
-  "Devise", "Capistrano", "CarrierWave", "RSpec", "Kaminari", "Pundit", "ActiveAdmin", "Sidekiq"
+  "Git", "GitHub", "GitHub Actions", "CI/CD",
+  "VSCode", "Vim",
+  "ESLint", "Prettier", "Webpack", "Vite",
+  "npm", "Yarn", "pnpm",
+  "Postman", "Slack", "Bash", "Zsh"
 ]
+
 
 tag_names.each do |tag_name|
   Tag.find_or_create_by!(name: tag_name)
