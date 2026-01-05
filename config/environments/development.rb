@@ -48,6 +48,10 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
+  # Set asset host for Action Mailer to display images in emails
+  # 🎓 Action Mailerのビューに画像を追加する: https://railsguides.jp/v7.2/action_mailer_basics.html#action-mailer%E3%81%AE%E3%83%93%E3%83%A5%E3%83%BC%E3%81%AB%E7%94%BB%E5%83%8F%E3%82%92%E8%BF%BD%E5%8A%A0%E3%81%99%E3%82%8B
+  config.action_mailer.asset_host = "http://localhost:3000"
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
