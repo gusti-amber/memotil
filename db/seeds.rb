@@ -40,7 +40,7 @@ tag_names = [
   "VSCode", "Vim",
   "ESLint", "Prettier", "Webpack", "Vite",
   "npm", "Yarn", "pnpm",
-  "Postman", "Slack", "Bash", "Zsh",
+  "Postman", "Slack", "Bash", "Zsh"
 ]
 
 
