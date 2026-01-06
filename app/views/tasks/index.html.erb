@@ -1,5 +1,4 @@
 <div class="flex flex-col h-full gap-10 px-20 py-10">
-  <p class="text-4xl font-bold text-custom-dark-green text-center">タスク</p>
   <div class="flex gap-4 justify-between">
     <!-- 検索フォーム -->
     <%= form_with url: tasks_path, method: :get, scope: :q, data: { turbo_frame: "tasks_list" }, class: "flex items-center gap-2 flex-1" do |form| %>
@@ -48,7 +47,7 @@
     <% end %>
     
     <!-- タスク作成ボタン -->
-    <%= link_to new_task_path, class: "btn btn-outline btn-neutral" do %>
+    <%= link_to new_task_path, class: "btn btn-neutral" do %>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
         <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
       </svg>
