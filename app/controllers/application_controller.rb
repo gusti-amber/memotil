@@ -77,6 +77,7 @@ class ApplicationController < ActionController::Base
     u = User.new(name: "guest", email: "guest_#{Time.now.to_i}#{rand(100)}@example.com")
     u.skip_confirmation! # ゲストユーザーは確認メールを送信しない
     u.save!(validate: false)
+    DummyDataCreatorService.new(u).call # ダミーデータの生成
     session[:guest_user_id] = u.id
     u
   end
