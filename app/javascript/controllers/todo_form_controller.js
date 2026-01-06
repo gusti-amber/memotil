@@ -1,7 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["todoFields", "addButton", "todoTemplate", "todoField"];
+  static targets = [
+    "todoFields",
+    "addButton",
+    "todoTemplate",
+    "todoField",
+    "submitButton",
+  ];
   static values = {
     maxCount: { type: Number, default: 5 },
     confirmMessage: { type: String, default: "この項目を削除しますか？" },
@@ -36,24 +42,45 @@ export default class extends Controller {
 
   updateButtonState() {
     // canAddの真偽により、ToDo追加ボタンのdisabled属性とcssクラスを更新
-    const isDisabled = !this.canAdd;
+    const isAddButtonDisabled = !this.canAdd;
 
-    // disabled属性の更新
-    this.addButtonTarget.disabled = isDisabled;
+    // 追加ボタンのdisabled属性の更新
+    this.addButtonTarget.disabled = isAddButtonDisabled;
 
-    // cssクラスの更新
-    if (isDisabled) {
+    // 追加ボタンのcssクラスの更新
+    if (isAddButtonDisabled) {
       this.addButtonTarget.classList.add("opacity-50");
       this.addButtonTarget.classList.add("cursor-not-allowed");
     } else {
       this.addButtonTarget.classList.remove("opacity-50");
       this.addButtonTarget.classList.remove("cursor-not-allowed");
     }
+
+    // canSubmitの真偽により、送信ボタンのdisabled属性とcssクラスを更新
+    const isSubmitButtonDisabled = !this.canSubmit;
+
+    // 送信ボタンのdisabled属性の更新
+    this.submitButtonTarget.disabled = isSubmitButtonDisabled;
+
+    // 送信ボタンのcssクラスの更新
+    if (isSubmitButtonDisabled) {
+      this.submitButtonTarget.classList.add("opacity-50");
+      this.submitButtonTarget.classList.add("cursor-not-allowed");
+    } else {
+      this.submitButtonTarget.classList.remove("opacity-50");
+      this.submitButtonTarget.classList.remove("cursor-not-allowed");
+    }
   }
 
   get canAdd() {
     // ToDoフィールドがmaxCount(Taskが保持するToDoの最大数)を超えてないか判定
     return this.enabledTodoFieldCount < this.maxCountValue;
+  }
+
+  get canSubmit() {
+    // DOM上に存在するすべてのToDoフィールドが1個以上存在する場合、送信可能と判定
+    // _destroyの値に関係なく、すべてのToDoフィールドを対象とする
+    return this.todoFieldTargets.length > 0;
   }
 
   get enabledTodoFieldCount() {
