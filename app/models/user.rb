@@ -10,6 +10,8 @@ class User < ApplicationRecord
   # カスタムバリデーション
   validates :name, presence: true, length: { minimum: 2, maximum: 20 }
 
+  after_create :create_dummy_data, unless: :guest_user?
+
   def self.from_github(auth)
     # 👍 今後、メールアドレスなどでログインしている状態でタスク詳細画面からGitHub認証を行う場合、GitHubアカウントの情報を既存のUserレコードに追加する処理を実装予定。
     user = find_or_create_by(github_uid: auth.uid) do |u|
@@ -49,5 +51,13 @@ class User < ApplicationRecord
   # 参考wiki: https://www.rubydoc.info/github/plataformatec/devise/Devise/Models/Confirmable#confirmation_required%3F-instance_method
   def confirmation_required?
     !guest_user? && !github_user?
+  end
+
+  private
+
+  # ✨ 将来的に、ダミーデータの生成はサービスではなく、Userモデルに移行する
+  # そのためには、ゲストユーザーの生成ロジックもUserモデルに移行する必要がある
+  def create_dummy_data
+    DummyDataCreatorService.new(self).call
   end
 end
