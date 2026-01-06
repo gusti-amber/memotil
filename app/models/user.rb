@@ -14,6 +14,7 @@ class User < ApplicationRecord
 
   def self.from_github(auth)
     # 👍 今後、メールアドレスなどでログインしている状態でタスク詳細画面からGitHub認証を行う場合、GitHubアカウントの情報を既存のUserレコードに追加する処理を実装予定。
+    # find_or_create_byのブロック内で新規ユーザーが作成された場合、after_createコールバックが自動的に呼ばれ、ダミーデータが生成される
     user = find_or_create_by(github_uid: auth.uid) do |u|
       u.email = auth.info.email
       u.password = Devise.friendly_token[0, 20]
