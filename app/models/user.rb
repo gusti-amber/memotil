@@ -10,7 +10,7 @@ class User < ApplicationRecord
   # カスタムバリデーション
   validates :name, presence: true, length: { minimum: 2, maximum: 20 }
 
-  after_create :create_dummy_data, unless: :guest_user?
+  after_create :create_dummy_data, unless: -> { guest_user? || Rails.env.test? }
 
   def self.from_github(auth)
     # 👍 今後、メールアドレスなどでログインしている状態でタスク詳細画面からGitHub認証を行う場合、GitHubアカウントの情報を既存のUserレコードに追加する処理を実装予定。
