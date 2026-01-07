@@ -25,15 +25,15 @@ RSpec.describe TextPost, type: :model do
       end
 
       context '文字数制限' do
-        it '500文字以内の場合は有効' do
-          text_post.body = 'a' * 500
-          expect(text_post).to be_valid, 'bodyが500文字以内の場合は有効である必要があります'
+        it '1000文字以内の場合は有効' do
+          text_post.body = 'a' * 1000
+          expect(text_post).to be_valid, 'bodyが1000文字以内の場合は有効である必要があります'
         end
 
-        it '501文字以上の場合は無効' do
-          text_post.body = 'a' * 501
-          expect(text_post).not_to be_valid, 'bodyが501文字以上の場合は無効である必要があります'
-          expect(text_post.errors[:body]).to include('は500文字以下で入力してください')
+        it '1001文字以上の場合は無効' do
+          text_post.body = 'a' * 1001
+          expect(text_post).not_to be_valid, 'bodyが1001文字以上の場合は無効である必要があります'
+          expect(text_post.errors[:body]).to include('は1000文字以下で入力してください')
         end
       end
     end

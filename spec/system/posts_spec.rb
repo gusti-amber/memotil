@@ -37,14 +37,14 @@ RSpec.describe 'Posts', type: :system do
           expect(current_path).to eq task_path(task)
         end
 
-        it 'bodyが501文字以上の場合、エラーメッセージが表示される' do
-          fill_in 'post[postable_attributes][body]', with: 'a' * 501
+        it 'bodyが1001文字以上の場合、エラーメッセージが表示される' do
+          fill_in 'post[postable_attributes][body]', with: 'a' * 1001
           within('#text-post-form') do
             click_button '送信'
           end
 
-          expect(page).to have_content('コメント は500文字以下で入力してください')
-          expect(page).to have_content('a' * 501)
+          expect(page).to have_content('コメント は1000文字以下で入力してください')
+          expect(page).to have_content('a' * 1001)
           expect(current_path).to eq task_path(task)
         end
       end
