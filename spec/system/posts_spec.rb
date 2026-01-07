@@ -33,7 +33,7 @@ RSpec.describe 'Posts', type: :system do
             click_button '送信'
           end
 
-          expect(page).to have_content('コメント を入力してください')
+          expect(page).to have_content('メモ を入力してください')
           expect(current_path).to eq task_path(task)
         end
 
@@ -43,7 +43,7 @@ RSpec.describe 'Posts', type: :system do
             click_button '送信'
           end
 
-          expect(page).to have_content('コメント は1000文字以下で入力してください')
+          expect(page).to have_content('メモ は1000文字以下で入力してください')
           expect(page).to have_content('a' * 1001)
           expect(current_path).to eq task_path(task)
         end
