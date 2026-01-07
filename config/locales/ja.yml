@@ -37,7 +37,7 @@ ja:
       task/todos:
         body: "ToDoの内容"
       text_post:
-        body: "コメント"
+        body: "メモ"
 
   # エラーメッセージの和訳
   errors:
