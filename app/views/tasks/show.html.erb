@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-  <% elsif @task.doing? || @task.done? %>
+  <% elsif @task.doing? %>
     <div class="flex justify-center min-h-screen">
       <!-- ポストセクション -->
       <%= render 'tasks/posts_section', task: @task, post: @post %>
@@ -30,11 +30,19 @@
 
       <!-- タスクのサブ情報サイドバー -->
       <div class="flex flex-col items-start gap-1 max-w-sm w-full">
-        <% if @task.doing? %>
-          <%= render 'tasks/doing_sidebar', task: @task %>
-        <% elsif @task.done? %>
-          <%= render 'tasks/done_sidebar', task: @task %>
-        <% end %>
+        <%= render 'tasks/doing_sidebar', task: @task %>
+      </div>
+    </div>
+  <% elsif @task.done? %>
+    <div class="flex justify-center min-h-screen">
+      <!-- ポストセクション -->
+      <%= render 'tasks/posts_section', task: @task, post: @post %>
+
+      <div class="divider divider-horizontal"></div>
+
+      <!-- タスクのサブ情報サイドバー -->
+      <div class="flex flex-col items-start gap-1 max-w-xl w-full">
+        <%= render 'tasks/done_sidebar', task: @task %>
       </div>
     </div>
   <% end %>
