@@ -4,7 +4,7 @@
   <div class="form-control">
     <%= f.fields_for :postable_attributes, (post.postable.is_a?(DocumentPost) ? post.postable.document : Document.new) do |document_post_form| %>
       <%= document_post_form.text_field :url, 
-          placeholder: "参照した資料のURLを貼り付けてください(ex. https://docs.example.com)", 
+          placeholder: "参考にした資料のURLを入力しましょう(ex. https://railsguides.jp/)", 
           class: "input input-ghost w-full text-neutral placeholder:text-neutral/50 focus:outline-none",
           autocomplete: "off" %>
     <% end %>
