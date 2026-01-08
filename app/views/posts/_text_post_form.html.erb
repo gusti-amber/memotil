@@ -3,8 +3,16 @@
   
   <div class="form-control">
     <%= f.fields_for :postable_attributes, (post.postable.is_a?(TextPost) ? post.postable : TextPost.new) do |text_post_form| %>
+      <% placeholder_text = <<~TEXT
+        調べたことや思いついたことを書きましょう
+        コードスニペットは以下のように言語を指定して```で囲んで入力してください
+        ```ruby
+        puts "Hello, World!"
+        ```
+      TEXT
+      %>
       <%= text_post_form.text_area :body, 
-          placeholder: "調べたことや思いついたことを書きましょう", 
+          placeholder: placeholder_text.chomp, 
           class: "textarea textarea-ghost w-full h-24 text-neutral placeholder:text-neutral/50 focus:outline-none" %>
     <% end %>
   </div>
