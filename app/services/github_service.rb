@@ -8,25 +8,26 @@ class GithubService
     @client.repos(nil, per_page: 100)
   end
 
-  def fetch_readme(repo)
-    readme = @client.contents(repo, path: "README.md")
+  # 🔥 README.md編集機能は廃止予定
+  # def fetch_readme(repo)
+  #   readme = @client.contents(repo, path: "README.md")
 
-    # 取得したREADME.mdをBase64でデコードし、UTF-8でエンコード
-    body = Base64.decode64(readme[:content]).force_encoding("UTF-8")
-    { sha: readme[:sha], body: body }
-  rescue Octokit::NotFound
-    { sha: nil, body: "" }
-  end
+  #   # 取得したREADME.mdをBase64でデコードし、UTF-8でエンコード
+  #   body = Base64.decode64(readme[:content]).force_encoding("UTF-8")
+  #   { sha: readme[:sha], body: body }
+  # rescue Octokit::NotFound
+  #   { sha: nil, body: "" }
+  # end
 
-  def update_readme(repo, message:, new_body:, sha: nil)
-    # 🎓 update_contentsメソッドは位置引数を取るので注意（キーワード引数ではない）
-    # 公式ドキュメント: https://octokit.github.io/octokit.rb/Octokit/Client/Contents.html#update_contents-instance_method
-    @client.update_contents(
-      repo, # GitHubのリポジトリ
-      "README.md", # 更新するコンテンツのパス
-      message, # コンテンツ更新時のコミットメッセージ
-      sha, # 更新するコンテンツのSHA
-      new_body # 更新するコンテンツの内容
-    )
-  end
+  # def update_readme(repo, message:, new_body:, sha: nil)
+  #   # 🎓 update_contentsメソッドは位置引数を取るので注意（キーワード引数ではない）
+  #   # 公式ドキュメント: https://octokit.github.io/octokit.rb/Octokit/Client/Contents.html#update_contents-instance_method
+  #   @client.update_contents(
+  #     repo, # GitHubのリポジトリ
+  #     "README.md", # 更新するコンテンツのパス
+  #     message, # コンテンツ更新時のコミットメッセージ
+  #     sha, # 更新するコンテンツのSHA
+  #     new_body # 更新するコンテンツの内容
+  #   )
+  # end
 end
