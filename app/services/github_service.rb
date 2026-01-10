@@ -30,4 +30,15 @@ class GithubService
   #     new_body # 更新するコンテンツの内容
   #   )
   # end
+
+  def create_contents(repo, path:, message:, content:)
+    # 🎓 create_contentsメソッドは位置引数を取るので注意（キーワード引数ではない）
+    # 公式ドキュメント: https://www.rubydoc.info/gems/octokit/10.0.0/Octokit/Client/Contents#create_contents-instance_method
+    @client.create_contents(
+      repo, # GitHubのリポジトリ
+      path, # 作成するコンテンツのパス
+      message, # コンテンツ作成時のコミットメッセージ
+      content # 作成するコンテンツの内容
+    )
+  end
 end
