@@ -35,7 +35,18 @@ class TilsController < ApplicationController
   end
 
   def create
-    # TODO: 新規.mdファイル作成機能を実装
+    client = GithubService.new(current_user.github_token)
+    client.create_contents(
+      params[:repo],
+      path: params[:path],
+      message: params[:message],
+      content: params[:body]
+    )
+    redirect_to @task, notice: "GitHubリポジトリにTILを保存しました"
+  rescue Octokit::Unauthorized
+    redirect_to @task, alert: "GitHub連携が必要です"
+  rescue Octokit::UnprocessableEntity => e
+    redirect_to new_task_til_path(@task, repo: params[:repo]), alert: "ファイルの作成に失敗しました: #{e.message}"
   end
 
   private
