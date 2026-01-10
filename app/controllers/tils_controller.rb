@@ -26,7 +26,12 @@ class TilsController < ApplicationController
   # end
 
   def new
-    # TODO: 新規.mdファイル作成機能を実装
+    @client = GithubService.new(current_user.github_token)
+    @repositories = @client.list_repositories
+
+    @selected_repo = params[:repo].presence
+  rescue Octokit::Unauthorized
+    redirect_to @task, alert: "GitHub連携が必要です"
   end
 
   def create
