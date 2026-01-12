@@ -69,5 +69,67 @@ RSpec.describe 'TILs', type: :system do
         expect(page).to have_content('新しいmdファイルにTILを記録しました')
       end
     end
+
+    context '不正な入力の場合' do
+      context 'パス名が空の場合' do
+        EMPTY_PATHS.each do |empty_path|
+          it "#{empty_path.inspect}の場合、エラーメッセージが表示される" do
+            fill_in 'path', with: empty_path.to_s
+            fill_in 'message', with: 'Test commit message'
+            fill_in 'body', with: 'Test content'
+
+            click_button 'GitHubリポジトリに保存'
+
+            # エラーメッセージの表示
+            expect(page).to have_content('パス名を入力してください')
+          end
+        end
+      end
+
+      context 'パス名の末尾が.mdではない場合' do
+        INVALID_EXTENSION_PATHS.each do |invalid_path|
+          it "#{invalid_path.inspect}の場合、エラーメッセージが表示される" do
+            fill_in 'path', with: invalid_path
+            fill_in 'message', with: 'Test commit message'
+            fill_in 'body', with: 'Test content'
+
+            click_button 'GitHubリポジトリに保存'
+
+            # エラーメッセージの表示
+            expect(page).to have_content('パス名は.mdで終わる必要があります')
+          end
+        end
+      end
+
+      context 'パス名が禁止文字を含む場合' do
+        FORBIDDEN_CHAR_PATHS.each do |invalid_path|
+          it "#{invalid_path.inspect}の場合、エラーメッセージが表示される" do
+            fill_in 'path', with: invalid_path
+            fill_in 'message', with: 'Test commit message'
+            fill_in 'body', with: 'Test content'
+
+            click_button 'GitHubリポジトリに保存'
+
+            # エラーメッセージの表示
+            expect(page).to have_content('パス名に使用できない文字( : * ? " < > | )が含まれています')
+          end
+        end
+      end
+
+      context 'パス名が不正な場合' do
+        INVALID_LOCATION_PATHS.each do |invalid_path|
+          it "#{invalid_path.inspect}の場合、エラーメッセージが表示される" do
+            fill_in 'path', with: invalid_path
+            fill_in 'message', with: 'Test commit message'
+            fill_in 'body', with: 'Test content'
+
+            click_button 'GitHubリポジトリに保存'
+
+            # エラーメッセージの表示
+            expect(page).to have_content('不正なパス名が指定されています')
+          end
+        end
+      end
+    end
   end
 end
