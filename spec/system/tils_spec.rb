@@ -1,6 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe 'TILs', type: :system do
+  # 不正なパス名の定数
+  EMPTY_PATHS = [nil, "", " ", "\n", "\t"].freeze
+  INVALID_EXTENSION_PATHS = ["category", "category/til", "category/til,md", "category/til.txt"].freeze
+  FORBIDDEN_CHAR_PATHS = [
+    "category/a:b.md",
+    "category/a*b.md",
+    "category/a?b.md",
+    "category/a|b.md",
+    "category/a<b>.md",
+    "category/a\"b.md"
+  ].freeze
+  INVALID_LOCATION_PATHS = [
+    "../til.md",
+    "category/../til.md",
+    ".git/config/til.md"
+  ].freeze
+
   let(:user) { create(:user, github_token: 'test_token') }
   let(:done_task) { create(:done_task, user: user) }
   let(:mock_repo) { double('repo', full_name: 'test_user/test_repo', owner: double('owner', login: 'test_user'), name: 'test_repo') }
