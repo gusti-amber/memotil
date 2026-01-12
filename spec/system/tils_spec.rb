@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'TILs', type: :system do
   # 不正なパス名の定数
-  EMPTY_PATHS = [nil, "", " ", "\n", "\t"].freeze
-  INVALID_EXTENSION_PATHS = ["category", "category/til", "category/til,md", "category/til.txt"].freeze
+  EMPTY_PATHS = [ nil, "", " ", "\n", "\t" ].freeze
+  INVALID_EXTENSION_PATHS = [ "category", "category/til", "category/til,md", "category/til.txt" ].freeze
   FORBIDDEN_CHAR_PATHS = [
     "category/a:b.md",
     "category/a*b.md",
@@ -31,7 +31,7 @@ RSpec.describe 'TILs', type: :system do
     # スタブはオブジェクトのメソッドの戻り値を設定することができる。
     # 指定方法: allow(object).to receive(method).and_return(value)
     allow(Octokit::Client).to receive(:new).and_return(mock_client)
-    allow(mock_client).to receive(:repos).and_return([mock_repo])
+    allow(mock_client).to receive(:repos).and_return([ mock_repo ])
     allow(mock_client).to receive(:create_contents).and_return(double('result', content: double('content', path: 'test.md')))
 
     sign_in user
@@ -41,7 +41,7 @@ RSpec.describe 'TILs', type: :system do
   describe '新しいmdファイル作成' do
     before do
       click_link '新しいmdファイルにTILを記録'
-      
+
       # TIL作成画面へ遷移
       expect(page).to have_content('新しいmdファイルにTILを記録')
 
@@ -66,7 +66,7 @@ RSpec.describe 'TILs', type: :system do
 
         # タスク詳細画面へリダイレクト
         expect(page).to have_current_path(task_path(done_task))
-        
+
         # サクセスメッセージの表示
         expect(page).to have_content('新しいmdファイルにTILを記録しました')
       end
