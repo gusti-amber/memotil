@@ -32,7 +32,8 @@
           <% end %>
         </div>
 
-        <%= form_with url: task_til_path(@task), method: :post, data: { turbo_frame: "til" }, class: "flex flex-col gap-2" do |f| %>
+        <!-- 🎓 turbo: false によりTurboを無効化し、フルページリロードを強制することで、サクセスメッセージを表示する -->
+        <%= form_with url: task_til_path(@task), method: :post, data: { turbo: false }, class: "flex flex-col gap-2" do |f| %>
           <%= f.hidden_field :repo, value: @selected_repo %>
           <%= f.label :path, "新しいmdファイルのパス名", class: "label text-sm text-neutral font-semibold" %>
           <%= f.text_field :path, 
