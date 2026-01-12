@@ -82,6 +82,7 @@ class TilsController < ApplicationController
     return "パス名は.mdで終わる必要があります" unless path.end_with?('.md')
     return "パス名に使用できない文字( : \* ? \" < > | )が含まれています" if contains_forbidden_characters?(path)
     return "不正なパス名が指定されています" if contains_invalid_location?(path)
+    return "指定したパス名はすでに存在しています" if file_already_exists?(path)
 
     nil
   end
@@ -100,6 +101,11 @@ class TilsController < ApplicationController
       path.start_with?('.git')       # .gitで始まるパス
     ]
     invalid_patterns.any?
+  end
+
+  def file_already_exists?(path)
+    client = GithubService.new(current_user.github_token)
+    client.file_exists?(params[:repo], path: path)
   end
 
   # 再レンダリング時のパラメータを保持
