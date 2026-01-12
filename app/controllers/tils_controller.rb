@@ -50,6 +50,12 @@ class TilsController < ApplicationController
       return
     end
 
+    # パス名が禁止文字を含む場合
+    if contains_forbidden_characters?(path)
+      redirect_to new_task_til_path(@task, repo: params[:repo]), alert: "パス名に使用できない文字( : \* ? \" < > | )が含まれています"
+      return
+    end
+
     client = GithubService.new(current_user.github_token)
     client.create_contents(
       params[:repo],
@@ -74,5 +80,10 @@ class TilsController < ApplicationController
 
   def ensure_done
     redirect_to @task, alert: "完了したタスクのみTILを反映できます" unless @task&.done?
+  end
+
+  def contains_forbidden_characters?(path)
+    forbidden_chars = /[:*?"<>|]/
+    path.match?(forbidden_chars)
   end
 end
