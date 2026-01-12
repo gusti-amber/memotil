@@ -38,27 +38,9 @@ class TilsController < ApplicationController
     path = params[:path]
 
     # パス名のバリデーション
-    # パス名が空の場合
-    if path.blank? || path.strip.empty?
-      redirect_to new_task_til_path(@task, repo: params[:repo]), alert: "パス名を入力してください"
-      return
-    end
-
-    # パス名の末尾が.mdではない場合
-    unless path.end_with?('.md')
-      redirect_to new_task_til_path(@task, repo: params[:repo]), alert: "パス名は.mdで終わる必要があります"
-      return
-    end
-
-    # パス名が禁止文字を含む場合
-    if contains_forbidden_characters?(path)
-      redirect_to new_task_til_path(@task, repo: params[:repo]), alert: "パス名に使用できない文字( : \* ? \" < > | )が含まれています"
-      return
-    end
-
-    # パス名が不正な場合
-    if contains_invalid_location?(path)
-      redirect_to new_task_til_path(@task, repo: params[:repo]), alert: "不正なパス名が指定されています"
+    validation_error = validate_path(path)
+    if validation_error
+      redirect_to new_task_til_path(@task, repo: params[:repo]), alert: validation_error
       return
     end
 
@@ -88,11 +70,20 @@ class TilsController < ApplicationController
     redirect_to @task, alert: "完了したタスクのみTILを反映できます" unless @task&.done?
   end
 
+  def validate_path(path)
+    return "パス名を入力してください" if path.blank? || path.strip.empty?
+    return "パス名は.mdで終わる必要があります" unless path.end_with?('.md')
+    return "パス名に使用できない文字( : \* ? \" < > | )が含まれています" if contains_forbidden_characters?(path)
+    return "不正なパス名が指定されています" if contains_invalid_location?(path)
+
+    nil
+  end
+
   def contains_forbidden_characters?(path)
     forbidden_chars = /[:*?"<>|]/
     path.match?(forbidden_chars)
   end
-  
+
   def contains_invalid_location?(path)
     path.include?('..') || path.include?('.git/') || path.start_with?('.git')
   end
