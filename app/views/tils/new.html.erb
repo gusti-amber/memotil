@@ -20,6 +20,18 @@
     <!-- 新規mdファイル作成フォーム（POST） -->
     <% if @selected_repo %>
       <div class="flex flex-col gap-2">
+        <!-- 選択したリポジトリのリンク付きURL -->
+        <div class="flex gap-1">
+          <label class="label text-sm text-neutral font-semibold">選択したリポジトリ</label>
+          <% repo_url = "https://github.com/#{@selected_repo}" %>
+          <%= link_to repo_url, 
+                      target: "_blank", # 新しいタブでリポジトリを開く
+                      rel: "noopener noreferrer",
+                      class: "link link-primary text-sm" do %>
+            <%= @selected_repo %>
+          <% end %>
+        </div>
+
         <%= form_with url: task_til_path(@task), method: :post, data: { turbo_frame: "til" }, class: "flex flex-col gap-2" do |f| %>
           <%= f.hidden_field :repo, value: @selected_repo %>
           <%= f.label :path, "新しいmdファイルのパス名", class: "label text-sm text-neutral font-semibold" %>
