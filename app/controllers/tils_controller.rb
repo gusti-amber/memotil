@@ -35,15 +35,13 @@ class TilsController < ApplicationController
   end
 
   def create
-    path = params[:path]
-
     # フォームの入力値を保持するため、インスタンス変数に保存
     @path = params[:path]
     @message = params[:message]
     @body = params[:body]
 
     # パス名のバリデーション
-    @validation_error = validate_path(path)
+    @validation_error = validate_path(@path)
     if @validation_error
       prepare_new_view
       respond_to do |format|
@@ -56,9 +54,9 @@ class TilsController < ApplicationController
     client = GithubService.new(current_user.github_token)
     client.create_contents(
       params[:repo],
-      path: path,
-      message: params[:message],
-      content: params[:body]
+      path: @path,
+      message: @message,
+      content: @body
     )
     redirect_to @task, notice: "新しいmdファイルにTILを記録しました"
   rescue Octokit::Unauthorized
