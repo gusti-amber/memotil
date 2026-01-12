@@ -42,7 +42,7 @@ class TilsController < ApplicationController
       message: params[:message],
       content: params[:body]
     )
-    redirect_to @task, notice: "GitHubリポジトリにTILを保存しました"
+    redirect_to @task, notice: "新しいmdファイルにTILを記録しました"
   rescue Octokit::Unauthorized
     redirect_to @task, alert: "GitHub連携が必要です"
   rescue Octokit::UnprocessableEntity => e
