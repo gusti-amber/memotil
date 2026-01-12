@@ -17,7 +17,6 @@
                       onchange: "this.form.requestSubmit()" } %>
     <% end %>
 
-    <!-- 新規mdファイル作成フォーム（POST） -->
     <% if @selected_repo %>
       <div class="flex flex-col gap-2">
         <!-- 選択したリポジトリのリンク付きURL -->
@@ -32,25 +31,9 @@
           <% end %>
         </div>
 
-        <!-- 🎓 turbo: false によりTurboを無効化し、フルページリロードを強制することで、サクセスメッセージを表示する -->
-        <%= form_with url: task_til_path(@task), method: :post, data: { turbo: false }, class: "flex flex-col gap-2" do |f| %>
-          <%= f.hidden_field :repo, value: @selected_repo %>
-          <%= f.label :path, "新しいmdファイルのパス名", class: "label text-sm text-neutral font-semibold" %>
-          <%= f.text_field :path, 
-                          placeholder: "category/today_i_learned.md", 
-                          class: "input input-bordered input-neutral w-full" %>
-          <%= f.label :message, "コミットメッセージ", class: "label text-sm text-neutral font-semibold" %>
-          <%= f.text_field :message, 
-                          value: "Add TIL: #{(@task.title || 'task')}", 
-                          class: "input input-bordered input-neutral w-full" %>
-          <%= f.label :body, "mdファイルの内容", class: "label text-sm text-neutral font-semibold" %>
-          <%= f.text_area :body, 
-                         rows: 16, 
-                         placeholder: "今日学んだことを記録しましょう",
-                         class: "textarea textarea-bordered text-area-neutral w-full" %>
-          <div class="flex justify-end">
-            <%= f.submit "GitHubリポジトリに保存", class: "btn btn-primary rounded-full shadow-none w-full" %>
-          </div>
+        <!-- 新規mdファイル作成フォーム -->
+        <%= turbo_frame_tag "md_form" do %>
+          <%= render "md_form" %>
         <% end %>
       </div>
     <% end %>
