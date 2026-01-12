@@ -41,4 +41,13 @@ class GithubService
       content # 作成するコンテンツの内容
     )
   end
+
+  def file_exists?(repo, path:)
+    # 🎓 contentsメソッドでファイルの存在を確認
+    # 公式ドキュメント: https://octokit.github.io/octokit.rb/Octokit/Client/Contents.html#contents-instance_method
+    @client.contents(repo, path: path)
+    true
+  rescue Octokit::NotFound
+    false
+  end
 end
