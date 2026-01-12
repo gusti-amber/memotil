@@ -92,7 +92,14 @@ class TilsController < ApplicationController
   end
 
   def contains_invalid_location?(path)
-    path.include?('..') || path.include?('.git/') || path.start_with?('.git')
+    invalid_patterns = [
+      path.include?('..'),           # 親ディレクトリ参照
+      path.include?('//'),           # 連続するスラッシュ
+      path.start_with?('/'),         # 絶対パス
+      path.include?('.git/'),        # .gitディレクトリ内
+      path.start_with?('.git')       # .gitで始まるパス
+    ]
+    invalid_patterns.any?
   end
 
   # 再レンダリング時のパラメータを保持
