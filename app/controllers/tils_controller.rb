@@ -56,6 +56,12 @@ class TilsController < ApplicationController
       return
     end
 
+    # パス名が不正な場合
+    if contains_invalid_location?(path)
+      redirect_to new_task_til_path(@task, repo: params[:repo]), alert: "不正なパス名が指定されています"
+      return
+    end
+
     client = GithubService.new(current_user.github_token)
     client.create_contents(
       params[:repo],
@@ -85,5 +91,9 @@ class TilsController < ApplicationController
   def contains_forbidden_characters?(path)
     forbidden_chars = /[:*?"<>|]/
     path.match?(forbidden_chars)
+  end
+  
+  def contains_invalid_location?(path)
+    path.include?('..') || path.include?('.git/') || path.start_with?('.git')
   end
 end
