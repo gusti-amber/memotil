@@ -37,10 +37,19 @@ class TilsController < ApplicationController
   def create
     path = params[:path]
 
+    # フォームの入力値を保持するため、インスタンス変数に保存
+    @path = params[:path]
+    @message = params[:message]
+    @body = params[:body]
+
     # パス名のバリデーション
-    validation_error = validate_path(path)
-    if validation_error
-      redirect_to new_task_til_path(@task, repo: params[:repo]), alert: validation_error
+    @validation_error = validate_path(path)
+    if @validation_error
+      prepare_new_view
+      respond_to do |format|
+        format.turbo_stream { render :create, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity }
+      end
       return
     end
 
@@ -86,5 +95,12 @@ class TilsController < ApplicationController
 
   def contains_invalid_location?(path)
     path.include?('..') || path.include?('.git/') || path.start_with?('.git')
+  end
+
+  # 再レンダリング時のパラメータを保持
+  def prepare_new_view
+    @client = GithubService.new(current_user.github_token)
+    @repositories = @client.list_repositories
+    @selected_repo = params[:repo].presence
   end
 end
