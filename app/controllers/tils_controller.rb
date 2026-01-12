@@ -35,10 +35,19 @@ class TilsController < ApplicationController
   end
 
   def create
+    path = params[:path]
+
+    # パス名のバリデーション
+    # パス名が空の場合
+    if path.blank? || path.strip.empty?
+      redirect_to new_task_til_path(@task, repo: params[:repo]), alert: "パス名を入力してください"
+      return
+    end
+
     client = GithubService.new(current_user.github_token)
     client.create_contents(
       params[:repo],
-      path: params[:path],
+      path: path,
       message: params[:message],
       content: params[:body]
     )
