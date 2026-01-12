@@ -132,6 +132,22 @@ RSpec.describe 'TILs', type: :system do
           end
         end
       end
+
+      context 'パス名がすでに存在する場合' do
+        it 'エラーメッセージが表示される' do
+          # GithubService#file_exists?をスタブしてtrueを返す（ファイルが存在する）
+          allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(true)
+
+          fill_in 'path', with: 'category/existing_file.md'
+          fill_in 'message', with: 'Test commit message'
+          fill_in 'body', with: 'Test content'
+
+          click_button 'GitHubリポジトリに保存'
+
+          # エラーメッセージの表示
+          expect(page).to have_content('指定したパス名はすでに存在しています')
+        end
+      end
     end
   end
 end
