@@ -8,7 +8,7 @@
   </div>
 <% end %>
 
-<%= form_with url: task_til_path(@task), method: :post, data: { turbo_frame: "til" }, class: "flex flex-col gap-2" do |f| %>
+<%= form_with url: task_til_path(@task), method: :post, data: { turbo_frame: "_top" }, class: "flex flex-col gap-2" do |f| %>
   <%= f.hidden_field :repo, value: @selected_repo %>
   <%= f.label :path, "新しいmdファイルのパス名", class: "label text-sm text-neutral font-semibold" %>
   <%= f.text_field :path, 
