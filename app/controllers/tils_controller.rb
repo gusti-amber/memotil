@@ -44,6 +44,12 @@ class TilsController < ApplicationController
       return
     end
 
+    # パス名の末尾が.mdではない場合
+    unless path.end_with?('.md')
+      redirect_to new_task_til_path(@task, repo: params[:repo]), alert: "パス名は.mdで終わる必要があります"
+      return
+    end
+
     client = GithubService.new(current_user.github_token)
     client.create_contents(
       params[:repo],
