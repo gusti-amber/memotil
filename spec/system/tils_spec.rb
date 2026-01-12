@@ -1,0 +1,56 @@
+require 'rails_helper'
+
+RSpec.describe 'TILs', type: :system do
+  let(:user) { create(:user, github_token: 'test_token') }
+  let(:done_task) { create(:done_task, user: user) }
+  let(:mock_repo) { double('repo', full_name: 'test_user/test_repo', owner: double('owner', login: 'test_user'), name: 'test_repo') }
+  let(:mock_client) { instance_double(Octokit::Client) }
+
+  before do
+    # Octokit::Clientのスタブ（メソッドの戻り値を設定）
+    # 🎓 スタブについて
+    # スタブはオブジェクトのメソッドの戻り値を設定することができる。
+    # 指定方法: allow(object).to receive(method).and_return(value)
+    allow(Octokit::Client).to receive(:new).and_return(mock_client)
+    allow(mock_client).to receive(:repos).and_return([mock_repo])
+    allow(mock_client).to receive(:create_contents).and_return(double('result', content: double('content', path: 'test.md')))
+
+    sign_in user
+    visit task_path(done_task)
+  end
+
+  describe '新しいmdファイル作成' do
+    before do
+      click_link '新しいmdファイルにTILを記録'
+      
+      # TIL作成画面へ遷移
+      expect(page).to have_content('新しいmdファイルにTILを記録')
+
+      # リポジトリを選択
+      select 'test_user/test_repo', from: 'repo'
+
+      # 選択されたリポジトリのリンク付きURLが表示される
+      expect(page).to have_content('新しいmdファイルのパス名')
+      expect(page).to have_link('test_user/test_repo', href: 'https://github.com/test_user/test_repo')
+    end
+
+    context '正常な入力の場合' do
+      it 'コミットが成功しサクセスメッセージが表示される' do
+        # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
+        # allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
+
+        fill_in 'path', with: 'category/today_i_learned.md'
+        fill_in 'message', with: 'Add TIL: test task'
+        fill_in 'body', with: '# Today I Learned\n\n今日学んだことを記録します。'
+
+        click_button 'GitHubリポジトリに保存'
+
+        # タスク詳細画面へリダイレクト
+        expect(page).to have_current_path(task_path(done_task))
+        
+        # サクセスメッセージの表示
+        expect(page).to have_content('新しいmdファイルにTILを記録しました')
+      end
+    end
+  end
+end
