@@ -15,7 +15,9 @@ RSpec.describe 'TILs', type: :system do
   INVALID_LOCATION_PATHS = [
     "../til.md",
     "category/../til.md",
-    ".git/config/til.md"
+    ".git/config/til.md",
+    "/til.md",
+    "category//til.md"
   ].freeze
 
   let(:user) { create(:user, github_token: 'test_token') }
