@@ -56,7 +56,7 @@ RSpec.describe 'TILs', type: :system do
     context '正常な入力の場合' do
       it 'コミットが成功しサクセスメッセージが表示される' do
         # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
-        # allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
+        allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
 
         fill_in 'path', with: 'category/today_i_learned.md'
         fill_in 'message', with: 'Add TIL: test task'
