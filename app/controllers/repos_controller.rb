@@ -10,8 +10,12 @@ class ReposController < ApplicationController
   end
 
   def create
-    @validation_name_error = validate_name(params[:name])
-    @validation_description_error = validate_description(params[:description])
+    # フォームの入力値を保持するため、インスタンス変数に保存
+    @name = params[:name]
+    @description = params[:description]
+
+    @validation_name_error = validate_name(@name)
+    @validation_description_error = validate_description(@description)
     if @validation_name_error || @validation_description_error
       respond_to do |format|
         format.turbo_stream { render :create, status: :unprocessable_entity }

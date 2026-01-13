@@ -2,6 +2,7 @@
   <%= f.label :name, "リポジトリ名", class: "label text-sm text-neutral font-semibold" %>
   <% has_name_error = @validation_name_error.present? %>
   <%= f.text_field :name, 
+                  value: @name,
                   placeholder: "til", 
                   class: "input #{has_name_error ? 'input-error' : 'input-neutral'} w-full" %>
   
@@ -13,6 +14,7 @@
   <%= f.label :description, "説明文", class: "label text-sm text-neutral font-semibold" %>
   <% has_description_error = @validation_description_error.present? %>
   <%= f.text_area :description, 
+                  value: @description,
                   rows: 4, 
                   placeholder: "今日学んだことを記録するリポジトリ",
                   class: "textarea #{has_description_error ? 'textarea-error' : 'textarea-neutral'} w-full" %>
