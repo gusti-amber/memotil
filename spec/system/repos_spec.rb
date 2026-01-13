@@ -42,5 +42,19 @@ RSpec.describe 'Repos', type: :system do
         expect(page).to have_content('新しいリポジトリを作成しました')
       end
     end
+
+    context '不正なリポジトリ名を入力した場合' do
+      context 'リポジトリ名が空の場合' do
+        it 'リポジトリ作成が失敗しエラーメッセージが表示される' do
+          fill_in 'name', with: ''
+          fill_in 'description', with: '今日学んだことを記録するリポジトリ'
+
+          click_button 'GitHubリポジトリを作成'
+
+          # エラーメッセージの表示
+          expect(page).to have_content('リポジトリ名を入力してください')
+        end
+      end
+    end
   end
 end
