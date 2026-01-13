@@ -1,8 +1,14 @@
 <%= form_with url: task_repo_path(@task), method: :post, data: { turbo_frame: "_top" }, class: "flex flex-col gap-2" do |f| %>
   <%= f.label :name, "リポジトリ名", class: "label text-sm text-neutral font-semibold" %>
+  <% has_name_error = @validation_name_error.present? %>
   <%= f.text_field :name, 
                   placeholder: "til", 
-                  class: "input input-neutral w-full" %>
+                  class: "input #{has_name_error ? 'input-error' : 'input-neutral'} w-full" %>
+  
+  <!-- リポジトリ名のエラーメッセージの表示 -->
+  <% if has_name_error %>
+    <p class="text-xs text-error font-bold"><%= @validation_name_error %></p>
+  <% end %>
 
   <%= f.label :description, "説明文", class: "label text-sm text-neutral font-semibold" %>
   <%= f.text_area :description, 
