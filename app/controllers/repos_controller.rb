@@ -11,6 +11,13 @@ class ReposController < ApplicationController
 
   def create
     @validation_name_error = validate_name(params[:name])
+    if @validation_name_error
+      respond_to do |format|
+        format.turbo_stream { render :create, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity }
+      end
+      return
+    end
 
     client = GithubService.new(current_user.github_token)
     client.create_repository(
