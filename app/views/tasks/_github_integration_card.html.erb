@@ -3,10 +3,18 @@
   <div class="card-body">
     <%= turbo_frame_tag "til_form" do %>
       <% if current_user.github_token.present? %>
-        <div class="card-actions justify-center">
-          <%= link_to new_task_til_path(task), data: { turbo_frame: "til_form" }, class: "btn btn-lg btn-primary rounded-full text-base" do %>
-            新しいmdファイルにTILを記録
-          <% end %>
+        <div class="flex flex-col gap-2">
+          <div class="card-actions justify-center">
+            <%= link_to new_task_repo_path(task), data: { turbo_frame: "til_form" }, class: "btn btn-lg btn-primary rounded-full text-base" do %>
+              新しいリポジトリを作成
+            <% end %>
+          </div>
+          
+          <div class="card-actions justify-center">
+            <%= link_to new_task_til_path(task), data: { turbo_frame: "til_form" }, class: "btn btn-lg btn-primary rounded-full text-base" do %>
+              新しいmdファイルにTILを記録
+            <% end %>
+          </div>
         </div>
       <% else %>
         <div class="card-actions justify-center">
