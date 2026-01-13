@@ -4,6 +4,9 @@ class ReposController < ApplicationController
   before_action :ensure_done
 
   def new
+    @client = GithubService.new(current_user.github_token)
+  rescue Octokit::Unauthorized
+    redirect_to @task, alert: "GitHub連携が必要です"
   end
 
   def create
