@@ -48,11 +48,17 @@ class ReposController < ApplicationController
   def validate_name(name)
     return "リポジトリ名を入力してください" if name.blank? || name.strip.empty?
     return "リポジトリ名は英数字と一部の記号( ., -, _ )のみ使用できます" unless valid_format?(name)
+    return "指定したリポジトリ名はすでに存在しています" if repository_already_exists?(name)
 
     nil
   end
 
   def valid_format?(name)
     name.match?(/\A[a-zA-Z0-9._-]+\z/)
+  end
+
+  def repository_already_exists?(name)
+    client = GithubService.new(current_user.github_token)
+    client.repository_exists?(name)
   end
 end
