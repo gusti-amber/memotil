@@ -10,6 +10,8 @@ class ReposController < ApplicationController
   end
 
   def create
+    @validation_name_error = validate_name(params[:name])
+
     client = GithubService.new(current_user.github_token)
     client.create_repository(
       name: params[:name],
@@ -34,5 +36,11 @@ class ReposController < ApplicationController
 
   def ensure_done
     redirect_to @task, alert: "完了したタスクのみリポジトリを作成できます" unless @task&.done?
+  end
+
+  def validate_name(name)
+    return "リポジトリ名を入力してください" if name.blank? || name.strip.empty?
+
+    nil
   end
 end
