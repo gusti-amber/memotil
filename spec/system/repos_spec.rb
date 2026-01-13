@@ -137,5 +137,20 @@ RSpec.describe 'Repos', type: :system do
         end
       end
     end
+
+    context '説明文が351文字以上の場合' do
+      it 'リポジトリ作成が失敗しエラーメッセージが表示される' do
+        # GithubService#repository_exists?をスタブしてfalseを返す（リポジトリが存在しない）
+        allow_any_instance_of(GithubService).to receive(:repository_exists?).and_return(false)
+
+        fill_in 'name', with: 'til'
+        fill_in 'description', with: 'a' * 351
+
+        click_button 'GitHubリポジトリを作成'
+
+        # エラーメッセージの表示
+        expect(page).to have_content('説明文は350文字以下で入力してください')
+      end
+    end
   end
 end
