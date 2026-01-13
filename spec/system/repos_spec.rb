@@ -100,6 +100,21 @@ RSpec.describe 'Repos', type: :system do
           end
         end
       end
+
+      context 'リポジトリ名がすでに存在する場合' do
+        it 'リポジトリ作成が失敗しエラーメッセージが表示される' do
+          # GithubService#repository_exists?をスタブしてtrueを返す（リポジトリが存在する）
+          allow_any_instance_of(GithubService).to receive(:repository_exists?).and_return(true)
+
+          fill_in 'name', with: 'existing_repo'
+          fill_in 'description', with: '今日学んだことを記録するリポジトリ'
+
+          click_button 'GitHubリポジトリを作成'
+
+          # エラーメッセージの表示
+          expect(page).to have_content('指定したリポジトリ名はすでに存在しています')
+        end
+      end
     end
   end
 end
