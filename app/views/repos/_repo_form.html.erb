@@ -1,0 +1,30 @@
+<%= form_with url: task_repo_path(@task), method: :post, data: { turbo_frame: "_top" }, class: "flex flex-col gap-2" do |f| %>
+  <%= f.label :name, "リポジトリ名", class: "label text-sm text-neutral font-semibold" %>
+  <%= f.text_field :name, 
+                  placeholder: "til", 
+                  class: "input input-neutral w-full" %>
+
+  <%= f.label :description, "説明文", class: "label text-sm text-neutral font-semibold" %>
+  <%= f.text_area :description, 
+                  rows: 4, 
+                  placeholder: "今日学んだことを記録するリポジトリ",
+                  class: "textarea text-area-neutral w-full" %>
+
+  <div class="flex flex-col gap-2">
+    <label class="label cursor-pointer justify-start gap-2">
+      <!-- check時はparams[:repo][:private]="true",
+           unchecked時はparams[:repo][:private]="false"を送信 -->
+      <%= f.check_box :private, { checked: false, class: "checkbox checkbox-sm checkbox-neutral" }, true, false %>
+      <span class="label-text text-sm text-neutral font-semibold">非公開に設定</span>
+    </label>
+
+    <label class="label cursor-pointer justify-start gap-2">
+      <%= f.check_box :auto_init, { checked: false, class: "checkbox checkbox-sm checkbox-neutral" }, true, false %>
+      <span class="label-text text-sm text-neutral font-semibold">READMEを追加</span>
+    </label>
+  </div>
+
+  <div class="flex justify-end">
+    <%= f.submit "GitHubリポジトリを作成", class: "btn btn-primary rounded-full shadow-none w-full" %>
+  </div>
+<% end %>
