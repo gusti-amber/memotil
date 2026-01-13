@@ -50,4 +50,20 @@ class GithubService
   rescue Octokit::NotFound
     false
   end
+
+  def create_repository(name:, description: nil, private: false, auto_init: false)
+    # 🎓 create_repositoryメソッドでリポジトリを作成
+    # 公式ドキュメント: https://www.rubydoc.info/gems/octokit/10.0.0/Octokit/Client/Repositories#create_repository-instance_method
+    # リポジトリ名のみを指定すると、認証済みユーザーのアカウント直下に作成される
+    options = {
+      description: description,
+      private: private,
+      auto_init: auto_init,
+      has_issues: true,
+      has_wiki: false,
+      has_downloads: false,
+      gitignore_template: nil
+    }
+    @client.create_repository(name, options)
+  end
 end
