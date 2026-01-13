@@ -47,7 +47,12 @@ class ReposController < ApplicationController
 
   def validate_name(name)
     return "リポジトリ名を入力してください" if name.blank? || name.strip.empty?
+    return "リポジトリ名は英数字と一部の記号( ., -, _ )のみ使用できます" unless valid_format?(name)
 
     nil
+  end
+
+  def valid_format?(name)
+    name.match?(/\A[a-zA-Z0-9._-]+\z/)
   end
 end
