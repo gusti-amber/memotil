@@ -62,7 +62,7 @@ class TilsController < ApplicationController
   rescue Octokit::Unauthorized
     redirect_to @task, alert: "GitHub連携が必要です"
   rescue Octokit::UnprocessableEntity => e
-    redirect_to new_task_til_path(@task, repo: params[:repo]), alert: "ファイルの作成に失敗しました: #{e.message}"
+    redirect_to @task, alert: "ファイルの作成に失敗しました: #{e.message}"
   end
 
   private
