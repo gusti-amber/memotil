@@ -61,6 +61,9 @@ RSpec.describe 'Repos', type: :system do
 
     context '正しいリポジトリ名を入力した場合' do
       it 'リポジトリ作成が成功しサクセスメッセージが表示される' do
+        # GithubService#repository_exists?をスタブしてfalseを返す（リポジトリが存在しない）
+        allow_any_instance_of(GithubService).to receive(:repository_exists?).and_return(false)
+
         fill_in 'name', with: 'til'
         fill_in 'description', with: '今日学んだことを記録するリポジトリ'
 
