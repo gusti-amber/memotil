@@ -35,7 +35,7 @@ class ReposController < ApplicationController
   rescue Octokit::Unauthorized
     redirect_to @task, alert: "GitHub連携が必要です"
   rescue Octokit::UnprocessableEntity => e
-    redirect_to new_task_repo_path(@task), alert: "リポジトリの作成に失敗しました: #{e.message}"
+    redirect_to @task, alert: "リポジトリの作成に失敗しました: #{e.message}"
   end
 
   private
