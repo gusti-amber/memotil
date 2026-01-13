@@ -11,7 +11,8 @@ class ReposController < ApplicationController
 
   def create
     @validation_name_error = validate_name(params[:name])
-    if @validation_name_error
+    @validation_description_error = validate_description(params[:description])
+    if @validation_name_error || @validation_description_error
       respond_to do |format|
         format.turbo_stream { render :create, status: :unprocessable_entity }
         format.html { render :new, status: :unprocessable_entity }
@@ -50,6 +51,12 @@ class ReposController < ApplicationController
     return "リポジトリ名は英数字と一部の記号( ., -, _ )のみ使用できます" unless valid_format?(name)
     return "指定したリポジトリ名はすでに存在しています" if repository_already_exists?(name)
 
+    nil
+  end
+
+  def validate_description(description)
+    return "説明文は350文字以下で入力してください" if description.length > 350
+    
     nil
   end
 
