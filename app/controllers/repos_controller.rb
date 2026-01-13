@@ -10,6 +10,18 @@ class ReposController < ApplicationController
   end
 
   def create
+    client = GithubService.new(current_user.github_token)
+    client.create_repository(
+      name: params[:name],
+      description: params[:description],
+      private: params[:private],
+      auto_init: params[:auto_init] == "true" # Boolean型に変換
+    )
+    redirect_to @task, notice: "新しいリポジトリを作成しました"
+  rescue Octokit::Unauthorized
+    redirect_to @task, alert: "GitHub連携が必要です"
+  rescue Octokit::UnprocessableEntity => e
+    redirect_to new_task_repo_path(@task), alert: "リポジトリの作成に失敗しました: #{e.message}"
   end
 
   private
