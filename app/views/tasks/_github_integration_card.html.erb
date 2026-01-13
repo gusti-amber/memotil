@@ -1,10 +1,10 @@
 <!-- GitHub連携カード -->
 <div class="card bg-base-200 shadow-sm w-full mb-1">
   <div class="card-body">
-    <%= turbo_frame_tag "til" do %>
+    <%= turbo_frame_tag "til_form" do %>
       <% if current_user.github_token.present? %>
         <div class="card-actions justify-center">
-          <%= link_to new_task_til_path(task), data: { turbo_frame: "til" }, class: "btn btn-lg btn-primary rounded-full text-base" do %>
+          <%= link_to new_task_til_path(task), data: { turbo_frame: "til_form" }, class: "btn btn-lg btn-primary rounded-full text-base" do %>
             新しいmdファイルにTILを記録
           <% end %>
         </div>

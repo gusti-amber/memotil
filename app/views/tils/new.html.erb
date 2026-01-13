@@ -1,8 +1,8 @@
-<%= turbo_frame_tag "til" do %>
+<%= turbo_frame_tag "til_form" do %>
   <div class="flex flex-col gap-6">
     <div class="flex items-center justify-between">
       <p class="text-xl font-bold text-neutral">新しいmdファイルにTILを記録</p>
-      <%= link_to task_path(@task), data: { turbo_frame: "til" }, class: "btn btn-ghost btn-circle text-neutral border-none shadow-none hover:bg-neutral/10" do %>
+      <%= link_to task_path(@task), data: { turbo_frame: "til_form" }, class: "btn btn-ghost btn-circle text-neutral border-none shadow-none hover:bg-neutral/10" do %>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
           <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
         </svg>
@@ -10,7 +10,7 @@
     </div>
 
     <!-- リポジトリ選択フォーム（GET） -->
-    <%= form_with url: new_task_til_path(@task), method: :get, data: { turbo_frame: "til" }, class: "flex flex-col gap-1" do |f| %>
+    <%= form_with url: new_task_til_path(@task), method: :get, data: { turbo_frame: "til_form" }, class: "flex flex-col gap-1" do |f| %>
       <%= f.label :repo, "リポジトリを選択", class: "label text-sm text-neutral font-semibold" %>
       <%= f.select :repo,
                     @repositories.map { |r| ["#{r.owner.login}/#{r.name}", r.full_name] },
