@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :posts, only: [ :create, :destroy ]
     resources :todos, only: [ :update ]
     resource :til, only: [ :new, :create ]
+    resource :repo, only: [ :new, :create ]
   end
 
   root "static_pages#top"
