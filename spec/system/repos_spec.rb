@@ -29,7 +29,7 @@ RSpec.describe 'Repos', type: :system do
     "my~repo",        # ~を含む
     "my`repo",        # `を含む
     "my!repo",        # !を含む
-    "リポジトリ",      # 日本語を含む
+    "リポジトリ"      # 日本語を含む
   ].freeze
 
   let(:user) { create(:user, github_token: 'test_token') }
@@ -118,20 +118,20 @@ RSpec.describe 'Repos', type: :system do
           expect(page).to have_content('指定したリポジトリ名はすでに存在しています')
         end
       end
-      
+
       context '説明文が350文字以下の場合' do
         it 'リポジトリ作成が成功しサクセスメッセージが表示される' do
           # GithubService#repository_exists?をスタブしてfalseを返す（リポジトリが存在しない）
           allow_any_instance_of(GithubService).to receive(:repository_exists?).and_return(false)
-  
-          fill_in 'name', with: 'til' 
+
+          fill_in 'name', with: 'til'
           fill_in 'description', with: 'a' * 350
-  
+
           click_button 'GitHubリポジトリを作成'
-  
+
           # タスク詳細画面へリダイレクト
           expect(page).to have_current_path(task_path(done_task))
-  
+
           # サクセスメッセージの表示
           expect(page).to have_content('新しいリポジトリを作成しました')
         end

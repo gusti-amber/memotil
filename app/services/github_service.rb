@@ -68,7 +68,7 @@ class GithubService
     }
     @client.create_repository(name, options)
   end
-  
+
   def repository_exists?(repo)
     # 🎓 GitHub API のユーザー情報取得方法: https://octokit.github.io/octokit.rb/Octokit/Client/Users.html#user-instance_method
     owner = @client.user.login

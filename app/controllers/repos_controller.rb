@@ -60,7 +60,7 @@ class ReposController < ApplicationController
 
   def validate_description(description)
     return "説明文は350文字以下で入力してください" if description.length > 350
-    
+
     nil
   end
 
