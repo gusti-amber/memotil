@@ -11,10 +11,16 @@
   <% end %>
 
   <%= f.label :description, "説明文", class: "label text-sm text-neutral font-semibold" %>
+  <% has_description_error = @validation_description_error.present? %>
   <%= f.text_area :description, 
                   rows: 4, 
                   placeholder: "今日学んだことを記録するリポジトリ",
-                  class: "textarea text-area-neutral w-full" %>
+                  class: "textarea #{has_description_error ? 'textarea-error' : 'textarea-neutral'} w-full" %>
+
+  <!-- 説明文のエラーメッセージの表示 -->
+  <% if has_description_error %>
+    <p class="text-xs text-error font-bold"><%= @validation_description_error %></p>
+  <% end %>
 
   <div class="flex flex-col gap-2">
     <label class="label cursor-pointer justify-start gap-2">
