@@ -12,7 +12,8 @@
 
   <div class="flex flex-col gap-2">
     <label class="label cursor-pointer justify-start gap-2">
-      <!-- check時はparams[:repo][:private]="true",
+      <!-- checkboxはString型を返すため、
+           checked時はparams[:repo][:private]="true",
            unchecked時はparams[:repo][:private]="false"を送信 -->
       <%= f.check_box :private, { checked: false, class: "checkbox checkbox-sm checkbox-neutral" }, true, false %>
       <span class="label-text text-sm text-neutral font-semibold">非公開に設定</span>
