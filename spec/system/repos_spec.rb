@@ -1,6 +1,37 @@
 require 'rails_helper'
 
 RSpec.describe 'Repos', type: :system do
+  # 禁止された文字を含むリポジトリ名の定数
+  FORBIDDEN_CHAR_NAMES = [
+    "my repo",        # スペースを含む
+    "my@repo",        # @を含む
+    "my#repo",        # #を含む
+    "my$repo",        # $を含む
+    "my%repo",        # %を含む
+    "my^repo",        # ^を含む
+    "my&repo",        # &を含む
+    "my*repo",        # *を含む
+    "my(repo)",       # ()を含む
+    "my+repo",        # +を含む
+    "my=repo",        # =を含む
+    "my[repo]",       # []を含む
+    "my{repo}",       # {}を含む
+    "my|repo",        # |を含む
+    "my\\repo",       # \を含む
+    "my:repo",        # :を含む
+    "my;repo",        # ;を含む
+    "my\"repo",       # "を含む
+    "my'repo",        # 'を含む
+    "my<repo>",       # <>を含む
+    "my,repo",        # ,を含む
+    "my?repo",        # ?を含む
+    "my/repo",        # /を含む
+    "my~repo",        # ~を含む
+    "my`repo",        # `を含む
+    "my!repo",        # !を含む
+    "リポジトリ",      # 日本語を含む
+  ].freeze
+
   let(:user) { create(:user, github_token: 'test_token') }
   let(:done_task) { create(:done_task, user: user) }
   let(:mock_account) { double('account', login: 'test_account') }
@@ -53,6 +84,20 @@ RSpec.describe 'Repos', type: :system do
 
           # エラーメッセージの表示
           expect(page).to have_content('リポジトリ名を入力してください')
+        end
+      end
+
+      context 'リポジトリ名が正しい形式でない場合' do
+        FORBIDDEN_CHAR_NAMES.each do |invalid_name|
+          it "#{invalid_name.inspect}の場合、エラーメッセージが表示される" do
+            fill_in 'name', with: invalid_name
+            fill_in 'description', with: '今日学んだことを記録するリポジトリ'
+
+            click_button 'GitHubリポジトリを作成'
+
+            # エラーメッセージの表示
+            expect(page).to have_content('リポジトリ名は英数字と一部の記号( ., -, _ )のみ使用できます')
+          end
         end
       end
     end
