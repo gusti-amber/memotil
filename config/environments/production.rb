@@ -124,6 +124,10 @@ Rails.application.configure do
     "memotil.com",        # Allow requests from memotil.com
     /.*\.memotil\.com/    # Allow requests from subdomains like www.memotil.com
   ]
+  # Allow Render's hostname for health checks and internal requests
+  # RENDER_EXTERNAL_HOSTNAME is automatically set by Render platform
+  render_host = ENV["RENDER_EXTERNAL_HOSTNAME"]
+  config.hosts << render_host if render_host.present?
   # Skip DNS rebinding protection for the default health check endpoint.
   config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
