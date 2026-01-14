@@ -14,7 +14,7 @@ class Users::PasswordsController < Devise::PasswordsController
     user = User.find_by(email: email)
 
     # 未確認ユーザーの場合、エラーを追加
-    if !user&.confirmed?
+    if user.present? && !user.confirmed?
       self.resource = resource_class.new(user_params)
       resource.errors.add(:email, :unconfirmed)
       respond_with(resource)
