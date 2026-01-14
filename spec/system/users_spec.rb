@@ -365,6 +365,22 @@ RSpec.describe 'Users', type: :system do
         # 存在しないメールアドレスの場合、エラーが表示される
         expect(page).to have_content('メールアドレス が見つかりませんでした')
       end
+
+      it '確認されていないメールアドレスを入力した場合、メール送信に失敗しエラーメッセージが表示される' do
+        unconfirmed_user = create(:unconfirmed_user)
+        ActionMailer::Base.deliveries.clear
+
+        visit new_user_password_path
+
+        fill_in 'メールアドレス', with: unconfirmed_user.email
+        click_button '設定メールを送信'
+
+        # エラーメッセージが表示される
+        expect(page).to have_content('メールアドレス はまだ確認できていません')
+
+        # メールが送信されないことを確認
+        expect(ActionMailer::Base.deliveries.size).to eq(0)
+      end
     end
 
     context 'パスワードリセット' do
