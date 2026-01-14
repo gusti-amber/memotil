@@ -55,6 +55,7 @@ ja:
       expired: "の有効期限が切れています"
       already_confirmed: "はすでに確認済みです"
       confirmation_period_expired: "は有効期限内に確認する必要があります"
+      unconfirmed: "はまだ確認できていません"
     attributes:
       # ♻️ 最大個数は変数で管理するようにする。
       tag_ids:
