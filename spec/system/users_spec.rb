@@ -347,39 +347,51 @@ RSpec.describe 'Users', type: :system do
         end
       end
 
-      it 'メールアドレスが空の場合はエラーが表示される' do
-        visit new_user_password_path
+      context 'メールアドレスが空の場合' do
+        it 'メール送信は失敗し、エラーメッセージが表示される' do
+          visit new_user_password_path
 
-        fill_in 'メールアドレス', with: ''
-        click_button '設定メールを送信'
+          fill_in 'メールアドレス', with: ''
+          click_button '設定メールを送信'
 
-        expect(page).to have_content('メールアドレス を入力してください')
+          expect(page).to have_content('メールアドレス を入力してください')
+
+          # メールが送信されないことを確認
+          expect(ActionMailer::Base.deliveries.size).to eq(0)
+        end
       end
 
-      it '登録されていないメールアドレスを入力した場合はエラーが表示される' do
-        visit new_user_password_path
+      context '登録されていないメールアドレスを入力した場合' do
+        it 'メール送信は失敗し、エラーメッセージが表示される' do
+          visit new_user_password_path
 
-        fill_in 'メールアドレス', with: 'unregistered@example.com'
-        click_button '設定メールを送信'
+          fill_in 'メールアドレス', with: 'unregistered@example.com'
+          click_button '設定メールを送信'
 
-        # 存在しないメールアドレスの場合、エラーが表示される
-        expect(page).to have_content('メールアドレス が見つかりませんでした')
+          # 存在しないメールアドレスの場合、エラーが表示される
+          expect(page).to have_content('メールアドレス が見つかりませんでした')
+
+          # メールが送信されないことを確認
+          expect(ActionMailer::Base.deliveries.size).to eq(0)
+        end
       end
 
-      it '確認されていないメールアドレスを入力した場合、メール送信に失敗しエラーメッセージが表示される' do
-        unconfirmed_user = create(:unconfirmed_user)
-        ActionMailer::Base.deliveries.clear
+      context '確認されていないメールアドレスを入力した場合' do
+        it 'メール送信は失敗し、エラーメッセージが表示される' do
+          unconfirmed_user = create(:unconfirmed_user)
+          ActionMailer::Base.deliveries.clear
 
-        visit new_user_password_path
+          visit new_user_password_path
 
-        fill_in 'メールアドレス', with: unconfirmed_user.email
-        click_button '設定メールを送信'
+          fill_in 'メールアドレス', with: unconfirmed_user.email
+          click_button '設定メールを送信'
 
-        # エラーメッセージが表示される
-        expect(page).to have_content('メールアドレス はまだ確認できていません')
+          # エラーメッセージが表示される
+          expect(page).to have_content('メールアドレス はまだ確認できていません')
 
-        # メールが送信されないことを確認
-        expect(ActionMailer::Base.deliveries.size).to eq(0)
+          # メールが送信されないことを確認
+          expect(ActionMailer::Base.deliveries.size).to eq(0)
+        end
       end
     end
 
