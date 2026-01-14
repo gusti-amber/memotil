@@ -7,9 +7,21 @@ class Users::PasswordsController < Devise::PasswordsController
   # end
 
   # POST /resource/password
-  # def create
-  #   super
-  # end
+  # 🎓 passwords#createをカスタマイズ
+  # 公式実装: https://github.com/heartcombo/devise/blob/main/app/controllers/devise/passwords_controller.rb
+  def create
+    email = user_params[:email]
+    user = User.find_by(email: email)
+
+    # 未確認ユーザーの場合、エラーを追加
+    if user.present? && !user.confirmed?
+      self.resource = resource_class.new(user_params)
+      resource.errors.add(:email, :unconfirmed)
+      respond_with(resource)
+    else
+      super
+    end
+  end
 
   # GET /resource/password/edit?reset_password_token=abcdef
   # def edit
@@ -21,7 +33,11 @@ class Users::PasswordsController < Devise::PasswordsController
   #   super
   # end
 
-  # protected
+  protected
+
+  def user_params
+    params.require(:user).permit(:email)
+  end
 
   # def after_resetting_password_path_for(resource)
   #   super(resource)
