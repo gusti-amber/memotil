@@ -197,10 +197,10 @@ Notion は ブログ形式で記述できる反面、文章としてまとめる
 | インフラ               | Render                          |
 | 開発環境               | Docker (Docker Compose)         |
 
+## E-R 図
+
+<img width="1849" height="1533" alt="e-r" src="https://github.com/user-attachments/assets/a6837e5f-b5c5-43dd-ade8-c74758fc34a0" />
+
 ## 画面遷移図
 
 https://www.figma.com/design/zOplZlur07IL8oWRqlQmOy/%E3%82%BF%E3%82%B9%E3%82%AF%E3%83%A1%E3%83%A2%E3%82%A2%E3%83%97%E3%83%AA?node-id=0-1&t=BVV11oXtRknQ4bOA-1
-
-## E-R 図
-
-https://miro.com/app/board/uXjVInsnBRM=/?share_link_id=678957626031
