@@ -8,7 +8,7 @@
   <!-- 保存前のポスト一覧が空でなかった場合 -->
   <% else %>
     <!-- ポストを追加 -->
-    <%= turbo_stream.append "posts_list" do %>
+    <%= turbo_stream.prepend "posts_list" do %>
       <%= render partial: "posts/post", locals: { post: @post } %>
     <% end %>
   <% end %>

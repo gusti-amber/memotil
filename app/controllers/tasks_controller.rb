@@ -26,7 +26,8 @@ class TasksController < ApplicationController
   end
 
   def show
-    @posts = @task.posts.includes(:user, :postable).order(created_at: :asc)
+    order_direction = @task.doing? ? :desc : :asc
+    @posts = @task.posts.includes(:user, :postable).order(created_at: order_direction)
     @post = Post.new
   end
 
