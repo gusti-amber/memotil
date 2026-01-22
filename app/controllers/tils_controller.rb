@@ -30,6 +30,7 @@ class TilsController < ApplicationController
     @repositories = @client.list_repositories
 
     @selected_repo = params[:repo].presence
+    @form = TilForm.new
   rescue Octokit::Unauthorized
     redirect_to @task, alert: "GitHub連携が必要です"
   end
