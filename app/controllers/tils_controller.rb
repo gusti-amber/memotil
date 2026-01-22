@@ -40,25 +40,23 @@ class TilsController < ApplicationController
     @message = params[:message]
     @body = params[:body]
 
-    # パス名のバリデーション
-    @validation_error = validate_path(@path)
-    if @validation_error
+    @client = GithubService.new(current_user.github_token)
+    @form = TilForm.new({ path: @path, message: @message, body: @body, repo: params[:repo] }, github_service: @client)
+    if @form.valid?
+      @client.create_contents(
+        @form.repo,
+        path: @form.path,
+        message: @form.message,
+        content: @form.body
+      )
+      redirect_to @task, notice: "新しいmdファイルにTILを記録しました"
+    else
       prepare_new_view
       respond_to do |format|
         format.turbo_stream { render :create, status: :unprocessable_entity }
         format.html { render :new, status: :unprocessable_entity }
       end
-      return
     end
-
-    client = GithubService.new(current_user.github_token)
-    client.create_contents(
-      params[:repo],
-      path: @path,
-      message: @message,
-      content: @body
-    )
-    redirect_to @task, notice: "新しいmdファイルにTILを記録しました"
   rescue Octokit::Unauthorized
     redirect_to @task, alert: "GitHub連携が必要です"
   rescue Octokit::UnprocessableEntity => e
