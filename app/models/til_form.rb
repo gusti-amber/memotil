@@ -7,11 +7,19 @@ class TilForm
   attribute :body, :string
   attribute :repo, :string
 
+  attr_accessor :github_service
+
   validates :path, presence: true
   validates :repo, presence: true
 
   validate :validate_path_format
   validate :validate_path_safety
+  validate :validate_file_uniqueness
+
+  def initialize(attributes = {}, github_service: nil)
+    super(attributes)
+    @github_service = github_service # インスタンス変数に直接代入
+  end
 
   private
 
@@ -40,6 +48,14 @@ class TilForm
     ]
     if invalid_patterns.any?
       errors.add(:path, "は不正なパスです")
+    end
+  end
+
+  def validate_file_uniqueness
+    return if path.blank? || repo.blank? || github_service.nil?
+
+    if github_service.file_exists?(repo, path: path)
+      errors.add(:path, "はすでに存在しています")
     end
   end
 end
