@@ -11,6 +11,7 @@ class TilForm
   validates :repo, presence: true
 
   validate :validate_path_format
+  validate :validate_path_safety
 
   private
 
@@ -18,5 +19,27 @@ class TilForm
     return if path.blank?
 
     errors.add(:path, "は.mdで終わる必要があります") unless path.end_with?(".md")
+  end
+
+  def validate_path_safety
+    return if path.blank?
+
+    # 禁止文字のチェック
+    forbidden_chars = /[:*?"<>|]/
+    if if forbidden_chars.match?(path)
+      errors.add(:path, "に使用できない文字が含まれています")
+    end
+
+    # 不正パスパターンのチェック
+    invalid_patterns = [
+      path.include?(".."),           # 親ディレクトリ参照
+      path.include?("//"),           # 連続するスラッシュ
+      path.start_with?("/"),         # 絶対パス
+      path.include?(".git/"),        # .gitディレクトリ内
+      path.start_with?(".git")       # .gitで始まるパス
+    ]
+    if invalid_patterns.any?
+      errors.add(:path, "は不正なパスです")
+    end
   end
 end
