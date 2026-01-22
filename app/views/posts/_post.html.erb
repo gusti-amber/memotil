@@ -20,7 +20,7 @@
         <% end %>
       </div>
     </div>
-    <% if post.task.doing? %>
+    <% if show_post_actions %>
       <div class="flex justify-start">
         <%= link_to task_post_path(post.task, post),
           data: { turbo_method: :delete, turbo_confirm: "この投稿を削除しますか？", test_id: "delete-post-btn" },
