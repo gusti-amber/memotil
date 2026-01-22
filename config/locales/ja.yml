@@ -39,6 +39,12 @@ ja:
       text_post:
         body: "メモ"
 
+  # ActiveModelの属性名の和訳
+  activemodel:
+    attributes:
+      til_form:
+        path: "パス名"
+
   # エラーメッセージの和訳
   errors:
     messages:
