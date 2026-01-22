@@ -10,7 +10,7 @@
   <!-- ポスト一覧 -->
   <div class="flex-1 flex flex-col justify-start max-h-screen overflow-y-auto">
     <%= turbo_frame_tag "posts_list" do %>
-      <%= render "posts/posts_list" %>
+      <%= render "posts/posts_list", show_post_actions: task.doing? %>
     <% end %>
   </div>
 </div>
