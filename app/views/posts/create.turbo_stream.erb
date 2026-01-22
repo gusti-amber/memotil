@@ -3,13 +3,13 @@
   <% if @posts_empty_before %>
     <!-- postsフレーム全体を更新 -->
     <%= turbo_stream.update "posts_list" do %>
-      <%= render "posts/posts_list" %>
+      <%= render "posts/posts_list", show_post_actions: @task.doing? %>
     <% end %>
   <!-- 保存前のポスト一覧が空でなかった場合 -->
   <% else %>
     <!-- ポストを追加 -->
     <%= turbo_stream.prepend "posts_list" do %>
-      <%= render partial: "posts/post", locals: { post: @post } %>
+      <%= render partial: "posts/post", locals: { post: @post, show_post_actions: @task.doing? } %>
     <% end %>
   <% end %>
 
