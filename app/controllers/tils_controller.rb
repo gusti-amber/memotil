@@ -61,7 +61,7 @@ class TilsController < ApplicationController
   private
 
   def til_params
-    params.permit(:path, :message, :body, :repo)
+    params.require(:til_form).permit(:path, :message, :body, :repo)
   end
 
   def set_task
