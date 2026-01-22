@@ -36,7 +36,7 @@ class TilsController < ApplicationController
 
   def create
     @client = GithubService.new(current_user.github_token)
-    @form = TilForm.new(til_params, github_service: @client)
+    @form = TilForm.new(til_params, client: @client)
     if @form.valid?
       @client.create_contents(
         @form.repo,
