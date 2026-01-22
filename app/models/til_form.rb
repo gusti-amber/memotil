@@ -34,7 +34,7 @@ class TilForm
 
     # 禁止文字のチェック
     forbidden_chars = /[:*?"<>|]/
-    if if forbidden_chars.match?(path)
+    if forbidden_chars.match?(path)
       errors.add(:path, "に使用できない文字が含まれています")
     end
 
