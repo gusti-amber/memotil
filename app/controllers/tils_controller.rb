@@ -35,13 +35,8 @@ class TilsController < ApplicationController
   end
 
   def create
-    # フォームの入力値を保持するため、インスタンス変数に保存
-    @path = params[:path]
-    @message = params[:message]
-    @body = params[:body]
-
     @client = GithubService.new(current_user.github_token)
-    @form = TilForm.new({ path: @path, message: @message, body: @body, repo: params[:repo] }, github_service: @client)
+    @form = TilForm.new(til_params, github_service: @client)
     if @form.valid?
       @client.create_contents(
         @form.repo,
@@ -64,6 +59,10 @@ class TilsController < ApplicationController
   end
 
   private
+
+  def til_params
+    params.permit(:path, :message, :body, :repo)
+  end
 
   def set_task
     @task = current_user.tasks.find(params[:task_id])
