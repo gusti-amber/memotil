@@ -46,7 +46,6 @@ class TilsController < ApplicationController
       )
       redirect_to @task, notice: "新しいmdファイルにTILを記録しました"
     else
-      prepare_new_view
       respond_to do |format|
         format.turbo_stream { render :create, status: :unprocessable_entity }
         format.html { render :new, status: :unprocessable_entity }
@@ -72,12 +71,5 @@ class TilsController < ApplicationController
 
   def ensure_done
     redirect_to @task, alert: "完了したタスクのみTILを反映できます" unless @task&.done?
-  end
-
-  # 再レンダリング時のパラメータを保持
-  def prepare_new_view
-    @client = GithubService.new(current_user.github_token)
-    @repositories = @client.list_repositories
-    @selected_repo = params[:repo].presence
   end
 end
