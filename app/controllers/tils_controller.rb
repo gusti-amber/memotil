@@ -75,37 +75,6 @@ class TilsController < ApplicationController
     redirect_to @task, alert: "完了したタスクのみTILを反映できます" unless @task&.done?
   end
 
-  def validate_path(path)
-    return "パス名を入力してください" if path.blank? || path.strip.empty?
-    return "パス名は.mdで終わる必要があります" unless path.end_with?(".md")
-    return "パス名に使用できない文字( : \* ? \" < > | )が含まれています" if contains_forbidden_characters?(path)
-    return "不正なパス名が指定されています" if contains_invalid_location?(path)
-    return "指定したパス名はすでに存在しています" if file_already_exists?(path)
-
-    nil
-  end
-
-  def contains_forbidden_characters?(path)
-    forbidden_chars = /[:*?"<>|]/
-    path.match?(forbidden_chars)
-  end
-
-  def contains_invalid_location?(path)
-    invalid_patterns = [
-      path.include?(".."),           # 親ディレクトリ参照
-      path.include?("//"),           # 連続するスラッシュ
-      path.start_with?("/"),         # 絶対パス
-      path.include?(".git/"),        # .gitディレクトリ内
-      path.start_with?(".git")       # .gitで始まるパス
-    ]
-    invalid_patterns.any?
-  end
-
-  def file_already_exists?(path)
-    client = GithubService.new(current_user.github_token)
-    client.file_exists?(params[:repo], path: path)
-  end
-
   # 再レンダリング時のパラメータを保持
   def prepare_new_view
     @client = GithubService.new(current_user.github_token)
