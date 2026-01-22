@@ -6,4 +6,7 @@ class TilForm
   attribute :message, :string
   attribute :body, :string
   attribute :repo, :string
+
+  validates :path, presence: true
+  validates :repo, presence: true
 end
