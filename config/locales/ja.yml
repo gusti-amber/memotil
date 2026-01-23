@@ -44,6 +44,8 @@ ja:
     attributes:
       til_form:
         path: "パス名"
+        message: "コミットメッセージ"
+        body: "mdファイルの内容"
 
   # エラーメッセージの和訳
   errors:
