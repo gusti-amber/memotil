@@ -74,11 +74,13 @@ RSpec.describe 'TILs', type: :system do
 
     context '不正な入力の場合' do
       context 'パス名が空の場合' do
+        before do
+          # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
+          allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
+        end
+
         EMPTY_PATHS.each do |empty_path|
           it "#{empty_path.inspect}の場合、エラーメッセージが表示される" do
-            # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
-            allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
-
             fill_in '新しいmdファイルのパス名', with: empty_path.to_s
             fill_in 'コミットメッセージ', with: 'Test commit message'
             fill_in 'mdファイルの内容', with: 'Test content'
@@ -92,11 +94,13 @@ RSpec.describe 'TILs', type: :system do
       end
 
       context 'パス名の末尾が.mdではない場合' do
+        before do
+          # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
+          allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
+        end
+
         INVALID_EXTENSION_PATHS.each do |invalid_path|
           it "#{invalid_path.inspect}の場合、エラーメッセージが表示される" do
-            # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
-            allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
-
             fill_in '新しいmdファイルのパス名', with: invalid_path
             fill_in 'コミットメッセージ', with: 'Test commit message'
             fill_in 'mdファイルの内容', with: 'Test content'
@@ -110,11 +114,13 @@ RSpec.describe 'TILs', type: :system do
       end
 
       context 'パス名が禁止文字を含む場合' do
+        before do
+          # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
+          allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
+        end
+
         FORBIDDEN_CHAR_PATHS.each do |invalid_path|
           it "#{invalid_path.inspect}の場合、エラーメッセージが表示される" do
-            # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
-            allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
-
             fill_in '新しいmdファイルのパス名', with: invalid_path
             fill_in 'コミットメッセージ', with: 'Test commit message'
             fill_in 'mdファイルの内容', with: 'Test content'
@@ -128,11 +134,13 @@ RSpec.describe 'TILs', type: :system do
       end
 
       context 'パス名が不正な場合' do
+        before do
+          # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
+          allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
+        end
+
         INVALID_LOCATION_PATHS.each do |invalid_path|
           it "#{invalid_path.inspect}の場合、エラーメッセージが表示される" do
-            # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
-            allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
-
             fill_in '新しいmdファイルのパス名', with: invalid_path
             fill_in 'コミットメッセージ', with: 'Test commit message'
             fill_in 'mdファイルの内容', with: 'Test content'
