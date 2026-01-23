@@ -12,6 +12,10 @@ ja:
         title: "タイトル"
         tag_ids: "タグ"
         todos: "タスクの完了条件"
+      til_form:
+        path: "新しいmdファイルのパス名"
+        message: "コミットメッセージ"
+        body: "mdファイルの内容"
 
   # ActiveRecordの属性名の和訳
   activerecord:
