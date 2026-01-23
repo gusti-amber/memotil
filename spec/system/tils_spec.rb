@@ -46,7 +46,7 @@ RSpec.describe 'TILs', type: :system do
       expect(page).to have_content('新しいmdファイルにTILを記録')
 
       # リポジトリを選択
-      select 'test_user/test_repo', from: 'repo'
+      select 'test_user/test_repo', from: 'selected_repo'
 
       # 選択されたリポジトリのリンク付きURLが表示される
       expect(page).to have_content('新しいmdファイルのパス名')

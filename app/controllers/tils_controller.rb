@@ -8,7 +8,7 @@ class TilsController < ApplicationController
   #   @client = GithubService.new(current_user.github_token)
   #   @repositories = @client.list_repositories
   #
-  #   @selected_repo = params[:repo].presence
+  #   @selected_repo = params[:selected_repo].presence
   #   if @selected_repo
   #     readme = @client.fetch_readme(@selected_repo)
   #     @readme_sha = readme[:sha]
@@ -29,7 +29,7 @@ class TilsController < ApplicationController
     @client = GithubService.new(current_user.github_token)
     @repositories = @client.list_repositories
 
-    @selected_repo = params[:repo].presence
+    @selected_repo = params[:selected_repo].presence
     @form = TilForm.new
   rescue Octokit::Unauthorized
     redirect_to @task, alert: "GitHub連携が必要です"
