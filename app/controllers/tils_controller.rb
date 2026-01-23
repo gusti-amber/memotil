@@ -29,7 +29,7 @@ class TilsController < ApplicationController
     @client = GithubService.new(current_user.github_token)
     @repositories = @client.list_repositories
 
-    @selected_repo = params[:selected_repo].presence
+    @selected_repo = new_params[:selected_repo].presence
     @form = TilForm.new
   rescue Octokit::Unauthorized
     redirect_to @task, alert: "GitHub連携が必要です"
@@ -59,6 +59,11 @@ class TilsController < ApplicationController
   end
 
   private
+
+  # tils#newで受け取るGETパラメータを許可
+  def new_params
+    params.permit(:selected_repo)
+  end
 
   def til_params
     params.require(:til_form).permit(:path, :message, :body, :repo)
