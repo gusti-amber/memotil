@@ -46,7 +46,7 @@ RSpec.describe 'TILs', type: :system do
       expect(page).to have_content('新しいmdファイルにTILを記録')
 
       # リポジトリを選択
-      select 'test_user/test_repo', from: 'repo'
+      select 'test_user/test_repo', from: 'selected_repo'
 
       # 選択されたリポジトリのリンク付きURLが表示される
       expect(page).to have_content('新しいmdファイルのパス名')
@@ -58,9 +58,9 @@ RSpec.describe 'TILs', type: :system do
         # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
         allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
 
-        fill_in 'path', with: 'category/today_i_learned.md'
-        fill_in 'message', with: 'Add TIL: test task'
-        fill_in 'body', with: '# Today I Learned\n\n今日学んだことを記録します。'
+        fill_in '新しいmdファイルのパス名', with: 'category/today_i_learned.md'
+        fill_in 'コミットメッセージ', with: 'Add TIL: test task'
+        fill_in 'mdファイルの内容', with: '# Today I Learned\n\n今日学んだことを記録します。'
 
         click_button 'GitHubリポジトリに保存'
 
@@ -74,61 +74,81 @@ RSpec.describe 'TILs', type: :system do
 
     context '不正な入力の場合' do
       context 'パス名が空の場合' do
+        before do
+          # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
+          allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
+        end
+
         EMPTY_PATHS.each do |empty_path|
           it "#{empty_path.inspect}の場合、エラーメッセージが表示される" do
-            fill_in 'path', with: empty_path.to_s
-            fill_in 'message', with: 'Test commit message'
-            fill_in 'body', with: 'Test content'
+            fill_in '新しいmdファイルのパス名', with: empty_path.to_s
+            fill_in 'コミットメッセージ', with: 'Test commit message'
+            fill_in 'mdファイルの内容', with: 'Test content'
 
             click_button 'GitHubリポジトリに保存'
 
             # エラーメッセージの表示
-            expect(page).to have_content('パス名を入力してください')
+            expect(page).to have_content('パス名 を入力してください')
           end
         end
       end
 
       context 'パス名の末尾が.mdではない場合' do
+        before do
+          # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
+          allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
+        end
+
         INVALID_EXTENSION_PATHS.each do |invalid_path|
           it "#{invalid_path.inspect}の場合、エラーメッセージが表示される" do
-            fill_in 'path', with: invalid_path
-            fill_in 'message', with: 'Test commit message'
-            fill_in 'body', with: 'Test content'
+            fill_in '新しいmdファイルのパス名', with: invalid_path
+            fill_in 'コミットメッセージ', with: 'Test commit message'
+            fill_in 'mdファイルの内容', with: 'Test content'
 
             click_button 'GitHubリポジトリに保存'
 
             # エラーメッセージの表示
-            expect(page).to have_content('パス名は.mdで終わる必要があります')
+            expect(page).to have_content('パス名 は.mdで終わる必要があります')
           end
         end
       end
 
       context 'パス名が禁止文字を含む場合' do
+        before do
+          # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
+          allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
+        end
+
         FORBIDDEN_CHAR_PATHS.each do |invalid_path|
           it "#{invalid_path.inspect}の場合、エラーメッセージが表示される" do
-            fill_in 'path', with: invalid_path
-            fill_in 'message', with: 'Test commit message'
-            fill_in 'body', with: 'Test content'
+            fill_in '新しいmdファイルのパス名', with: invalid_path
+            fill_in 'コミットメッセージ', with: 'Test commit message'
+            fill_in 'mdファイルの内容', with: 'Test content'
 
             click_button 'GitHubリポジトリに保存'
 
             # エラーメッセージの表示
-            expect(page).to have_content('パス名に使用できない文字( : * ? " < > | )が含まれています')
+            expect(page).to have_content('パス名 に使用できない文字が含まれています')
           end
         end
       end
 
       context 'パス名が不正な場合' do
+        before do
+          # GithubService#file_exists?をスタブしてfalseを返す（ファイルが存在しない）
+          allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(false)
+        end
+
         INVALID_LOCATION_PATHS.each do |invalid_path|
           it "#{invalid_path.inspect}の場合、エラーメッセージが表示される" do
-            fill_in 'path', with: invalid_path
-            fill_in 'message', with: 'Test commit message'
-            fill_in 'body', with: 'Test content'
+            fill_in '新しいmdファイルのパス名', with: invalid_path
+            fill_in 'コミットメッセージ', with: 'Test commit message'
+            fill_in 'mdファイルの内容', with: 'Test content'
 
             click_button 'GitHubリポジトリに保存'
 
             # エラーメッセージの表示
-            expect(page).to have_content('不正なパス名が指定されています')
+            expect(page).to have_content('パス名 は不正なパスです')
           end
         end
       end
@@ -138,14 +158,14 @@ RSpec.describe 'TILs', type: :system do
           # GithubService#file_exists?をスタブしてtrueを返す（ファイルが存在する）
           allow_any_instance_of(GithubService).to receive(:file_exists?).and_return(true)
 
-          fill_in 'path', with: 'category/existing_file.md'
-          fill_in 'message', with: 'Test commit message'
-          fill_in 'body', with: 'Test content'
+          fill_in '新しいmdファイルのパス名', with: 'category/existing_file.md'
+          fill_in 'コミットメッセージ', with: 'Test commit message'
+          fill_in 'mdファイルの内容', with: 'Test content'
 
           click_button 'GitHubリポジトリに保存'
 
           # エラーメッセージの表示
-          expect(page).to have_content('指定したパス名はすでに存在しています')
+          expect(page).to have_content('パス名 はすでに存在しています')
         end
       end
     end

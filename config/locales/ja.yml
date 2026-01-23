@@ -12,6 +12,10 @@ ja:
         title: "タイトル"
         tag_ids: "タグ"
         todos: "タスクの完了条件"
+      til_form:
+        path: "新しいmdファイルのパス名"
+        message: "コミットメッセージ"
+        body: "mdファイルの内容"
 
   # ActiveRecordの属性名の和訳
   activerecord:
@@ -38,6 +42,14 @@ ja:
         body: "ToDoの内容"
       text_post:
         body: "メモ"
+
+  # ActiveModelの属性名の和訳
+  activemodel:
+    attributes:
+      til_form:
+        path: "パス名"
+        message: "コミットメッセージ"
+        body: "mdファイルの内容"
 
   # エラーメッセージの和訳
   errors:

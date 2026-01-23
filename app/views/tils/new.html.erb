@@ -11,8 +11,8 @@
 
     <!-- リポジトリ選択フォーム（GET） -->
     <%= form_with url: new_task_til_path(@task), method: :get, data: { turbo_frame: "til_form" }, class: "flex flex-col gap-1" do |f| %>
-      <%= f.label :repo, "リポジトリを選択", class: "label text-sm text-neutral font-semibold" %>
-      <%= f.select :repo,
+      <%= f.label :selected_repo, "リポジトリを選択", class: "label text-sm text-neutral font-semibold" %>
+      <%= f.select :selected_repo,
                     @repositories.map { |r| ["#{r.owner.login}/#{r.name}", r.full_name] },
                     { include_blank: "選択してください", selected: @selected_repo },
                     { class: "select select-bordered w-full",

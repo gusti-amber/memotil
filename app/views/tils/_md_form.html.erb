@@ -1,24 +1,21 @@
-<%= form_with url: task_til_path(@task), method: :post, data: { turbo_frame: "_top" }, class: "flex flex-col gap-2" do |f| %>
+<%= form_with model: @form, url: task_til_path(@task), data: { turbo_frame: "_top" }, class: "flex flex-col gap-2" do |f| %>
   <%= f.hidden_field :repo, value: @selected_repo %>
-  <%= f.label :path, "新しいmdファイルのパス名", class: "label text-sm text-neutral font-semibold" %>
-  <% has_validation_error = @validation_error.present? %>
+  <%= f.label :path, class: "label text-sm text-neutral font-semibold" %>
   <%= f.text_field :path, 
-                  value: @path,
                   placeholder: "category/today_i_learned.md", 
-                  class: "input #{has_validation_error ? 'input-error' : 'input-neutral'} w-full" %>
+                  class: "input #{@form.errors[:path].any? ? 'input-error' : 'input-neutral'} w-full" %>
   
-  <!-- エラーメッセージの表示 -->
-  <% if has_validation_error %>
-    <p class="text-xs text-error font-bold"><%= @validation_error %></p>
+  <!-- パス名のバリデーションエラーの表示 -->
+  <% @form.errors.where(:path).each do |error| %>
+    <p class="text-xs text-error font-bold"><%= error.full_message %></p>
   <% end %>
 
-  <%= f.label :message, "コミットメッセージ", class: "label text-sm text-neutral font-semibold" %>
+  <%= f.label :message, class: "label text-sm text-neutral font-semibold" %>
   <%= f.text_field :message, 
-                  value: @message || "Add TIL: #{(@task.title || 'task')}", 
+                  value: @form.message.presence || "Add TIL: #{(@task.title || 'task')}", 
                   class: "input input-neutral w-full" %>
-  <%= f.label :body, "mdファイルの内容", class: "label text-sm text-neutral font-semibold" %>
+  <%= f.label :body, class: "label text-sm text-neutral font-semibold" %>
   <%= f.text_area :body, 
-                  value: @body,
                   rows: 16, 
                   placeholder: "今日学んだことを記録しましょう",
                   class: "textarea text-area-neutral w-full" %>
