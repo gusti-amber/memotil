@@ -1,13 +1,13 @@
 <header class="bg-base-100 text-base-content rounded-lg">
   <div class="flex justify-between items-center p-4 gap-10">
-    <%= link_to root_path do %>
+    <%= link_to (user_signed_in? ? tasks_path : root_path) do %>
       <%= image_tag "logo.svg", class: "flex-none h-10 w-auto" %>
     <% end %>
     <% if !auth_page? %>
-      <div class="flex-1 flex justify-start items-center gap-10">
-        <%= link_to "タスクページをみる", tasks_path, class: "text-lg text-neutral/80 hover:text-neutral transition-colors" %>
-      </div>
       <% if user_signed_in? %>
+        <div class="flex-1 flex justify-start items-center gap-10">
+          <%= link_to "タスクページをみる", tasks_path, class: "text-lg text-neutral/80 hover:text-neutral transition-colors" %>
+        </div>
         <% if current_user.guest_user? %>
           <!-- ゲストユーザーの場合はログアウトボタンのみ表示 -->
           <%= link_to "ログアウト", destroy_user_session_path,
