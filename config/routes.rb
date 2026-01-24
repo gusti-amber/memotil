@@ -26,5 +26,5 @@ Rails.application.routes.draw do
     resource :repo, only: [ :new, :create ]
   end
 
-  root "static_pages#top"
+  root "pages#home"
 end
