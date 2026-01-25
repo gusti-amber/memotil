@@ -39,12 +39,12 @@
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-4 w-full" }) do |f| %>
       <div class="field w-full">
         <%= f.label :email, class: "text-sm text-custom-dark-green font-semibold" %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "id@example.com", class: "input input-lg input-bordered w-full bg-custom-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "id@example.com", class: "input input-lg input-bordered w-full bg-custom-off-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
       </div>
 
       <div class="field w-full">
         <%= f.label :password, class: "text-sm text-custom-dark-green font-semibold" %><br />
-        <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class: "input input-lg input-bordered w-full bg-custom-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+        <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class: "input input-lg input-bordered w-full bg-custom-off-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
       </div>
 
       <% if devise_mapping.rememberable? %>

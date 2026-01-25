@@ -12,7 +12,7 @@
 
         <div class="field w-full">
           <%= f.label :name, class: "text-sm text-custom-dark-green font-semibold" %><br />
-          <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "name", class: "input input-lg input-bordered w-full bg-custom-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+          <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "name", class: "input input-lg input-bordered w-full bg-custom-off-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
         </div>
 
         <div class="actions flex justify-center w-full">
@@ -37,7 +37,7 @@
         <!-- 新しいメールアドレスの入力フィールド -->
         <div class="field w-full">
           <%= f.label :email, "新しいメールアドレス", class: "text-sm text-custom-dark-green font-semibold" %><br />
-          <%= f.email_field :email, value: resource.unconfirmed_email.presence || "", autocomplete: "email", placeholder: "id@example.com", class: "input input-lg input-bordered w-full bg-custom-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+          <%= f.email_field :email, value: resource.unconfirmed_email.presence || "", autocomplete: "email", placeholder: "id@example.com", class: "input input-lg input-bordered w-full bg-custom-off-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
         </div>
 
         <div class="actions flex justify-center w-full">
