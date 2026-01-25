@@ -1,4 +1,18 @@
 @import "tailwindcss";
+
+/* Tailwind CSS v4 カスタムカラー定義 */
+@theme {
+  --color-*: initial;
+  --color-green: oklch(0.5741 0.1325 156.53); /*#148f57*/
+  --color-dark-green: oklch(0.3348 0.0387 163.46); /*#233d31*/
+  --color-gray: oklch(0.6898 0.027 109.55); /*#9c9d8a*/
+  --color-ivory: oklch(0.9628 0.007 106.52); /*#f3f3ed*/
+  --color-off-white: oklch(0.9902 0.0039 106.47); /*#fcfcf9*/
+  --color-snow: oklch(0.9962 0.004 106.47); /*#fefefb*/
+  --color-red: oklch(0.5183 0.168 21.78); /*#b5313a*/
+  --color-purple: oklch(0.5795 0.272581 299.5824); /*#9733ff*/
+}
+
 @plugin "daisyui" {
   themes: default --default;
 }
@@ -37,15 +51,3 @@
   --noise: 0;
 }
 
-/* Tailwind CSS v4 カスタムカラー定義 */
-@theme {
-  --color-*: initial;
-  --color-green: oklch(0.5741 0.1325 156.53); /*#148f57*/
-  --color-dark-green: oklch(0.3348 0.0387 163.46); /*#233d31*/
-  --color-gray: oklch(0.6898 0.027 109.55); /*#9c9d8a*/
-  --color-ivory: oklch(0.9628 0.007 106.52); /*#f3f3ed*/
-  --color-off-white: oklch(0.9902 0.0039 106.47); /*#fcfcf9*/
-  --color-snow: oklch(0.9962 0.004 106.47); /*#fefefb*/
-  --color-red: oklch(0.5183 0.168 21.78); /*#b5313a*/
-  --color-purple: oklch(0.5795 0.272581 299.5824); /*#9733ff*/
-}
