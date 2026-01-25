@@ -19,6 +19,12 @@
     var(--color-dark-green) 75%,
     transparent
   );
+
+  --color-subtle: color-mix(
+    in oklch,
+    var(--color-gray) 16%,
+    transparent
+  );
 }
 
 @plugin "daisyui" {
