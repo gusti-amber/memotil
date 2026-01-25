@@ -39,6 +39,7 @@
 
 /* Tailwind CSS v4 カスタムカラー定義 */
 @theme {
+  --color-*: initial;
   --color-custom-green: oklch(0.5741 0.1325 156.53); /*#148f57*/
   --color-custom-dark-green: oklch(0.3348 0.0387 163.46); /*#233d31*/
   --color-custom-gray: oklch(0.6898 0.027 109.55); /*#9c9d8a*/
