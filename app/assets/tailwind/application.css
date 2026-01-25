@@ -12,6 +12,13 @@
   --color-teal: oklch(0.74 0.1 205); /*#50bdc9*/
   --color-red: oklch(0.5183 0.168 21.78); /*#b5313a*/
   --color-purple: oklch(0.5795 0.272581 299.5824); /*#9733ff*/
+
+  /* UI Component Color */
+  --color-muted: color-mix(
+    in oklch,
+    var(--color-dark-green) 75%,
+    transparent
+  );
 }
 
 @plugin "daisyui" {
