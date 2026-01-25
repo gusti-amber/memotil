@@ -39,12 +39,13 @@
 
 /* Tailwind CSS v4 カスタムカラー定義 */
 @theme {
-  --color-custom-green: #148f57;
-  --color-custom-dark-green: #233d31;
+  --color-custom-green: oklch(0.5741 0.1325 156.53); /*#148f57*/
+  --color-custom-dark-green: oklch(0.3348 0.0387 163.46); /*#233d31*/
   --color-custom-gray: oklch(0.5 0.039 163.5);
   --color-custom-light-gray: #e8e8e2;
-  --color-custom-off-white: #f3f3ed;
-  --color-custom-white: #fcfcf9;
-  --color-custom-rust: #a94b2e;
-  --color-custom-purple: #9733ff;
+  --color-custom-off-white: oklch(0.9628 0.007 106.52); /*#f3f3ed*/
+  --color-custom-white: oklch(0.9902 0.0039 106.47); /*#fcfcf9*/
+  --color-custom-pure-white: oklch(0.9962 0.004 106.47); /*#fefefb*/
+  --color-custom-rust: oklch(0.5183 0.168 21.78); /*#b5313a*/
+  --color-custom-purple: oklch(0.5795 0.272581 299.5824); /*#9733ff*/
 }
