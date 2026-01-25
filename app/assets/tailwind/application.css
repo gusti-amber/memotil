@@ -24,7 +24,11 @@
   prefersdark: false;
   --color-base-100: var(--color-off-white);
   --color-base-200: var(--color-ivory);
-  --color-base-300: oklch(0.929 0.008 106.6);
+  --color-base-300: color-mix(
+    in oklch,
+    var(--color-dark-green) 16%,
+    transparent
+  );
   --color-base-content: var(--color-dark-green);
   --color-primary: var(--color-green);
   --color-primary-content: var(--color-off-white);
