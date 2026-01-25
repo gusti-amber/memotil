@@ -44,7 +44,7 @@
   --color-custom-gray: oklch(0.6898 0.027 109.55); /*#9c9d8a*/
   --color-custom-off-white: oklch(0.9628 0.007 106.52); /*#f3f3ed*/
   --color-custom-white: oklch(0.9902 0.0039 106.47); /*#fcfcf9*/
-  --color-custom-pure-white: oklch(0.9962 0.004 106.47); /*#fefefb*/
+  --color-custom-snow: oklch(0.9962 0.004 106.47); /*#fefefb*/
   --color-custom-red: oklch(0.5183 0.168 21.78); /*#b5313a*/
   --color-custom-purple: oklch(0.5795 0.272581 299.5824); /*#9733ff*/
 }
