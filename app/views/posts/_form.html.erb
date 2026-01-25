@@ -5,10 +5,10 @@
   <input type="radio" 
           name="post_type" 
           role="tab" 
-          class="tab text-custom-dark-green"
+          class="tab text-dark-green"
           aria-label="メモ" 
           <%= 'checked' if post.postable_type.blank? || post.postable_type == 'TextPost' %> />
-  <div role="tabpanel" class="tab-content bg-custom-off-white rounded-box p-1">
+  <div role="tabpanel" class="tab-content bg-off-white rounded-box p-1">
     <!-- TextPost エラーメッセージ -->
     <% if post.postable_type.blank? || post.postable_type == 'TextPost' %>
       <%= render 'posts/post_error_messages', post: post %>
@@ -22,10 +22,10 @@
   <input type="radio" 
           name="post_type" 
           role="tab" 
-          class="tab text-custom-dark-green"
+          class="tab text-dark-green"
           aria-label="参照URL" 
           <%= 'checked' if post.postable_type == 'DocumentPost' %> />
-  <div role="tabpanel" class="tab-content bg-custom-off-white rounded-box p-1">
+  <div role="tabpanel" class="tab-content bg-off-white rounded-box p-1">
     <!-- DocumentPost エラーメッセージ -->
     <% if post.postable_type == 'DocumentPost' %>
       <%= render 'posts/post_error_messages', post: post %>

@@ -1,6 +1,6 @@
 <div class="flex justify-center">
   <div class="flex flex-col gap-6 p-12 max-w-2xl w-full">
-    <p class="text-2xl font-bold text-custom-dark-green text-center">ログイン</p>
+    <p class="text-2xl font-bold text-dark-green text-center">ログイン</p>
 
     <!-- ゲストユーザーに関する注意書き -->
     <div class="alert alert-info alert-soft">
@@ -38,20 +38,20 @@
     
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-4 w-full" }) do |f| %>
       <div class="field w-full">
-        <%= f.label :email, class: "text-sm text-custom-dark-green font-semibold" %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "id@example.com", class: "input input-lg input-bordered w-full bg-custom-off-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+        <%= f.label :email, class: "text-sm text-dark-green font-semibold" %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "id@example.com", class: "input input-lg input-bordered w-full bg-off-white border-dark-green text-base text-dark-green focus:border-dark-green focus:ring-2 focus:ring-dark-green/20 focus:outline-none placeholder:text-dark-green/50" %>
       </div>
 
       <div class="field w-full">
-        <%= f.label :password, class: "text-sm text-custom-dark-green font-semibold" %><br />
-        <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class: "input input-lg input-bordered w-full bg-custom-off-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+        <%= f.label :password, class: "text-sm text-dark-green font-semibold" %><br />
+        <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class: "input input-lg input-bordered w-full bg-off-white border-dark-green text-base text-dark-green focus:border-dark-green focus:ring-2 focus:ring-dark-green/20 focus:outline-none placeholder:text-dark-green/50" %>
       </div>
 
       <% if devise_mapping.rememberable? %>
         <div class="form-control w-full">
           <label class="label cursor-pointer">
             <%= f.check_box :remember_me, class: "checkbox checkbox-neutral" %>
-            <span class="label-text text-custom-dark-green">ログイン状態を保持</span>
+            <span class="label-text text-dark-green">ログイン状態を保持</span>
           </label>
         </div>
       <% end %>
@@ -62,8 +62,8 @@
     <% end %>
 
     <div class="flex justify-center gap-10">
-      <%= link_to "新規アカウントを作成", new_registration_path(resource_name), class: "text-sm font-semibold text-custom-dark-green underline hover:text-custom-dark-green/80" %>
-      <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "text-sm font-semibold text-custom-dark-green underline hover:text-custom-dark-green/80" %>
+      <%= link_to "新規アカウントを作成", new_registration_path(resource_name), class: "text-sm font-semibold text-dark-green underline hover:text-dark-green/80" %>
+      <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "text-sm font-semibold text-dark-green underline hover:text-dark-green/80" %>
     </div>
   </div>
 </div>

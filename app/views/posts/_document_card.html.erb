@@ -10,7 +10,7 @@
 <!-- メインコンテンツ -->
 <div class="flex items-start gap-4">
   <!-- 左側の緑色の縦線 -->
-  <div class="w-1 bg-custom-green rounded-full self-stretch"></div>
+  <div class="w-1 bg-green rounded-full self-stretch"></div>
 
   <!-- 中央のコンテンツ -->
   <div class="flex-1 min-w-0">
@@ -20,12 +20,12 @@
                   document.url, 
                   target: "_blank", 
                   rel: "noopener noreferrer",
-                  class: "text-custom-dark-green hover:text-custom-green transition-colors duration-200" %>
+                  class: "text-dark-green hover:text-green transition-colors duration-200" %>
     </h3>
     
     <!-- 説明文 -->
     <% if document.card_description.present? %>
-      <p class="text-sm text-custom-dark-green/70 line-clamp-3 leading-relaxed">
+      <p class="text-sm text-dark-green/70 line-clamp-3 leading-relaxed">
         <%= document.card_description %>
       </p>
     <% end %>

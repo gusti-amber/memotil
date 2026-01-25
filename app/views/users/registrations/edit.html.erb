@@ -1,6 +1,6 @@
 <div class="flex justify-center">
   <div class="flex flex-col gap-6 p-12 max-w-2xl w-full">
-    <p class="text-2xl font-bold text-custom-dark-green text-center">アカウント設定</p>
+    <p class="text-2xl font-bold text-dark-green text-center">アカウント設定</p>
 
     <!-- 🎨 エラーメッセージ表示を一つにまとめたが、UIの改善の余地あり。 -->
     <%= render "users/shared/error_messages", resource: resource %>
@@ -11,8 +11,8 @@
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "flex flex-col gap-6 w-full" }) do |f| %>
 
         <div class="field w-full">
-          <%= f.label :name, class: "text-sm text-custom-dark-green font-semibold" %><br />
-          <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "name", class: "input input-lg input-bordered w-full bg-custom-off-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+          <%= f.label :name, class: "text-sm text-dark-green font-semibold" %><br />
+          <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "name", class: "input input-lg input-bordered w-full bg-off-white border-dark-green text-base text-dark-green focus:border-dark-green focus:ring-2 focus:ring-dark-green/20 focus:outline-none placeholder:text-dark-green/50" %>
         </div>
 
         <div class="actions flex justify-center w-full">
@@ -28,7 +28,7 @@
 
         <!-- 現在のメールアドレスの表示 -->
         <div class="field w-full">
-          <label class="text-sm text-custom-dark-green font-semibold">現在のメールアドレス</label><br />
+          <label class="text-sm text-dark-green font-semibold">現在のメールアドレス</label><br />
           <div class="input input-lg input-bordered w-full bg-base-200 border-base-300 text-base text-base-content cursor-not-allowed">
             <%= current_user.email %>
           </div>
@@ -36,8 +36,8 @@
 
         <!-- 新しいメールアドレスの入力フィールド -->
         <div class="field w-full">
-          <%= f.label :email, "新しいメールアドレス", class: "text-sm text-custom-dark-green font-semibold" %><br />
-          <%= f.email_field :email, value: resource.unconfirmed_email.presence || "", autocomplete: "email", placeholder: "id@example.com", class: "input input-lg input-bordered w-full bg-custom-off-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+          <%= f.label :email, "新しいメールアドレス", class: "text-sm text-dark-green font-semibold" %><br />
+          <%= f.email_field :email, value: resource.unconfirmed_email.presence || "", autocomplete: "email", placeholder: "id@example.com", class: "input input-lg input-bordered w-full bg-off-white border-dark-green text-base text-dark-green focus:border-dark-green focus:ring-2 focus:ring-dark-green/20 focus:outline-none placeholder:text-dark-green/50" %>
         </div>
 
         <div class="actions flex justify-center w-full">

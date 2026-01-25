@@ -6,12 +6,12 @@
     <%= form_with model: @task, local: true, html: { class: "flex flex-col gap-6" } do |f| %>
       <!-- タイトルフォーム -->
       <div class="form-control">
-        <%= f.label :title, class: "label text-sm text-custom-dark-green font-semibold" %>
+        <%= f.label :title, class: "label text-sm text-dark-green font-semibold" %>
         <div class="join w-full">
-          <%= f.text_field :title, class: "input input-lg input-bordered join-item flex-1 bg-custom-off-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none" %>
+          <%= f.text_field :title, class: "input input-lg input-bordered join-item flex-1 bg-off-white border-dark-green text-base text-dark-green focus:border-dark-green focus:ring-2 focus:ring-dark-green/20 focus:outline-none" %>
           <!-- ♻️onclickイベントは改善の余地あり。今後Stimulusコントローラーで実装予定 -->
           <button type="button" 
-            class="btn btn-lg btn-square join-item bg-custom-dark-green hover:bg-custom-dark-green/80 text-custom-off-white border-none"
+            class="btn btn-lg btn-square join-item bg-dark-green hover:bg-dark-green/80 text-off-white border-none"
             onclick="document.getElementById('task_title').value = ''">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -22,12 +22,12 @@
 
       <!-- タグ選択セクション -->
       <div class="form-control">
-        <%= f.label :tag_ids, class: "label text-sm text-custom-dark-green font-semibold" %>
+        <%= f.label :tag_ids, class: "label text-sm text-dark-green font-semibold" %>
         
         <!-- タグ選択ドロップダウンメニュー -->
         <div class="dropdown w-full">
           <!-- ♻️safariブラウザ含むすべてのブラウザで動作するコード。https://daisyui.com/components/dropdown/#method-3-css-focus -->
-          <div tabindex="0" role="button" class="btn btn-lg btn-outline w-full bg-custom-off-white border-custom-dark-green text-base text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-off-white">
+          <div tabindex="0" role="button" class="btn btn-lg btn-outline w-full bg-off-white border-dark-green text-base text-dark-green hover:bg-dark-green hover:text-off-white">
             <span>選択</span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0" stroke="currentColor" class="size-4">
               <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -35,15 +35,15 @@
           </div>
 
           <!-- 🎓tabindex="0"により、ラベルをクリックしても画面が閉じなくなる。-->
-          <ul tabindex="0" class="dropdown-content bg-custom-off-white rounded-box z-[1] p-2 shadow w-full max-h-60 overflow-y-auto border">
+          <ul tabindex="0" class="dropdown-content bg-off-white rounded-box z-[1] p-2 shadow w-full max-h-60 overflow-y-auto border">
             <% Tag.all.each do |tag| %>
               <li class="rounded p-1">
-                <label class="flex items-center gap-2 text-custom-dark-green hover:text-custom-dark-green rounded cursor-pointer p-1 transition-colors duration-200">
+                <label class="flex items-center gap-2 text-dark-green hover:text-dark-green rounded cursor-pointer p-1 transition-colors duration-200">
                   <input type="checkbox" 
                           name="task[tag_ids][]" 
                           value="<%= tag.id %>"
                           <%= 'checked' if @task.tag_ids.include?(tag.id) %>
-                          class="checkbox bg-custom-off-white border-custom-dark-green"
+                          class="checkbox bg-off-white border-dark-green"
                           style="--chkbg: #233D31; --chkfg: #FCFCF9;">
                   <span><%= tag.name %></span>
                 </label>
@@ -58,8 +58,8 @@
 
       <!-- アクションボタン -->
       <div class="flex justify-end gap-4">
-        <%= link_to "戻る", task_path(@task), class: "btn btn-lg btn-outline border-custom-dark-green text-base text-custom-dark-green hover:bg-custom-dark-green hover:text-custom-off-white bg-transparent" %>
-        <%= f.submit "変更", class: "btn btn-lg bg-custom-green hover:bg-custom-green/80 text-base text-custom-off-white border-none" %>
+        <%= link_to "戻る", task_path(@task), class: "btn btn-lg btn-outline border-dark-green text-base text-dark-green hover:bg-dark-green hover:text-off-white bg-transparent" %>
+        <%= f.submit "変更", class: "btn btn-lg bg-green hover:bg-green/80 text-base text-off-white border-none" %>
       </div>
     <% end %>
   </div>
