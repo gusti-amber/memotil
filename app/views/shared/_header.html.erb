@@ -6,7 +6,7 @@
     <% if !auth_page? %>
       <% if user_signed_in? %>
         <div class="flex-1 flex justify-start items-center gap-10">
-          <%= link_to "タスクページをみる", tasks_path, class: "text-lg text-neutral/80 hover:text-neutral transition-colors" %>
+          <%= link_to "タスクページをみる", tasks_path, class: "text-lg text-base-content/80 hover:text-base-content transition-colors" %>
         </div>
         <% if current_user.guest_user? %>
           <!-- ゲストユーザーの場合はログアウトボタンのみ表示 -->
