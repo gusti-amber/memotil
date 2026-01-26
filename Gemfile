@@ -67,7 +67,7 @@ end
 
 gem "tailwindcss-rails", "~> 4.0"
 
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 gem "nokogiri"
 gem "redcarpet"
 gem "rouge"
