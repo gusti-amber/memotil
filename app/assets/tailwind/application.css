@@ -14,17 +14,9 @@
   --color-purple: oklch(0.5795 0.272581 299.5824); /*#9733ff*/
 
   /* UI Component Color */
-  --color-muted: color-mix(
-    in oklch,
-    var(--color-dark-green) 75%,
-    transparent
-  );
+  --color-muted: color-mix(in oklch, var(--color-dark-green) 75%, transparent);
 
-  --color-subtle: color-mix(
-    in oklch,
-    var(--color-gray) 30%,
-    transparent
-  );
+  --color-subtle: color-mix(in oklch, var(--color-gray) 30%, transparent);
 
   --color-surface: var(--color-snow);
 }
@@ -47,7 +39,7 @@
   --color-base-content: var(--color-dark-green);
   --color-primary: var(--color-green);
   --color-primary-content: var(--color-off-white);
-  --color-secondary: var(--color-dark-green);
+  --color-secondary: var(--color-muted);
   --color-secondary-content: var(--color-off-white);
   --color-accent: var(--color-purple);
   --color-accent-content: var(--color-off-white);
@@ -68,4 +60,3 @@
   --depth: 1;
   --noise: 0;
 }
-
