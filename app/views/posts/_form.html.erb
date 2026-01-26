@@ -1,14 +1,14 @@
 <!-- ポスト投稿フォーム（TextPost投稿フォームとDocumentPost投稿フォームをタブ切り替え） -->
-<div role="tablist" class="tabs tabs-box">
+<div role="tablist" class="tabs tabs-box bg-surface-elevated border border-subtle">
   
   <!-- TextPost タブ -->
   <input type="radio" 
-          name="post_type" 
-          role="tab" 
-          class="tab text-dark-green"
-          aria-label="メモ" 
-          <%= 'checked' if post.postable_type.blank? || post.postable_type == 'TextPost' %> />
-  <div role="tabpanel" class="tab-content bg-off-white rounded-box p-1">
+         name="post_type" 
+         role="tab" 
+         class="tab text-base-content"
+         aria-label="メモ" 
+         <%= 'checked' if post.postable_type.blank? || post.postable_type == 'TextPost' %> />
+  <div role="tabpanel" class="tab-content bg-surface rounded-box p-1">
     <!-- TextPost エラーメッセージ -->
     <% if post.postable_type.blank? || post.postable_type == 'TextPost' %>
       <%= render 'posts/post_error_messages', post: post %>
@@ -20,12 +20,12 @@
 
   <!-- DocumentPost タブ -->
   <input type="radio" 
-          name="post_type" 
-          role="tab" 
-          class="tab text-dark-green"
-          aria-label="参照URL" 
-          <%= 'checked' if post.postable_type == 'DocumentPost' %> />
-  <div role="tabpanel" class="tab-content bg-off-white rounded-box p-1">
+         name="post_type" 
+         role="tab" 
+         class="tab text-base-content"
+         aria-label="参照URL" 
+         <%= 'checked' if post.postable_type == 'DocumentPost' %> />
+  <div role="tabpanel" class="tab-content bg-surface rounded-box p-1">
     <!-- DocumentPost エラーメッセージ -->
     <% if post.postable_type == 'DocumentPost' %>
       <%= render 'posts/post_error_messages', post: post %>
