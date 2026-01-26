@@ -19,6 +19,8 @@
   --color-subtle: color-mix(in oklch, var(--color-gray) 30%, transparent);
 
   --color-surface: var(--color-snow);
+
+  --color-surface-elevated: var(--color-ivory);
 }
 
 @plugin "daisyui" {
