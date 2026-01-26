@@ -16,6 +16,12 @@
   /* UI Component Color */
   --color-muted: color-mix(in oklch, var(--color-dark-green) 75%, transparent);
 
+  --color-placeholder: color-mix(
+    in oklch,
+    var(--color-dark-green) 50%,
+    transparent
+  );
+
   --color-subtle: color-mix(in oklch, var(--color-gray) 30%, transparent);
 
   --color-surface: var(--color-snow);
