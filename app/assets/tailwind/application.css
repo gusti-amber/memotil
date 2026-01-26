@@ -22,7 +22,7 @@
 
   --color-subtle: color-mix(
     in oklch,
-    var(--color-gray) 16%,
+    var(--color-gray) 30%,
     transparent
   );
 
