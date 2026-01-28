@@ -1,3 +1,4 @@
+<!-- ♻️ 今後、TodoリストとTodoフォームの切り替えをTurboで実装する -->
 <div data-controller="todo-section" class="@container">
   <% show_form = task.todos.empty? || task.errors.any? %>
   <div data-todo-section-target="todoList" class="<%= 'hidden' if show_form %>">
