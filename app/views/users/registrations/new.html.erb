@@ -7,12 +7,12 @@
 
       <div class="field w-full">
         <%= f.label :name, class: "text-sm font-semibold" %><br />
-        <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "name", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
+        <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
       </div>
 
       <div class="field w-full">
         <%= f.label :email, class: "text-sm font-semibold" %><br />
-        <%= f.email_field :email, autocomplete: "email", placeholder: "id@example.com", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
+        <%= f.email_field :email, autocomplete: "email", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
       </div>
 
       <div class="field w-full">
@@ -20,12 +20,12 @@
         <% if @minimum_password_length %>
           <p class="text-xs text-muted"><%= @minimum_password_length %> 文字以上の半角英数字</p>
         <% end %>
-        <%= f.password_field :password, autocomplete: "new-password", placeholder: "password", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
       </div>
 
       <div class="field w-full">
         <%= f.label :password_confirmation, class: "text-sm font-semibold" %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "password(confirmation)", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
       </div>
 
       <div class="actions flex justify-center w-full mt-4">
