@@ -1,16 +1,18 @@
 <div class="flex justify-center">
-  <div class="flex flex-col gap-6 p-12 max-w-2xl w-full">
-    <p class="text-2xl font-bold text-dark-green text-center">ログイン</p>
+  <div class="flex flex-col gap-6 p-12 max-w-2xl w-full text-base-content">
+    <p class="text-2xl font-bold text-center">ログイン</p>
 
     <!-- ゲストユーザーに関する注意書き -->
     <div class="alert alert-info alert-soft">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
       </svg>
-      <div class="text-sm text-base-content font-semibold">
-        <p class="text-base font-bold">ゲストユーザーの機能制限について</p>
-        <p>ゲストユーザーは GitHub 連携およびリモートリポジトリの操作を利用できません。</p>
-        <p>これらの機能を利用するには、メールアドレスまたは GitHub アカウントでログインしてください。</p>
+      <div class="flex flex-col gap-2">
+        <p class="text-base font-bold text-base-content">ゲストユーザーの機能制限について</p>
+        <p class="text-sm text-muted">
+          ゲストユーザーは GitHub 連携およびリモートリポジトリの操作を利用できません。<br>
+          これらの機能を利用するには、メールアドレスまたは GitHub アカウントでログインしてください。
+        </p>
       </div>
     </div>
 
@@ -34,24 +36,24 @@
     </div>
 
     <!-- 区切り線 -->
-    <div class="divider divider-secondary/50 text-neutral">または</div>
+    <div class="divider text-muted">または</div>
     
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-4 w-full" }) do |f| %>
       <div class="field w-full">
-        <%= f.label :email, class: "text-sm text-dark-green font-semibold" %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "id@example.com", class: "input input-lg input-bordered w-full bg-off-white border-dark-green text-base text-dark-green focus:border-dark-green focus:ring-2 focus:ring-dark-green/20 focus:outline-none placeholder:text-dark-green/50" %>
+        <%= f.label :email, class: "text-sm font-semibold" %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "id@example.com", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
       </div>
 
       <div class="field w-full">
-        <%= f.label :password, class: "text-sm text-dark-green font-semibold" %><br />
-        <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class: "input input-lg input-bordered w-full bg-off-white border-dark-green text-base text-dark-green focus:border-dark-green focus:ring-2 focus:ring-dark-green/20 focus:outline-none placeholder:text-dark-green/50" %>
+        <%= f.label :password, class: "text-sm font-semibold" %><br />
+        <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
       </div>
 
       <% if devise_mapping.rememberable? %>
         <div class="form-control w-full">
-          <label class="label cursor-pointer">
+          <label class="cursor-pointer">
             <%= f.check_box :remember_me, class: "checkbox checkbox-neutral" %>
-            <span class="label-text text-dark-green">ログイン状態を保持</span>
+            <span class="text-sm">ログイン状態を保持</span>
           </label>
         </div>
       <% end %>
@@ -62,8 +64,8 @@
     <% end %>
 
     <div class="flex justify-center gap-10">
-      <%= link_to "新規アカウントを作成", new_registration_path(resource_name), class: "text-sm font-semibold text-dark-green underline hover:text-dark-green/80" %>
-      <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "text-sm font-semibold text-dark-green underline hover:text-dark-green/80" %>
+      <%= link_to "新規アカウントを作成", new_registration_path(resource_name), class: "text-sm font-semibold underline hover:text-muted" %>
+      <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "text-sm font-semibold underline hover:text-muted" %>
     </div>
   </div>
 </div>
