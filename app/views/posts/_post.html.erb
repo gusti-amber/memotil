@@ -11,7 +11,7 @@
           <%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
         </span>
       </div>
-      <div class="chat-bubble bg-surface-elevated border-none overflow-x-auto">
+      <div class="chat-bubble bg-surface-elevated border-none">
         <% if post.postable_type == 'TextPost' %>
           <!-- ♻️ 今後、サニタイズの実装を行う -->
           <%= markdown(post.postable.body) %>
