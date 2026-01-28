@@ -5,17 +5,17 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "flex flex-col gap-4 w-full" }) do |f| %>
       <%= render "users/shared/error_messages", resource: resource %>
 
-      <div class="field w-full">
-        <%= f.label :name, class: "text-sm font-semibold" %><br />
+      <div class="w-full">
+        <%= f.label :name, class: "text-sm font-semibold" %>
         <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
       </div>
 
-      <div class="field w-full">
-        <%= f.label :email, class: "text-sm font-semibold" %><br />
+      <div class="w-full">
+        <%= f.label :email, class: "text-sm font-semibold" %>
         <%= f.email_field :email, autocomplete: "email", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
       </div>
 
-      <div class="field w-full">
+      <div class="w-full">
         <%= f.label :password, class: "text-sm font-semibold" %>
         <% if @minimum_password_length %>
           <p class="text-xs text-muted"><%= @minimum_password_length %> 文字以上の半角英数字</p>
@@ -23,8 +23,8 @@
         <%= f.password_field :password, autocomplete: "new-password", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
       </div>
 
-      <div class="field w-full">
-        <%= f.label :password_confirmation, class: "text-sm font-semibold" %><br />
+      <div class="w-full">
+        <%= f.label :password_confirmation, class: "text-sm font-semibold" %>
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
       </div>
 

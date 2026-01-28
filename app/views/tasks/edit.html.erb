@@ -5,13 +5,13 @@
     
     <%= form_with model: @task, local: true, html: { class: "flex flex-col gap-6 w-full" } do |f| %>
       <!-- タイトル入力フィールド -->
-      <div class="field w-full">
+      <div class="w-full">
         <%= f.label :title, class: "text-sm font-semibold" %>
         <%= f.text_field :title, class: "input input-lg bg-surface text-base w-full" %>
       </div>
 
       <!-- タグ選択セクション -->
-      <div class="form-control">
+      <div class="w-full">
         <%= f.label :tag_ids, class: "text-sm font-semibold" %>
         <!-- タグ選択ドロップダウン -->
         <div class="dropdown w-full">

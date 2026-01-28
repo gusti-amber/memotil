@@ -18,8 +18,8 @@
           登録されているメールアドレス宛にメールアドレス確認用のリンクを送信します。
         </p>
 
-        <div class="field w-full">
-          <%= f.label :email, class: "text-sm font-semibold" %><br />
+        <div class="w-full">
+          <%= f.label :email, class: "text-sm font-semibold" %>
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
         </div>
       <% end %>
