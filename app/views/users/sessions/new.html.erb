@@ -50,12 +50,10 @@
       </div>
 
       <% if devise_mapping.rememberable? %>
-        <div class="form-control w-full">
-          <label class="cursor-pointer">
-            <%= f.check_box :remember_me, class: "checkbox checkbox-neutral" %>
-            <span class="text-sm">ログイン状態を保持</span>
-          </label>
-        </div>
+        <label class="label">
+          <%= f.check_box :remember_me, class: "checkbox checkbox-neutral" %>
+          <span class="text-sm text-muted">ログイン状態を保持</span>
+        </label>
       <% end %>
 
       <div class="actions flex justify-center w-full">
