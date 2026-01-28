@@ -1,4 +1,34 @@
 @import "tailwindcss";
+
+/* Tailwind CSS v4 カスタムカラー定義 */
+@theme {
+  --color-*: initial;
+  --color-green: oklch(0.5741 0.1325 156.53); /*#148f57*/
+  --color-dark-green: oklch(0.3348 0.0387 163.46); /*#233d31*/
+  --color-gray: oklch(0.6898 0.027 109.55); /*#9c9d8a*/
+  --color-ivory: oklch(0.9628 0.007 106.52); /*#f3f3ed*/
+  --color-off-white: oklch(0.9902 0.0039 106.47); /*#fcfcf9*/
+  --color-white: oklch(0.9962 0.004 106.47); /*#fefefb*/
+  --color-teal: oklch(0.74 0.1 205); /*#50bdc9*/
+  --color-red: oklch(0.5183 0.168 21.78); /*#b5313a*/
+  --color-purple: oklch(0.5795 0.272581 299.5824); /*#9733ff*/
+
+  /* UI Component Color */
+  --color-muted: color-mix(in oklch, var(--color-dark-green) 75%, transparent);
+
+  --color-placeholder: color-mix(
+    in oklch,
+    var(--color-dark-green) 50%,
+    transparent
+  );
+
+  --color-subtle: color-mix(in oklch, var(--color-gray) 30%, transparent);
+
+  --color-surface: var(--color-white);
+
+  --color-surface-elevated: var(--color-ivory);
+}
+
 @plugin "daisyui" {
   themes: default --default;
 }
@@ -7,26 +37,28 @@
   name: "default";
   default: true;
   prefersdark: false;
-  --color-base-100: oklch(0.99 0.004 106.5);
-  --color-base-200: oklch(0.962 0.008 106.5);
-  --color-base-300: oklch(0.929 0.008 106.6);
-  --color-base-content: oklch(0.335 0.039 163.5);
-  --color-primary: oklch(0.574 0.132 156.5);
-  --color-primary-content: oklch(0.99 0.004 106.5);
-  --color-secondary: oklch(0.5 0.039 163.5);
-  --color-secondary-content: oklch(0.99 0.004 106.5);
-  --color-accent: oklch(0.579 0.273 299.6);
-  --color-accent-content: oklch(0.99 0.004 106.5);
-  --color-neutral: oklch(0.335 0.039 163.5);
-  --color-neutral-content: oklch(0.99 0.004 106.5);
-  --color-info: oklch(74% 0.16 232.661);
-  --color-info-content: oklch(29% 0.066 243.157);
-  --color-success: oklch(0.574 0.132 156.5);
-  --color-success-content: oklch(0.99 0.004 106.5);
-  --color-warning: oklch(82% 0.189 84.429);
-  --color-warning-content: oklch(41% 0.112 45.904);
-  --color-error: oklch(0.529 0.131 37.7);
-  --color-error-content: oklch(0.99 0.004 106.5);
+  --color-base-100: var(--color-off-white);
+  --color-base-200: var(--color-ivory);
+  --color-base-300: color-mix(
+    in oklch,
+    var(--color-dark-green) 16%,
+    transparent
+  );
+  --color-base-content: var(--color-dark-green);
+  --color-primary: var(--color-green);
+  --color-primary-content: var(--color-off-white);
+  --color-secondary: var(--color-muted);
+  --color-secondary-content: var(--color-off-white);
+  --color-accent: var(--color-purple);
+  --color-accent-content: var(--color-off-white);
+  --color-neutral: var(--color-dark-green);
+  --color-neutral-content: var(--color-off-white);
+  --color-info: var(--color-teal);
+  --color-info-content: var(--color-off-white);
+  --color-success: var(--color-green);
+  --color-success-content: var(--color-off-white);
+  --color-error: var(--color-red);
+  --color-error-content: var(--color-off-white);
   --radius-selector: 2rem;
   --radius-field: 0.25rem;
   --radius-box: 0.5rem;
@@ -35,16 +67,4 @@
   --border: 1px;
   --depth: 1;
   --noise: 0;
-}
-
-/* Tailwind CSS v4 カスタムカラー定義 */
-@theme {
-  --color-custom-green: #148f57;
-  --color-custom-dark-green: #233d31;
-  --color-custom-gray: oklch(0.5 0.039 163.5);
-  --color-custom-light-gray: #e8e8e2;
-  --color-custom-off-white: #f3f3ed;
-  --color-custom-white: #fcfcf9;
-  --color-custom-rust: #a94b2e;
-  --color-custom-purple: #9733ff;
 }

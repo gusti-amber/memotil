@@ -2,16 +2,16 @@
   <div class="flex items-end group px-6 py-2">
     
     <!-- 投稿内容 -->
-    <div class="chat chat-start">
+    <div class="chat chat-start text-base-content">
       <div class="chat-header">
-        <span class="text-sm font-medium text-custom-dark-green">
+        <span class="text-sm font-medium">
           <%= post.user.name %>
         </span>
-        <span class="text-xs text-custom-dark-green/70 ml-2">
+        <span class="text-xs text-muted ml-2">
           <%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
         </span>
       </div>
-      <div class="chat-bubble bg-custom-off-white text-custom-dark-green border-none overflow-x-auto">
+      <div class="chat-bubble bg-surface-elevated border-none">
         <% if post.postable_type == 'TextPost' %>
           <!-- ♻️ 今後、サニタイズの実装を行う -->
           <%= markdown(post.postable.body) %>
@@ -20,6 +20,8 @@
         <% end %>
       </div>
     </div>
+
+    <!-- タスクのステータスがDoingの場合、投稿の削除ボタンを表示 -->
     <% if show_post_actions %>
       <div class="flex justify-start">
         <%= link_to task_post_path(post.task, post),

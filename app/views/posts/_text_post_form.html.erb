@@ -1,21 +1,20 @@
 <%= form_with model: post, url: task_posts_path(task), method: :post, class: "flex flex-col gap-1", id: "text-post-form" do |f| %>
   <%= f.hidden_field :postable_type, value: "TextPost" %>
   
-  <div class="form-control">
-    <%= f.fields_for :postable_attributes, (post.postable.is_a?(TextPost) ? post.postable : TextPost.new) do |text_post_form| %>
-      <% placeholder_text = <<~TEXT
-        調べたことや思いついたことを書きましょう
-        コードスニペットは以下のように言語を指定して```で囲んで入力してください
-        ```ruby
-        puts "Hello, World!"
-        ```
-      TEXT
-      %>
-      <%= text_post_form.text_area :body, 
-          placeholder: placeholder_text.chomp, 
-          class: "textarea textarea-ghost w-full h-24 text-neutral placeholder:text-neutral/50 focus:outline-none" %>
-    <% end %>
-  </div>
+  <%= f.fields_for :postable_attributes, (post.postable.is_a?(TextPost) ? post.postable : TextPost.new) do |text_post_form| %>
+    <% placeholder_text = <<~TEXT
+      調べたことや思いついたことを書きましょう
+      コードスニペットは以下のように言語を指定して```で囲んで入力してください
+      ```ruby
+      puts "Hello, World!"
+      ```
+    TEXT
+    %>
+    <%= text_post_form.text_area :body, 
+        placeholder: placeholder_text.chomp, 
+        class: "textarea textarea-ghost w-full h-32 text-base-content placeholder:text-placeholder focus:outline-none" %>
+  <% end %>
+  
   <div class="flex justify-end gap-4">
     <%= f.submit "送信", class: "btn btn-neutral rounded-full shadow-none" %>
   </div>

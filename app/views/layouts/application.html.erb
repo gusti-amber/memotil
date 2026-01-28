@@ -89,11 +89,13 @@
       <%#= render 'shared/debug_user_info' %>
     <% end %>
     
-    <main class="bg-base-100 text-base-content rounded-lg min-h-screen">
-      <%= render 'shared/flash_messages' %>
-      <%= yield %>
-    </main>
-    
-    <%= render 'shared/footer' %>
+    <div class="bg-base-100 rounded-lg min-h-screen">
+      <main class="text-base-content">
+        <%= render 'shared/flash_messages' %>
+        <%= yield %>
+      </main>
+      
+      <%= render 'shared/footer' %>
+    </div>
   </body>
 </html>

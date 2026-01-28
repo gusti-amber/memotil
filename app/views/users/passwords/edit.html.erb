@@ -1,22 +1,22 @@
 <div class="flex justify-center">
-  <div class="flex flex-col gap-6 p-12 max-w-2xl w-full">
-    <p class="text-2xl font-bold text-custom-dark-green text-center">新しいパスワードの設定</p>
+  <div class="flex flex-col gap-6 p-12 max-w-2xl w-full text-base-content">
+    <p class="text-2xl font-bold text-center">新しいパスワードの設定</p>
 
-    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "flex flex-col gap-5 w-full" }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "flex flex-col gap-4 w-full" }) do |f| %>
       <%= render "users/shared/error_messages", resource: resource %>
       <%= f.hidden_field :reset_password_token %>
 
-      <div class="field w-full">
-        <%= f.label :password, class: "text-sm text-custom-dark-green font-semibold" %><br />
+      <div class="w-full">
+        <%= f.label :password, class: "text-sm font-semibold" %>
         <% if @minimum_password_length %>
-          <p class="text-sm text-custom-dark-green/60"><%= @minimum_password_length %> 文字以上の半角英数字</p>
+          <p class="text-xs text-muted"><%= @minimum_password_length %> 文字以上の半角英数字</p>
         <% end %>
-        <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "input input-lg input-bordered w-full bg-custom-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+        <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
       </div>
 
-      <div class="field w-full">
-        <%= f.label :password_confirmation, class: "text-sm text-custom-dark-green font-semibold" %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-lg input-bordered w-full bg-custom-white border-custom-dark-green text-base text-custom-dark-green focus:border-custom-dark-green focus:ring-2 focus:ring-custom-dark-green/20 focus:outline-none placeholder:text-custom-dark-green/50" %>
+      <div class="w-full">
+        <%= f.label :password_confirmation, class: "text-sm font-semibold" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-lg w-full bg-surface text-base placeholder:text-placeholder" %>
       </div>
 
       <div class="actions flex justify-center w-full">

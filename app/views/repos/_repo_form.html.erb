@@ -1,41 +1,41 @@
 <%= form_with url: task_repo_path(@task), method: :post, data: { turbo_frame: "_top" }, class: "flex flex-col gap-2" do |f| %>
-  <%= f.label :name, "リポジトリ名", class: "label text-sm text-neutral font-semibold" %>
+  <%= f.label :name, "リポジトリ名", class: "text-sm font-semibold" %>
   <% has_name_error = @validation_name_error.present? %>
   <%= f.text_field :name, 
                   value: @name,
                   placeholder: "til", 
-                  class: "input #{has_name_error ? 'input-error' : 'input-neutral'} w-full" %>
+                  class: "input #{'input-error' if has_name_error} w-full placeholder:text-placeholder" %>
   
   <!-- リポジトリ名のエラーメッセージの表示 -->
   <% if has_name_error %>
     <p class="text-xs text-error font-bold"><%= @validation_name_error %></p>
   <% end %>
 
-  <%= f.label :description, "説明文", class: "label text-sm text-neutral font-semibold" %>
+  <%= f.label :description, "説明文", class: "text-sm font-semibold" %>
   <% has_description_error = @validation_description_error.present? %>
   <%= f.text_area :description, 
                   value: @description,
                   rows: 4, 
                   placeholder: "今日学んだことを記録するリポジトリ",
-                  class: "textarea #{has_description_error ? 'textarea-error' : 'textarea-neutral'} w-full" %>
+                  class: "textarea #{'textarea-error' if has_description_error} w-full placeholder:text-placeholder" %>
 
   <!-- 説明文のエラーメッセージの表示 -->
   <% if has_description_error %>
     <p class="text-xs text-error font-bold"><%= @validation_description_error %></p>
   <% end %>
 
-  <div class="flex flex-col gap-2">
-    <label class="label cursor-pointer justify-start gap-2">
+  <div class="flex flex-col gap-3">
+    <label class="label">
       <!-- checkboxはString型を返すため、
            checked時はparams[:repo][:private]="true",
            unchecked時はparams[:repo][:private]="false"を送信 -->
       <%= f.check_box :private, { checked: false, class: "checkbox checkbox-sm checkbox-neutral" }, true, false %>
-      <span class="label-text text-sm text-neutral font-semibold">非公開に設定</span>
+      <span class="text-sm text-muted">非公開に設定</span>
     </label>
 
-    <label class="label cursor-pointer justify-start gap-2">
+    <label class="label">
       <%= f.check_box :auto_init, { checked: false, class: "checkbox checkbox-sm checkbox-neutral" }, true, false %>
-      <span class="label-text text-sm text-neutral font-semibold">READMEを追加</span>
+      <span class="text-sm text-muted">READMEを追加</span>
     </label>
   </div>
 

@@ -1,11 +1,11 @@
-<%= link_to task_path(task), class: "card h-48 shadow-sm" do %>
+<%= link_to task_path(task), class: "card h-48 bg-surface border border-subtle shadow" do %>
   <div class="card-body">
     <div class="card-actions">
       <!-- ステータスアイコン -->
       <%= render 'tasks/status_icon', task: task %>
 
       <!-- 作成日 -->
-      <p class="text-custom-dark-green/80">
+      <p class="text-muted">
         作成日: <%= task.created_at.strftime("%Y年%m月%d日 %H:%M") %>
       </p>
     </div>

@@ -1,14 +1,14 @@
 <%= form_with model: post, url: task_posts_path(task), method: :post, class: "flex flex-col gap-1", id: "document-post-form" do |f| %>
   <%= f.hidden_field :postable_type, value: "DocumentPost" %>
   
-  <div class="form-control">
-    <%= f.fields_for :postable_attributes, (post.postable.is_a?(DocumentPost) ? post.postable.document : Document.new) do |document_post_form| %>
-      <%= document_post_form.text_field :url, 
-          placeholder: "参考にした資料のURLを入力しましょう(ex. https://railsguides.jp/)", 
-          class: "input input-ghost w-full text-neutral placeholder:text-neutral/50 focus:outline-none",
-          autocomplete: "off" %>
-    <% end %>
-  </div>
+  <%= f.fields_for :postable_attributes, (post.postable.is_a?(DocumentPost) ? post.postable.document : Document.new) do |document_post_form| %>
+    <% placeholder_text = "参考にした資料のURLを入力しましょう(ex. https://railsguides.jp/)" %>
+    <%= document_post_form.text_field :url, 
+        placeholder: placeholder_text.chomp, 
+        class: "input input-ghost w-full text-base-content placeholder:text-placeholder focus:outline-none",
+        autocomplete: "off" %>
+  <% end %>
+  
   <div class="flex justify-end gap-4">
     <%= f.submit "送信", class: "btn btn-neutral rounded-full shadow-none" %>
   </div>

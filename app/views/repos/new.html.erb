@@ -1,8 +1,10 @@
 <%= turbo_frame_tag "til_form" do %>
-  <div class="flex flex-col gap-6">
+  <div class="flex flex-col gap-6 text-base-content">
     <div class="flex items-center justify-between">
-      <p class="text-xl font-bold text-neutral">新しいリポジトリを作成</p>
-      <%= link_to task_path(@task), data: { turbo_frame: "til_form" }, class: "btn btn-ghost btn-circle text-neutral border-none shadow-none hover:bg-neutral/10" do %>
+      <p class="text-xl font-bold">新しいリポジトリを作成</p>
+
+      <!-- 戻るボタン -->
+      <%= link_to task_path(@task), data: { turbo_frame: "til_form" }, class: "btn btn-ghost btn-circle border-none shadow-none hover:bg-neutral/10" do %>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
           <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
         </svg>

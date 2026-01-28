@@ -14,9 +14,8 @@
     <!-- 1. 既存のTodoフィールド用、Railsフォームヘルパーを使用。 -->
     <%= todo_form.text_field :body, 
         placeholder: "やることを入力してください", 
-        class: "input bg-base-100 border-base-content text-base text-base-content w-full
-                focus:ring-2 focus:ring-base-content/20 focus:outline-none
-                placeholder:text-base-content/50
+        class: "input bg-surface text-base w-full
+                placeholder:text-placeholder
                 input-md @md:input-lg text-sm @md:text-base",
         data: { test_id: "existing-todo-field" } %>
     <%= todo_form.hidden_field :id %>
@@ -35,9 +34,8 @@
     <input type="text"
            name="task[todos_attributes][INDEX][body]" 
            placeholder="やることを入力してください" 
-           class="input bg-base-100 border-base-content text-base text-base-content w-full
-                  focus:ring-2 focus:ring-base-content/20 focus:outline-none
-                  placeholder:text-base-content/50
+           class="input bg-surface text-base w-full
+                  placeholder:text-placeholder
                   input-md @md:input-lg text-sm @md:text-base"
            data-test-id="new-todo-field">
     <input type="hidden" name="task[todos_attributes][INDEX][id]" value="">

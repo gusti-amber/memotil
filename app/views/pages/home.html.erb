@@ -1,27 +1,31 @@
-<div class="flex justify-center items-center h-full w-full p-10 gap-6">
+<div class="flex flex-col justify-center items-center h-full w-full p-10 gap-6 text-base-content">
   <div class="flex flex-col items-center justify-center p-4 gap-6">
-    <%= image_tag "description.svg", class: "w-4/5" %>
-    <p class="text-lg font-bold text-custom-dark-green">学習や作業中の気づきをメモする<br>メモをまとめてTILとして記録する<br>学びを形にする学習・作業メモアプリ</p>
+    <%= image_tag "description.svg", class: "w-3/5" %>
+    <p class="text-xl">
+      学習や作業中の気づきをメモする<br>
+      メモをまとめてTILとして記録する<br>
+      学びを形にする学習・作業メモアプリ
+    </p>
     <%= link_to "アプリを始める", tasks_path, class: "btn btn-lg btn-primary btn-outline rounded-full text-base" %>
   </div>
   <div class="flex flex-col items-center justify-center p-4 gap-6">
-    <p class="text-2xl font-bold text-custom-dark-green text-center">書いたメモをもとに、TILを記録できます。</p>
-    <div class ="bg-custom-white rounded-lg p-4 shadow-md w-full">
-      <h2 class="text-lg font-bold text-custom-dark-green">1. タスクページを作成する</h2>
-      <p class="text-base text-custom-dark-green">技術の学習や開発作業など、取り組む内容に応じたタスクページを作成します。</p>
+    <p class="text-2xl font-bold text-center">書いたメモをもとに、今日学んだこと(TIL)を記録できます。</p>
+    <div class ="bg-surface border border-subtle rounded-lg p-4 shadow-sm w-full">
+      <h2 class="text-lg font-bold">1. タスクページを作成する</h2>
+      <p class="text-base text-muted">技術の学習や開発作業など、取り組む内容に応じたタスクページを作成します。</p>
     </div>
-    <div class ="bg-custom-white rounded-lg p-4 shadow-md w-full">
-      <h2 class="text-lg font-bold text-custom-dark-green">2. タスクページで気づきをメモする</h2>
-      <p class="text-base text-custom-dark-green">学習・作業中の気づきや調査したこと、参照した記事やコードスニペットをチャット形式でメモします。</p>
+    <div class ="bg-surface border border-subtle rounded-lg p-4 shadow-sm w-full">
+      <h2 class="text-lg font-bold">2. タスクページで気づきをメモする</h2>
+      <p class="text-base text-muted">学習・作業中の気づきや調査したこと、参照した記事やコードスニペットをチャット形式でメモします。</p>
     </div>
-    <p class="text-lg font-bold text-custom-dark-green text-center">※ 以降の機能を利用するにはGitHubアカウントとの連携が必要です。</p>
-    <div class ="bg-custom-white rounded-lg p-4 shadow-md w-full">
-      <h2 class="text-lg font-bold text-custom-dark-green">3. メモをもとに「今日学んだこと（TIL）」を書く</h2>
-      <p class="text-base text-custom-dark-green">学習・作業が完了したら、メモをまとめて「今日学んだこと（TIL）」を書きます。</p>
+    <p class="text-base font-semibold text-muted text-center">※ 以降の機能を利用するにはGitHubアカウントとの連携が必要です。</p>
+    <div class ="bg-surface border border-subtle rounded-lg p-4 shadow-sm w-full">
+      <h2 class="text-lg font-bold">3. メモをもとに「今日学んだこと（TIL）」を書く</h2>
+      <p class="text-base text-muted">学習・作業が完了したら、メモをまとめて「今日学んだこと（TIL）」を書きます。</p>
     </div>
-    <div class ="bg-custom-white rounded-lg p-4 shadow-md w-full">
-      <h2 class="text-lg font-bold text-custom-dark-green">4. GitHubリポジトリにTILを記録する</h2>
-      <p class="text-base text-custom-dark-green">書いたTILをGitHubリポジトリに学習成果として記録します。</p>
+    <div class ="bg-surface border border-subtle rounded-lg p-4 shadow-sm w-full">
+      <h2 class="text-lg font-bold">4. GitHubリポジトリにTILを記録する</h2>
+      <p class="text-base text-muted">書いたTILをGitHubリポジトリに学習成果として記録します。</p>
     </div>
   </div>
 </div>
