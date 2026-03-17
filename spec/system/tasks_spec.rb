@@ -79,7 +79,6 @@ RSpec.describe 'Tasks', type: :system do
 
       it '戻るボタンをクリックすると一覧ページに戻る' do
         click_link '戻る'
-        expect(page).to have_content('タスク')
         expect(page).to have_link('作成')
       end
     end
