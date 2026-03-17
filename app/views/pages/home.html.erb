@@ -1,4 +1,5 @@
 <div class="flex flex-col justify-center items-center h-full w-full p-10 gap-6 text-base-content">
+  <!-- ヒーローセクション（大きなロゴ＋キャッチコピー＋CTAボタン） -->
   <div class="flex flex-col items-center justify-center p-4 gap-6">
     <%= image_tag "description.svg", class: "w-3/5" %>
     <p class="text-xl">
@@ -8,7 +9,9 @@
     </p>
     <%= link_to "アプリを始める", tasks_path, class: "btn btn-lg btn-primary btn-outline rounded-full text-base" %>
   </div>
-  <div class="flex flex-col items-center justify-center p-4 gap-6">
+
+  <!-- 使い方 -->
+  <%# <div class="flex flex-col items-center justify-center p-4 gap-6">
     <p class="text-2xl font-bold text-center">書いたメモをもとに、今日学んだこと(TIL)を記録できます。</p>
     <div class ="bg-surface border border-subtle rounded-lg p-4 shadow-sm w-full">
       <h2 class="text-lg font-bold">1. タスクページを作成する</h2>
@@ -27,5 +30,5 @@
       <h2 class="text-lg font-bold">4. GitHubリポジトリにTILを記録する</h2>
       <p class="text-base text-muted">書いたTILをGitHubリポジトリに学習成果として記録します。</p>
     </div>
-  </div>
+  </div> %>
 </div>
