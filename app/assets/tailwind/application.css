@@ -28,6 +28,8 @@
   --color-surface: var(--color-white);
 
   --color-surface-elevated: var(--color-ivory);
+
+  --color-surface-hover: var(--color-snow);
 }
 
 @plugin "daisyui" {
