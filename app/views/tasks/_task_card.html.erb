@@ -1,21 +1,28 @@
-<%= link_to task_path(task), class: "card h-48 bg-surface border border-subtle shadow" do %>
-  <div class="card-body">
-    <div class="card-actions">
-      <!-- ステータスアイコン -->
-      <%= render 'tasks/status_icon', task: task %>
+<%= link_to task_path(task) do %>
+  <div class="card bg-base-100 border border-subtle
+              h-full hover:bg-surface hover:shadow-sm">
+    <div class="card-body h-full">
+      <div class="flex items-center gap-2 pr-10">
+        <!-- ステータスアイコン -->
+        <%= render 'tasks/status_icon', task: task %>
 
-      <!-- 作成日 -->
-      <p class="text-muted">
-        作成日: <%= task.created_at.strftime("%Y年%m月%d日 %H:%M") %>
-      </p>
-    </div>
+        <!-- タイトル -->
+        <h2 class="card-title text-base font-normal line-clamp-1"><%= task.title %></h2>
+      </div>
 
-    <!-- タイトル -->
-    <p class="card-title line-clamp-2"><%= task.title %></p>
-
-    <!-- タグ一覧 -->
-    <div class="card-actions">
-      <%= render partial: "tasks/tag_badge", collection: task.tags, as: :tag %>
+      <!-- タグ一覧 -->
+      <div class="card-actions flex-1">
+        <%= render partial: "tasks/tag_badge",
+                  collection: task.tags,
+                  as: :tag,
+                  locals: { size: "badge-sm" } %>
+      </div>
+      <div class="flex justify-start">
+        <!-- 更新日時の表示 -->
+        <p class="text-muted text-xs">
+          <%= updated_ago_label(task.updated_at) %>
+        </p>
+      </div>
     </div>
   </div>
 <% end %>
