@@ -18,9 +18,9 @@
                   locals: { size: "badge-sm" } %>
       </div>
       <div class="flex justify-start">
-        <!-- 作成日 -->
+        <!-- 更新日時の表示 -->
         <p class="text-muted">
-          作成日: <%= task.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+          <%= updated_ago_label(task.updated_at) %>
         </p>
       </div>
     </div>
