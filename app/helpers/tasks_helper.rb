@@ -1,6 +1,6 @@
 module TasksHelper
   def updated_ago_label(updated_at, now = Time.current)
-    elapsed_seconds = [(now - updated_at).to_i, 0].max
+    elapsed_seconds = [ (now - updated_at).to_i, 0 ].max
 
     case elapsed_seconds
     when 0...60
