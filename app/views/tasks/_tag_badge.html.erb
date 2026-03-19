@@ -1,1 +1,2 @@
-<span class="badge badge-neutral"><%= tag.name %></span>
+<% size_class = (defined?(size) && size.present?) ? size : "badge-sm" %>
+<span class="badge <%= size_class %> badge-neutral"><%= tag.name %></span>
