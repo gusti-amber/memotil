@@ -37,7 +37,7 @@
       <% end %>
 
       <!-- フィルターフォーム -->
-      <%= form_with url: tasks_path, method: :get, scope: :q, class: "flex gap-4", data: { turbo_frame: "tasks_list" } do |form| %>
+      <%= form_with url: tasks_path, method: :get, scope: :q, class: "flex justify-end gap-4", data: { turbo_frame: "tasks_list" } do |form| %>
         <%= form.hidden_field :title_cont, value: params.dig(:q, :title_cont) %>
         <div class="w-32">
           <%= form.select :status_eq,
