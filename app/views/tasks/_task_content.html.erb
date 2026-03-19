@@ -19,7 +19,10 @@
     
     <!-- タグ一覧 -->
     <div class="flex flex-wrap gap-2">
-      <%= render partial: "tasks/tag_badge", collection: task.tags, as: :tag %>
+      <%= render partial: "tasks/tag_badge",
+                 collection: task.tags,
+                 as: :tag,
+                 locals: { size: "badge-md" } %>
     </div>
   </div>
   
