@@ -47,8 +47,8 @@
                 ['Doing', 1],
                 ['Done', 2]
               ],
-              { include_blank: 'すべての状態', selected: params.dig(:q, :status_eq) },
-              class: "select select-bordered select-neutral font-semibold w-full",
+              { include_blank: 'ステータス', selected: params.dig(:q, :status_eq) },
+              class: "select border border-subtle font-semibold w-full",
               onchange: "this.form.requestSubmit()" %>
         </div>
 
