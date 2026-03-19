@@ -55,8 +55,8 @@
         <div class="w-32">
           <%= form.select :tags_name_eq,
               @tags.map { |tag| tag.name },
-              { include_blank: 'すべてのタグ', selected: params.dig(:q, :tags_name_eq) },
-              class: "select select-bordered select-neutral font-semibold w-full",
+              { include_blank: 'タグ', selected: params.dig(:q, :tags_name_eq) },
+              class: "select border border-subtle font-semibold w-full",
               onchange: "this.form.requestSubmit()" %>
         </div>
       <% end %>
