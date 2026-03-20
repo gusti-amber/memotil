@@ -1,5 +1,6 @@
 <div class="flex justify-center">
-  <div class="flex flex-col gap-6 p-12 max-w-7xl w-full text-base-content">
+  <div class="flex w-full max-w-7xl flex-col gap-6 px-4 py-6 text-base-content sm:px-8 sm:py-8 lg:px-12 lg:py-12">
+    <!-- タスク一覧へのリンク -->
     <div class="flex justify-start">
       <%= link_to tasks_path,
         class: "inline-flex items-center gap-1.5 text-sm text-muted hover:text-base-content transition-colors" do %>
@@ -8,25 +9,25 @@
       <% end %>
     </div>
 
-    <div class="flex gap-6">
-      <div class="flex flex-col gap-6">
-        <!-- タスクのメイン情報セクション -->
-        <%= render 'tasks/task_content', task: @task %>
-        
+    <!-- 狭い幅: 縦並び（メイン → サイドバー）。lg 以上: 横並び（メインが flex-1 で広い／サイドは固定幅） -->
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8 xl:gap-10">
+      <!-- メインセクション -->
+      <div class="flex min-w-0 flex-col gap-6 lg:flex-1">
+        <!-- タスクセクション -->
+        <%= render "tasks/task_content", task: @task %>
+
         <!-- ポストセクション -->
-        <%= render 'tasks/posts_section', task: @task, post: @post %>
+        <%= render "tasks/posts_section", task: @task, post: @post %>
       </div>
 
       <% if @task.doing? %>
-      <!-- タスクのサブ情報サイドバー -->
-      <div class="flex flex-col items-start gap-1 max-w-sm w-full">
-        <%= render 'tasks/doing_sidebar', task: @task %>
-      </div>
+        <aside class="flex w-full shrink-0 flex-col gap-3 lg:sticky lg:top-6 lg:w-96">
+          <%= render "tasks/doing_sidebar", task: @task %>
+        </aside>
       <% elsif @task.done? %>
-      <!-- タスクのサブ情報サイドバー -->
-      <div class="flex flex-col items-start gap-1 max-w-xl w-full">
-        <%= render 'tasks/done_sidebar', task: @task %>
-      </div>
+        <aside class="flex w-full shrink-0 flex-col gap-3 lg:sticky lg:top-6 lg:w-96">
+          <%= render "tasks/done_sidebar", task: @task %>
+        </aside>
       <% end %>
     </div>
   </div>
