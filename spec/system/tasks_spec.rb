@@ -236,63 +236,72 @@ RSpec.describe 'Tasks', type: :system do
     describe 'やることリスト（Doing）' do
       let(:task) { create(:doing_task, user: user) }
 
-      before do
-        visit task_path(task)
-      end
+      # 親の before で visit すると、子の let!(:todo) より先に走り一覧が hidden になるため、
+      # 各 context でデータ準備の後に visit する。
 
       context 'ToDoフォームの表示' do
-        context 'ToDoフォームの「追加」ボタンをクリックする場合' do
-          it 'ToDoフォームに新しいToDoフィールドが追加される' do
-            # 初期状態では新規ToDoフィールドが0個であることを確認
-            expect(all('[data-test-id="new-todo-field"]').count).to eq(0)
-
-            # ToDoを追加
-            click_button '追加'
-
-            # 新しいToDoフィールドが1個追加されたことを確認
-            expect(all('[data-test-id="new-todo-field"]').count).to eq(1)
+        context '空のタスクの場合' do
+          before do
+            visit task_path(task)
           end
-        end
 
-        context '追加したToDoフィールドに入力し、「保存」ボタンをクリックする場合' do
-          context '正常な入力の場合' do
-            it 'ToDoが正常に保存される' do
-              click_button '追加'
+          context 'ToDoフォームの「追加」ボタンをクリックする場合' do
+            it 'ToDoフォームに新しいToDoフィールドが追加される' do
+              # 初期状態では新規ToDoフィールドが0個であることを確認
+              expect(all('[data-test-id="new-todo-field"]').count).to eq(0)
 
-              # 最初のToDoフィールドに入力
-              first('[data-test-id="new-todo-field"]').fill_in with: 'new_todo'
+              # ToDoを追加
+              click_add_todo_field_button
 
-              click_button '保存'
-
-              expect(page).to have_content('new_todo')
+              # 新しいToDoフィールドが1個追加されたことを確認
+              expect(all('[data-test-id="new-todo-field"]').count).to eq(1)
             end
           end
 
-          context '追加したToDoフィールドを空のままにした場合' do
-            it '更新は成功する' do
-              # 更新前のToDo数を記録
-              todo_count_before = task.todos.count
+          context '追加したToDoフィールドに入力し、「保存」ボタンをクリックする場合' do
+            context '正常な入力の場合' do
+              it 'ToDoが正常に保存される' do
+                click_add_todo_field_button
 
-              # ToDoを追加
-              click_button '追加'
+                # 最初のToDoフィールドに入力
+                first('[data-test-id="new-todo-field"]').fill_in with: 'new_todo'
 
-              # ToDoフィールドを空のままにする
-              first('[data-test-id="new-todo-field"]').fill_in with: ''
+                click_button '保存'
 
-              click_button '保存'
+                expect(page).to have_content('new_todo')
+              end
+            end
 
-              # 空のToDoは記録されないため、ToDo数は変わらない
-              expect(task.reload.todos.count).to eq todo_count_before
+            context '追加したToDoフィールドを空のままにした場合' do
+              it '更新は成功する' do
+                # 更新前のToDo数を記録
+                todo_count_before = task.todos.count
+
+                # ToDoを追加
+                click_add_todo_field_button
+
+                # ToDoフィールドを空のままにする
+                first('[data-test-id="new-todo-field"]').fill_in with: ''
+
+                click_button '保存'
+
+                # 空のToDoは記録されないため、ToDo数は変わらない
+                expect(task.reload.todos.count).to eq todo_count_before
+              end
             end
           end
         end
 
         context '既存のToDoフィールドに入力し、「保存」ボタンをクリックする場合' do
-          let!(:todo) { create(:todo, task: task, body: 'existing_todo') }
+          before do
+            create(:todo, task: task, body: 'existing_todo')
+            visit task_path(task)
+          end
+
           context '正常な入力の場合' do
             it 'ToDoが正常に更新される' do
               # ToDoフォームへの切り替えボタンをクリック
-              find('[data-test-id="show-todo-form-button"]').click
+              click_show_todo_form_button
 
               # 既存のToDoフィールドに入力
               first('[data-test-id="existing-todo-field"]').fill_in with: 'update_todo'
@@ -306,7 +315,7 @@ RSpec.describe 'Tasks', type: :system do
           context 'バリデーションエラーが発生する場合' do
             it '既存のToDoフィールドを空にした場合、エラーメッセージが表示される' do
               # ToDoフォームへの切り替えボタンをクリック
-              find('[data-test-id="show-todo-form-button"]').click
+              click_show_todo_form_button
 
               # 既存のToDoフィールドを空にする
               first('[data-test-id="existing-todo-field"]').fill_in with: ''
@@ -318,7 +327,7 @@ RSpec.describe 'Tasks', type: :system do
 
             it '既存のToDoフィールドに256文字以上の値を入力した場合、エラーメッセージが表示される' do
               # ToDoフォームへの切り替えボタンをクリック
-              find('[data-test-id="show-todo-form-button"]').click
+              click_show_todo_form_button
 
               first('[data-test-id="existing-todo-field"]').fill_in with: 'a' * 256
 
@@ -330,10 +339,14 @@ RSpec.describe 'Tasks', type: :system do
         end
 
         context '既存のToDoフィールドの削除ボタンをクリックした後、「保存」ボタンをクリックする場合' do
-          let!(:todo) { create(:todo, task: task, body: 'existing_todo') }
+          before do
+            create(:todo, task: task, body: 'existing_todo')
+            visit task_path(task)
+          end
+
           it 'ToDoが正常に削除される' do
             # ToDoフォームへの切り替えボタンをクリック
-            find('[data-test-id="show-todo-form-button"]').click
+            click_show_todo_form_button
 
             accept_confirm do
               # 削除ボタンをクリック
@@ -347,17 +360,21 @@ RSpec.describe 'Tasks', type: :system do
         end
 
         context '「追加」ボタンをクリックし、表示されるToDoフィールドが最大個数(5個)に達した場合' do
+          before do
+            visit task_path(task)
+          end
+
           it '追加ボタンが非表示になる' do
             # 追加ボタンが表示されていることを確認
-            expect(page).to have_button('追加')
+            expect(page).to have_css('[data-test-id="add-todo-field-button"]:not([disabled])')
 
             # 最大個数のToDoを追加
             max_todos.times do |i|
-              click_button '追加'
+              click_add_todo_field_button
             end
 
-            # 追加ボタンが非表示になっていることを確認
-            expect(page).not_to have_button('追加')
+            # 最大個数では追加ボタンが無効化される（DOM 上は残る）
+            expect(page).to have_css('[data-test-id="add-todo-field-button"][disabled]')
           end
         end
       end
