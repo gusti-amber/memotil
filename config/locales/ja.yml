@@ -77,6 +77,12 @@ ja:
       todos:
         too_many: "は最大5個まで作成できます"
 
+  views:
+    tasks:
+      description:
+        more: "もっと表示"
+        less: "表示を減らす"
+
   # フラッシュメッセージ
   flash:
     tasks:

@@ -29,3 +29,9 @@
 
 en:
   hello: "Hello world"
+
+  views:
+    tasks:
+      description:
+        more: "Show more"
+        less: "Show less"
