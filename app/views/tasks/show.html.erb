@@ -1,23 +1,33 @@
 <div class="flex justify-center">
-  <div class="flex gap-6 p-12 max-w-7xl w-full text-base-content">
-    <div class="flex flex-col gap-6">
-      <!-- タスクのメイン情報セクション -->
-      <%= render 'tasks/task_content', task: @task %>
-      
-      <!-- ポストセクション -->
-      <%= render 'tasks/posts_section', task: @task, post: @post %>
+  <div class="flex flex-col gap-6 p-12 max-w-7xl w-full text-base-content">
+    <div class="flex justify-start">
+      <%= link_to tasks_path,
+        class: "inline-flex items-center gap-1.5 text-sm text-muted hover:text-base-content transition-colors" do %>
+        <span aria-hidden="true">←</span>
+        すべてのタスク
+      <% end %>
     </div>
 
-    <% if @task.doing? %>
-    <!-- タスクのサブ情報サイドバー -->
-    <div class="flex flex-col items-start gap-1 max-w-sm w-full">
-      <%= render 'tasks/doing_sidebar', task: @task %>
+    <div class="flex gap-6">
+      <div class="flex flex-col gap-6">
+        <!-- タスクのメイン情報セクション -->
+        <%= render 'tasks/task_content', task: @task %>
+        
+        <!-- ポストセクション -->
+        <%= render 'tasks/posts_section', task: @task, post: @post %>
+      </div>
+
+      <% if @task.doing? %>
+      <!-- タスクのサブ情報サイドバー -->
+      <div class="flex flex-col items-start gap-1 max-w-sm w-full">
+        <%= render 'tasks/doing_sidebar', task: @task %>
+      </div>
+      <% elsif @task.done? %>
+      <!-- タスクのサブ情報サイドバー -->
+      <div class="flex flex-col items-start gap-1 max-w-xl w-full">
+        <%= render 'tasks/done_sidebar', task: @task %>
+      </div>
+      <% end %>
     </div>
-    <% elsif @task.done? %>
-    <!-- タスクのサブ情報サイドバー -->
-    <div class="flex flex-col items-start gap-1 max-w-xl w-full">
-      <%= render 'tasks/done_sidebar', task: @task %>
-    </div>
-    <% end %>
   </div>
 </div>
