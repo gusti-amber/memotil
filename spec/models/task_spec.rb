@@ -47,7 +47,7 @@ RSpec.describe Task, type: :model do
 
     describe 'status' do
       it 'statusが存在する場合は有効' do
-        task.status = 'todo'
+        task.status = 'doing'
         expect(task).to be_valid, 'statusが存在する場合は有効である必要があります'
       end
 

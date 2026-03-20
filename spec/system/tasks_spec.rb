@@ -9,10 +9,8 @@ RSpec.describe 'Tasks', type: :system do
   let(:max_todos) { 5 }
   let!(:tags) { create_list(:tag, max_tags + 1) }
 
-  # ステータス(Todo, Doing, Done)ごとのタスクを作成
-  let(:todo_task) { create(:todo_task, user: user) }
+  # ステータス(Doing, Done)ごとのタスク
   let(:doing_task) { create(:doing_task, user: user) }
-  let!(:todo) { create(:todo, task: doing_task, body: 'test_todo') }
   let(:done_task) { create(:done_task, user: user) }
 
   describe '認証フィルター' do
@@ -235,9 +233,11 @@ RSpec.describe 'Tasks', type: :system do
       sign_in user
     end
 
-    describe 'Todoタスク詳細' do
+    describe 'やることリスト（Doing）' do
+      let(:task) { create(:doing_task, user: user) }
+
       before do
-        visit task_path(todo_task)
+        visit task_path(task)
       end
 
       context 'ToDoフォームの表示' do
@@ -288,7 +288,7 @@ RSpec.describe 'Tasks', type: :system do
         end
 
         context '既存のToDoフィールドに入力し、「保存」ボタンをクリックする場合' do
-          let!(:todo) { create(:todo, task: todo_task, body: 'existing_todo') }
+          let!(:todo) { create(:todo, task: task, body: 'existing_todo') }
           context '正常な入力の場合' do
             it 'ToDoが正常に更新される' do
               # ToDoフォームへの切り替えボタンをクリック
@@ -330,7 +330,7 @@ RSpec.describe 'Tasks', type: :system do
         end
 
         context '既存のToDoフィールドの削除ボタンをクリックした後、「保存」ボタンをクリックする場合' do
-          let!(:todo) { create(:todo, task: todo_task, body: 'existing_todo') }
+          let!(:todo) { create(:todo, task: task, body: 'existing_todo') }
           it 'ToDoが正常に削除される' do
             # ToDoフォームへの切り替えボタンをクリック
             find('[data-test-id="show-todo-form-button"]').click
@@ -364,6 +364,8 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     describe 'Doingタスク詳細' do
+      let!(:todo) { create(:todo, task: doing_task, body: 'test_todo') }
+
       before do
         visit task_path(doing_task)
       end
@@ -435,24 +437,6 @@ RSpec.describe 'Tasks', type: :system do
       sign_in user
     end
 
-    context 'ステータスがTodoの場合' do
-      let(:task) { create(:task, user: user, status: :todo) }
-
-      it '「タスクに取り組む」ボタンをクリックすると、ステータスがDoingに変更される' do
-        visit task_path(task)
-        expect(page).to have_content('Todo')
-
-        click_link 'タスクに取り組む'
-
-        # サクセスメッセージの表示
-        expect(page).to have_css('.alert.alert-success')
-        expect(page).to have_content('ステータスが変更されました')
-
-        # ステータスがDoingに変更されたことを確認
-        expect(page).to have_content('Doing')
-      end
-    end
-
     context 'ステータスがDoingの場合' do
       let(:task) { create(:task, user: user, status: :doing) }
 
@@ -491,15 +475,15 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe "タスク一覧" do
-    let!(:todo_task) { create(:task, user: user, status: 'todo', title: 'Todo Task') }
+    let!(:title_search_task) { create(:task, user: user, status: 'doing', title: 'Todo Task') }
     let!(:doing_task) { create(:task, user: user, status: 'doing', title: 'Doing Task') }
     let!(:done_task) { create(:task, user: user, status: 'done', title: 'Done Task') }
     let!(:ruby_tag) { create(:tag, name: 'Ruby') }
     let!(:rails_tag) { create(:tag, name: 'Rails') }
-    let!(:task_with_ruby_tag) { create(:task, user: user, status: 'todo', title: 'Ruby Task') }
-    let!(:task_with_rails_tag) { create(:task, user: user, status: 'todo', title: 'Rails Task') }
-    let!(:task_with_both_tags) { create(:task, user: user, status: 'todo', title: 'Both Tags Task') }
-    let!(:task_without_tag) { create(:task, user: user, status: 'todo', title: 'No Tag Task') }
+    let!(:task_with_ruby_tag) { create(:task, user: user, status: 'doing', title: 'Ruby Task') }
+    let!(:task_with_rails_tag) { create(:task, user: user, status: 'doing', title: 'Rails Task') }
+    let!(:task_with_both_tags) { create(:task, user: user, status: 'doing', title: 'Both Tags Task') }
+    let!(:task_without_tag) { create(:task, user: user, status: 'doing', title: 'No Tag Task') }
 
     before do
       task_with_ruby_tag.tags << ruby_tag
@@ -511,20 +495,11 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context "ステータスフィルター" do
-      context "セレクトボックスからtodoを選択した場合" do
-        it "Todoステータスのタスクのみが表示される" do
-          select 'Todo', from: 'q[status_eq]'
-          expect(page).to have_content('Todo Task')
-          expect(page).not_to have_content('Doing Task')
-          expect(page).not_to have_content('Done Task')
-        end
-      end
-
       context "セレクトボックスからdoingを選択した場合" do
         it "Doingステータスのタスクのみが表示される" do
           select 'Doing', from: 'q[status_eq]'
           expect(page).to have_content('Doing Task')
-          expect(page).not_to have_content('Todo Task')
+          expect(page).to have_content('Todo Task')
           expect(page).not_to have_content('Done Task')
         end
       end
@@ -533,8 +508,8 @@ RSpec.describe 'Tasks', type: :system do
         it "Doneステータスのタスクのみが表示される" do
           select 'Done', from: 'q[status_eq]'
           expect(page).to have_content('Done Task')
-          expect(page).not_to have_content('Todo Task')
           expect(page).not_to have_content('Doing Task')
+          expect(page).not_to have_content('Todo Task')
         end
       end
 
