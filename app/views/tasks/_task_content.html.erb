@@ -11,7 +11,23 @@
   </div>
 
   <% if task.description.present? %>
-    <div class="text-sm text-muted leading-relaxed line-clamp-2 whitespace-pre-wrap"><%= task.description %></div>
+    <div data-controller="description-expand" class="flex flex-col gap-2">
+      <div
+        data-description-expand-target="content"
+        class="text-sm text-base-content leading-relaxed line-clamp-2">
+        <%= task.description %>
+      </div>
+      <button
+        type="button"
+        data-description-expand-target="toggleButton"
+        data-action="click->description-expand#toggle"
+        data-test-id="task-description-toggle"
+        class="inline-flex items-center text-xs text-muted hover:text-base-content transition-colors underline"
+        aria-expanded="false">
+        <span data-description-expand-target="labelMore"><%= t("views.tasks.description.more") %></span>
+        <span data-description-expand-target="labelLess" class="hidden"><%= t("views.tasks.description.less") %></span>
+      </button>
+    </div>
   <% end %>
 
   <div class="flex justify-start items-center gap-4">
