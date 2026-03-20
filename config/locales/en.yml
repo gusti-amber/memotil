@@ -35,3 +35,5 @@ en:
       description:
         more: "Show more"
         less: "Show less"
+      todo_form:
+        empty_hint: "Write your task completion criteria. Clear criteria make the goal obvious."

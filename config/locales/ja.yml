@@ -82,6 +82,8 @@ ja:
       description:
         more: "もっと表示"
         less: "表示を減らす"
+      todo_form:
+        empty_hint: "タスクの完了条件を書きましょう。条件を書くことでゴールが明確になります。"
 
   # フラッシュメッセージ
   flash:
