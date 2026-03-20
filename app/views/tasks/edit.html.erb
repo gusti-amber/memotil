@@ -10,6 +10,15 @@
         <%= f.text_field :title, class: "input input-lg bg-surface text-base w-full" %>
       </div>
 
+      <!-- 概要 -->
+      <div class="w-full">
+        <%= f.label :description, class: "text-sm font-semibold" %>
+        <%= f.text_area :description,
+                        rows: 4,
+                        class: "textarea bg-surface border border-subtle w-full min-h-24 text-base leading-relaxed placeholder:text-placeholder",
+                        placeholder: "タスクの目標、テーマなどを説明してください..." %>
+      </div>
+
       <!-- タグ選択セクション -->
       <div class="w-full">
         <%= f.label :tag_ids, class: "text-sm font-semibold" %>
