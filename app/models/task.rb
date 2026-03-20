@@ -13,6 +13,7 @@ class Task < ApplicationRecord
   enum status: { doing: 1, done: 2 }
 
   validates :title, presence: true, length: { minimum: 2, maximum: 255 }
+  validates :description, length: { maximum: 2000 }, allow_blank: true
   validates :status, presence: true
   validate :tags_must_be_five_or_less
   validate :todos_must_be_five_or_less
