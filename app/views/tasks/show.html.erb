@@ -21,11 +21,11 @@
       </div>
 
       <% if @task.doing? %>
-        <aside class="flex w-full shrink-0 flex-col gap-3 lg:sticky lg:top-6 lg:w-96">
+        <aside class="flex w-full shrink-0 flex-col gap-3 lg:sticky lg:top-6 lg:w-md">
           <%= render "tasks/doing_sidebar", task: @task %>
         </aside>
       <% elsif @task.done? %>
-        <aside class="flex w-full shrink-0 flex-col gap-3 lg:sticky lg:top-6 lg:w-96">
+        <aside class="flex w-full shrink-0 flex-col gap-3 lg:sticky lg:top-6 lg:w-xl">
           <%= render "tasks/done_sidebar", task: @task %>
         </aside>
       <% end %>
