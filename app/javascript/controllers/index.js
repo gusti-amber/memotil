@@ -18,3 +18,6 @@ application.register(
 
 import TodoSectionController from "./todo_section_controller";
 application.register("todo-section", TodoSectionController);
+
+import DescriptionExpandController from "./description_expand_controller";
+application.register("description-expand", DescriptionExpandController);
