@@ -16,6 +16,12 @@
   </div>
 
   <%= form_with model: task, local: false, html: { class: "flex flex-col gap-4" } do |f| %>
+    <p
+      data-todo-form-target="emptyHint"
+      class="text-sm text-muted leading-relaxed <%= 'hidden' if task.todos.any? %>">
+      <%= t("views.tasks.todo_form.empty_hint") %>
+    </p>
+
     <!-- ToDoフィールド(2種類のフィールドを使用) -->
     <!-- 1. 既存のTodoフィールド用
             formオブジェクトを渡し、Railsフォームヘルパーを使用。 -->
