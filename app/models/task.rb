@@ -10,7 +10,7 @@ class Task < ApplicationRecord
   #   つまり、_destroyの値を除くすべての属性に値がないと、レコードが作成されないようになる。
   accepts_nested_attributes_for :todos, allow_destroy: true, reject_if: :all_blank
 
-  enum status: { todo: 0, doing: 1, done: 2 }
+  enum status: { doing: 1, done: 2 }
 
   validates :title, presence: true, length: { minimum: 2, maximum: 255 }
   validates :status, presence: true
