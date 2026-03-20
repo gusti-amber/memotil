@@ -1,28 +1,23 @@
 <div class="flex justify-center">
-  <div class="flex flex-col gap-6 p-12 max-w-7xl w-full text-base-content">
-    <!-- タスクのメイン情報セクション -->
-    <%= render 'tasks/task_content', task: @task %>
+  <div class="flex gap-6 p-12 max-w-7xl w-full text-base-content">
+    <div class="flex flex-col gap-6">
+      <!-- タスクのメイン情報セクション -->
+      <%= render 'tasks/task_content', task: @task %>
+      
+      <!-- ポストセクション -->
+      <%= render 'tasks/posts_section', task: @task, post: @post %>
+    </div>
 
     <% if @task.doing? %>
-      <div class="flex justify-center min-h-screen gap-6">
-        <!-- ポストセクション -->
-        <%= render 'tasks/posts_section', task: @task, post: @post %>
-
-        <!-- タスクのサブ情報サイドバー -->
-        <div class="flex flex-col items-start gap-1 max-w-sm w-full">
-          <%= render 'tasks/doing_sidebar', task: @task %>
-        </div>
-      </div>
+    <!-- タスクのサブ情報サイドバー -->
+    <div class="flex flex-col items-start gap-1 max-w-sm w-full">
+      <%= render 'tasks/doing_sidebar', task: @task %>
+    </div>
     <% elsif @task.done? %>
-      <div class="flex justify-center min-h-screen gap-6">
-        <!-- ポストセクション -->
-        <%= render 'tasks/posts_section', task: @task, post: @post %>
-
-        <!-- タスクのサブ情報サイドバー -->
-        <div class="flex flex-col items-start gap-1 max-w-xl w-full">
-          <%= render 'tasks/done_sidebar', task: @task %>
-        </div>
-      </div>
+    <!-- タスクのサブ情報サイドバー -->
+    <div class="flex flex-col items-start gap-1 max-w-xl w-full">
+      <%= render 'tasks/done_sidebar', task: @task %>
+    </div>
     <% end %>
   </div>
 </div>
