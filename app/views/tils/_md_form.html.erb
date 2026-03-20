@@ -3,7 +3,7 @@
   <%= f.label :path, class: "text-sm font-semibold" %>
   <%= f.text_field :path, 
                   placeholder: "category/today_i_learned.md", 
-                  class: "input #{'input-error' if @form.errors[:path].any?} w-full
+                  class: "input #{'input-error' if @form.errors[:path].any?} bg-surface w-full
                           placeholder:text-placeholder" %>
   
   <!-- パス名のバリデーションエラーの表示 -->
@@ -14,13 +14,13 @@
   <%= f.label :message, class: "text-sm font-semibold" %>
   <%= f.text_field :message, 
                   value: @form.message.presence || "Add TIL: #{(@task.title || 'task')}", 
-                  class: "input w-full
+                  class: "input bg-surface w-full
                           placeholder:text-placeholder" %>
   <%= f.label :body, class: "text-sm font-semibold" %>
   <%= f.text_area :body, 
                   rows: 16, 
                   placeholder: "今日学んだことを記録しましょう",
-                  class: "textarea w-full
+                  class: "textarea bg-surface w-full
                           placeholder:text-placeholder" %>
   <div class="flex justify-end">
     <%= f.submit "GitHubリポジトリに保存", class: "btn btn-primary rounded-full shadow-none w-full" %>
