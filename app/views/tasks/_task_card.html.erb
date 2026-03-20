@@ -10,6 +10,10 @@
         <h2 class="card-title text-base font-normal line-clamp-1"><%= task.title %></h2>
       </div>
 
+      <% if task.description.present? %>
+        <p class="text-sm text-muted line-clamp-2"><%= task.description %></p>
+      <% end %>
+
       <!-- タグ一覧 -->
       <div class="card-actions flex-1">
         <%= render partial: "tasks/tag_badge",

@@ -10,6 +10,10 @@
     <% end %>
   </div>
 
+  <% if task.description.present? %>
+    <div class="text-sm text-muted leading-relaxed line-clamp-2 whitespace-pre-wrap"><%= task.description %></div>
+  <% end %>
+
   <div class="flex justify-start items-center gap-4">
     <!-- ステータスバッジ -->
     <%= turbo_frame_tag "task_status_badge" do %>
