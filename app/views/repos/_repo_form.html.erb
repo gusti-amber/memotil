@@ -4,7 +4,7 @@
   <%= f.text_field :name, 
                   value: @name,
                   placeholder: "til", 
-                  class: "input #{'input-error' if has_name_error} w-full placeholder:text-placeholder" %>
+                  class: "input #{'input-error' if has_name_error} bg-surface w-full placeholder:text-placeholder" %>
   
   <!-- リポジトリ名のエラーメッセージの表示 -->
   <% if has_name_error %>
@@ -17,7 +17,7 @@
                   value: @description,
                   rows: 4, 
                   placeholder: "今日学んだことを記録するリポジトリ",
-                  class: "textarea #{'textarea-error' if has_description_error} w-full placeholder:text-placeholder" %>
+                  class: "textarea #{'textarea-error' if has_description_error} bg-surface w-full placeholder:text-placeholder" %>
 
   <!-- 説明文のエラーメッセージの表示 -->
   <% if has_description_error %>
