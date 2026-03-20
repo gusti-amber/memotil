@@ -10,6 +10,7 @@ ja:
         remember_me: "ログイン情報を記憶する"
       task:
         title: "タイトル"
+        description: "概要"
         tag_ids: "タグ"
         todos: "タスクの完了条件"
       til_form:
@@ -32,6 +33,7 @@ ja:
         confirmation_token: "確認トークン"
       task:
         title: "タイトル"
+        description: "概要"
         tag_ids: "タグ"
         status: "ステータス"
       document:
