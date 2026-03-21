@@ -1,0 +1,83 @@
+# 🎯 Commit Rules（gitmoji × Conventional Commits）
+
+## 📌 基本ルール
+
+- Conventional Commits形式を使用する
+- 必ず **gitemoji + prefix** を付ける
+- 1行で簡潔に書く
+- 日本語で記述する
+
+---
+
+## 🔥 基本（最小セット）
+
+| gitemoji          | prefix   | 意味             |
+| ----------------- | -------- | ---------------- |
+| ✨ (`:sparkles:`) | feat     | 新機能追加       |
+| 🐛 (`:bug:`)      | fix      | バグ修正         |
+| 💄 (`:lipstick:`) | style    | UI / 見た目修正  |
+| ♻️ (`:recycle:`)  | refactor | リファクタリング |
+| 📝 (`:memo:`)     | docs     | ドキュメント     |
+
+---
+
+## 🚀 よく使う（実務）
+
+| gitemoji                  | prefix | 意味               |
+| ------------------------- | ------ | ------------------ |
+| 🚑️ (`:ambulance:`)        | fix    | 緊急バグ修正       |
+| ⚡️ (`:zap:`)              | perf   | パフォーマンス改善 |
+| 🔥 (`:fire:`)             | chore  | 不要コード削除     |
+| 🎉 (`:tada:`)             | feat   | 初期コミット       |
+| ✅ (`:white_check_mark:`) | test   | テスト追加         |
+
+---
+
+## ⚙️ 開発・運用系
+
+| gitemoji             | prefix | 意味             |
+| -------------------- | ------ | ---------------- |
+| 🔧 (`:wrench:`)      | chore  | 設定変更         |
+| 🚀 (`:rocket:`)      | chore  | デプロイ         |
+| 💚 (`:green_heart:`) | ci     | CI修正           |
+| 📦 (`:package:`)     | build  | 依存関係         |
+| ⬆️ (`:arrow_up:`)    | chore  | 依存アップデート |
+| ⬇️ (`:arrow_down:`)  | chore  | 依存ダウン       |
+
+---
+
+## 🧪 その他
+
+| gitemoji              | prefix | 意味                 |
+| --------------------- | ------ | -------------------- |
+| 🚧 (`:construction:`) | wip    | 作業中               |
+| 🔒 (`:lock:`)         | fix    | セキュリティ修正     |
+| 🧪 (`:test_tube:`)    | test   | テスト追加           |
+| ♿️ (`:wheelchair:`)   | feat   | アクセシビリティ改善 |
+
+---
+
+## ✍️ 書き方（例）
+
+✨ feat: ユーザー登録機能を追加
+🐛 fix: ログイン時のエラーを修正
+💄 style: ボタンの余白を調整
+♻️ refactor: 認証処理を整理
+📝 docs: READMEを更新
+
+---
+
+## 🎯 指針
+
+- UIの見た目変更 → `💄 style`
+- バグ修正 → `🐛 fix`
+- 新機能 → `✨ feat`
+- 内部改善 → `♻️ refactor`
+
+---
+
+## 🚀 補足
+
+- emoji = 直感的に理解するため
+- prefix = 自動化・分類のため
+- 両方使うことで可読性と拡張性を両立する

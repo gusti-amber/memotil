@@ -7,6 +7,7 @@ export default class extends Controller {
     "todoTemplate",
     "todoField",
     "submitButton",
+    "emptyHint",
   ];
   static values = {
     maxCount: { type: Number, default: 5 },
@@ -69,6 +70,13 @@ export default class extends Controller {
     } else {
       this.submitButtonTarget.classList.remove("opacity-50");
       this.submitButtonTarget.classList.remove("cursor-not-allowed");
+    }
+
+    if (this.hasEmptyHintTarget) {
+      this.emptyHintTarget.classList.toggle(
+        "hidden",
+        this.enabledTodoFieldCount > 0
+      );
     }
   }
 

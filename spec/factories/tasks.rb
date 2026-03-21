@@ -5,10 +5,6 @@ FactoryBot.define do
     association :user
   end
 
-  factory :todo_task, parent: :task do
-    status { :todo }
-  end
-
   factory :doing_task, parent: :task do
     status { :doing }
   end

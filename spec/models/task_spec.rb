@@ -45,9 +45,27 @@ RSpec.describe Task, type: :model do
       end
     end
 
+    describe 'description' do
+      it '空の場合は有効' do
+        task.description = ''
+        expect(task).to be_valid, 'descriptionが空の場合は有効である必要があります'
+      end
+
+      it '2000文字以下の場合は有効' do
+        task.description = 'a' * 2000
+        expect(task).to be_valid, 'descriptionが2000文字以下の場合は有効である必要があります'
+      end
+
+      it '2001文字以上の場合は無効' do
+        task.description = 'a' * 2001
+        expect(task).not_to be_valid, 'descriptionが2001文字以上の場合は無効である必要があります'
+        expect(task.errors[:description]).to include('は2000文字以下で入力してください')
+      end
+    end
+
     describe 'status' do
       it 'statusが存在する場合は有効' do
-        task.status = 'todo'
+        task.status = 'doing'
         expect(task).to be_valid, 'statusが存在する場合は有効である必要があります'
       end
 

@@ -1,12 +1,12 @@
 <%= turbo_frame_tag "til_form" do %>
   <div class="flex flex-col gap-6 text-base-content">
     <div class="flex items-center justify-between">
-      <p class="text-xl font-bold">新しいmdファイルにTILを記録</p>
+      <h3 class="card-title text-base-content text-base font-medium">新しいmdファイルにTILを記録</h3>
 
       <!-- 戻るボタン -->
       <%= link_to task_path(@task),
                   data: { turbo_frame: "til_form" },
-                  class: "btn btn-ghost btn-circle border-none shadow-none hover:bg-neutral/10" do %>
+                  class: "btn btn-sm btn-ghost btn-circle text-sm border-none shadow-none hover:bg-neutral/10" do %>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
           <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
         </svg>
@@ -32,7 +32,7 @@
           <%= link_to repo_url, 
                       target: "_blank", # 新しいタブでリポジトリを開く
                       rel: "noopener noreferrer",
-                      class: "link link-info text-sm" do %>
+                      class: "link text-muted text-sm hover:text-base-content transition-colors underline" do %>
             <%= @selected_repo %>
           <% end %>
         </div>

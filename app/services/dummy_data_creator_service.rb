@@ -15,6 +15,7 @@ class DummyDataCreatorService
     # タスクを作成
     task = @user.tasks.create!(
       title: "見本: AtCoder Beginner Contest 439 の A~C問題を解く",
+      description: "AtCoder Beginner Contest の過去問に取り組み、解法とコードをメモするタスクです。",
       status: :doing
     )
 

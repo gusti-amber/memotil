@@ -3,20 +3,25 @@
   <%= render 'shared/error_messages', object: task %>
 
   <div class="flex items-center justify-between">
-    <p class="text-sm @md:text-lg font-semibold">タスクの完了条件</p>
+    <h3 class="text-base-content text-base font-medium">タスクの完了条件</h3>
     <button type="button"
             data-todo-form-target="addButton"
+            data-test-id="add-todo-field-button"
             data-action="click->todo-form#addTodoField"
-            class="btn btn-neutral rounded-full shadow-none
-                    btn-sm @md:btn-md text-xs @md:text-sm">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+            class="btn btn-ghost btn-circle border-none shadow-none btn-sm text-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-5">
         <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
       </svg>
-      <span>追加</span>
     </button>
   </div>
 
   <%= form_with model: task, local: false, html: { class: "flex flex-col gap-4" } do |f| %>
+    <p
+      data-todo-form-target="emptyHint"
+      class="text-sm text-muted leading-relaxed <%= 'hidden' if task.todos.any? %>">
+      <%= t("views.tasks.todo_form.empty_hint") %>
+    </p>
+
     <!-- ToDoフィールド(2種類のフィールドを使用) -->
     <!-- 1. 既存のTodoフィールド用
             formオブジェクトを渡し、Railsフォームヘルパーを使用。 -->
@@ -39,5 +44,5 @@
           data: { todo_form_target: "submitButton" },
           disabled: task.todos.empty? %>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>

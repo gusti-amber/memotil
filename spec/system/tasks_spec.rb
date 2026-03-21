@@ -9,10 +9,8 @@ RSpec.describe 'Tasks', type: :system do
   let(:max_todos) { 5 }
   let!(:tags) { create_list(:tag, max_tags + 1) }
 
-  # ステータス(Todo, Doing, Done)ごとのタスクを作成
-  let(:todo_task) { create(:todo_task, user: user) }
+  # ステータス(Doing, Done)ごとのタスク
   let(:doing_task) { create(:doing_task, user: user) }
-  let!(:todo) { create(:todo, task: doing_task, body: 'test_todo') }
   let(:done_task) { create(:done_task, user: user) }
 
   describe '認証フィルター' do
@@ -235,64 +233,75 @@ RSpec.describe 'Tasks', type: :system do
       sign_in user
     end
 
-    describe 'Todoタスク詳細' do
-      before do
-        visit task_path(todo_task)
-      end
+    describe 'やることリスト（Doing）' do
+      let(:task) { create(:doing_task, user: user) }
+
+      # 親の before で visit すると、子の let!(:todo) より先に走り一覧が hidden になるため、
+      # 各 context でデータ準備の後に visit する。
 
       context 'ToDoフォームの表示' do
-        context 'ToDoフォームの「追加」ボタンをクリックする場合' do
-          it 'ToDoフォームに新しいToDoフィールドが追加される' do
-            # 初期状態では新規ToDoフィールドが0個であることを確認
-            expect(all('[data-test-id="new-todo-field"]').count).to eq(0)
-
-            # ToDoを追加
-            click_button '追加'
-
-            # 新しいToDoフィールドが1個追加されたことを確認
-            expect(all('[data-test-id="new-todo-field"]').count).to eq(1)
+        context '空のタスクの場合' do
+          before do
+            visit task_path(task)
           end
-        end
 
-        context '追加したToDoフィールドに入力し、「保存」ボタンをクリックする場合' do
-          context '正常な入力の場合' do
-            it 'ToDoが正常に保存される' do
-              click_button '追加'
+          context 'ToDoフォームの「追加」ボタンをクリックする場合' do
+            it 'ToDoフォームに新しいToDoフィールドが追加される' do
+              # 初期状態では新規ToDoフィールドが0個であることを確認
+              expect(all('[data-test-id="new-todo-field"]').count).to eq(0)
 
-              # 最初のToDoフィールドに入力
-              first('[data-test-id="new-todo-field"]').fill_in with: 'new_todo'
+              # ToDoを追加
+              click_add_todo_field_button
 
-              click_button '保存'
-
-              expect(page).to have_content('new_todo')
+              # 新しいToDoフィールドが1個追加されたことを確認
+              expect(all('[data-test-id="new-todo-field"]').count).to eq(1)
             end
           end
 
-          context '追加したToDoフィールドを空のままにした場合' do
-            it '更新は成功する' do
-              # 更新前のToDo数を記録
-              todo_count_before = task.todos.count
+          context '追加したToDoフィールドに入力し、「保存」ボタンをクリックする場合' do
+            context '正常な入力の場合' do
+              it 'ToDoが正常に保存される' do
+                click_add_todo_field_button
 
-              # ToDoを追加
-              click_button '追加'
+                # 最初のToDoフィールドに入力
+                first('[data-test-id="new-todo-field"]').fill_in with: 'new_todo'
 
-              # ToDoフィールドを空のままにする
-              first('[data-test-id="new-todo-field"]').fill_in with: ''
+                click_button '保存'
 
-              click_button '保存'
+                expect(page).to have_content('new_todo')
+              end
+            end
 
-              # 空のToDoは記録されないため、ToDo数は変わらない
-              expect(task.reload.todos.count).to eq todo_count_before
+            context '追加したToDoフィールドを空のままにした場合' do
+              it '更新は成功する' do
+                # 更新前のToDo数を記録
+                todo_count_before = task.todos.count
+
+                # ToDoを追加
+                click_add_todo_field_button
+
+                # ToDoフィールドを空のままにする
+                first('[data-test-id="new-todo-field"]').fill_in with: ''
+
+                click_button '保存'
+
+                # 空のToDoは記録されないため、ToDo数は変わらない
+                expect(task.reload.todos.count).to eq todo_count_before
+              end
             end
           end
         end
 
         context '既存のToDoフィールドに入力し、「保存」ボタンをクリックする場合' do
-          let!(:todo) { create(:todo, task: todo_task, body: 'existing_todo') }
+          before do
+            create(:todo, task: task, body: 'existing_todo')
+            visit task_path(task)
+          end
+
           context '正常な入力の場合' do
             it 'ToDoが正常に更新される' do
               # ToDoフォームへの切り替えボタンをクリック
-              find('[data-test-id="show-todo-form-button"]').click
+              click_show_todo_form_button
 
               # 既存のToDoフィールドに入力
               first('[data-test-id="existing-todo-field"]').fill_in with: 'update_todo'
@@ -306,7 +315,7 @@ RSpec.describe 'Tasks', type: :system do
           context 'バリデーションエラーが発生する場合' do
             it '既存のToDoフィールドを空にした場合、エラーメッセージが表示される' do
               # ToDoフォームへの切り替えボタンをクリック
-              find('[data-test-id="show-todo-form-button"]').click
+              click_show_todo_form_button
 
               # 既存のToDoフィールドを空にする
               first('[data-test-id="existing-todo-field"]').fill_in with: ''
@@ -318,7 +327,7 @@ RSpec.describe 'Tasks', type: :system do
 
             it '既存のToDoフィールドに256文字以上の値を入力した場合、エラーメッセージが表示される' do
               # ToDoフォームへの切り替えボタンをクリック
-              find('[data-test-id="show-todo-form-button"]').click
+              click_show_todo_form_button
 
               first('[data-test-id="existing-todo-field"]').fill_in with: 'a' * 256
 
@@ -330,10 +339,14 @@ RSpec.describe 'Tasks', type: :system do
         end
 
         context '既存のToDoフィールドの削除ボタンをクリックした後、「保存」ボタンをクリックする場合' do
-          let!(:todo) { create(:todo, task: todo_task, body: 'existing_todo') }
+          before do
+            create(:todo, task: task, body: 'existing_todo')
+            visit task_path(task)
+          end
+
           it 'ToDoが正常に削除される' do
             # ToDoフォームへの切り替えボタンをクリック
-            find('[data-test-id="show-todo-form-button"]').click
+            click_show_todo_form_button
 
             accept_confirm do
               # 削除ボタンをクリック
@@ -347,23 +360,29 @@ RSpec.describe 'Tasks', type: :system do
         end
 
         context '「追加」ボタンをクリックし、表示されるToDoフィールドが最大個数(5個)に達した場合' do
+          before do
+            visit task_path(task)
+          end
+
           it '追加ボタンが非表示になる' do
             # 追加ボタンが表示されていることを確認
-            expect(page).to have_button('追加')
+            expect(page).to have_css('[data-test-id="add-todo-field-button"]:not([disabled])')
 
             # 最大個数のToDoを追加
             max_todos.times do |i|
-              click_button '追加'
+              click_add_todo_field_button
             end
 
-            # 追加ボタンが非表示になっていることを確認
-            expect(page).not_to have_button('追加')
+            # 最大個数では追加ボタンが無効化される（DOM 上は残る）
+            expect(page).to have_css('[data-test-id="add-todo-field-button"][disabled]')
           end
         end
       end
     end
 
     describe 'Doingタスク詳細' do
+      let!(:todo) { create(:todo, task: doing_task, body: 'test_todo') }
+
       before do
         visit task_path(doing_task)
       end
@@ -435,24 +454,6 @@ RSpec.describe 'Tasks', type: :system do
       sign_in user
     end
 
-    context 'ステータスがTodoの場合' do
-      let(:task) { create(:task, user: user, status: :todo) }
-
-      it '「タスクに取り組む」ボタンをクリックすると、ステータスがDoingに変更される' do
-        visit task_path(task)
-        expect(page).to have_content('Todo')
-
-        click_link 'タスクに取り組む'
-
-        # サクセスメッセージの表示
-        expect(page).to have_css('.alert.alert-success')
-        expect(page).to have_content('ステータスが変更されました')
-
-        # ステータスがDoingに変更されたことを確認
-        expect(page).to have_content('Doing')
-      end
-    end
-
     context 'ステータスがDoingの場合' do
       let(:task) { create(:task, user: user, status: :doing) }
 
@@ -474,11 +475,11 @@ RSpec.describe 'Tasks', type: :system do
     context 'ステータスがDoneの場合' do
       let(:task) { create(:task, user: user, status: :done) }
 
-      it '「再びタスクに取り組む」ボタンをクリックすると、ステータスがDoingに変更される' do
+      it '「タスクに戻る」ボタンをクリックすると、ステータスがDoingに変更される' do
         visit task_path(task)
         expect(page).to have_content('Done')
 
-        click_link '再びタスクに取り組む'
+        click_link 'タスクに戻る'
 
         # サクセスメッセージの表示
         expect(page).to have_css('.alert.alert-success')
@@ -491,15 +492,15 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe "タスク一覧" do
-    let!(:todo_task) { create(:task, user: user, status: 'todo', title: 'Todo Task') }
+    let!(:title_search_task) { create(:task, user: user, status: 'doing', title: 'Todo Task') }
     let!(:doing_task) { create(:task, user: user, status: 'doing', title: 'Doing Task') }
     let!(:done_task) { create(:task, user: user, status: 'done', title: 'Done Task') }
     let!(:ruby_tag) { create(:tag, name: 'Ruby') }
     let!(:rails_tag) { create(:tag, name: 'Rails') }
-    let!(:task_with_ruby_tag) { create(:task, user: user, status: 'todo', title: 'Ruby Task') }
-    let!(:task_with_rails_tag) { create(:task, user: user, status: 'todo', title: 'Rails Task') }
-    let!(:task_with_both_tags) { create(:task, user: user, status: 'todo', title: 'Both Tags Task') }
-    let!(:task_without_tag) { create(:task, user: user, status: 'todo', title: 'No Tag Task') }
+    let!(:task_with_ruby_tag) { create(:task, user: user, status: 'doing', title: 'Ruby Task') }
+    let!(:task_with_rails_tag) { create(:task, user: user, status: 'doing', title: 'Rails Task') }
+    let!(:task_with_both_tags) { create(:task, user: user, status: 'doing', title: 'Both Tags Task') }
+    let!(:task_without_tag) { create(:task, user: user, status: 'doing', title: 'No Tag Task') }
 
     before do
       task_with_ruby_tag.tags << ruby_tag
@@ -511,20 +512,11 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context "ステータスフィルター" do
-      context "セレクトボックスからtodoを選択した場合" do
-        it "Todoステータスのタスクのみが表示される" do
-          select 'Todo', from: 'q[status_eq]'
-          expect(page).to have_content('Todo Task')
-          expect(page).not_to have_content('Doing Task')
-          expect(page).not_to have_content('Done Task')
-        end
-      end
-
       context "セレクトボックスからdoingを選択した場合" do
         it "Doingステータスのタスクのみが表示される" do
           select 'Doing', from: 'q[status_eq]'
           expect(page).to have_content('Doing Task')
-          expect(page).not_to have_content('Todo Task')
+          expect(page).to have_content('Todo Task')
           expect(page).not_to have_content('Done Task')
         end
       end
@@ -533,8 +525,8 @@ RSpec.describe 'Tasks', type: :system do
         it "Doneステータスのタスクのみが表示される" do
           select 'Done', from: 'q[status_eq]'
           expect(page).to have_content('Done Task')
-          expect(page).not_to have_content('Todo Task')
           expect(page).not_to have_content('Doing Task')
+          expect(page).not_to have_content('Todo Task')
         end
       end
 
