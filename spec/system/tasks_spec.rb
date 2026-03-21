@@ -475,11 +475,11 @@ RSpec.describe 'Tasks', type: :system do
     context 'ステータスがDoneの場合' do
       let(:task) { create(:task, user: user, status: :done) }
 
-      it '「再びタスクに取り組む」ボタンをクリックすると、ステータスがDoingに変更される' do
+      it '「タスクに戻る」ボタンをクリックすると、ステータスがDoingに変更される' do
         visit task_path(task)
         expect(page).to have_content('Done')
 
-        click_link '再びタスクに取り組む'
+        click_link 'タスクに戻る'
 
         # サクセスメッセージの表示
         expect(page).to have_css('.alert.alert-success')
