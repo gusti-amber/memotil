@@ -127,6 +127,30 @@ RSpec.describe Task, type: :model do
     end
   end
 
+  describe 'タグの付与可否バリデーション' do
+    let(:user) { create(:user) }
+    let(:other_user) { create(:user) }
+
+    it 'システムタグ（user_id が nil）のみの場合は有効' do
+      tag = create(:tag, user_id: nil)
+      task = build(:task, user: user, tag_ids: [ tag.id ])
+      expect(task).to be_valid, 'システムタグのみの場合は有効である必要があります'
+    end
+
+    it 'タスク所有者が作成したタグのみの場合は有効' do
+      tag = create(:tag, :for_user, user: user)
+      task = build(:task, user: user, tag_ids: [ tag.id ])
+      expect(task).to be_valid, 'タスク所有者のユーザー作成タグのみの場合は有効である必要があります'
+    end
+
+    it '他ユーザーが作成したタグを含む場合は無効' do
+      other_tag = create(:tag, :for_user, user: other_user)
+      task = build(:task, user: user, tag_ids: [ other_tag.id ])
+      expect(task).not_to be_valid, '他ユーザーのタグを含む場合は無効である必要があります'
+      expect(task.errors[:tag_ids]).to include('に選択できないタグが含まれています')
+    end
+  end
+
   describe 'アソシエーション' do
     describe 'belongs_to :user' do
       let(:user) { create(:user) }
