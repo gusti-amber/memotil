@@ -8,7 +8,7 @@ class TasksController < ApplicationController
                 .includes(:tags)
                 .order(created_at: :desc)
                 .page(params[:page]).per(24)
-    @tags = Tag.all
+    @tags = Tag.for_user(current_user).order(:name)
   end
 
   def new

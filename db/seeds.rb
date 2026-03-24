@@ -45,7 +45,7 @@ tag_names = [
 
 
 tag_names.each do |tag_name|
-  Tag.find_or_create_by!(name: tag_name)
+  Tag.find_or_create_by!(name: tag_name, user_id: nil)
 end
 
 # 開発環境でのテストデータ作成

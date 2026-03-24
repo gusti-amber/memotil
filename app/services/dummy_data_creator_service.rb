@@ -20,8 +20,8 @@ class DummyDataCreatorService
     )
 
     # タグを取得して紐付け
-    ruby_tag = Tag.find_or_create_by!(name: "Ruby")
-    algorithm_tag = Tag.find_or_create_by!(name: "アルゴリズム")
+    ruby_tag = Tag.find_or_create_by!(name: "Ruby", user_id: nil)
+    algorithm_tag = Tag.find_or_create_by!(name: "アルゴリズム", user_id: nil)
     task.tags << [ ruby_tag, algorithm_tag ]
 
     # Todoを5件作成
