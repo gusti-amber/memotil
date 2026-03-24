@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_03_20_120001) do
+ActiveRecord::Schema[7.2].define(version: 2026_03_21_120002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_20_120001) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index "lower((name)::text)", name: "index_tags_on_lower_name_system", unique: true, where: "(user_id IS NULL)"
+    t.index "user_id, lower((name)::text)", name: "index_tags_on_user_id_and_lower_name_user_tags", unique: true, where: "(user_id IS NOT NULL)"
+    t.index ["user_id"], name: "index_tags_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -103,6 +107,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_20_120001) do
   add_foreign_key "document_posts", "documents"
   add_foreign_key "posts", "tasks"
   add_foreign_key "posts", "users"
+  add_foreign_key "tags", "users"
   add_foreign_key "tasks", "users"
   add_foreign_key "tasktags", "tags"
   add_foreign_key "tasktags", "tasks"
