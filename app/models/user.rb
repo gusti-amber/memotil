@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   has_many :tasks, dependent: :destroy
   has_many :posts, dependent: :destroy
+  has_many :tags, dependent: :destroy, inverse_of: :user
   # カスタムバリデーション
   validates :name, presence: true, length: { minimum: 2, maximum: 20 }
 

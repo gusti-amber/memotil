@@ -16,6 +16,7 @@ class Task < ApplicationRecord
   validates :description, length: { maximum: 2000 }, allow_blank: true
   validates :status, presence: true
   validate :tags_must_be_five_or_less
+  validate :tags_must_be_assignable_to_user
   validate :todos_must_be_five_or_less
 
   def self.ransackable_attributes(auth_object = nil)
@@ -31,6 +32,18 @@ class Task < ApplicationRecord
   def tags_must_be_five_or_less
     if tag_ids.present? && tag_ids.length > 5
       errors.add(:tag_ids, :too_many)
+    end
+  end
+
+  def tags_must_be_assignable_to_user
+    ids = Array(tag_ids).compact_blank.map(&:to_i).uniq
+    return if ids.empty?
+
+    Tag.where(id: ids).each do |tag|
+      next if tag.user_id.nil? || tag.user_id == user_id
+
+      errors.add(:tag_ids, :not_assignable)
+      break
     end
   end
 
