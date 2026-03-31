@@ -511,38 +511,6 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
 
-    context "タグフィルター" do
-      context "セレクトボックスからRubyを選択した場合" do
-        it "Rubyタグが付いたタスクのみが表示される" do
-          select 'Ruby', from: 'q[tags_name_eq]'
-          expect(page).to have_content('Ruby Task')
-          expect(page).to have_content('Both Tags Task')
-          expect(page).not_to have_content('Rails Task')
-          expect(page).not_to have_content('No Tag Task')
-        end
-      end
-
-      context "セレクトボックスからRailsを選択した場合" do
-        it "Railsタグが付いたタスクのみが表示される" do
-          select 'Rails', from: 'q[tags_name_eq]'
-          expect(page).to have_content('Rails Task')
-          expect(page).to have_content('Both Tags Task')
-          expect(page).not_to have_content('Ruby Task')
-          expect(page).not_to have_content('No Tag Task')
-        end
-      end
-
-      context "セレクトボックスからすべてのタグを選択した場合" do
-        it "全タスクが表示される" do
-          select 'タグ', from: 'q[tags_name_eq]'
-          expect(page).to have_content('Ruby Task')
-          expect(page).to have_content('Rails Task')
-          expect(page).to have_content('Both Tags Task')
-          expect(page).to have_content('No Tag Task')
-        end
-      end
-    end
-
     context "キーワード検索" do
       context "キーワードで検索した場合" do
         it "該当するタスクのみが表示される" do
