@@ -8,7 +8,6 @@ class TasksController < ApplicationController
                 .includes(:tags)
                 .order(created_at: :desc)
                 .page(params[:page]).per(24)
-    @tags = Tag.for_user(current_user).order(:name)
   end
 
   def new
@@ -139,7 +138,7 @@ class TasksController < ApplicationController
 
   def search_params
     return {} unless params[:q]
-    params[:q].permit(:status_eq, :tags_name_eq, :title_cont)
+    params[:q].permit(:status_eq, :title_cont)
   end
 
   def set_task
