@@ -16,7 +16,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = current_user.tasks.build(task_params)
+    @task = current_user.tasks.build(task_attributes_for_save)
 
     if @task.save
       redirect_to @task, notice: t("flash.tasks.create")
@@ -35,7 +35,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    if @task.update(task_params)
+    if @task.update(task_attributes_for_save)
       # todo_formからのリクエストかどうかを判別
       if from_todo_form?
         # todo_formからのリクエストの場合、Turbo Streamでtodo_sectionを更新
@@ -101,8 +101,40 @@ class TasksController < ApplicationController
 
   private
 
+  # モデルにパラメータを渡す前に、tag_idsを解決する処理
+  def task_attributes_for_save
+    # new_tag_namesをtask_paramsから除外する。
+    base = task_params.except(:new_tag_names)
+    return base if from_todo_form?
+
+    # tag_idsを解決する。new_tag_namesから新しいTagを作成し、そのIDをtag_idsに追加する処理
+    # task#create, task#updateではtag_idsを渡すことにより、Taskに紐づくTagの更新を行う。
+    base.merge(tag_ids: resolve_tag_ids_for_task)
+  end
+
   def task_params
-    params.require(:task).permit(:title, :description, tag_ids: [], todos_attributes: [ :id, :body, :done, :_destroy ])
+    params.require(:task).permit(:title, :description, tag_ids: [], new_tag_names: [], todos_attributes: [ :id, :body, :done, :_destroy ])
+  end
+
+  def resolve_tag_ids_for_task
+    ids = Array(params.dig(:task, :tag_ids)).map(&:to_i).reject(&:zero?).uniq
+    names = Array(params.dig(:task, :new_tag_names)).map(&:strip).reject(&:blank?).uniq
+
+    # new_tag_namesから新しいTagを作成し、そのIDをtag_idsに追加する処理
+    names.each do |name|
+      tag = find_or_create_tag_for_current_user(name)
+      ids << tag.id if tag
+    end
+    ids.uniq
+  end
+
+  def find_or_create_tag_for_current_user(name)
+    tag = Tag.for_user(current_user).where("lower(name) = ?", name.downcase).first
+    return tag if tag
+
+    Tag.create!(user: current_user, name: name)
+  rescue ActiveRecord::RecordInvalid
+    Tag.for_user(current_user).where("lower(name) = ?", name.downcase).first
   end
 
   def search_params
