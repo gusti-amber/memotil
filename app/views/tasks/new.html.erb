@@ -2,53 +2,18 @@
   <div class="flex flex-col gap-6 p-12 max-w-2xl w-full text-base-content">
     <!-- エラーメッセージ表示エリア -->
     <%= render 'shared/error_messages', object: @task %>
+
+    <h1 class="text-3xl font-medium">学習・作業タスクを作成</h1>
     
     <%= form_with model: @task, local: true, html: { class: "flex flex-col gap-6 w-full" } do |f| %>
-      <!-- タイトル入力フィールド -->
-      <div class="w-full">
-        <%= f.label :title, class: "text-sm font-semibold" %>
-        <%= f.text_field :title, class: "input input-lg bg-surface text-base w-full" %>
-      </div>
+      <!-- タイトルフィールド -->
+      <%= render "title_field", f: f %>
 
-      <!-- 概要 -->
-      <div class="w-full">
-        <%= f.label :description, class: "text-sm font-semibold" %>
-        <%= f.text_area :description,
-                        rows: 4,
-                        class: "textarea bg-surface border border-subtle w-full min-h-24 text-base leading-relaxed placeholder:text-placeholder",
-                        placeholder: "タスクの目標、テーマなどを説明してください..." %>
-      </div>
+      <!-- 概要フィールド -->
+      <%= render "description_field", f: f %>
 
-      <!-- タグ選択セクション -->
-      <div class="w-full">
-        <%= f.label :tag_ids, class: "text-sm font-semibold" %>
-        <!-- タグ選択ドロップダウン -->
-        <div class="dropdown w-full">
-          <!-- ♻️safariブラウザ含むすべてのブラウザで動作するコード。https://v4.daisyui.com/components/dropdown/#method-2-using-css-focus -->
-          <div tabindex="0" role="button" class="btn btn-neutral btn-lg btn-outline w-full text-base">
-            <span>選択</span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0" stroke="currentColor" class="size-4">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-            </svg>
-
-          </div>
-
-          <!-- 🎓tabindex="0"により、ラベルをクリックしても画面が閉じなくなる。-->
-          <ul tabindex="0" class="dropdown-content bg-surface border border-subtle shadow-sm rounded-box z-[1] p-2 w-full max-h-60 overflow-y-auto">
-            <% Tag.all.each do |tag| %>
-              <li class="rounded p-1">
-                <label class="flex items-center gap-2 text-neutral cursor-pointer p-1 w-full">
-                  <input type="checkbox" 
-                         name="task[tag_ids][]" 
-                         value="<%= tag.id %>"
-                         class="checkbox checkbox-neutral">
-                  <span><%= tag.name %></span>
-                </label>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
+      <!-- タグフィールド -->
+      <%= render "tag_field", f: f, task: @task %>
 
       <!-- ボタンセクション -->
       <div class="flex justify-end gap-4 mt-6">

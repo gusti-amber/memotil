@@ -9,8 +9,8 @@ ja:
         password_confirmation: "パスワード（確認）"
         remember_me: "ログイン情報を記憶する"
       task:
-        title: "タイトル"
-        description: "概要"
+        title: "何に取り組んでいますか？"
+        description: "何を達成しようとしていますか？"
         tag_ids: "タグ"
         todos: "タスクの完了条件"
       til_form:

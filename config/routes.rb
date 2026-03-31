@@ -12,6 +12,12 @@ Rails.application.routes.draw do
     post "/users/guest", to: "users/sessions#create_guest", as: :guest_session
   end
 
+  resources :tags, only: [] do
+    collection do
+      get :autocomplete
+    end
+  end
+
   resources :tasks do
     # 🎓 member, collectionルーティングについて: https://railsguides.jp/v7.2/routing.html#restful%E3%81%AA%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E3%81%95%E3%82%89%E3%81%AB%E8%BF%BD%E5%8A%A0%E3%81%99%E3%82%8B
     member do

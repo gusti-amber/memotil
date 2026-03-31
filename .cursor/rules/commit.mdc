@@ -1,17 +1,33 @@
+---
+description: コミットメッセージ（gitmoji × Conventional Commits）
+alwaysApply: true
+---
+
 # 🎯 Commit Rules（gitmoji × Conventional Commits）
 
 ## 📌 基本ルール
 
-- Conventional Commits形式を使用する
-- 必ず **gitemoji + prefix** を付ける
+- Conventional Commits形式を使うが、**optional scope（括弧での領域名）は付けない**（例: `feat(tags):` は不可。`feat: タグの…` と本文で表す）
+- 必ず **gitmoji + prefix + コロン + 半角スペース + 説明** の順にする
+- prefix は **小文字**（`feat` / `fix` / `style` など）。**`fear` などの綴り間違いに注意**
 - 1行で簡潔に書く
-- 日本語で記述する
+- 説明は日本語で記述する
+
+### メッセージの型（この順序を守る）
+
+```
+{gitmoji} {prefix}: {説明}
+```
+
+- 正しい例: `✨ feat: タグのオートコンプリートAPIを追加`
+- 誤り: `✨ feat(tags): …`（scope を付けない）
+- 誤り: `✨ fear: …`（prefix の綴り）
 
 ---
 
 ## 🔥 基本（最小セット）
 
-| gitemoji          | prefix   | 意味             |
+| gitmoji           | prefix   | 意味             |
 | ----------------- | -------- | ---------------- |
 | ✨ (`:sparkles:`) | feat     | 新機能追加       |
 | 🐛 (`:bug:`)      | fix      | バグ修正         |
@@ -23,7 +39,7 @@
 
 ## 🚀 よく使う（実務）
 
-| gitemoji                  | prefix | 意味               |
+| gitmoji                   | prefix | 意味               |
 | ------------------------- | ------ | ------------------ |
 | 🚑️ (`:ambulance:`)        | fix    | 緊急バグ修正       |
 | ⚡️ (`:zap:`)              | perf   | パフォーマンス改善 |
@@ -35,7 +51,7 @@
 
 ## ⚙️ 開発・運用系
 
-| gitemoji             | prefix | 意味             |
+| gitmoji              | prefix | 意味             |
 | -------------------- | ------ | ---------------- |
 | 🔧 (`:wrench:`)      | chore  | 設定変更         |
 | 🚀 (`:rocket:`)      | chore  | デプロイ         |
@@ -48,7 +64,7 @@
 
 ## 🧪 その他
 
-| gitemoji              | prefix | 意味                 |
+| gitmoji               | prefix | 意味                 |
 | --------------------- | ------ | -------------------- |
 | 🚧 (`:construction:`) | wip    | 作業中               |
 | 🔒 (`:lock:`)         | fix    | セキュリティ修正     |
@@ -60,6 +76,7 @@
 ## ✍️ 書き方（例）
 
 ✨ feat: ユーザー登録機能を追加
+✨ feat: タグのオートコンプリートAPIを追加
 🐛 fix: ログイン時のエラーを修正
 💄 style: ボタンの余白を調整
 ♻️ refactor: 認証処理を整理

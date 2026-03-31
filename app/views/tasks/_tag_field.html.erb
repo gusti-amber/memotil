@@ -1,0 +1,34 @@
+<div
+  class="w-full"
+  data-controller="tag-autocomplete"
+  data-tag-autocomplete-initial-tags-value="<%= h(task.tags.order(:name).map { |t| { id: t.id, name: t.name } }.to_json) %>"
+>
+  <%= f.label :tag_ids, class: "text-sm font-light" %>
+  <div class="relative">
+    <div
+      class="flex flex-wrap items-start gap-2 bg-surface p-2 border border-subtle rounded"
+    >
+      <div
+        data-tag-autocomplete-target="badgeContainer"
+        class="contents"
+      ></div>
+      <input
+        type="text"
+        data-tag-autocomplete-target="input"
+        data-action="input->tag-autocomplete#search
+                     keydown->tag-autocomplete#keydown
+                     focus->tag-autocomplete#onFocus
+                     blur->tag-autocomplete#onBlur
+                     focusout->tag-autocomplete#onBlur"
+        data-test-id="task-tag-search"
+        class="flex-1 text-sm leading-6 outline-none placeholder:text-placeholder"
+        autocomplete="off"
+      />
+    </div>
+    <ul
+      data-tag-autocomplete-target="results"
+      class="absolute inset-x-0 top-full z-[5] mt-1 hidden max-h-60 overflow-y-auto rounded-box border border-subtle bg-surface p-1 shadow-sm"
+    ></ul>
+    <div data-tag-autocomplete-target="hiddenContainer" class="hidden"></div>
+  </div>
+</div>
