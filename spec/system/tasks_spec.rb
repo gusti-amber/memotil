@@ -7,7 +7,11 @@ RSpec.describe 'Tasks', type: :system do
   let(:other_user_task) { create(:task, user: other_user) }
   let(:max_tags) { 5 }
   let(:max_todos) { 5 }
-  let!(:tags) { create_list(:tag, max_tags + 1) }
+  let!(:tags) do
+    (1..(max_tags + 1)).map do |i|
+      create(:tag, name: format("spec_tag_%02d", i))
+    end
+  end
 
   # ステータス(Doing, Done)ごとのタスク
   let(:doing_task) { create(:doing_task, user: user) }
@@ -48,18 +52,10 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context '正常な入力の場合' do
-      it 'タスクが新規作成される' do
+      it 'タスクが新規作成される', js: true do
         fill_in 'タイトル', with: 'test_task_with_tag'
 
-        # 「選択」ボタンをクリックしてドロップダウンを開く
-        find('span', text: '選択').click
-
-        # 最初のタグを選択
-        first('input[type="checkbox"]').check
-
-        # ドロップダウンを閉じる
-        # ⚠️ find('body').clickは正常に動作しない（セレクトボックスを閉じない）
-        find('body').send_keys(:escape)
+        add_tag_via_autocomplete(tags.min_by(&:id).name)
 
         click_button '作成'
 
@@ -72,7 +68,7 @@ RSpec.describe 'Tasks', type: :system do
 
         # コンテンツの表示
         expect(page).to have_content('test_task_with_tag')
-        expect(page).to have_content(tags.first.name)
+        expect(page).to have_content(tags.min_by(&:id).name)
       end
 
       it '戻るボタンをクリックすると一覧ページに戻る' do
@@ -107,19 +103,10 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content('タイトル は255文字以下で入力してください')
       end
 
-      it 'タグを最大数を超える数選択した場合、エラーメッセージが表示される' do
+      it 'タグを最大数を超える数選択した場合、エラーメッセージが表示される', js: true do
         fill_in 'タイトル', with: 'test_task_with_too_many_tags'
 
-        # 「選択」ボタンをクリックしてドロップダウンを開く
-        find('span', text: '選択').click
-
-        # 最大数を超えるタグを選択
-        (max_tags + 1).times do |i|
-          all('input[type="checkbox"]')[i].check
-        end
-
-        # ドロップダウンを閉じる（ESCキーを押す）
-        find('body').send_keys(:escape)
+        inject_task_tag_ids(tags.sort_by(&:id).first(max_tags + 1).map(&:id))
 
         click_button '作成'
 
@@ -135,19 +122,12 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context '正常な入力の場合' do
-      it 'タスクが正常に更新される' do
+      it 'タスクが正常に更新される', js: true do
         visit edit_task_path(task)
 
         fill_in 'タイトル', with: 'updated_task_title'
 
-        # 「選択」ボタンをクリックしてドロップダウンを開く
-        find('span', text: '選択').click
-
-        # 最初のタグを選択
-        first('input[type="checkbox"]').check
-
-        # ドロップダウンを閉じる
-        find('body').send_keys(:escape)
+        add_tag_via_autocomplete(tags.min_by(&:id).name)
 
         click_button '変更'
 
@@ -160,7 +140,7 @@ RSpec.describe 'Tasks', type: :system do
 
         # コンテンツの表示
         expect(page).to have_content('updated_task_title')
-        expect(page).to have_content(tags.first.name)
+        expect(page).to have_content(tags.min_by(&:id).name)
       end
 
       it '戻るボタンをクリックすると詳細ページに戻る' do
@@ -198,20 +178,11 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content('タイトル は255文字以下で入力してください')
       end
 
-      it 'タグを最大数を超える数選択した場合、エラーメッセージが表示される' do
+      it 'タグを最大数を超える数選択した場合、エラーメッセージが表示される', js: true do
         visit edit_task_path(task)
         fill_in 'タイトル', with: 'updated_task_with_too_many_tags'
 
-        # 「選択」ボタンをクリックしてドロップダウンを開く
-        find('span', text: '選択').click
-
-        # 最大数を超えるタグを選択
-        (max_tags + 1).times do |i|
-          all('input[type="checkbox"]')[i].check
-        end
-
-        # ドロップダウンを閉じる（ESCキーを押す）
-        find('body').send_keys(:escape)
+        inject_task_tag_ids(tags.sort_by(&:id).first(max_tags + 1).map(&:id))
 
         click_button '変更'
 
