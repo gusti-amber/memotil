@@ -14,7 +14,6 @@
       <!-- キーワード検索フォーム -->
       <%= form_with url: tasks_path, method: :get, scope: :q, class: "w-full", data: { turbo_frame: "tasks_list" } do |form| %>
         <%= form.hidden_field :status_eq, value: params.dig(:q, :status_eq) %>
-        <%= form.hidden_field :tags_name_eq, value: params.dig(:q, :tags_name_eq) %>
         <div class="relative w-full" data-controller="task-search-autocomplete">
           <label class="input bg-surface border border-subtle flex items-center gap-2 w-full
                         placeholder:text-placeholder">
@@ -47,14 +46,6 @@
                 ['Done', 2]
               ],
               { include_blank: 'ステータス', selected: params.dig(:q, :status_eq) },
-              class: "select border border-subtle font-semibold w-full",
-              onchange: "this.form.requestSubmit()" %>
-        </div>
-
-        <div class="w-32">
-          <%= form.select :tags_name_eq,
-              @tags.map { |tag| tag.name },
-              { include_blank: 'タグ', selected: params.dig(:q, :tags_name_eq) },
               class: "select border border-subtle font-semibold w-full",
               onchange: "this.form.requestSubmit()" %>
         </div>
