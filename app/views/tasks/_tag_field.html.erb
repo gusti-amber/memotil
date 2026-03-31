@@ -3,7 +3,7 @@
   data-controller="tag-autocomplete"
   data-tag-autocomplete-initial-tags-value="<%= h(task.tags.order(:name).map { |t| { id: t.id, name: t.name } }.to_json) %>"
 >
-  <%= f.label :tag_ids, class: "text-sm font-semibold" %>
+  <%= f.label :tag_ids, class: "text-sm font-light" %>
   <div class="relative">
     <div
       class="flex flex-wrap items-start gap-2 bg-surface p-2 border border-subtle rounded"
