@@ -3,7 +3,10 @@
   data-controller="tag-autocomplete"
   data-tag-autocomplete-initial-tags-value="<%= h(task.tags.order(:name).map { |t| { id: t.id, name: t.name } }.to_json) %>"
 >
-  <%= f.label :tag_ids, class: "text-sm font-light" %>
+  <div class="flex justify-start items-center gap-2">
+    <%= f.label :tag_ids, class: "text-sm font-light" %>
+    <p class="text-muted text-xs font-light">５つまで入力できます</p>
+  </div>
   <div class="relative">
     <div
       class="flex flex-wrap items-start gap-2 bg-surface p-2 border border-subtle rounded"
