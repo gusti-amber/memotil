@@ -13,11 +13,21 @@ RSpec.describe "Tags", type: :request do
     context "ログイン済み" do
       before { sign_in user }
 
-      it "q が2文字未満のときは空配列を返す" do
-        get autocomplete_tags_path(q: "a")
+      it "q が空のときは空配列を返す" do
+        get autocomplete_tags_path(q: "")
         expect(response).to have_http_status(:ok)
         json = response.parsed_body
         expect(json["tags"]).to eq([])
+      end
+
+      it "q が1文字でも部分一致するタグを返す" do
+        create(:tag, name: "alpha", user_id: nil)
+
+        get autocomplete_tags_path(q: "a")
+        expect(response).to have_http_status(:ok)
+        json = response.parsed_body
+        expect(json["tags"].size).to eq(1)
+        expect(json["tags"].first["name"]).to eq("alpha")
       end
 
       it "空白のみの q は空配列を返す" do
