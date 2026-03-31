@@ -3,7 +3,7 @@
     <!-- エラーメッセージ表示エリア -->
     <%= render 'shared/error_messages', object: @task %>
 
-    <h1 class="text-3xl font-medium">学習・作業タスクを編集</h1>
+    <h1 class="text-3xl font-medium">タスクページを編集</h1>
     
     <%= form_with model: @task, local: true, html: { class: "flex flex-col gap-6 w-full" } do |f| %>
       <!-- タイトルフィールド -->
@@ -17,7 +17,7 @@
       <!-- ボタンセクション -->
       <div class="flex justify-end gap-4 mt-6">
         <%= link_to "戻る", task_path(@task), class: "btn btn-ghost rounded-full shadow-none border-none hover:bg-neutral/10" %>
-        <%= f.submit "変更", class: "btn btn-primary rounded-full shadow-none" %>
+        <%= f.submit "変更", class: "btn btn-neutral rounded-full shadow-none" %>
       </div>
     <% end %>
   </div>
