@@ -53,7 +53,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context '正常な入力の場合' do
       it 'タスクが新規作成される', js: true do
-        fill_in 'タイトル', with: 'test_task_with_tag'
+        fill_in 'task_title', with: 'test_task_with_tag'
 
         add_tag_via_autocomplete(tags.min_by(&:id).name)
 
@@ -80,7 +80,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'バリデーションエラーが発生する場合' do
       it 'タイトルが空の場合、エラーメッセージが表示される' do
-        fill_in 'タイトル', with: ''
+        fill_in 'task_title', with: ''
         click_button '作成'
 
         expect(current_path).to eq new_task_path
@@ -88,7 +88,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'タイトルが1文字の場合、エラーメッセージが表示される' do
-        fill_in 'タイトル', with: 'a'
+        fill_in 'task_title', with: 'a'
         click_button '作成'
 
         expect(current_path).to eq new_task_path
@@ -96,7 +96,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'タイトルが256文字以上の場合、エラーメッセージが表示される' do
-        fill_in 'タイトル', with: 'a' * 256
+        fill_in 'task_title', with: 'a' * 256
         click_button '作成'
 
         expect(current_path).to eq new_task_path
@@ -104,7 +104,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'タグを最大数を超える数選択した場合、エラーメッセージが表示される', js: true do
-        fill_in 'タイトル', with: 'test_task_with_too_many_tags'
+        fill_in 'task_title', with: 'test_task_with_too_many_tags'
 
         inject_task_tag_ids(tags.sort_by(&:id).first(max_tags + 1).map(&:id))
 
@@ -125,7 +125,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'タスクが正常に更新される', js: true do
         visit edit_task_path(task)
 
-        fill_in 'タイトル', with: 'updated_task_title'
+        fill_in 'task_title', with: 'updated_task_title'
 
         add_tag_via_autocomplete(tags.min_by(&:id).name)
 
@@ -153,7 +153,7 @@ RSpec.describe 'Tasks', type: :system do
     context 'バリデーションエラーが発生する場合' do
       it 'タイトルが空の場合、エラーメッセージが表示される' do
         visit edit_task_path(task)
-        fill_in 'タイトル', with: ''
+        fill_in 'task_title', with: ''
         click_button '変更'
 
         expect(current_path).to eq edit_task_path(task)
@@ -162,7 +162,7 @@ RSpec.describe 'Tasks', type: :system do
 
       it 'タイトルが1文字の場合、エラーメッセージが表示される' do
         visit edit_task_path(task)
-        fill_in 'タイトル', with: 'a'
+        fill_in 'task_title', with: 'a'
         click_button '変更'
 
         expect(current_path).to eq edit_task_path(task)
@@ -171,7 +171,7 @@ RSpec.describe 'Tasks', type: :system do
 
       it 'タイトルが256文字以上の場合、エラーメッセージが表示される' do
         visit edit_task_path(task)
-        fill_in 'タイトル', with: 'a' * 256
+        fill_in 'task_title', with: 'a' * 256
         click_button '変更'
 
         expect(current_path).to eq edit_task_path(task)
@@ -180,7 +180,7 @@ RSpec.describe 'Tasks', type: :system do
 
       it 'タグを最大数を超える数選択した場合、エラーメッセージが表示される', js: true do
         visit edit_task_path(task)
-        fill_in 'タイトル', with: 'updated_task_with_too_many_tags'
+        fill_in 'task_title', with: 'updated_task_with_too_many_tags'
 
         inject_task_tag_ids(tags.sort_by(&:id).first(max_tags + 1).map(&:id))
 
