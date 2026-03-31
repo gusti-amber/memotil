@@ -2,6 +2,8 @@
   <div class="flex flex-col gap-6 p-12 max-w-2xl w-full text-base-content">
     <!-- エラーメッセージ表示エリア -->
     <%= render 'shared/error_messages', object: @task %>
+
+    <h1 class="text-3xl font-medium">学習・作業タスクを編集</h1>
     
     <%= form_with model: @task, local: true, html: { class: "flex flex-col gap-6 w-full" } do |f| %>
       <!-- タイトルフィールド -->
