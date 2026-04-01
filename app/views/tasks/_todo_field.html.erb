@@ -12,8 +12,9 @@
   <!-- ToDoフィールド(2種類のフィールドを使用) -->
   <% if todo_form %>
     <!-- 1. 既存のTodoフィールド用、Railsフォームヘルパーを使用。 -->
-    <%= todo_form.text_field :body, 
-        placeholder: "なにをしますか？", 
+    <%= todo_form.text_field :body,
+        autocomplete: "off",
+        placeholder: "なにをしますか？",
         class: "input bg-surface text-base w-full
                 placeholder:text-placeholder
                 input-md @md:input-lg text-sm @md:text-base",
@@ -32,8 +33,9 @@
   <% else %>
     <!-- 2. 新規追加のToDoフィールド用テンプレート、INDEXプレースホルダーを使用。 -->
     <input type="text"
-           name="task[todos_attributes][INDEX][body]" 
-           placeholder="なにをしますか？" 
+           name="task[todos_attributes][INDEX][body]"
+           autocomplete="off"
+           placeholder="なにをしますか？"
            class="input bg-surface text-base w-full
                   placeholder:text-placeholder
                   input-md @md:input-lg text-sm @md:text-base"
