@@ -25,13 +25,19 @@
 
 取り組む内容に応じてタスクページを作り、ページで達成する項目を ToDo リストに設定します。
 
+https://github.com/user-attachments/assets/adb68062-fb16-4ef2-92e2-97eb40dd7677
+
 ### Step 2. タスクページで気づいたことをメモする 📝
 
 タスクページで作業中に気づいたことや調べたことのメモ、またコードスニペットや参考にした記事の投稿を行うことができます。
 
+https://github.com/user-attachments/assets/bee08207-d372-4956-8875-28e7bd9352dc
+
 ### Step 3. メモをもとに 今日学んだこと（TIL）を書き、GitHub リポジトリに記録する 🍀
 
 作業を完了すると、メモを参考に 今日学んだこと（TIL） を書き、GitHub リポジトリに学習成果を記録できます。
+
+https://github.com/user-attachments/assets/388c2e70-9d69-4719-9a1f-eb9d66261c0b
 
 ## 本サービスの開発の背景
 
