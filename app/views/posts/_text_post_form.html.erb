@@ -10,8 +10,9 @@
       ```
     TEXT
     %>
-    <%= text_post_form.text_area :body, 
-        placeholder: placeholder_text.chomp, 
+    <%= text_post_form.text_area :body,
+        autocomplete: "off",
+        placeholder: placeholder_text.chomp,
         class: "textarea textarea-ghost w-full h-32 text-base-content placeholder:text-placeholder focus:outline-none" %>
   <% end %>
   
