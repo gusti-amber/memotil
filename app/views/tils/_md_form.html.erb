@@ -1,8 +1,9 @@
 <%= form_with model: @form, url: task_til_path(@task), data: { turbo_frame: "_top" }, class: "flex flex-col gap-2" do |f| %>
   <%= f.hidden_field :repo, value: @selected_repo %>
   <%= f.label :path, class: "text-sm font-semibold" %>
-  <%= f.text_field :path, 
-                  placeholder: "category/today_i_learned.md", 
+  <%= f.text_field :path,
+                  autocomplete: "off",
+                  placeholder: "category/today_i_learned.md",
                   class: "input #{'input-error' if @form.errors[:path].any?} bg-surface w-full
                           placeholder:text-placeholder" %>
   
@@ -12,13 +13,15 @@
   <% end %>
 
   <%= f.label :message, class: "text-sm font-semibold" %>
-  <%= f.text_field :message, 
-                  value: @form.message.presence || "Add TIL: #{(@task.title || 'task')}", 
+  <%= f.text_field :message,
+                  autocomplete: "off",
+                  value: @form.message.presence || "Add TIL: #{(@task.title || 'task')}",
                   class: "input bg-surface w-full
                           placeholder:text-placeholder" %>
   <%= f.label :body, class: "text-sm font-semibold" %>
-  <%= f.text_area :body, 
-                  rows: 16, 
+  <%= f.text_area :body,
+                  rows: 16,
+                  autocomplete: "off",
                   placeholder: "今日学んだことを記録しましょう",
                   class: "textarea bg-surface w-full
                           placeholder:text-placeholder" %>
