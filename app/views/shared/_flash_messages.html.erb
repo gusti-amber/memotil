@@ -3,12 +3,17 @@
   <div class="absolute top-4 right-4 z-50 flex flex-col gap-2 max-w-md w-[min(100%,28rem)] sm:max-w-lg">
     <% if flash[:notice].present? %>
       <%# daisyUI .alert は sm 以上で 2 列 grid のため、閉じるボタンが 3 つ目だと崩れる。flex で上書きする %>
-      <div class="alert alert-success alert-soft shadow-md !flex !flex-row !items-center !gap-3 !text-left !justify-start w-full" role="status" aria-live="polite">
+      <div
+        class="alert alert-success alert-soft shadow-md !flex !flex-row !items-center !gap-3 !text-left !justify-start w-full transition-opacity duration-200"
+        data-controller="flash-message"
+        role="status"
+      >
         <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <span class="flex-1 min-w-0 break-words"><%= flash[:notice] %></span>
-        <button type="button" class="btn btn-sm btn-circle btn-ghost shrink-0">
+        <button type="button" class="btn btn-sm btn-circle btn-ghost shrink-0"
+                data-action="click->flash-message#dismiss">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -16,7 +21,11 @@
       </div>
     <% end %>
     <% if flash[:alert].present? %>
-      <div class="alert alert-error alert-soft shadow-md !flex !flex-row !items-center !gap-3 !text-left !justify-start w-full" role="alert" aria-live="assertive">
+      <div
+        class="alert alert-error alert-soft shadow-md !flex !flex-row !items-center !gap-3 !text-left !justify-start w-full transition-opacity duration-200"
+        data-controller="flash-message"
+        role="alert"
+      >
         <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
@@ -28,7 +37,8 @@
             <%= flash[:alert] %>
           <% end %>
         </span>
-        <button type="button" class="btn btn-sm btn-circle btn-ghost shrink-0">
+        <button type="button" class="btn btn-sm btn-circle btn-ghost shrink-0"
+                data-action="click->flash-message#dismiss">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
