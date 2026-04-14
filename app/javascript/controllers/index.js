@@ -24,3 +24,6 @@ application.register("todo-section", TodoSectionController);
 
 import DescriptionExpandController from "./description_expand_controller";
 application.register("description-expand", DescriptionExpandController);
+
+import FlashMessageController from "./flash_message_controller";
+application.register("flash-message", FlashMessageController);

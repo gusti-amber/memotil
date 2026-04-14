@@ -1,24 +1,55 @@
-<% if flash[:notice] %>
-  <div class="alert alert-success alert-soft mx-4 mt-4">
-    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-    <span><%= flash[:notice] %></span>
+<% if flash[:notice].present? || flash[:alert].present? %>
+  <%# daisyUI の .toast は position:fixed でビューポート基準になるため使わず、main 内の右上に absolute 配置する %>
+  <div class="absolute top-4 right-4 z-50 flex flex-col gap-2 max-w-md w-[min(100%,28rem)] sm:max-w-lg">
+    <% if flash[:notice].present? %>
+      <%# daisyUI .alert は sm 以上で 2 列 grid のため、閉じるボタンが 3 つ目だと崩れる。flex で上書きする %>
+      <div
+        class="alert alert-success alert-soft shadow-md !flex !flex-row !items-center !gap-3 !text-left !justify-start w-full transition-opacity duration-500"
+        data-controller="flash-message"
+        role="status"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span class="flex-1 min-w-0 break-words"><%= flash[:notice] %></span>
+        <button
+          type="button"
+          class="btn btn-sm btn-circle shrink-0 border-0 !bg-transparent text-current shadow-none transition-colors hover:!bg-dark-green/15"
+          data-action="click->flash-message#dismiss"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    <% end %>
+    <% if flash[:alert].present? %>
+      <div
+        class="alert alert-error alert-soft shadow-md !flex !flex-row !items-center !gap-3 !text-left !justify-start w-full transition-opacity duration-500"
+        data-controller="flash-message"
+        role="alert"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span class="flex-1 min-w-0 break-words">
+          <% if flash[:alert] == I18n.t("devise.failure.user.unconfirmed") %>
+            <%# 未確認のメールアドレスでログインしようとした場合のみ、リンク付きメッセージを表示 %>
+            メールアドレスの確認が完了していません（確認メールが見つからない方は<%= link_to "こちら", new_user_confirmation_path, class: "link link-error font-semibold" %>から新しいメールを再送信してください）
+          <% else %>
+            <%= flash[:alert] %>
+          <% end %>
+        </span>
+        <button
+          type="button"
+          class="btn btn-sm btn-circle shrink-0 border-0 !bg-transparent text-current shadow-none transition-colors hover:!bg-red/15"
+          data-action="click->flash-message#dismiss"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    <% end %>
   </div>
 <% end %>
-<% if flash[:alert] %>
-  <div class="alert alert-error alert-soft mx-4 mt-4">
-    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-    <span>
-      <% if flash[:alert] == I18n.t("devise.failure.user.unconfirmed") %>
-        <!-- 未確認のメールアドレスでログインしようとした場合のみ、リンク付きメッセージを表示 -->
-        メールアドレスの確認が完了していません（確認メールが見つからない方は<%= link_to "こちら", new_user_confirmation_path, class: "link link-error font-semibold" %>から新しいメールを再送信してください）
-      <% else %>
-        <%= flash[:alert] %>
-      <% end %>
-    </span>
-  </div>
-<% end %>
-
