@@ -12,8 +12,11 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <span class="flex-1 min-w-0 break-words"><%= flash[:notice] %></span>
-        <button type="button" class="btn btn-sm btn-circle btn-ghost shrink-0"
-                data-action="click->flash-message#dismiss">
+        <button
+          type="button"
+          class="btn btn-sm btn-circle shrink-0 border-0 !bg-transparent text-current shadow-none transition-colors hover:!bg-dark-green/15"
+          data-action="click->flash-message#dismiss"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -37,8 +40,11 @@
             <%= flash[:alert] %>
           <% end %>
         </span>
-        <button type="button" class="btn btn-sm btn-circle btn-ghost shrink-0"
-                data-action="click->flash-message#dismiss">
+        <button
+          type="button"
+          class="btn btn-sm btn-circle shrink-0 border-0 !bg-transparent text-current shadow-none transition-colors hover:!bg-red/15"
+          data-action="click->flash-message#dismiss"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
