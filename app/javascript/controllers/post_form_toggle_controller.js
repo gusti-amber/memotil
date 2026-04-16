@@ -37,6 +37,15 @@ export default class extends Controller {
     this.toggleTargets.forEach((toggle) => {
       toggle.checked = isDocument;
     });
+
+    // フォーム切り替え後に表示中フォームのtextarea高さを再計算
+    // requestAnimationFrame: DOM更新が反映された直後のフレームでコールバックを実行する
+    requestAnimationFrame(() => {
+      const visibleTextareas = this.textareaTargets.filter(
+        (textarea) => !textarea.closest(".hidden"),
+      );
+      visibleTextareas.forEach((textarea) => this.resizeTextarea(textarea));
+    });
   }
 
   // すべてのtextareaの高さを自動調整
