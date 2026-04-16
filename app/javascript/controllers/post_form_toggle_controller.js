@@ -1,7 +1,15 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["textForm", "documentForm", "toggle", "textarea"];
+  static targets = [
+    "textForm",
+    "documentForm",
+    "toggle",
+    "textarea",
+    "textInput",
+    "documentInput",
+    "postableType",
+  ];
   static values = { initialType: String };
 
   connect() {
@@ -29,11 +37,18 @@ export default class extends Controller {
   }
 
   render(isDocument) {
-    // 2つのフォームの表示/非表示を切り替え
+    // 表示中のフォームパネルを切り替える
     this.textFormTarget.classList.toggle("hidden", isDocument);
     this.documentFormTarget.classList.toggle("hidden", !isDocument);
 
-    // 2つのフォームのトグルのchecked状態を更新
+    // hidden field の postable_type を更新
+    this.postableTypeTarget.value = isDocument ? "DocumentPost" : "TextPost";
+
+    // 非表示側の入力は送信対象から外す
+    this.textInputTarget.disabled = isDocument;
+    this.documentInputTarget.disabled = !isDocument;
+
+    // トグルUIの見た目を同期
     this.toggleTargets.forEach((toggle) => {
       toggle.checked = isDocument;
     });
