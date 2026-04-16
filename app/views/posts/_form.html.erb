@@ -1,37 +1,18 @@
-<!-- ポスト投稿フォーム（TextPost投稿フォームとDocumentPost投稿フォームをタブ切り替え） -->
-<div role="tablist" class="tabs tabs-box bg-surface-elevated border border-subtle">
-  
-  <!-- TextPost タブ -->
-  <input type="radio" 
-         name="post_type" 
-         role="tab" 
-         class="tab text-base-content"
-         aria-label="メモ" 
-         <%= 'checked' if post.postable_type.blank? || post.postable_type == 'TextPost' %> />
-  <div role="tabpanel" class="tab-content bg-surface rounded-box p-1">
-    <!-- TextPost エラーメッセージ -->
-    <% if post.postable_type.blank? || post.postable_type == 'TextPost' %>
-      <%= render 'posts/post_error_messages', post: post %>
+<% active_postable_type = post.postable_type.presence || "TextPost" %>
+<div class="rounded-2xl border border-subtle bg-surface p-3"
+     data-controller="post-form-toggle"
+     data-post-form-toggle-initial-type-value="<%= active_postable_type %>">
+  <div data-post-form-toggle-target="textForm" class="<%= "hidden" if active_postable_type == "DocumentPost" %>">
+    <% if active_postable_type == "TextPost" %>
+      <%= render "posts/post_error_messages", post: post %>
     <% end %>
-    
-    <!-- TextPost フォーム -->
-    <%= render 'posts/text_post_form', post: post, task: task %>
+    <%= render "posts/text_post_form", post: post, task: task %>
   </div>
 
-  <!-- DocumentPost タブ -->
-  <input type="radio" 
-         name="post_type" 
-         role="tab" 
-         class="tab text-base-content"
-         aria-label="参照URL" 
-         <%= 'checked' if post.postable_type == 'DocumentPost' %> />
-  <div role="tabpanel" class="tab-content bg-surface rounded-box p-1">
-    <!-- DocumentPost エラーメッセージ -->
-    <% if post.postable_type == 'DocumentPost' %>
-      <%= render 'posts/post_error_messages', post: post %>
+  <div data-post-form-toggle-target="documentForm" class="<%= "hidden" unless active_postable_type == "DocumentPost" %>">
+    <% if active_postable_type == "DocumentPost" %>
+      <%= render "posts/post_error_messages", post: post %>
     <% end %>
-    
-    <!-- DocumentPost フォーム -->
-    <%= render 'posts/document_post_form', post: post, task: task %>
+    <%= render "posts/document_post_form", post: post, task: task %>
   </div>
 </div>

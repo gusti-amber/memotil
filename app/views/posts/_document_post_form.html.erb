@@ -3,14 +3,24 @@
   
   <%= f.fields_for :postable_attributes, (post.postable.is_a?(DocumentPost) ? post.postable.document : Document.new) do |document_post_form| %>
     <% placeholder_text = "参考にした資料のURLを入力しましょう(ex. https://railsguides.jp/)" %>
-    <%= document_post_form.text_field :url, 
+    <%= document_post_form.text_area :url, 
         placeholder: placeholder_text.chomp, 
-        class: "input input-ghost w-full text-base-content placeholder:text-placeholder focus:outline-none",
+        class: "textarea textarea-ghost h-32 w-full text-base-content placeholder:text-placeholder focus:outline-none",
         autocomplete: "off" %>
   <% end %>
   
-  <div class="flex justify-end gap-4">
-    <%= f.submit "送信", class: "btn btn-neutral rounded-full shadow-none" %>
+  <div class="flex items-center justify-between gap-4 px-2">
+    <label class="toggle toggle-lg text-base-content">
+      <input type="checkbox"
+             data-post-form-toggle-target="toggle"
+             data-action="change->post-form-toggle#toggle" />
+      <%= text_post_icon %>
+      <%= document_post_icon %>
+    </label>
+
+    <button type="submit" class="btn btn-neutral btn-sm btn-circle shadow-none" data-test-id="submit-post-button" aria-label="送信">
+      <%= send_post_icon %>
+    </button>
   </div>
 <% end %>
 
