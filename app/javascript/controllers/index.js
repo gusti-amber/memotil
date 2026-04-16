@@ -27,3 +27,6 @@ application.register("description-expand", DescriptionExpandController);
 
 import FlashMessageController from "./flash_message_controller";
 application.register("flash-message", FlashMessageController);
+
+import PostFormToggleController from "./post_form_toggle_controller";
+application.register("post-form-toggle", PostFormToggleController);
