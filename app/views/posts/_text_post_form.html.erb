@@ -1,31 +1,13 @@
-<%= form_with model: post, url: task_posts_path(task), method: :post, class: "flex flex-col gap-1", id: "text-post-form" do |f| %>
-  <%= f.hidden_field :postable_type, value: "TextPost" %>
-  
-  <%= f.fields_for :postable_attributes, (post.postable.is_a?(TextPost) ? post.postable : TextPost.new) do |text_post_form| %>
-    <% placeholder_text = "調べたことや思いついたことを書きましょう"
-    %>
-    <%= text_post_form.text_area :body,
-        autocomplete: "off",
-        placeholder: placeholder_text.chomp,
-        class: "textarea textarea-ghost w-full text-base-content placeholder:text-placeholder focus:outline-none",
-        data: {
-          post_form_toggle_target: "textarea",
-          action: "input->post-form-toggle#autoResize keydown->post-form-toggle#submitOnEnter"
-        } %>
-  <% end %>
-  
-  <div class="flex items-center justify-between gap-4 px-2">
-    <label class="toggle toggle-lg text-base-content">
-      <input type="checkbox"
-             data-post-form-toggle-target="toggle"
-             data-action="change->post-form-toggle#toggle" />
-      <%= text_post_icon %>
-      <%= document_post_icon %>
-    </label>
-
-    <button type="submit" class="btn btn-neutral btn-sm btn-circle shadow-none" data-test-id="submit-post-button" aria-label="送信">
-      <%= send_post_icon %>
-    </button>
-  </div>
+<%= form.fields_for :postable_attributes, (post.postable.is_a?(TextPost) ? post.postable : TextPost.new) do |text_post_form| %>
+  <% placeholder_text = "調べたことや思いついたことを書きましょう" %>
+  <%= text_post_form.text_area :body,
+      autocomplete: "off",
+      placeholder: placeholder_text.chomp,
+      disabled: active_postable_type == "DocumentPost",
+      class: "textarea textarea-ghost w-full text-base-content placeholder:text-placeholder focus:outline-none",
+      data: {
+        post_form_toggle_target: "textarea textInput",
+        action: "input->post-form-toggle#autoResize keydown->post-form-toggle#submitOnEnter"
+      } %>
 <% end %>
 

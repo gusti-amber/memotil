@@ -2,17 +2,36 @@
 <div class="rounded-2xl border border-subtle bg-surface p-3"
      data-controller="post-form-toggle"
      data-post-form-toggle-initial-type-value="<%= active_postable_type %>">
-  <div data-post-form-toggle-target="textForm" class="<%= "hidden" if active_postable_type == "DocumentPost" %>">
-    <% if active_postable_type == "TextPost" %>
-      <%= render "posts/post_error_messages", post: post %>
-    <% end %>
-    <%= render "posts/text_post_form", post: post, task: task %>
-  </div>
+  <%= form_with model: post, url: task_posts_path(task), method: :post, class: "flex flex-col gap-1", id: "post-form" do |f| %>
+    <%= f.hidden_field :postable_type,
+        value: active_postable_type,
+        data: { post_form_toggle_target: "postableType" } %>
 
-  <div data-post-form-toggle-target="documentForm" class="<%= "hidden" unless active_postable_type == "DocumentPost" %>">
-    <% if active_postable_type == "DocumentPost" %>
+    <% if post.errors.any? %>
       <%= render "posts/post_error_messages", post: post %>
     <% end %>
-    <%= render "posts/document_post_form", post: post, task: task %>
-  </div>
+
+    <div data-post-form-toggle-target="textForm" class="<%= "hidden" if active_postable_type == "DocumentPost" %>">
+      <%= render "posts/text_post_form", form: f, post: post, active_postable_type: active_postable_type %>
+    </div>
+
+    <div data-post-form-toggle-target="documentForm" class="<%= "hidden" unless active_postable_type == "DocumentPost" %>">
+      <%= render "posts/document_post_form", form: f, post: post, active_postable_type: active_postable_type %>
+    </div>
+
+    <div class="flex items-center justify-between gap-4 px-2">
+      <label class="toggle toggle-lg text-base-content [--animation-input:0.35s] ease-in-out">
+        <input type="checkbox"
+               data-post-form-toggle-target="toggle"
+               data-action="change->post-form-toggle#toggle"
+               <%= "checked" if active_postable_type == "DocumentPost" %> />
+        <%= text_post_icon %>
+        <%= document_post_icon %>
+      </label>
+
+      <button type="submit" class="btn btn-neutral btn-sm btn-circle shadow-none" data-test-id="submit-post-button" aria-label="送信">
+        <%= send_post_icon %>
+      </button>
+    </div>
+  <% end %>
 </div>
