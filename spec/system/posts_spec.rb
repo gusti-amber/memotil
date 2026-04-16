@@ -15,7 +15,7 @@ RSpec.describe 'Posts', type: :system do
       context '正常な入力の場合' do
         it 'TextPostが正常に作成される' do
           fill_in 'post[postable_attributes][body]', with: 'test text post'
-          within('#text-post-form') do
+          within('#post-form') do
             find('[data-test-id="submit-post-button"]').click
           end
 
@@ -36,7 +36,7 @@ RSpec.describe 'Posts', type: :system do
       context 'バリデーションエラーが発生する場合' do
         it 'bodyが空の場合、エラーメッセージが表示される' do
           fill_in 'post[postable_attributes][body]', with: ''
-          within('#text-post-form') do
+          within('#post-form') do
             find('[data-test-id="submit-post-button"]').click
           end
 
@@ -46,7 +46,7 @@ RSpec.describe 'Posts', type: :system do
 
         it 'bodyが1001文字以上の場合、エラーメッセージが表示される' do
           fill_in 'post[postable_attributes][body]', with: 'a' * 1001
-          within('#text-post-form') do
+          within('#post-form') do
             find('[data-test-id="submit-post-button"]').click
           end
 
@@ -59,7 +59,7 @@ RSpec.describe 'Posts', type: :system do
       context 'Markdown形式の入力の場合' do
         it '言語が指定されている場合、シンタックスハイライトが適用される' do
           fill_in 'post[postable_attributes][body]', with: "```ruby\ndef add(x,y)\n  x+y\nend\n```"
-          within('#text-post-form') do
+          within('#post-form') do
             find('[data-test-id="submit-post-button"]').click
           end
 
@@ -69,7 +69,7 @@ RSpec.describe 'Posts', type: :system do
 
         it '言語が指定されていない場合、シンタックスハイライトが適用されない' do
           fill_in 'post[postable_attributes][body]', with: "```\ndef add(x,y)\n  x+y\nend\n```"
-          within('#text-post-form') do
+          within('#post-form') do
             find('[data-test-id="submit-post-button"]').click
           end
 
@@ -82,7 +82,7 @@ RSpec.describe 'Posts', type: :system do
     context 'DocumentPost作成' do
       before do
         # DocumentPost投稿フォームへ切り替える
-        within('#text-post-form') do
+        within('#post-form') do
           find('label.toggle').click
         end
       end
@@ -90,7 +90,7 @@ RSpec.describe 'Posts', type: :system do
       context '正常な入力の場合' do
         it 'DocumentPostが正常に作成される' do
           fill_in 'post[postable_attributes][url]', with: 'https://docs.example.com'
-          within('#document-post-form') do
+          within('#post-form') do
             find('[data-test-id="submit-post-button"]').click
           end
 
@@ -103,7 +103,7 @@ RSpec.describe 'Posts', type: :system do
       context 'バリデーションエラーが発生する場合' do
         it 'urlが空の場合、エラーメッセージが表示される' do
           fill_in 'post[postable_attributes][url]', with: ''
-          within('#document-post-form') do
+          within('#post-form') do
             find('[data-test-id="submit-post-button"]').click
           end
 
@@ -113,7 +113,7 @@ RSpec.describe 'Posts', type: :system do
 
         it 'urlが無効な形式の場合、エラーメッセージが表示される' do
           fill_in 'post[postable_attributes][url]', with: 'あかさたな'
-          within('#document-post-form') do
+          within('#post-form') do
             find('[data-test-id="submit-post-button"]').click
           end
 
@@ -124,7 +124,7 @@ RSpec.describe 'Posts', type: :system do
 
         it 'urlがhttpまたはhttpsで始まらない場合、エラーメッセージが表示される' do
           fill_in 'post[postable_attributes][url]', with: 'ftp://example.com'
-          within('#document-post-form') do
+          within('#post-form') do
             find('[data-test-id="submit-post-button"]').click
           end
 
