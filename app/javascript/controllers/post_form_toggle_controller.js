@@ -15,6 +15,13 @@ export default class extends Controller {
     this.render(event.currentTarget.checked);
   }
 
+  submitOnEnter(event) {
+    if (event.key !== "Enter" || event.shiftKey || event.isComposing) return;
+
+    event.preventDefault();
+    event.currentTarget.form?.requestSubmit();
+  }
+
   render(isDocument) {
     // 2つのフォームの表示/非表示を切り替え
     this.textFormTarget.classList.toggle("hidden", isDocument);
