@@ -4,7 +4,7 @@
       autocomplete: "off",
       placeholder: placeholder_text.chomp,
       disabled: active_postable_type == "DocumentPost",
-      class: "textarea textarea-ghost w-full text-base-content placeholder:text-placeholder focus:outline-none",
+      class: "textarea textarea-ghost text-base w-full text-base-content placeholder:text-placeholder focus:outline-none",
       data: {
         post_form_toggle_target: "textarea textInput",
         action: "input->post-form-toggle#autoResize keydown->post-form-toggle#submitOnEnter"

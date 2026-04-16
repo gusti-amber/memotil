@@ -3,7 +3,7 @@
   <%= document_post_form.text_area :url,
       placeholder: placeholder_text.chomp,
       disabled: active_postable_type == "TextPost",
-      class: "textarea textarea-ghost w-full text-base-content placeholder:text-placeholder focus:outline-none",
+      class: "textarea textarea-ghost text-base w-full text-base-content placeholder:text-placeholder focus:outline-none",
       autocomplete: "off",
       data: {
         post_form_toggle_target: "textarea documentInput",
