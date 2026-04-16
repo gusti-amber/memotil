@@ -2,19 +2,16 @@
   <%= f.hidden_field :postable_type, value: "TextPost" %>
   
   <%= f.fields_for :postable_attributes, (post.postable.is_a?(TextPost) ? post.postable : TextPost.new) do |text_post_form| %>
-    <% placeholder_text = <<~TEXT
-      調べたことや思いついたことを書きましょう
-      コードスニペットは以下のように言語を指定して```で囲んで入力してください
-      ```ruby
-      puts "Hello, World!"
-      ```
-    TEXT
+    <% placeholder_text = "調べたことや思いついたことを書きましょう"
     %>
     <%= text_post_form.text_area :body,
         autocomplete: "off",
         placeholder: placeholder_text.chomp,
-        class: "textarea textarea-ghost w-full h-32 text-base-content placeholder:text-placeholder focus:outline-none",
-        data: { action: "keydown->post-form-toggle#submitOnEnter" } %>
+        class: "textarea textarea-ghost w-full text-base-content placeholder:text-placeholder focus:outline-none",
+        data: {
+          post_form_toggle_target: "textarea",
+          action: "input->post-form-toggle#autoResize keydown->post-form-toggle#submitOnEnter"
+        } %>
   <% end %>
   
   <div class="flex items-center justify-between gap-4 px-2">

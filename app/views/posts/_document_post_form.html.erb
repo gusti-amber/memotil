@@ -5,8 +5,12 @@
     <% placeholder_text = "参考にした資料のURLを入力しましょう(ex. https://railsguides.jp/)" %>
     <%= document_post_form.text_area :url, 
         placeholder: placeholder_text.chomp, 
-        class: "textarea textarea-ghost h-32 w-full text-base-content placeholder:text-placeholder focus:outline-none",
-        autocomplete: "off" %>
+        class: "textarea textarea-ghost w-full text-base-content placeholder:text-placeholder focus:outline-none",
+        autocomplete: "off",
+        data: {
+          post_form_toggle_target: "textarea",
+          action: "input->post-form-toggle#autoResize"
+        } %>
   <% end %>
   
   <div class="flex items-center justify-between gap-4 px-2">
