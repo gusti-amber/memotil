@@ -79,4 +79,38 @@ RSpec.describe Document, type: :model do
       end
     end
   end
+
+  describe 'DocumentのOGP情報の保存' do
+    let(:url) { 'https://ogp.example.com/page' }
+
+    context 'OGP取得成功時' do
+      before do
+        allow_any_instance_of(OgpScraperService).to receive(:fetch_attributes).and_return(
+          title: 'OGPタイトル',
+          description: 'OGP説明',
+          image_url: 'https://ogp.example.com/og.png'
+        )
+      end
+
+      it 'Documentは作成され、title / description / image_url に値が保存される' do
+        document = described_class.create!(url: url)
+        expect(document.title).to eq('OGPタイトル')
+        expect(document.description).to eq('OGP説明')
+        expect(document.image_url).to eq('https://ogp.example.com/og.png')
+      end
+    end
+
+    context 'OGP取得失敗時' do
+      before do
+        allow_any_instance_of(OgpScraperService).to receive(:fetch_attributes).and_return(nil)
+      end
+
+      it 'Documentは作成され、title / description / image_url にnilが保存される' do
+        document = described_class.create!(url: url)
+        expect(document.title).to be_nil
+        expect(document.description).to be_nil
+        expect(document.image_url).to be_nil
+      end
+    end
+  end
 end
