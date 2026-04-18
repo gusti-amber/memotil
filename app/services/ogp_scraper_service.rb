@@ -7,16 +7,20 @@ class OgpScraperService
   end
 
   def call
+    fetch_attributes
+  end
+
+  # DBにOGP情報（title, description, image_url）を保存するためのメソッド
+  def fetch_attributes
     {
       title: extract_title,
       description: extract_description,
       image_url: extract_ogp_image
     }
-  # docの取得に失敗した場合、例外処理を実行
   rescue => e
     Rails.logger.error "以下のURLのOGP情報の取得に失敗しました: #{@url}\n
                         エラーメッセージ: #{e.message}"
-    fallback_data
+    nil
   end
 
   private
@@ -29,14 +33,14 @@ class OgpScraperService
     doc.at('meta[property="og:title"]')&.[]("content") ||
     doc.at("title")&.text&.strip ||
     doc.at("h1")&.text&.strip ||
-    @url
+    nil
   end
 
   def extract_description
     # OGP description > meta description
     doc.at('meta[property="og:description"]')&.[]("content") ||
     doc.at('meta[name="description"]')&.[]("content") ||
-    "不明"
+    nil
   end
 
   def extract_ogp_image
@@ -67,13 +71,5 @@ class OgpScraperService
       }
       Nokogiri::HTML(URI.open(@url, options))
     end
-  end
-
-  def fallback_data
-    {
-      title: @url,
-      description: "OGP情報の取得に失敗しました",
-      image_url: nil
-    }
   end
 end
