@@ -1,0 +1,36 @@
+---
+description: 作業ブランチの命名ルール
+alwaysApply: true
+---
+
+# 🌿 Branch Naming Rules
+
+## 基本ルール
+
+- 作業ブランチ名は **`{type}/{short-description}`** を基本形にする
+- `type` はコミット規約に合わせて `feat` / `fix` / `refactor` / `docs` / `chore` / `test` / `style` / `ci` / `perf` から選ぶ
+- `short-description` は **英小文字のケバブケース** で書く
+- ブランチ名には **日本語・スペース・アンダースコア・大文字** を使わない
+- 1ブランチ1目的を守り、内容が分かる短い名前にする
+
+## 推奨ルール
+
+- Issue番号がある場合は **`{type}/#{issue-number}-{short-description}`** を使う
+- 緊急修正だけ `fix` を使い、曖昧な `update` / `misc` / `work` は使わない
+- 一時作業でも `tmp` や `test` のような曖昧な説明だけで終わらせない
+
+## 例
+
+- `feat/add-tag-autocomplete`
+- `fix/login-redirect-loop`
+- `refactor/simplify-auth-service`
+- `docs/#111-update-setup-guide`
+- `feat/#123-add-tag-autocomplete`
+
+## NG例
+
+- `feature/add-tag`
+- `fix_bug`
+- `tag機能追加`
+- `naussicayu-work`
+- `tmp`
