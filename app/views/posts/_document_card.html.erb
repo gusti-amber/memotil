@@ -7,9 +7,9 @@
               class: "link link-info text-sm" %>
   
   <!-- メインコンテンツ -->
-  <div class="flex items-center gap-4">
+  <div class="flex justify-start items-center gap-2">
     <!-- 左側の緑色の縦線 -->
-    <div class="w-1 bg-green rounded-full self-stretch"></div>
+    <div class="flex-shrink-0 w-1 bg-green rounded-full self-stretch"></div>
 
     <!-- 中央のコンテンツ -->
     <div class="flex-1">
@@ -19,20 +19,18 @@
                     document.url, 
                     target: "_blank", 
                     rel: "noopener noreferrer",
-                    class: "text-base-content text-lg font-bold line-clamp-2 leading-tight" %>
+                    class: "text-base-content text-lg font-bold line-clamp-1 leading-tight" %>
         
         <!-- 説明文 -->
-        <% if document.card_description.present? %>
-          <p class="text-sm text-muted line-clamp-3 leading-relaxed">
-            <%= document.card_description %>
-          </p>
-        <% end %>
+        <p class="text-sm text-muted line-clamp-2 leading-relaxed">
+          <%= document.card_description %>
+        </p>
       </div>
     </div>
 
     <!-- 右側のアイコン -->
     <div class="flex-shrink-0">
-      <% if document.card_image_url.present? %>
+      <% if document.card_has_image? %>
         <%= image_tag document.card_image_url,
                       class: "w-12 h-12 object-cover rounded-lg" %>
       <% else %>

@@ -4,25 +4,35 @@ class Document < ApplicationRecord
   validates :url, presence: true, uniqueness: true
   validate :url_format_validation
 
-  # OGP情報を取得するメソッド
-  def ogp_info
-    @ogp_info ||= OgpScraperService.new(url).call
-  end
+  before_validation :fetch_ogp, on: :create
 
   # カード表示用のヘルパーメソッド
   def card_title
-    ogp_info[:title]
+    title.presence || "タイトルを取得できませんでした"
   end
 
   def card_description
-    ogp_info[:description]
+    description.presence || "説明文を取得できませんでした"
   end
 
   def card_image_url
-    ogp_info[:image_url]
+    image_url.presence
+  end
+
+  def card_has_image?
+    card_image_url.present?
   end
 
   private
+
+  def fetch_ogp
+    data = OgpScraperService.new(url).fetch_attributes
+    return if data.nil?
+
+    self.title = data[:title]
+    self.description = data[:description]
+    self.image_url = data[:image_url]
+  end
 
   def url_format_validation
     return if url.blank?
