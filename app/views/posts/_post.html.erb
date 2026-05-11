@@ -1,17 +1,8 @@
 <%= turbo_frame_tag "post_#{post.id}" do %>
-  <div class="flex items-end group px-6 py-2">
-    
-    <!-- 投稿内容 -->
-    <div class="chat chat-start text-base-content">
-      <div class="chat-header">
-        <span class="text-sm font-medium">
-          <%= post.user.name %>
-        </span>
-        <span class="text-xs text-muted ml-2">
-          <%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
-        </span>
-      </div>
-      <div class="chat-bubble bg-surface-elevated border-none">
+  <div class="flex flex-col gap-2 px-2 py-4 border-b border-subtle group">
+    <div class="flex items-end"> 
+      <!-- 投稿内容 -->
+      <div class="text-base-content">
         <% if post.postable_type == 'TextPost' %>
           <!-- ♻️ 今後、サニタイズの実装を行う -->
           <%= markdown(post.postable.body) %>
@@ -20,10 +11,9 @@
         <% end %>
       </div>
     </div>
-
     <!-- タスクのステータスがDoingの場合、投稿の削除ボタンを表示 -->
     <% if show_post_actions %>
-      <div class="flex justify-start">
+      <div class="flex justify-end">
         <%= link_to task_post_path(post.task, post),
           data: { turbo_method: :delete, turbo_confirm: "この投稿を削除しますか？", test_id: "delete-post-btn" },
           class: "btn btn-ghost btn-circle btn-sm text-error border-none shadow-none hover:bg-error/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" do %>
