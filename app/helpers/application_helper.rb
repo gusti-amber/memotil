@@ -9,7 +9,7 @@ module ApplicationHelper
   end
 
   def time_ago_label(time, now = Time.current)
-    elapsed_seconds = [(now - time).to_i, 0].max
+    elapsed_seconds = [ (now - time).to_i, 0 ].max
 
     case elapsed_seconds
     when 0...60
