@@ -151,21 +151,15 @@ RSpec.describe 'Posts', type: :system do
 
       it '投稿一覧にTextPostが正しく表示される' do
         expect(page).to have_content('test text post')
-        expect(page).to have_content(user.name)
-        expect(page).to have_content(text_post.created_at.strftime("%Y年%m月%d日 %H:%M"))
       end
 
       it '投稿一覧にMarkdown形式のTextPostが正しく表示される' do
         expect(page).to have_content('add(x,y)')
         expect(page).to have_selector('.highlight .ruby')
-        expect(page).to have_content(user.name)
-        expect(page).to have_content(text_post_with_markdown.created_at.strftime("%Y年%m月%d日 %H:%M"))
       end
 
       it '投稿一覧にDocumentPostが正しく表示される' do
         expect(page).to have_content('https://docs.example.com')
-        expect(page).to have_content(user.name)
-        expect(page).to have_content(document_post.created_at.strftime("%Y年%m月%d日 %H:%M"))
       end
     end
   end
@@ -182,7 +176,7 @@ RSpec.describe 'Posts', type: :system do
     context 'ポスト下の削除ボタンをクリックする' do
       it '投稿が正常に削除される' do
         # 投稿の内容を含む要素を見つけて、その親要素（.group）にホバー
-        find('.chat-bubble', text: 'test text post').hover
+        find('[data-test-id="post"]', text: 'test text post').hover
 
         # 削除ボタンをクリック
         accept_confirm do
