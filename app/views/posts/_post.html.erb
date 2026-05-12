@@ -6,7 +6,7 @@
       <div class="min-w-0 w-full text-base-content">
         <% if post.postable_type == 'TextPost' %>
           <!-- ♻️ 今後、サニタイズの実装を行う -->
-          <div class="flex flex-col gap-2">
+          <div class="markdown-body flex flex-col gap-2">
             <%= markdown(post.postable.body) %>
           </div>
         <% elsif post.postable_type == 'DocumentPost' %>
