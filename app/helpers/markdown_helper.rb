@@ -11,7 +11,7 @@ module MarkdownHelper
       language_label = ERB::Util.html_escape(language.presence || "text")
 
       <<~HTML
-        <div class="bg-surface-elevated rounded-box">
+        <div class="markdown-code-block bg-surface-elevated rounded-box">
           <div class="flex items-center justify-between gap-2 px-3 py-2 text-xs text-muted">
             <span>#{language_label}</span>
             <button type="button" class="btn btn-ghost btn-xs">コピー</button>
