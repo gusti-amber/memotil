@@ -1,9 +1,9 @@
 <%= turbo_frame_tag "post_#{post.id}" do %>
   <div class="flex flex-col gap-2 px-2 py-4 border-b border-subtle group",
        data-test-id="post">
-    <div class="flex items-end"> 
+    <div class="flex min-w-0 items-end">
       <!-- 投稿内容 -->
-      <div class="text-base-content">
+      <div class="min-w-0 w-full text-base-content">
         <% if post.postable_type == 'TextPost' %>
           <!-- ♻️ 今後、サニタイズの実装を行う -->
           <div class="flex flex-col gap-2">
