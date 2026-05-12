@@ -7,16 +7,28 @@ module MarkdownHelper
     include Rouge::Plugins::Redcarpet
   end
 
-
-  # Markdown形式の解析を行うヘルパーメソッド
+  # Markdown形式の解析と表示
   def markdown(text)
     return "" if text.blank?
 
+    # Markdown→HTML変換用のレンダラー
     renderer = CustomRenderer.new(
-      hard_wrap: true # Markdown形式が改行を含む時、<br>を挿入
+      hard_wrap: true, # Markdown形式が改行を含む時、<br>を挿入
+      filter_html: true, # HTMLタグを削除
+      safe_links_only: true, # 外部リンクを新しいタブで開く
+      link_attributes: { 
+        target: "_blank",
+        rel: "noopener noreferrer"
+      }
     )
+
+    # Markdownパーサー
     markdown = Redcarpet::Markdown.new(renderer, {
-      fenced_code_blocks: true # コードブロックの解析を許可
+      fenced_code_blocks: true, # コードブロックの解析を許可
+      tables: true, # テーブルの解析を許可
+      autolink: true, # リンクを自動的に解析
+      strikethrough: true, # 取り消し線の解析を許可
+      disable_indented_code_blocks: true # インデントされたコードブロックを無効化
     })
 
     # コードブロックを発見すると、block_codeメソッドが呼び出される
