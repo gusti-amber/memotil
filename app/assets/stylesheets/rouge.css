@@ -17,7 +17,6 @@
 .highlight,
 .highlight .w {
   color: #24292f;
-  background-color: var(--color-surface-elevated, #f3f3ed);
   padding: 5px;
 }
 .highlight .k,
