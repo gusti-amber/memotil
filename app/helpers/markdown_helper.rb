@@ -5,6 +5,23 @@ module MarkdownHelper
   class CustomRenderer < Redcarpet::Render::HTML
     # 🎓 Rouge::Plugins::Redcarpet: https://github.com/rouge-ruby/rouge/blob/b30020bb8ac965ef2a29560e115ebf0fc3da32d1/lib/rouge/plugins/redcarpet.rb
     include Rouge::Plugins::Redcarpet
+
+    def block_code(code, language)
+      highlighted_code = super
+      language_label = ERB::Util.html_escape(language.presence || "text")
+
+      <<~HTML
+        <div class="bg-surface-elevated rounded-box">
+          <div class="flex items-center justify-between gap-2 px-3 py-2 text-xs text-muted">
+            <span>#{language_label}</span>
+            <button type="button" class="btn btn-ghost btn-xs">コピー</button>
+          </div>
+          <div class="overflow-x-auto">
+            #{highlighted_code}
+          </div>
+        </div>
+      HTML
+    end
   end
 
   # Markdown形式の解析と表示
