@@ -1,6 +1,6 @@
 ---
 description: 作業ブランチの命名ルール
-alwaysApply: true
+alwaysApply: false
 ---
 
 # 🌿 Branch Naming Rules
