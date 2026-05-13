@@ -9,16 +9,18 @@ module MarkdownHelper
     def block_code(code, language)
       highlighted_code = super
       language_label = ERB::Util.html_escape(language.presence || "text")
+      copy_source = ERB::Util.html_escape(code)
 
       <<~HTML
-        <div class="markdown-code-block bg-surface-elevated rounded-box">
+        <div class="markdown-code-block bg-surface-elevated rounded-box" data-controller="code-copy">
           <div class="flex items-center justify-between gap-2 px-3 py-2 text-xs text-muted">
             <span>#{language_label}</span>
-            <button type="button" class="btn btn-ghost btn-xs">コピー</button>
+            <button type="button" class="btn btn-ghost btn-xs" data-action="code-copy#copy" data-code-copy-target="button">コピー</button>
           </div>
           <div class="overflow-x-auto">
             #{highlighted_code}
           </div>
+          <textarea class="sr-only" readonly data-code-copy-target="source">#{copy_source}</textarea>
         </div>
       HTML
     end
