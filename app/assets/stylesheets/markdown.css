@@ -1,0 +1,90 @@
+.markdown-body {
+  line-height: 1.7;
+  color: inherit;
+}
+
+.markdown-body > * + * {
+  margin-top: 0.75rem;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.markdown-body h1 {
+  font-size: 1.5rem;
+}
+
+.markdown-body h2 {
+  font-size: 1.25rem;
+}
+
+.markdown-body h3 {
+  font-size: 1.125rem;
+}
+
+.markdown-body p,
+.markdown-body li,
+.markdown-body blockquote,
+.markdown-body td,
+.markdown-body th {
+  word-break: break-word;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 1.5rem;
+}
+
+.markdown-body ul {
+  list-style-type: disc;
+}
+
+.markdown-body ol {
+  list-style-type: decimal;
+}
+
+.markdown-body li + li {
+  margin-top: 0.25rem;
+}
+
+.markdown-body blockquote {
+  border-left: 3px solid var(--color-subtle, #9c9d8a);
+  padding-left: 0.75rem;
+  color: var(--color-muted, #233d31);
+}
+
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid var(--color-subtle, #9c9d8a);
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.markdown-body thead th {
+  background-color: var(--color-surface-elevated, #f3f3ed);
+  font-weight: 700;
+}
+
+.markdown-body a {
+  color: var(--color-info, #50bdc9);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.markdown-code-block .highlight pre {
+  margin: 0;
+  white-space: pre;
+}

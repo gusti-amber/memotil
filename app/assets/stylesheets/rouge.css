@@ -1,6 +1,7 @@
 /* GitHubのシンタックスハイライトテーマをダウンロード*/
 /* 参考ドキュメント: https://github.com/rouge-ruby/rouge?tab=readme-ov-file#command-line*/
 /* 実行したコマンド: rougify style github > app/assets/stylesheets/rouge.css */
+/* ベース背景は app/assets/tailwind/application.css の @theme と揃える（markdown コードブロックと同一トーン） */
 .highlight table {
   max-width: 100%;
   table-layout: auto;
@@ -16,11 +17,7 @@
 .highlight,
 .highlight .w {
   color: #24292f;
-  background-color: #fcfcf9;
   padding: 5px;
-  border-radius: 8px;
-  max-width: 100%;
-  overflow-x: auto;
 }
 .highlight .k,
 .highlight .kd,
@@ -36,7 +33,6 @@
 }
 .highlight .gd {
   color: #82071e;
-  background-color: #ffebe9;
 }
 .highlight .nb {
   color: #953800;
@@ -61,7 +57,6 @@
 }
 .highlight .gi {
   color: #116329;
-  background-color: #dafbe1;
 }
 .highlight .ges {
   font-weight: bold;
