@@ -164,6 +164,78 @@ RSpec.describe 'Posts', type: :system do
     end
   end
 
+  describe 'Markdown表示（テキスト投稿）' do
+    let(:task) { create(:task, user: user) }
+    let(:markdown_body) do
+      <<~MD.chomp
+        # 見出し
+
+        - りすと
+
+        > 引用
+
+        | a | b |
+        |---|---|
+        | 1 | 2 |
+
+        https://example.com/page
+
+        1行目
+        2行目
+
+        ```ruby
+        def copy_target
+          42
+        end
+        ```
+
+        [unsafe](javascript:alert(1))
+
+        <script>alert('xss')</script>
+      MD
+    end
+
+    let!(:markdown_post) do
+      create(:post, user: user, task: task, postable: create(:text_post, body: markdown_body))
+    end
+
+    before do
+      sign_in user
+      visit task_path(task)
+    end
+
+    it '見出し・リスト・引用・テーブル・自動リンクが表示される' do
+      expect(page).to have_css('.markdown-body h1', text: '見出し')
+      expect(page).to have_css('.markdown-body ul li', text: 'りすと')
+      expect(page).to have_css('.markdown-body blockquote', text: '引用')
+      expect(page).to have_css('.markdown-body table')
+      expect(page).to have_css('a[href="https://example.com/page"]')
+    end
+
+    it '単一改行が画面上で反映される' do
+      post_el = find('[data-test-id="post"]', text: '1行目')
+      expect(post_el).to have_css('br')
+    end
+
+    it 'フェンスコードにラッパー・言語・コピーがある' do
+      block = find('.markdown-code-block', text: 'copy_target')
+      expect(block).to have_text('ruby')
+      expect(block).to have_button('コピー')
+    end
+
+    it 'markdown本文ブロックにscript要素が含まれない' do
+      within('.markdown-body') do
+        expect(page).to have_no_selector('script')
+      end
+    end
+
+    it 'javascript: のリンクにならない' do
+      within('.markdown-body') do
+        expect(page).to have_no_css('a[href*="javascript:"]')
+      end
+    end
+  end
+
   describe '投稿削除' do
     let(:task) { create(:task, user: user) }
     let!(:post) { create(:post, user: user, task: task, postable: create(:text_post, body: 'test text post')) }
