@@ -35,7 +35,7 @@ module MarkdownHelper
       hard_wrap: true, # Markdown形式が改行を含む時、<br>を挿入
       filter_html: true, # HTMLタグを削除
       safe_links_only: true, # 外部リンクを新しいタブで開く
-      link_attributes: { 
+      link_attributes: {
         target: "_blank",
         rel: "noopener noreferrer"
       }
