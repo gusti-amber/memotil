@@ -30,3 +30,6 @@ application.register("flash-message", FlashMessageController);
 
 import PostFormToggleController from "./post_form_toggle_controller";
 application.register("post-form-toggle", PostFormToggleController);
+
+import CodeCopyController from "./code_copy_controller";
+application.register("code-copy", CodeCopyController);
