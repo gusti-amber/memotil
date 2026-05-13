@@ -15,7 +15,7 @@ module MarkdownHelper
         <div class="markdown-code-block bg-surface-elevated rounded-box" data-controller="code-copy">
           <div class="flex items-center justify-between gap-2 px-3 py-2 text-xs text-muted">
             <span>#{language_label}</span>
-            <button type="button" class="btn btn-ghost btn-xs" data-action="code-copy#copy" data-code-copy-target="button">コピー</button>
+            <button type="button" class="btn btn-ghost btn-xs border-none hover:bg-neutral/10" data-action="code-copy#copy" data-code-copy-target="button">コピー</button>
           </div>
           <div class="overflow-x-auto">
             #{highlighted_code}
