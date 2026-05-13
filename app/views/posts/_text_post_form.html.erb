@@ -1,5 +1,5 @@
 <%= form.fields_for :postable_attributes, (post.postable.is_a?(TextPost) ? post.postable : TextPost.new) do |text_post_form| %>
-  <% placeholder_text = "調べたことや思いついたことを書きましょう" %>
+  <% placeholder_text = "調べたことや思いついたことを書きましょう(Markdown対応)" %>
   <%= text_post_form.text_area :body,
       autocomplete: "off",
       placeholder: placeholder_text.chomp,
