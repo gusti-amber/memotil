@@ -1,6 +1,6 @@
 ---
-description: コミットメッセージ（gitmoji × Conventional Commits）
-alwaysApply: true
+description: コミットメッセージ（gitmoji × Conventional Commits）のルール
+alwaysApply: false
 ---
 
 # 🎯 Commit Rules（gitmoji × Conventional Commits）
