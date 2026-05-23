@@ -28,7 +28,9 @@ Rails.application.routes.draw do
     end
     resources :posts, only: [ :create, :destroy ]
     resources :todos, only: [ :update ]
-    resource :til, only: [ :new, :create ]
+    resource :til, only: [ :new, :create ] do
+      post :preview, on: :member
+    end
     resource :repo, only: [ :new, :create ]
   end
 
