@@ -33,3 +33,6 @@ application.register("post-form-toggle", PostFormToggleController);
 
 import CodeCopyController from "./code_copy_controller";
 application.register("code-copy", CodeCopyController);
+
+import TilPreviewController from "./til_preview_controller";
+application.register("til-preview", TilPreviewController);
