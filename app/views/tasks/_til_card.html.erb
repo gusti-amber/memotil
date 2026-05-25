@@ -16,7 +16,8 @@
           </div>
           
           <div class="card-actions justify-center">
-            <%= link_to new_task_til_path(task), data: { turbo_frame: "til_form" },
+            <%= link_to new_task_til_path(task),
+                data: { turbo_frame: "til_form", test_id: "til-new-md-link" },
                 class: "btn btn-md bg-ghost rounded-lg text-sm font-medium w-full
                   inline-flex items-center justify-between gap-2" do %>
               <span>新しいmdファイルにTILを記録</span>
