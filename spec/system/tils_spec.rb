@@ -25,6 +25,10 @@ RSpec.describe 'TILs', type: :system do
   let(:mock_repo) { double('repo', full_name: 'test_user/test_repo', owner: double('owner', login: 'test_user'), name: 'test_repo') }
   let(:mock_client) { instance_double(Octokit::Client) }
 
+  def find_by_test_id(test_id)
+    find("[data-test-id='#{test_id}']", visible: :all)
+  end
+
   before do
     # Octokit::Clientのスタブ（メソッドの戻り値を設定）
     # 🎓 スタブについて
@@ -168,6 +172,31 @@ RSpec.describe 'TILs', type: :system do
           expect(page).to have_content('パス名 はすでに存在しています')
         end
       end
+    end
+  end
+
+  describe 'Markdownプレビュー', js: true do
+    before do
+      find_by_test_id('til-new-md-link').click
+      select 'test_user/test_repo', from: 'selected_repo'
+    end
+
+    it 'プレビュータブで入力内容がレンダリング表示される' do
+      body = "# Preview title\n\n本文"
+      find_by_test_id('til-editor-field').set(body)
+      find_by_test_id('til-preview-tab').click
+
+      expect(find_by_test_id('til-preview-panel')).to have_css('.markdown-body')
+      expect(page).to have_content('Preview title')
+    end
+
+    it 'プレビュー後に編集タブへ戻っても入力内容が保持される' do
+      body = "# Keep body\n\n編集内容"
+      find_by_test_id('til-editor-field').set(body)
+      find_by_test_id('til-preview-tab').click
+      find_by_test_id('til-edit-tab').click
+
+      expect(find_by_test_id('til-editor-field').value).to eq(body)
     end
   end
 end
