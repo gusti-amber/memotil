@@ -1,7 +1,7 @@
 class TilsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_task
-  before_action :ensure_done
+  before_action :ensure_done, except: :preview
 
   def new
     @client = GithubService.new(current_user.github_token)
@@ -34,6 +34,10 @@ class TilsController < ApplicationController
     redirect_to @task, alert: "GitHub連携が必要です"
   rescue Octokit::UnprocessableEntity => e
     redirect_to @task, alert: "ファイルの作成に失敗しました: #{e.message}"
+  end
+
+  def preview
+    render partial: "preview", locals: { body: params[:body].to_s }
   end
 
   private

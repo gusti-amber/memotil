@@ -1,4 +1,11 @@
-<%= form_with model: @form, url: task_til_path(@task), data: { turbo_frame: "_top" }, class: "flex flex-col gap-2" do |f| %>
+<%= form_with model: @form,
+              url: task_til_path(@task),
+              data: {
+                turbo_frame: "_top",
+                controller: "til-preview",
+                til_preview_url_value: preview_task_til_path(@task)
+              },
+              class: "flex flex-col gap-2" do |f| %>
   <%= f.hidden_field :repo, value: @selected_repo %>
   <%= f.label :path, class: "text-sm font-semibold" %>
   <%= f.text_field :path,
@@ -19,12 +26,44 @@
                   class: "input bg-surface w-full
                           placeholder:text-placeholder" %>
   <%= f.label :body, class: "text-sm font-semibold" %>
-  <%= f.text_area :body,
-                  rows: 16,
-                  autocomplete: "off",
-                  placeholder: "今日学んだことを記録しましょう",
-                  class: "textarea bg-surface w-full
-                          placeholder:text-placeholder" %>
+  <div role="tablist" class="tabs tabs-border">
+    <input
+      type="radio"
+      name="til_body_tabs_<%= @task.id %>"
+      role="tab"
+      class="tab text-xs"
+      aria-label="編集"
+      data-test-id="til-edit-tab"
+      checked="checked"
+    />
+    <div role="tabpanel" class="tab-content pt-4">
+      <%= f.text_area :body,
+                      rows: 16,
+                      autocomplete: "off",
+                      placeholder: "今日学んだことを記録しましょう",
+                      data: {
+                        til_preview_target: "editor",
+                        test_id: "til-editor-field"
+                      },
+                      class: "textarea bg-surface w-full h-96
+                              placeholder:text-placeholder" %>
+    </div>
+
+    <input
+      type="radio"
+      name="til_body_tabs_<%= @task.id %>"
+      role="tab"
+      class="tab text-xs"
+      aria-label="プレビュー"
+      data-test-id="til-preview-tab"
+      data-action="change->til-preview#showPreview"
+    />
+    <div role="tabpanel" class="tab-content pt-4">
+      <div data-til-preview-target="preview" data-test-id="til-preview-panel">
+        <%= render "preview", body: @form.body %>
+      </div>
+    </div>
+  </div>
   <div class="flex justify-end">
     <%= f.submit "GitHubリポジトリに保存", class: "btn btn-neutral rounded-full shadow-none w-full" %>
   </div>
