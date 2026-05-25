@@ -33,6 +33,7 @@
       role="tab"
       class="tab text-xs"
       aria-label="編集"
+      data-test-id="til-edit-tab"
       checked="checked"
     />
     <div role="tabpanel" class="tab-content pt-4">
@@ -40,7 +41,10 @@
                       rows: 16,
                       autocomplete: "off",
                       placeholder: "今日学んだことを記録しましょう",
-                      data: { til_preview_target: "editor" },
+                      data: {
+                        til_preview_target: "editor",
+                        test_id: "til-editor-field"
+                      },
                       class: "textarea bg-surface w-full h-96
                               placeholder:text-placeholder" %>
     </div>
@@ -51,10 +55,11 @@
       role="tab"
       class="tab text-xs"
       aria-label="プレビュー"
+      data-test-id="til-preview-tab"
       data-action="change->til-preview#showPreview"
     />
     <div role="tabpanel" class="tab-content pt-4">
-      <div data-til-preview-target="preview">
+      <div data-til-preview-target="preview" data-test-id="til-preview-panel">
         <%= render "preview", body: @form.body %>
       </div>
     </div>
