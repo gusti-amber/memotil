@@ -1,6 +1,6 @@
 ---
-name: 新機能・機能改善リクエスト
-about: 新機能リクエストのためのissueテンプレート
+name: Feature Request
+about: 新機能の提案や既存機能の改善をリクエストするためのテンプレート
 title: ''
 labels: enhancement
 assignees: ''
