@@ -1,6 +1,6 @@
 ---
-name: バグ報告
-about: バグ報告のためのissueテンプレート
+name: Bug Report
+about: バグや不具合を報告するためのテンプレート
 title: ''
 labels: bug
 assignees: ''
