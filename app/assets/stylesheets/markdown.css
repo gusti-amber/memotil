@@ -87,4 +87,5 @@
 .markdown-code-block .highlight pre {
   margin: 0;
   white-space: pre;
+  font-size: 14px;
 }
