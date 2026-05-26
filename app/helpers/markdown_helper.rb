@@ -20,7 +20,7 @@ module MarkdownHelper
           <div class="overflow-x-auto">
             #{highlighted_code}
           </div>
-          <textarea class="sr-only" readonly data-code-copy-target="source">#{copy_source}</textarea>
+          <input type="hidden" value="#{copy_source}" data-code-copy-target="source">
         </div>
       HTML
     end
