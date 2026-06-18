@@ -65,7 +65,7 @@ group :test do
   # webdrivers gemは不要（selenium-webdriver 4.6以降でChromeDriverを自動管理）
 end
 
-gem "tailwindcss-rails", "~> 4.0"
+gem "tailwindcss-rails", "~> 4.6"
 
 gem "devise", "~> 4.9"
 gem "nokogiri"
